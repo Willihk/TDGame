@@ -8,24 +8,24 @@ namespace TDGame.Network
 {
     public class PlayerManager : NetworkBehaviour
     {
-        public static PlayerManager Instance;
+        //public static PlayerManager Instance;
 
-        public SyncList<PlayerData> PlayerDatas = new SyncList<PlayerData>();
+        //public SyncList<PlayerData> PlayerDatas = new SyncList<PlayerData>();
 
 
-        private void Awake()
-        {
-            if (Instance is null)
-                Instance = this;
-            else
-                Destroy(gameObject);
+        //private void Awake()
+        //{
+        //    if (Instance is null)
+        //        Instance = this;
+        //    else
+        //        Destroy(gameObject);
 
-            DontDestroyOnLoad(Instance);
-        }
+        //    DontDestroyOnLoad(Instance);
+        //}
 
-        public void PlayerConnected(PlayerData playerData)
-        {
-            PlayerDatas.Add(playerData);
-        }
+        //public void PlayerConnected(PlayerData playerData)
+        //{
+        //    PlayerDatas.Add(playerData);
+        //}
     }
 }

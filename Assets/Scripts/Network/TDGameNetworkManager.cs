@@ -37,9 +37,11 @@ namespace TDGame.Network
 
         void OnCreatePlayer(NetworkConnection conn, CreatePlayerMessage message)
         {
-            PlayerManager.Instance.PlayerConnected(new PlayerData { ConnectionId = conn.connectionId, Name = message.Name });
-
             GameObject gameobject = Instantiate(playerPrefab);
+
+            PlayerNetworkController Player = gameobject.GetComponent<PlayerNetworkController>();
+            Player.Setup(new PlayerData { ConnectionId = conn.connectionId, Name = message.Name });
+
             NetworkServer.AddPlayerForConnection(conn, gameobject);
         }
     }
