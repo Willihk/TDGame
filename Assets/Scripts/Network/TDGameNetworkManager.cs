@@ -1,6 +1,8 @@
 using UnityEngine;
 using Mirror;
 using TDGame.Network.Message;
+using System.Linq;
+using TDGame.Network.Player;
 
 /*
 	Documentation: https://mirror-networking.com/docs/Components/NetworkManager.html
@@ -11,6 +13,7 @@ namespace TDGame.Network
 {
     public class TDGameNetworkManager : NetworkManager
     {
+
         public override void OnStartServer()
         {
             base.OnStartServer();
@@ -34,9 +37,9 @@ namespace TDGame.Network
 
         void OnCreatePlayer(NetworkConnection conn, CreatePlayerMessage message)
         {
-            GameObject gameobject = Instantiate(playerPrefab);
+            PlayerManager.Instance.PlayerConnected(new PlayerData { ConnectionId = conn.connectionId, Name = message.Name });
 
-            Debug.Log(message.Name);
+            GameObject gameobject = Instantiate(playerPrefab);
             NetworkServer.AddPlayerForConnection(conn, gameobject);
         }
     }
