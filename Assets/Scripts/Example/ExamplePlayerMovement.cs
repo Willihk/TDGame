@@ -14,12 +14,12 @@ public class ExamplePlayerMovement : NetworkBehaviour
 
     private void Update()
     {
-        if (!isLocalPlayer)
+        if (!hasAuthority)
             return;
 
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        gameObject.transform.position = new Vector2(transform.position.x + (h * speed) * Time.deltaTime, transform.position.y + (v * speed) * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x + (h * speed) * Time.deltaTime, transform.position.y,transform.position.y + (v * speed) * Time.deltaTime);
     }
 }
