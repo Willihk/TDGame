@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using System.Collections.Generic;
 using System.Linq;
+using TDGame.Events;
 using TDGame.Network.Player;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,9 +13,6 @@ namespace TDGame.Network
         public static PlayerManager Instance;
 
         public SyncList<PlayerData> PlayerDatas = new SyncList<PlayerData>();
-
-        Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
-
 
         public UnityEvent OnPlayerListChange;
 
@@ -29,19 +27,18 @@ namespace TDGame.Network
             DontDestroyOnLoad(Instance);
         }
 
-        public void PlayerDisconnected(NetworkConnection conn)
+        [Server]
+        public void UpdatePlayers()
         {
-            var player = connectedPlayers[conn.connectionId];
-
-            PlayerDatas.RemoveAll(x => x.Name == player.Name);
-            OnPlayerListChange.Invoke();
+            PlayerDatas.Clear();
+            PlayerDatas.AddRange(TDGameNetworkManager.Instance.connectedPlayers.Values.ToArray());
+            Debug.Log(PlayerDatas.Count);
         }
 
-        public void PlayerConnected(PlayerData playerData)
+        public override void OnStartServer()
         {
-            Debug.Log(PlayerDatas);
-            PlayerDatas.Add(playerData);
-            OnPlayerListChange.Invoke();
+            base.OnStartServer();
+            UpdatePlayers();
         }
     }
 }

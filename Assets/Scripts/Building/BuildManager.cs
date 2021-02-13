@@ -16,7 +16,7 @@ public class BuildManager : NetworkBehaviour
     [SerializeField]
     List<GameObject> prefabs = new List<GameObject>();
 
-    private void Awake()
+    private void start()
     {
         if (Instance is null)
             Instance = this;

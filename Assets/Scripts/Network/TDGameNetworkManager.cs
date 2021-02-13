@@ -4,6 +4,7 @@ using TDGame.Network.Message;
 using System.Linq;
 using TDGame.Network.Player;
 using TDGame.Events;
+using System.Collections.Generic;
 
 /*
 	Documentation: https://mirror-networking.com/docs/Components/NetworkManager.html
@@ -14,10 +15,21 @@ namespace TDGame.Network
 {
     public class TDGameNetworkManager : NetworkManager
     {
+        public static TDGameNetworkManager Instance;
+
+        public override void Awake()
+        {
+            base.Awake();
+            Instance = this;
+        }
+
         [Header("Server Event Bindings")]
+        [SerializeField]
+        GameEvent server_OnClientConnectEvent;
         [SerializeField]
         NetworkGameEvent server_OnClientDisconnectEvent;
 
+        public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
 
         /// <summary>
         /// This is invoked when a server is started - including when a host is started.
@@ -48,10 +60,13 @@ namespace TDGame.Network
             GameObject gameobject = Instantiate(playerPrefab);
 
             Debug.Log("player manager: " + PlayerManager.Instance == null);
-            PlayerManager.Instance.PlayerConnected(new PlayerData { Name = message.Name });
+            var playerData = new PlayerData { Name = message.Name };
 
             PlayerNetworkController Player = gameobject.GetComponent<PlayerNetworkController>();
-            Player.Setup(new PlayerData { Name = message.Name });
+            Player.Setup(playerData);
+
+            connectedPlayers.Add(conn.connectionId, playerData);
+            server_OnClientConnectEvent.Raise();
 
             NetworkServer.AddPlayerForConnection(conn, gameobject);
         }

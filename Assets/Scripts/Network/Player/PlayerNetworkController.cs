@@ -34,8 +34,7 @@ namespace TDGame.Network.Player
         [Command]
         void Cmd_SpawnTestCube()
         {
-            Debug.Log(netIdentity.connectionToClient);
-            var building = Instantiate(BuildManager.Instance.GetBuilding(0));
+            var building = Instantiate(NetworkManager.singleton.spawnPrefabs[0]);
             NetworkServer.Spawn(building, connectionToClient);
         }
     }

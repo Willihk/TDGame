@@ -17,11 +17,14 @@ namespace TDGame.UI.PlayerList
 
         private void Start()
         {
-            PlayerManager.Instance.OnPlayerListChange.AddListener(UpdatePlayers);
+            InvokeRepeating(nameof(UpdatePlayers), 1, 1);
         }
 
         void UpdatePlayers()
         {
+            if (!PlayerManager.Instance)
+                return;
+
             if (cachedPlayerEntries.Count == PlayerManager.Instance.PlayerDatas.Count)
                 return;
 
