@@ -410,6 +410,7 @@ GameObject:
   - component: {fileID: 1161530010}
   - component: {fileID: 1161530009}
   - component: {fileID: 1161530012}
+  - component: {fileID: 1161530013}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -489,6 +490,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1161530013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161530008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa9265a1dfe24234c820d02652456902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  prefabs: []
 --- !u!1001 &1335346290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -720,7 +736,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 8314502480742944117, guid: 9559a9f85e0caa84aa3b6925327c2c5d, type: 3}
   autoCreatePlayer: 0
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 3575137548368127431, guid: 067f0fedcaf48eb4b82e025ba0c5653d, type: 3}
   server_OnClientDisconnectEvent: {fileID: 11400000, guid: 6ea1094bb542b1d4d8143ea802a8edf5, type: 2}
 --- !u!4 &1992914372
 Transform:

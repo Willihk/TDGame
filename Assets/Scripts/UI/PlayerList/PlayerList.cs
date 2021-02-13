@@ -17,7 +17,7 @@ namespace TDGame.UI.PlayerList
 
         private void Start()
         {
-            InvokeRepeating(nameof(UpdatePlayers), 1, 1);
+            PlayerManager.Instance.OnPlayerListChange.AddListener(UpdatePlayers);
         }
 
         void UpdatePlayers()
@@ -30,7 +30,7 @@ namespace TDGame.UI.PlayerList
 
             foreach (PlayerData player in PlayerManager.Instance.PlayerDatas)
             {
-                AddPlayerEntry(player.Name + " - " + player.ConnectionId);
+                AddPlayerEntry(player.Name);
             }
         }
 

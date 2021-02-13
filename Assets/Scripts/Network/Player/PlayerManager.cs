@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TDGame.Network.Player;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDGame.Network
 {
@@ -12,6 +13,10 @@ namespace TDGame.Network
 
         public SyncList<PlayerData> PlayerDatas = new SyncList<PlayerData>();
 
+        Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
+
+
+        public UnityEvent OnPlayerListChange;
 
         private void Awake()
         {
@@ -20,19 +25,23 @@ namespace TDGame.Network
             else
                 Destroy(gameObject);
 
+            OnPlayerListChange = new UnityEvent();
             DontDestroyOnLoad(Instance);
         }
 
-        [Server]
         public void PlayerDisconnected(NetworkConnection conn)
         {
-            PlayerDatas.RemoveAll(x => x.ConnectionId == conn.connectionId);
+            var player = connectedPlayers[conn.connectionId];
+
+            PlayerDatas.RemoveAll(x => x.Name == player.Name);
+            OnPlayerListChange.Invoke();
         }
 
-        [Server]
         public void PlayerConnected(PlayerData playerData)
         {
+            Debug.Log(PlayerDatas);
             PlayerDatas.Add(playerData);
+            OnPlayerListChange.Invoke();
         }
     }
 }
