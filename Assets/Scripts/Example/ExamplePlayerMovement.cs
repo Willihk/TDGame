@@ -20,6 +20,6 @@ public class ExamplePlayerMovement : NetworkBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        transform.position = new Vector3(transform.position.x + (h * speed) * Time.deltaTime, transform.position.y,transform.position.y + (v * speed) * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x + (h * speed) * Time.deltaTime, transform.position.y,transform.position.z + (v * speed) * Time.deltaTime);
     }
 }
