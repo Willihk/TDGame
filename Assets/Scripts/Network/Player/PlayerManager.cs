@@ -18,12 +18,15 @@ namespace TDGame.Network
 
         private void Awake()
         {
+            OnPlayerListChange = new UnityEvent();
+        }
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
             if (Instance is null)
                 Instance = this;
             else
                 Destroy(gameObject);
-
-            OnPlayerListChange = new UnityEvent();
             DontDestroyOnLoad(Instance);
         }
 

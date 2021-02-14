@@ -5,6 +5,7 @@ using System.Linq;
 using TDGame.Network.Player;
 using TDGame.Events;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 /*
 	Documentation: https://mirror-networking.com/docs/Components/NetworkManager.html
@@ -25,9 +26,9 @@ namespace TDGame.Network
 
         [Header("Server Event Bindings")]
         [SerializeField]
-        GameEvent server_OnClientConnectEvent;
+        GameEvent serverOnClientConnectEvent;
         [SerializeField]
-        NetworkGameEvent server_OnClientDisconnectEvent;
+        NetworkGameEvent serverOnClientDisconnectEvent;
 
         public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
 
@@ -55,18 +56,17 @@ namespace TDGame.Network
             conn.Send(message);
         }
 
-        void OnCreatePlayer(NetworkConnection conn, CreatePlayerMessage message)
+        private void OnCreatePlayer(NetworkConnection conn, CreatePlayerMessage message)
         {
             GameObject gameobject = Instantiate(playerPrefab);
 
-            Debug.Log("player manager: " + PlayerManager.Instance == null);
             var playerData = new PlayerData { Name = message.Name };
 
-            PlayerNetworkController Player = gameobject.GetComponent<PlayerNetworkController>();
-            Player.Setup(playerData);
+            PlayerNetworkController player = gameobject.GetComponent<PlayerNetworkController>();
+            player.Setup(playerData);
 
             connectedPlayers.Add(conn.connectionId, playerData);
-            server_OnClientConnectEvent.Raise();
+            serverOnClientConnectEvent.Raise();
 
             NetworkServer.AddPlayerForConnection(conn, gameobject);
         }
@@ -154,7 +154,8 @@ namespace TDGame.Network
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             base.OnServerDisconnect(conn);
-            //server_OnClientDisconnectEvent.Raise(conn);
+            connectedPlayers.Remove(conn.connectionId);
+            serverOnClientDisconnectEvent.Raise(conn);
         }
 
         ///// <summary>

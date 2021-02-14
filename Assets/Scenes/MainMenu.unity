@@ -410,7 +410,6 @@ GameObject:
   - component: {fileID: 1161530010}
   - component: {fileID: 1161530009}
   - component: {fileID: 1161530012}
-  - component: {fileID: 1161530013}
   - component: {fileID: 1161530014}
   m_Layer: 0
   m_Name: PlayerManager
@@ -482,21 +481,6 @@ MonoBehaviour:
   _UnityEventResponse:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1161530013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161530008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa9265a1dfe24234c820d02652456902, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  prefabs: []
 --- !u!114 &1161530014
 MonoBehaviour:
   m_ObjectHideFlags: 0
