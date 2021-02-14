@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections;
+using TDGame.Events.Base;
 using TDGame.Network.Player;
 using UnityEngine;
 
-namespace TDGame.Events.Network
+namespace TDGame.Events.Types.Network
 {
     [CreateAssetMenu(fileName = "GameEvent", menuName = "GameEvents/PlayerEvent")]
     [Serializable]

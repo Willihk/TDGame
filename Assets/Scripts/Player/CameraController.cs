@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace TDGame.Assets.Scripts.Player
+namespace TDGame.Player
 {
     public class CameraController : MonoBehaviour
     {

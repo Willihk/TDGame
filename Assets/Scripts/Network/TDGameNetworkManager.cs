@@ -1,10 +1,11 @@
 using UnityEngine;
 using Mirror;
-using TDGame.Network.Message;
 using System.Linq;
 using TDGame.Network.Player;
 using TDGame.Events;
 using System.Collections.Generic;
+using TDGame.Network.EventBinding;
+using TDGame.Network.Message.Player;
 using UnityEngine.Serialization;
 
 /*
@@ -84,7 +85,7 @@ namespace TDGame.Network
         public override void OnStopServer()
         {
             base.OnStopServer();
-            connectedPlayers = new Dictionary<int, PlayerData>();
+            connectedPlayers.Clear();
         }
     }
 }

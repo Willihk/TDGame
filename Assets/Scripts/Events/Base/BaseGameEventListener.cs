@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace TDGame.Events
+namespace TDGame.Events.Base
 {
     public abstract class BaseGameEventListener<T, GE, UER> : MonoBehaviour
          where GE : GameEvent<T>

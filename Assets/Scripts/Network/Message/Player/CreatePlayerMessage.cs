@@ -1,6 +1,6 @@
 ﻿using Mirror;
 
-namespace TDGame.Network.Message
+namespace TDGame.Network.Message.Player
 {
     public struct CreatePlayerMessage : NetworkMessage
     {

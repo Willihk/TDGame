@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace TDGame
+namespace TDGame.UI.MainMenu
 {
     public class MainMenuController : MonoBehaviour
     {

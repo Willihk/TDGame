@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace TDGame.Events
+namespace TDGame.Events.Base
 {
     [Serializable]
     public abstract class GameEvent : ScriptableObject

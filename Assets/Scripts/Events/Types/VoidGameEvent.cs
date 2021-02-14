@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using TDGame.Events.Base;
 using UnityEngine;
 
-namespace TDGame.Events
+namespace TDGame.Events.Types
 {
 
 [CreateAssetMenu(fileName = "GameEvent", menuName = "GameEvents/VoidEvent")]

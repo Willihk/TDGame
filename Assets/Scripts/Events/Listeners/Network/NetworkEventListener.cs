@@ -1,10 +1,9 @@
 ﻿using Mirror;
-using System.Collections;
-using TDGame.Events;
-using UnityEngine;
+using TDGame.Events.Base;
+using TDGame.Events.Types.Network;
 using UnityEngine.Events;
 
-namespace TDGame.Events.Network
+namespace TDGame.Events.Listeners.Network
 {
     public class NetworkEventListener : BaseGameEventListener<NetworkConnection, NetworkGameEvent, UnityEvent<NetworkConnection>>
     {

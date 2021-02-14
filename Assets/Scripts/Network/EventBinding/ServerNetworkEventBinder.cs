@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Mirror;
-using TDGame.Events;
-using TDGame.Network.Player;
+using TDGame.Events.Types.Network;
 using UnityEngine;
 
-namespace TDGame.Network
+namespace TDGame.Network.EventBinding
 {
     public class ServerNetworkEventBinder : MonoBehaviour
     {
@@ -14,7 +11,6 @@ namespace TDGame.Network
 
         [SerializeField] 
         NetworkGameEvent serverOnClientDisconnectEvent;
-
 
         #region Server Events
 
