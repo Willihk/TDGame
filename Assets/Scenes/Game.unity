@@ -1651,6 +1651,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   eventBinder: {fileID: 166588028}
+  PlayersChangedEvent: {fileID: 11400000, guid: da41950d55b462744834653f9aec89f2, type: 2}
 --- !u!114 &1683586322
 MonoBehaviour:
   m_ObjectHideFlags: 0

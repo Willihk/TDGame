@@ -1,6 +1,8 @@
-﻿namespace TDGame.Network.Message.Player
+﻿using Mirror;
+
+namespace TDGame.Network.Message.Player
 {
-    public struct PlayersChangedMessage
+    public struct PlayersChangedMessage : NetworkMessage
     {
         
     }

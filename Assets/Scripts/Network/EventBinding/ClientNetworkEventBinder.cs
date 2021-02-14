@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using TDGame.Events;
+using TDGame.Network.Message.Player;
 using TDGame.Network.Player;
 using UnityEngine;
 
@@ -17,10 +18,6 @@ namespace TDGame.Network.EventBinding
         [SerializeField] 
         GameEvent onPlayersChanged;
 
-        public struct PlayersChangedMessage : NetworkMessage
-        {
-
-        }
 
         public void Awake()
         {
