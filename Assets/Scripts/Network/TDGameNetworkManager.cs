@@ -63,7 +63,7 @@ namespace TDGame.Network
             player.Setup(playerData);
 
             connectedPlayers.Add(conn.connectionId, playerData);
-            eventBinder.ServerOnClientConnect();
+            eventBinder.ServerOnClientConnect(conn);
 
             NetworkServer.AddPlayerForConnection(conn, gameobject);
         }

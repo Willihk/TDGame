@@ -46,8 +46,6 @@ public class BuildController : NetworkBehaviour
     {
         if (Instance is null)
             Instance = this;
-        else
-            Destroy(this);
 
         LoadPrefabs();
     }
@@ -60,11 +58,6 @@ public class BuildController : NetworkBehaviour
     {
         if (Instance is null)
             Instance = this;
-        else
-            Destroy(this);
-
         LoadPrefabs();
     }
-
-
 }

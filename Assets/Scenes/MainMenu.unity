@@ -1434,8 +1434,8 @@ MonoBehaviour:
   CongestionWindow: 0
   SendWindowSize: 128
   ReceiveWindowSize: 128
-  debugLog: 0
-  statisticsGUI: 0
+  debugLog: 1
+  statisticsGUI: 1
   statisticsLog: 0
 --- !u!114 &1992914371
 MonoBehaviour:
@@ -1496,7 +1496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afbc3e47030245a4992955cfbeaeddc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverOnClientConnectEvent: {fileID: 11400000, guid: 5bfb6c29f0b79a943a807bbfc8df171e, type: 2}
+  serverOnClientConnectEvent: {fileID: 11400000, guid: 23bd5490767204744b5e2cccd4cec9fc, type: 2}
   serverOnClientDisconnectEvent: {fileID: 11400000, guid: 6ea1094bb542b1d4d8143ea802a8edf5, type: 2}
 --- !u!1 &2147482444
 GameObject:

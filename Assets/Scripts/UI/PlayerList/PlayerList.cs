@@ -15,19 +15,15 @@ namespace TDGame.UI.PlayerList
 
         List<GameObject> cachedPlayerEntries = new List<GameObject>();
 
-        private void Start()
+        public void UpdatePlayers()
         {
-            InvokeRepeating(nameof(UpdatePlayers), 1, 1);
-        }
-
-        void UpdatePlayers()
-        {
-            Debug.Log("updating player list");
             if (!PlayerManager.Instance)
                 return;
+            Debug.Log("updating player list");
 
             if (cachedPlayerEntries.Count == PlayerManager.Instance.PlayerDatas.Count)
                 return;
+            Debug.Log("updating player list " + PlayerManager.Instance.PlayerDatas.Count);
 
             cachedPlayerEntries.ForEach(x => Destroy(x));
             cachedPlayerEntries.Clear();

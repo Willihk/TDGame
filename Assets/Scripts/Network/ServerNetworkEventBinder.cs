@@ -10,7 +10,7 @@ namespace TDGame.Network
     public class ServerNetworkEventBinder : MonoBehaviour
     {
         [Header("Server Event Bindings")] [SerializeField]
-        GameEvent serverOnClientConnectEvent;
+        NetworkGameEvent serverOnClientConnectEvent;
 
         [SerializeField] 
         NetworkGameEvent serverOnClientDisconnectEvent;
@@ -23,9 +23,9 @@ namespace TDGame.Network
             serverOnClientDisconnectEvent.Raise(connection);
         }
 
-        public void ServerOnClientConnect()
+        public void ServerOnClientConnect(NetworkConnection connection)
         {
-            serverOnClientConnectEvent.Raise();
+            serverOnClientConnectEvent.Raise(connection);
         }
 
         #endregion

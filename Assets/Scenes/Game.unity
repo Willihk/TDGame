@@ -249,6 +249,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123690912}
   m_CullTransparentMesh: 1
+--- !u!1 &166588027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 166588030}
+  - component: {fileID: 166588029}
+  - component: {fileID: 166588028}
+  m_Layer: 0
+  m_Name: EventBinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &166588028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166588027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a56ba4b6e040518c91742e9d942495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  onPlayerConnect: {fileID: 11400000, guid: 59f430c12a225e74a85f97cb8416a3cc, type: 2}
+  onPlayerDisconnect: {fileID: 11400000, guid: 441e7dbf564e6cb4cb95ea38444a569c, type: 2}
+  onPlayersChanged: {fileID: 11400000, guid: da41950d55b462744834653f9aec89f2, type: 2}
+--- !u!114 &166588029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166588027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 1822713086
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!4 &166588030
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166588027}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -43.655136, y: 66.321785, z: -115.34715}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &201810553
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +343,7 @@ Transform:
   m_Children:
   - {fileID: 1802983808}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &257275506
 GameObject:
@@ -695,7 +760,7 @@ RectTransform:
   - {fileID: 1812273819}
   - {fileID: 1832945798}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -962,7 +1027,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &973682285
 GameObject:
@@ -1247,9 +1312,6 @@ GameObject:
   - component: {fileID: 1514074415}
   - component: {fileID: 1514074417}
   - component: {fileID: 1514074416}
-  - component: {fileID: 1514074419}
-  - component: {fileID: 1514074418}
-  - component: {fileID: 1514074420}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -1269,7 +1331,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1514074416
 MonoBehaviour:
@@ -1302,76 +1364,6 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &1514074418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1514074414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160f5899ffa28264e9082ac9673d1f16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _GameEvent: {fileID: 11400000, guid: 5bfb6c29f0b79a943a807bbfc8df171e, type: 2}
-  _UnityEventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1514074419}
-        m_TargetAssemblyTypeName: TDGame.Network.PlayerManager, Assembly-CSharp
-        m_MethodName: UpdatePlayers
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1514074419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1514074414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7af2324ccb6e8e4abc386664c1b6c82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
---- !u!114 &1514074420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1514074414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac65738c4ba462a4ca9c3d3325dad225, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _GameEvent: {fileID: 11400000, guid: 6ea1094bb542b1d4d8143ea802a8edf5, type: 2}
-  _UnityEventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1514074419}
-        m_TargetAssemblyTypeName: TDGame.Network.PlayerManager, Assembly-CSharp
-        m_MethodName: UpdatePlayers
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1544437429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,6 +1560,127 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1683586318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1683586323}
+  - component: {fileID: 1683586322}
+  - component: {fileID: 1683586321}
+  - component: {fileID: 1683586320}
+  - component: {fileID: 1683586319}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1683586319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683586318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac65738c4ba462a4ca9c3d3325dad225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 23bd5490767204744b5e2cccd4cec9fc, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1683586321}
+        m_TargetAssemblyTypeName: TDGame.Network.PlayerManager, Assembly-CSharp
+        m_MethodName: PlayerConnected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1683586320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683586318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac65738c4ba462a4ca9c3d3325dad225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 6ea1094bb542b1d4d8143ea802a8edf5, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1683586321}
+        m_TargetAssemblyTypeName: TDGame.Network.PlayerManager, Assembly-CSharp
+        m_MethodName: PlayerDisconnected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1683586321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683586318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7af2324ccb6e8e4abc386664c1b6c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  eventBinder: {fileID: 166588028}
+--- !u!114 &1683586322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683586318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 3141616804
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!4 &1683586323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683586318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -43.655136, y: 66.321785, z: -115.34715}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1771431350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,7 +1715,7 @@ Transform:
   - {fileID: 257275507}
   - {fileID: 973682286}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1777832757
 GameObject:
@@ -1837,6 +1950,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1832945798}
   - component: {fileID: 1832945799}
+  - component: {fileID: 1832945800}
+  - component: {fileID: 1832945801}
   m_Layer: 5
   m_Name: PlayerList
   m_TagString: Untagged
@@ -1879,6 +1994,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entryPrefab: {fileID: 8931866406164076786, guid: b34e0f00ffb2f034782e7211ee3d4fd6, type: 3}
   content: {fileID: 1674562968}
+--- !u!114 &1832945800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832945797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd63830ac9ebf1747b7a95e97db07f19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 59f430c12a225e74a85f97cb8416a3cc, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1832945799}
+        m_TargetAssemblyTypeName: TDGame.UI.PlayerList.PlayerList, Assembly-CSharp
+        m_MethodName: UpdatePlayers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1832945801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832945797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160f5899ffa28264e9082ac9673d1f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: da41950d55b462744834653f9aec89f2, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1832945799}
+        m_TargetAssemblyTypeName: TDGame.UI.PlayerList.PlayerList, Assembly-CSharp
+        m_MethodName: UpdatePlayers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1841576225
 GameObject:
   m_ObjectHideFlags: 0
