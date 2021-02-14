@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: afbc3e47030245a4992955cfbeaeddc5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - serverOnClientConnectEvent: {fileID: 11400000, guid: 5bfb6c29f0b79a943a807bbfc8df171e, type: 2}
+  - serverOnClientDisconnectEvent: {fileID: 11400000, guid: 6ea1094bb542b1d4d8143ea802a8edf5, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

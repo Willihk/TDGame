@@ -14,12 +14,6 @@ namespace TDGame.Network
 
         public SyncList<PlayerData> PlayerDatas = new SyncList<PlayerData>();
 
-        public UnityEvent OnPlayerListChange;
-
-        private void Awake()
-        {
-            OnPlayerListChange = new UnityEvent();
-        }
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -27,7 +21,6 @@ namespace TDGame.Network
                 Instance = this;
             else
                 Destroy(gameObject);
-            DontDestroyOnLoad(Instance);
         }
 
         [Server]
@@ -35,7 +28,6 @@ namespace TDGame.Network
         {
             PlayerDatas.Clear();
             PlayerDatas.AddRange(TDGameNetworkManager.Instance.connectedPlayers.Values.ToArray());
-            Debug.Log(PlayerDatas.Count);
         }
 
         public override void OnStartServer()

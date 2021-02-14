@@ -24,12 +24,9 @@ namespace TDGame.Network
             Instance = this;
         }
 
-        [Header("Server Event Bindings")]
         [SerializeField]
-        GameEvent serverOnClientConnectEvent;
-        [SerializeField]
-        NetworkGameEvent serverOnClientDisconnectEvent;
-
+        private ServerNetworkEventBinder eventBinder;
+        
         public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
 
         /// <summary>
@@ -66,7 +63,7 @@ namespace TDGame.Network
             player.Setup(playerData);
 
             connectedPlayers.Add(conn.connectionId, playerData);
-            serverOnClientConnectEvent.Raise();
+            eventBinder.ServerOnClientConnect();
 
             NetworkServer.AddPlayerForConnection(conn, gameobject);
         }
@@ -155,7 +152,7 @@ namespace TDGame.Network
         {
             base.OnServerDisconnect(conn);
             connectedPlayers.Remove(conn.connectionId);
-            serverOnClientDisconnectEvent.Raise(conn);
+            eventBinder.ServerOnClientDisconnect(conn);
         }
 
         ///// <summary>

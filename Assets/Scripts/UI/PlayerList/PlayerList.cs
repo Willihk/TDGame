@@ -22,6 +22,7 @@ namespace TDGame.UI.PlayerList
 
         void UpdatePlayers()
         {
+            Debug.Log("updating player list");
             if (!PlayerManager.Instance)
                 return;
 
