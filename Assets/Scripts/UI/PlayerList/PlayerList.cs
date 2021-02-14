@@ -19,10 +19,7 @@ namespace TDGame.UI.PlayerList
         {
             if (!PlayerManager.Instance)
                 return;
-            Debug.Log("updating player list");
 
-            if (cachedPlayerEntries.Count == PlayerManager.Instance.PlayerDatas.Count)
-                return;
             Debug.Log("updating player list " + PlayerManager.Instance.PlayerDatas.Count);
 
             cachedPlayerEntries.ForEach(x => Destroy(x));
