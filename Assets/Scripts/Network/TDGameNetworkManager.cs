@@ -64,7 +64,7 @@ namespace TDGame.Network
 
             if (!connectedPlayers.ContainsKey(conn.connectionId))
                 connectedPlayers.Add(conn.connectionId, playerData);
-            
+
             eventBinder.ServerOnClientConnect(conn);
 
             NetworkServer.AddPlayerForConnection(conn, gameobject);
@@ -79,7 +79,8 @@ namespace TDGame.Network
         {
             base.OnServerDisconnect(conn);
             eventBinder.ServerOnClientDisconnect(conn);
-            connectedPlayers.Remove(conn.connectionId);
+            if (connectedPlayers.ContainsKey(conn.connectionId))
+                connectedPlayers.Remove(conn.connectionId);
         }
 
         public override void OnStopServer()

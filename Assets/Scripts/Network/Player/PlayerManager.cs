@@ -21,14 +21,14 @@ namespace TDGame.Network.Player
 
         public override void OnStopClient()
         {
-            base.OnStopClient();
             Instance = null;
+            base.OnStopClient();
         }
 
         public override void OnStopServer()
         {
-            base.OnStopServer();
             Instance = null;
+            base.OnStopServer();
         }
 
         public override void OnStartServer()
