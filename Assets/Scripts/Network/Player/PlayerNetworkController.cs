@@ -16,6 +16,9 @@ namespace TDGame.Network.Player
         [SerializeField]
         int connectionId;
 
+        [SerializeField]
+        private BuildingList networkedBuildingList;
+
         public void Setup(PlayerData playerData)
         {
             Name = playerData.Name;
@@ -35,7 +38,7 @@ namespace TDGame.Network.Player
         [Command]
         void Cmd_SpawnTestCube()
         {
-            var building = Instantiate(BuildController.Instance.GetBuilding(0));
+            var building = Instantiate(networkedBuildingList.GetBuilding(0));
             NetworkServer.Spawn(building, connectionToClient);
         }
     }

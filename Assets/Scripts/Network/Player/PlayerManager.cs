@@ -42,8 +42,11 @@ namespace TDGame.Network.Player
             base.OnStartClient();
             PlayerDatas.Callback += (op, index, item, newItem) =>
             {
-                Debug.Log("Player data changed ");
-                clientPlayersChangedEvent.Raise();
+                if (op != SyncList<PlayerData>.Operation.OP_CLEAR)
+                {
+                    Debug.Log("Player data changed");
+                    clientPlayersChangedEvent.Raise();
+                }
             };
             clientPlayersChangedEvent.Raise();
         }

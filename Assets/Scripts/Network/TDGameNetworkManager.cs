@@ -4,6 +4,7 @@ using System.Linq;
 using TDGame.Network.Player;
 using TDGame.Events;
 using System.Collections.Generic;
+using TDGame.Building;
 using TDGame.Network.EventBinding;
 using TDGame.Network.Message.Player;
 using UnityEngine.Serialization;
@@ -23,9 +24,13 @@ namespace TDGame.Network
         {
             base.Awake();
             Instance = this;
+
+            spawnPrefabs.AddRange(networkedBuildingList.GetBuildings());
         }
 
         [SerializeField] private ServerNetworkEventBinder eventBinder;
+
+        [SerializeField] private BuildingList networkedBuildingList;
 
         public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
 
@@ -62,8 +67,8 @@ namespace TDGame.Network
             PlayerNetworkController player = gameobject.GetComponent<PlayerNetworkController>();
             player.Setup(playerData);
 
-            if (!connectedPlayers.ContainsKey(conn.connectionId))
-                connectedPlayers.Add(conn.connectionId, playerData);
+            // if (!connectedPlayers.ContainsKey(conn.connectionId))
+            connectedPlayers.Add(conn.connectionId, playerData);
 
             eventBinder.ServerOnClientConnect(conn);
 
@@ -78,9 +83,10 @@ namespace TDGame.Network
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             base.OnServerDisconnect(conn);
-            eventBinder.ServerOnClientDisconnect(conn);
             if (connectedPlayers.ContainsKey(conn.connectionId))
                 connectedPlayers.Remove(conn.connectionId);
+            
+            eventBinder.ServerOnClientDisconnect(conn);
         }
 
         public override void OnStopServer()
