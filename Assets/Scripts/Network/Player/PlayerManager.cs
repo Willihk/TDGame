@@ -11,8 +11,7 @@ namespace TDGame.Network.Player
 
         public readonly SyncList<PlayerData> PlayerDatas = new SyncList<PlayerData>();
 
-        [SerializeField]
-        private GameEvent clientPlayersChangedEvent;
+        [SerializeField] private GameEvent clientPlayersChangedEvent;
 
         public void Awake()
         {
@@ -42,11 +41,11 @@ namespace TDGame.Network.Player
             base.OnStartClient();
             PlayerDatas.Callback += (op, index, item, newItem) =>
             {
-                if (op != SyncList<PlayerData>.Operation.OP_CLEAR)
-                {
-                    Debug.Log("Player data changed");
-                    clientPlayersChangedEvent.Raise();
-                }
+                if (op == SyncList<PlayerData>.Operation.OP_CLEAR)
+                    return;
+                
+                Debug.Log("Player data changed");
+                clientPlayersChangedEvent.Raise();
             };
             clientPlayersChangedEvent.Raise();
         }
