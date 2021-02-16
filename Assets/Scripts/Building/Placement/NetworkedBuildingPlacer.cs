@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Mirror;
 using TDGame.Cursor;
 using Unity.Mathematics;
@@ -37,6 +38,8 @@ namespace TDGame.Building.Placement
 
         private GameObject prefab;
 
+        private Collider collider;
+
 
         private Material localMaterial;
 
@@ -46,6 +49,12 @@ namespace TDGame.Building.Placement
         {
             base.OnStartClient();
             Setup();
+        }
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            collider = GetComponent<Collider>();
         }
 
         private void Setup()
@@ -75,8 +84,11 @@ namespace TDGame.Building.Placement
 
         private void Update()
         {
-            // TODO: Only set value when it's actually changed
-            localMaterial.SetInt(IsValid, (isValidPlacement && !isColliding) ? 1 : 0);
+            if (!isServer)
+            {
+                // TODO: Only set value when it's actually changed
+                localMaterial.SetInt(IsValid, (isValidPlacement && !isColliding) ? 1 : 0);
+            }
 
             if (!hasAuthority)
                 return;
@@ -104,6 +116,7 @@ namespace TDGame.Building.Placement
             {
                 cursorState.State = CursorState.None;
                 Cmd_ConfirmPlacement(transform.position);
+                enabled = false;
             }
         }
 
@@ -133,7 +146,7 @@ namespace TDGame.Building.Placement
 
             NetworkServer.Destroy(gameObject);
         }
-       
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Ground"))
