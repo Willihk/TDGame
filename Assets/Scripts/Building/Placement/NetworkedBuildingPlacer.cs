@@ -39,17 +39,24 @@ namespace TDGame.Building.Placement
             if (!hasAuthority)
                 return;
 
-            Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
-            {
-                transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            }
-
             if (Input.GetMouseButtonDown(1))
             {
                 Cmd_CancelPlacement();
             }
-            else if (Input.GetMouseButtonDown(0))
+            
+            Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+            {
+                transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                isValidPlacement = true;
+            }
+            else
+            {
+                isValidPlacement = false;
+                return;
+            }
+            
+            if (Input.GetMouseButtonDown(0))
             {
                 Cmd_ConfirmPlacement(transform.position);
             }
