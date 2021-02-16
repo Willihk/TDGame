@@ -12,4 +12,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d797527b9e764290aa8a049f0b0edf1e, type: 3}
   m_Name: LocalCursorState
   m_EditorClassIdentifier: 
-  State: 1

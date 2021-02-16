@@ -29,6 +29,9 @@ namespace TDGame.Building.Placement
 
         private GameObject prefab;
 
+        [SerializeField]
+        private Material placementMaterial;
+
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -37,6 +40,21 @@ namespace TDGame.Building.Placement
             var prefabModel = buildingList.GetBuilding(prefabName).transform.Find("Model").gameObject;
 
             var model = Instantiate(prefabModel, transform);
+            ReplaceModelMaterialsReqursive(model.transform);
+        }
+
+        void ReplaceModelMaterialsReqursive(Transform transform)
+        {
+            if (transform.TryGetComponent(out Renderer renderer))
+            {
+                renderer.materials = new Material[] { placementMaterial };
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            }
+
+            foreach (Transform child in transform)
+            {
+                ReplaceModelMaterialsReqursive(child);
+            }
         }
 
         private void Update()
