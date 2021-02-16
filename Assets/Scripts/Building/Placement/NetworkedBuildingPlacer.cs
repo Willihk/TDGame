@@ -86,8 +86,7 @@ namespace TDGame.Building.Placement
             if (isClient)
             {
                 // TODO: Only set value when it's actually changed
-                if (isColliding)
-                    isValidPlacement = false;
+                isValidPlacement = !isColliding;
 
                 if (localMaterial)
                     localMaterial.SetInt(IsValid, isValidPlacement ? 1 : 0);
