@@ -11,7 +11,6 @@ namespace TDGame.Building.Placement
 {
     public class NetworkedBuildingPlacer : NetworkBehaviour
     {
-        [SerializeField]
         private bool isValidPlacement;
 
         [SerializeField]
@@ -52,9 +51,8 @@ namespace TDGame.Building.Placement
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                Cmd_ConfirmPlacement();
+                Cmd_ConfirmPlacement(transform.position);
             }
-            
         }
 
         [Server]
@@ -71,26 +69,24 @@ namespace TDGame.Building.Placement
         }
 
         [Command]
-        void Cmd_ConfirmPlacement()
+        void Cmd_ConfirmPlacement(Vector3 position)
         {
             if (!isValidPlacement)
                 return;
 
             var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
-            placedObject.transform.position = transform.position;
+            placedObject.transform.position = position;
 
             NetworkServer.Spawn(placedObject, connectionToClient);
 
             NetworkServer.Destroy(gameObject);
         }
 
-        [ServerCallback]
         private void OnCollisionExit(Collision other)
         {
             isValidPlacement = true;
         }
 
-        [ServerCallback]
         private void OnCollisionEnter(Collision other)
         {
             isValidPlacement = false;
