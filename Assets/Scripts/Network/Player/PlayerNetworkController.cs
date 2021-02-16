@@ -11,32 +11,18 @@ namespace TDGame.Network.Player
     {
         [SyncVar]
         [SerializeField]
-        string Name;
+        string name;
 
         [SyncVar]
         [SerializeField]
         int connectionId;
 
         [SerializeField]
-        private BuildingList networkedBuildingList;
-        
-        [SerializeField]
         private GameObject placementPrefab;
 
         public void Setup(PlayerData playerData)
         {
-            Name = playerData.Name;
-        }
-
-        private void Update()
-        {
-            if (isLocalPlayer)
-            {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    Cmd_SpawnTestCube();
-                }
-            }
+            name = playerData.Name;
         }
 
         public void SpawnPlacementForPrefab(string prefabName)
@@ -51,13 +37,6 @@ namespace TDGame.Network.Player
             var placer = placerObject.GetComponent<NetworkedBuildingPlacer>();
             placer.Setup(prefabName);
             NetworkServer.Spawn(placerObject, connectionToClient);
-        }
-
-        [Command]
-        private void Cmd_SpawnTestCube()
-        {
-            var building = Instantiate(networkedBuildingList.GetBuilding(0));
-            NetworkServer.Spawn(building, connectionToClient);
         }
     }
 }
