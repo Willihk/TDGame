@@ -35,25 +35,30 @@ namespace TDGame.Building.Placement
         public override void OnStartClient()
         {
             base.OnStartClient();
+            Setup();
+        }
+
+        private void Setup()
+        {
             referenceCamera = Camera.main;
 
             var prefabModel = buildingList.GetBuilding(prefabName).transform.Find("Model").gameObject;
 
             var model = Instantiate(prefabModel, transform);
-            ReplaceModelMaterialsReqursive(model.transform);
+            ReplaceModelMaterialsRecursive(model.transform);
         }
 
-        void ReplaceModelMaterialsReqursive(Transform transform)
+        private void ReplaceModelMaterialsRecursive(Transform transform)
         {
             if (transform.TryGetComponent(out Renderer renderer))
             {
-                renderer.materials = new Material[] { placementMaterial };
+                renderer.materials = new Material[] {placementMaterial};
                 renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             }
 
             foreach (Transform child in transform)
             {
-                ReplaceModelMaterialsReqursive(child);
+                ReplaceModelMaterialsRecursive(child);
             }
         }
 
