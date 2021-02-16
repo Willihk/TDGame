@@ -114,6 +114,9 @@ namespace TDGame.Building.Placement
                 return;
             }
 
+            if (!isValidPlacement || isColliding)
+                return;
+
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 cursorState.State = CursorState.None;
