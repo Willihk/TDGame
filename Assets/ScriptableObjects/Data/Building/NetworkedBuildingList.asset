@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NetworkedBuildingList
   m_EditorClassIdentifier: 
   prefabs:
+  - {fileID: 4065107553620101743, guid: 5dc2d38f7442f5947be5f483ed3a3a45, type: 3}
   - {fileID: 6711880627919443429, guid: 57a652adf45fc1a448bb4ce61202062b, type: 3}
   - {fileID: 3328605900019788229, guid: e057f58e6327e84478bad09220308ed2, type: 3}
-  - {fileID: 4065107553620101743, guid: 5dc2d38f7442f5947be5f483ed3a3a45, type: 3}
