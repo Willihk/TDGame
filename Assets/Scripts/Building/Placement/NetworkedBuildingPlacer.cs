@@ -35,26 +35,43 @@ namespace TDGame.Building.Placement
 			var model = Instantiate(prefabModel, transform);
 		}
 
-		[Server]
-		public void Setup(string prefabName)
-		{
-			this.prefabName = prefabName;
-		}
-
 		private void Update()
 		{
 			if (!hasAuthority)
 				return;
-			
-			// TODO: Place this transform on the cursor
 			
 			Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
 			{
 				transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
 			}
+
+			if (Input.GetMouseButtonDown(0))
+			{
+				Cmd_ConfirmPlacement();
+			}
 		}
 		
+		[Server]
+		public void Setup(string prefabName)
+		{
+			this.prefabName = prefabName;
+			isValidPlacement = true;
+		}
+
+		[Command]
+		void Cmd_ConfirmPlacement()
+		{
+			if (!isValidPlacement)
+				return;
+
+			var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
+			placedObject.transform.position = transform.position;
+			
+			NetworkServer.Spawn(placedObject, connectionToClient);
+			
+			NetworkServer.Destroy(gameObject);
+		}
 
 		[ServerCallback]
 		private void OnCollisionExit(Collision other)
