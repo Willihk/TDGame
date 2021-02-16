@@ -1,6 +1,7 @@
 using System;
 using Mirror;
 using TDGame.Cursor;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,7 +14,11 @@ namespace TDGame.Building.Placement
 {
     public class NetworkedBuildingPlacer : NetworkBehaviour
     {
+        [SerializeField]
         private bool isValidPlacement;
+
+        [SerializeField]
+        private bool isColliding;
 
         [SerializeField]
         [SyncVar]
@@ -31,6 +36,8 @@ namespace TDGame.Building.Placement
 
         [SerializeField]
         private Material placementMaterial;
+
+        private static readonly int IsValid = Shader.PropertyToID("IsValid");
 
         public override void OnStartClient()
         {
@@ -64,6 +71,9 @@ namespace TDGame.Building.Placement
 
         private void Update()
         {
+            // TODO: Only set value when it's actually changed
+            placementMaterial.SetInt(IsValid, (isValidPlacement && !isColliding) ? 1 : 0);
+
             if (!hasAuthority)
                 return;
 
@@ -76,7 +86,8 @@ namespace TDGame.Building.Placement
             Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
-                transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                var hitPoint = math.round(hit.point);
+                transform.position = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
                 isValidPlacement = true;
             }
             else
@@ -108,7 +119,7 @@ namespace TDGame.Building.Placement
         [Command]
         void Cmd_ConfirmPlacement(Vector3 position)
         {
-            if (!isValidPlacement)
+            if (!isValidPlacement || isColliding)
                 return;
 
             var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
@@ -118,15 +129,26 @@ namespace TDGame.Building.Placement
 
             NetworkServer.Destroy(gameObject);
         }
-
-        private void OnCollisionExit(Collision other)
+       
+        private void OnTriggerEnter(Collider other)
         {
-            isValidPlacement = true;
+            if (other.CompareTag("Ground"))
+                return;
+            isColliding = true;
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerStay(Collider other)
         {
-            isValidPlacement = false;
+            if (other.CompareTag("Ground"))
+                return;
+            isColliding = true;
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Ground"))
+                return;
+            isColliding = false;
         }
     }
 }
