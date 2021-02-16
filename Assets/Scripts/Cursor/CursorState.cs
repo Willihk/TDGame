@@ -2,7 +2,7 @@
 {
     public enum CursorState
     {
-        None = 1,
-        Placing = 2,
+        None = 0,
+        Placing = 1,
     }
 }

@@ -1,6 +1,8 @@
 using System;
 using Mirror;
+using TDGame.Cursor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /*
 	Documentation: https://mirror-networking.com/docs/Guides/NetworkBehaviour.html
@@ -19,6 +21,9 @@ namespace TDGame.Building.Placement
 
         [SerializeField]
         private BuildingList buildingList;
+
+        [SerializeField]
+        private LocalCursorState cursorState;
 
         private Camera referenceCamera;
 
@@ -41,9 +46,10 @@ namespace TDGame.Building.Placement
 
             if (Input.GetMouseButtonDown(1))
             {
+                cursorState.State = CursorState.None;
                 Cmd_CancelPlacement();
             }
-            
+
             Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
@@ -55,9 +61,10 @@ namespace TDGame.Building.Placement
                 isValidPlacement = false;
                 return;
             }
-            
-            if (Input.GetMouseButtonDown(0))
+
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
+                cursorState.State = CursorState.None;
                 Cmd_ConfirmPlacement(transform.position);
             }
         }
