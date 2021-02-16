@@ -1544,7 +1544,7 @@ MonoBehaviour:
   autoCreatePlayer: 0
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 0}
+  - {fileID: 6623300880123839917, guid: dd0d44f7fab27e54ea0496e0145b54ab, type: 3}
   eventBinder: {fileID: 1992914373}
   networkedBuildingList: {fileID: 11400000, guid: 805a3508962bf0c40bf24af168859488, type: 2}
 --- !u!4 &1992914372

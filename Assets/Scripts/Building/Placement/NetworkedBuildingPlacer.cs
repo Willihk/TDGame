@@ -14,6 +14,10 @@ namespace TDGame.Building.Placement
 		[SerializeField]
 		private bool isValidPlacement;
 
+		[SerializeField]
+		[SyncVar]
+		private string prefabName;
+
 		private Camera referenceCamera;
 
 		private GameObject prefab;
@@ -22,6 +26,12 @@ namespace TDGame.Building.Placement
 		{
 			base.OnStartClient();
 			referenceCamera = Camera.main;
+		}
+
+		[Server]
+		public void Setup(string prefabName)
+		{
+			this.prefabName = prefabName;
 		}
 
 		private void Update()

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using TDGame.Events.Base;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +13,20 @@ namespace TDGame.UI.BuildingList
         [SerializeField]
         private Image image;
 
-        public void Initialize(string name)
+        [SerializeField]
+        private GameEvent<string> OnClickBuyBuilding;
+
+        private string prefabName;
+
+        public void Initialize(string prefabName, string name)
         {
+            this.prefabName = prefabName;
             nameText.text = name;
+        }
+
+        public void OnClick()
+        {
+            OnClickBuyBuilding.Raise(prefabName);
         }
     }
 }

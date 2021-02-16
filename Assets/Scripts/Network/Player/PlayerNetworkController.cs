@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using TDGame.Building;
+using TDGame.Building.Placement;
 using UnityEngine;
 
 namespace TDGame.Network.Player
@@ -18,6 +19,9 @@ namespace TDGame.Network.Player
 
         [SerializeField]
         private BuildingList networkedBuildingList;
+        
+        [SerializeField]
+        private GameObject placementPrefab;
 
         public void Setup(PlayerData playerData)
         {
@@ -35,8 +39,22 @@ namespace TDGame.Network.Player
             }
         }
 
+        public void SpawnPlacementForPrefab(string prefabName)
+        {
+            Cmd_SpawnPrefabPlacer(prefabName);
+        }
+
         [Command]
-        void Cmd_SpawnTestCube()
+        private void Cmd_SpawnPrefabPlacer(string prefabName)
+        {
+            var placerObject = Instantiate(placementPrefab);
+            var placer = placerObject.GetComponent<NetworkedBuildingPlacer>();
+            placer.Setup(prefabName);
+            NetworkServer.Spawn(placerObject, connectionToClient);
+        }
+
+        [Command]
+        private void Cmd_SpawnTestCube()
         {
             var building = Instantiate(networkedBuildingList.GetBuilding(0));
             NetworkServer.Spawn(building, connectionToClient);

@@ -14,6 +14,7 @@ namespace TDGame.UI.BuildingList
         [SerializeField]
         private Transform content;
 
+
         private void Start()
         {
             var buildings = this.buildingList.GetBuildings();
@@ -21,7 +22,7 @@ namespace TDGame.UI.BuildingList
             for (int i = 0; i < buildings.Count; i++)
             {
                 var entryObject = Instantiate(entryPrefab, content);
-                entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name);
+                entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name,buildings[i].name);
             }
         }
     }

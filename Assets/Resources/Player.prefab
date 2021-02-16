@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8314502480742944107}
   - component: {fileID: 8314502480742944116}
   - component: {fileID: 220334520748180566}
+  - component: {fileID: -9159035424391176903}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -84,3 +85,33 @@ MonoBehaviour:
   Name: 
   connectionId: 0
   networkedBuildingList: {fileID: 11400000, guid: 805a3508962bf0c40bf24af168859488, type: 2}
+  placementPrefab: {fileID: 6623300880123839917, guid: dd0d44f7fab27e54ea0496e0145b54ab, type: 3}
+--- !u!114 &-9159035424391176903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8314502480742944117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c391e30e7f074b308004f590d561a5f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 3acd6928062a31c49a592897416d08fd, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 220334520748180566}
+        m_TargetAssemblyTypeName: TDGame.Network.Player.PlayerNetworkController,
+          Assembly-CSharp
+        m_MethodName: SpawnPlacementForPrefab
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
