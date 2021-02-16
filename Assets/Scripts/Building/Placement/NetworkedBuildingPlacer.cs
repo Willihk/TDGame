@@ -9,80 +9,91 @@ using UnityEngine;
 
 namespace TDGame.Building.Placement
 {
-	public class NetworkedBuildingPlacer : NetworkBehaviour
-	{
-		[SerializeField]
-		private bool isValidPlacement;
+    public class NetworkedBuildingPlacer : NetworkBehaviour
+    {
+        [SerializeField]
+        private bool isValidPlacement;
 
-		[SerializeField]
-		[SyncVar]
-		private string prefabName;
+        [SerializeField]
+        [SyncVar]
+        private string prefabName;
 
-		[SerializeField]
-		private BuildingList buildingList;
+        [SerializeField]
+        private BuildingList buildingList;
 
-		private Camera referenceCamera;
+        private Camera referenceCamera;
 
-		private GameObject prefab;
+        private GameObject prefab;
 
-		public override void OnStartClient()
-		{
-			base.OnStartClient();
-			referenceCamera = Camera.main;
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            referenceCamera = Camera.main;
 
-			var prefabModel = buildingList.GetBuilding(prefabName).transform.Find("Model").gameObject;
+            var prefabModel = buildingList.GetBuilding(prefabName).transform.Find("Model").gameObject;
 
-			var model = Instantiate(prefabModel, transform);
-		}
+            var model = Instantiate(prefabModel, transform);
+        }
 
-		private void Update()
-		{
-			if (!hasAuthority)
-				return;
-			
-			Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
-			{
-				transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-			}
+        private void Update()
+        {
+            if (!hasAuthority)
+                return;
 
-			if (Input.GetMouseButtonDown(0))
-			{
-				Cmd_ConfirmPlacement();
-			}
-		}
-		
-		[Server]
-		public void Setup(string prefabName)
-		{
-			this.prefabName = prefabName;
-			isValidPlacement = true;
-		}
+            Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+            {
+                transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            }
 
-		[Command]
-		void Cmd_ConfirmPlacement()
-		{
-			if (!isValidPlacement)
-				return;
+            if (Input.GetMouseButtonDown(1))
+            {
+                Cmd_CancelPlacement();
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
+                Cmd_ConfirmPlacement();
+            }
+            
+        }
 
-			var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
-			placedObject.transform.position = transform.position;
-			
-			NetworkServer.Spawn(placedObject, connectionToClient);
-			
-			NetworkServer.Destroy(gameObject);
-		}
+        [Server]
+        public void Setup(string prefabName)
+        {
+            this.prefabName = prefabName;
+            isValidPlacement = true;
+        }
 
-		[ServerCallback]
-		private void OnCollisionExit(Collision other)
-		{
-			isValidPlacement = true;
-		}
+        [Command]
+        void Cmd_CancelPlacement()
+        {
+            NetworkServer.Destroy(gameObject);
+        }
 
-		[ServerCallback]
-		private void OnCollisionEnter(Collision other)
-		{
-			isValidPlacement = false;
-		}
-	}
+        [Command]
+        void Cmd_ConfirmPlacement()
+        {
+            if (!isValidPlacement)
+                return;
+
+            var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
+            placedObject.transform.position = transform.position;
+
+            NetworkServer.Spawn(placedObject, connectionToClient);
+
+            NetworkServer.Destroy(gameObject);
+        }
+
+        [ServerCallback]
+        private void OnCollisionExit(Collision other)
+        {
+            isValidPlacement = true;
+        }
+
+        [ServerCallback]
+        private void OnCollisionEnter(Collision other)
+        {
+            isValidPlacement = false;
+        }
+    }
 }
