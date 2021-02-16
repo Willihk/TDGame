@@ -29,13 +29,16 @@ namespace TDGame.Building.Placement
 
         [SerializeField]
         private LocalCursorState cursorState;
+        
+        [SerializeField]
+        private Material placementMaterial;
 
         private Camera referenceCamera;
 
         private GameObject prefab;
 
-        [SerializeField]
-        private Material placementMaterial;
+
+        private Material localMaterial;
 
         private static readonly int IsValid = Shader.PropertyToID("IsValid");
 
@@ -52,6 +55,7 @@ namespace TDGame.Building.Placement
             var prefabModel = buildingList.GetBuilding(prefabName).transform.Find("Model").gameObject;
 
             var model = Instantiate(prefabModel, transform);
+            localMaterial = new Material(placementMaterial);
             ReplaceModelMaterialsRecursive(model.transform);
         }
 
@@ -59,7 +63,7 @@ namespace TDGame.Building.Placement
         {
             if (transform.TryGetComponent(out Renderer renderer))
             {
-                renderer.materials = new Material[] {placementMaterial};
+                renderer.materials = new Material[] {localMaterial};
                 renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             }
 
@@ -72,7 +76,7 @@ namespace TDGame.Building.Placement
         private void Update()
         {
             // TODO: Only set value when it's actually changed
-            placementMaterial.SetInt(IsValid, (isValidPlacement && !isColliding) ? 1 : 0);
+            localMaterial.SetInt(IsValid, (isValidPlacement && !isColliding) ? 1 : 0);
 
             if (!hasAuthority)
                 return;
