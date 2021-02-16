@@ -3,6 +3,7 @@ using Mirror;
 using TDGame.Network.Player;
 using System.Collections.Generic;
 using TDGame.Building;
+using TDGame.Enemy.Data;
 using TDGame.Network.EventBinding;
 using TDGame.Network.Message.Player;
 
@@ -23,11 +24,17 @@ namespace TDGame.Network
             Instance = this;
 
             spawnPrefabs.AddRange(networkedBuildingList.GetBuildings());
+            spawnPrefabs.AddRange(networkedEnemyList.GetEnemies());
         }
 
-        [SerializeField] private ServerNetworkEventBinder eventBinder;
+        [SerializeField]
+        private ServerNetworkEventBinder eventBinder;
 
-        [SerializeField] private BuildingList networkedBuildingList;
+        [SerializeField]
+        private BuildingList networkedBuildingList;
+        
+        [SerializeField]
+        private EnemyList networkedEnemyList;
 
         public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
 
@@ -82,7 +89,7 @@ namespace TDGame.Network
             base.OnServerDisconnect(conn);
             if (connectedPlayers.ContainsKey(conn.connectionId))
                 connectedPlayers.Remove(conn.connectionId);
-            
+
             eventBinder.ServerOnClientDisconnect(conn);
         }
 
