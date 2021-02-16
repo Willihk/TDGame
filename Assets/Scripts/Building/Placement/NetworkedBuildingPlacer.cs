@@ -14,23 +14,41 @@ namespace TDGame.Building.Placement
 		[SerializeField]
 		private bool isValidPlacement;
 
+		private Camera referenceCamera;
+
+		private GameObject prefab;
+
+		public override void OnStartClient()
+		{
+			base.OnStartClient();
+			referenceCamera = Camera.main;
+		}
+
 		private void Update()
 		{
 			if (!hasAuthority)
 				return;
+			
 			// TODO: Place this transform on the cursor
+			
+			Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
+			if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+			{
+				transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+			}
+		}
+		
+
+		[ServerCallback]
+		private void OnCollisionExit(Collision other)
+		{
+			isValidPlacement = true;
 		}
 
 		[ServerCallback]
-		private void OnTriggerEnter(Collider other)
+		private void OnCollisionEnter(Collision other)
 		{
 			isValidPlacement = false;
-		}
-		
-		[ServerCallback]
-		private void OnTriggerExit(Collider other)
-		{
-			isValidPlacement = true;
 		}
 	}
 }
