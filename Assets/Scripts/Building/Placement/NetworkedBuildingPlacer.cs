@@ -18,6 +18,9 @@ namespace TDGame.Building.Placement
 		[SyncVar]
 		private string prefabName;
 
+		[SerializeField]
+		private BuildingList buildingList;
+
 		private Camera referenceCamera;
 
 		private GameObject prefab;
@@ -26,6 +29,10 @@ namespace TDGame.Building.Placement
 		{
 			base.OnStartClient();
 			referenceCamera = Camera.main;
+
+			var prefabModel = buildingList.GetBuilding(prefabName).transform.Find("Model").gameObject;
+
+			var model = Instantiate(prefabModel, transform);
 		}
 
 		[Server]
