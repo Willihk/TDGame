@@ -30,7 +30,7 @@ namespace TDGame.Building.Placement
 
         [SerializeField]
         private LocalCursorState cursorState;
-        
+
         [SerializeField]
         private Material placementMaterial;
 
@@ -41,7 +41,7 @@ namespace TDGame.Building.Placement
         private Collider collider;
 
         private Material localMaterial;
-        
+
         private static readonly int IsValid = Shader.PropertyToID("IsValid");
 
         public override void OnStartClient()
@@ -88,8 +88,9 @@ namespace TDGame.Building.Placement
                 // TODO: Only set value when it's actually changed
                 if (isColliding)
                     isValidPlacement = false;
-                
-                localMaterial.SetInt(IsValid, isValidPlacement ? 1 : 0);
+
+                if (localMaterial)
+                    localMaterial.SetInt(IsValid, isValidPlacement ? 1 : 0);
             }
 
             if (!hasAuthority)
@@ -142,10 +143,10 @@ namespace TDGame.Building.Placement
         {
             if (!isValidPlacement || isColliding)
                 return;
-            
+
             netIdentity.RemoveClientAuthority();
             // TODO: Check for collisions based on position given by client
-            
+
             var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
             placedObject.transform.position = position;
 
