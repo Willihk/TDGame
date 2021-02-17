@@ -36,7 +36,7 @@ namespace TDGame.Systems.Turrets.Implementations
 
         [SerializeField]
         private GameObject target;
-        
+
         [SerializeField]
         [SyncVar]
         private Vector3 clientTargetPosition;
@@ -63,13 +63,13 @@ namespace TDGame.Systems.Turrets.Implementations
 
         private void Update()
         {
+            if (isClient)
+            {
+                LookAtTarget();
+            }
+
             if (target != null)
             {
-                if (isClient)
-                {
-                    LookAtTarget();
-                }
-
                 if (isServer)
                 {
                     if (!targetSystem.IsValidTarget(target))
@@ -79,7 +79,7 @@ namespace TDGame.Systems.Turrets.Implementations
                     }
 
                     clientTargetPosition = target.transform.position;
-                    
+
                     if (nextFire < Time.time)
                     {
                         ShootProjectile();
