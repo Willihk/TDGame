@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using Mirror;
 using TDGame.HealthSystem;
+using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
 namespace TDGame.Enemy.Base
 {
     public class NetworkedEnemy : NetworkBehaviour
     {
+        [SerializeField]
         private NetworkedHealthSystem healthSystem;
 
         [SerializeField]
@@ -59,6 +61,20 @@ namespace TDGame.Enemy.Base
             this.waypoints = waypoints;
             currentWaypoint = waypoints[0];
             hasWaypoint = true;
+        }
+
+        [ServerCallback]
+        public void Damage(float hitDamage)
+        {
+            EnemyTargetsController.Instance.targets.Remove(gameObject);
+            healthSystem.Damage(hitDamage);
+            Debug.Log("hit  " + healthSystem.Health);
+
+            if (healthSystem.Health <= 0)
+            {
+                EnemyTargetsController.Instance.targets.Remove(gameObject);
+                NetworkServer.Destroy(gameObject);
+            }
         }
     }
 }

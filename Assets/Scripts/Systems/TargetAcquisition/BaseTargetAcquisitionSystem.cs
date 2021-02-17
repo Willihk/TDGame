@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using TDGame.Systems.Target.Data;
+using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
 namespace TDGame.Systems.TargetAcquisition
 {
-    public abstract class BaseTargetAcquisition : MonoBehaviour
+    public abstract class BaseTargetAcquisitionSystem : MonoBehaviour
     {
-        [SerializeField]
-        protected TargetList targetList;
-        
         public abstract IEnumerable<GameObject> GetAvailableTargets();
+
+        public abstract bool IsValidTarget(GameObject target);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using TDGame.Enemy.Base;
 using TDGame.Enemy.Data;
+using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
 namespace TDGame.Enemy
@@ -37,10 +38,12 @@ namespace TDGame.Enemy
         [Server]
         void SpawnEnemy(GameObject prefab)
         {
-            var enemyObject = Instantiate(prefab, enemyHolder);
+            GameObject enemyObject = Instantiate(prefab, enemyHolder);
             enemyObject.GetComponent<NetworkedEnemy>().Setup(waypoints);
             
             NetworkServer.Spawn(enemyObject);
+            
+            EnemyTargetsController.Instance.targets.Add(enemyObject);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
 using UnityEngine;
 
 namespace TDGame.HealthSystem
@@ -15,11 +16,17 @@ namespace TDGame.HealthSystem
         protected float health;
         
         public bool IsAtMaxHealth => health >= startHealth;
+        public float Health => health;
 
-        [Command]
+        private void Awake()
+        {
+            health = startHealth;
+        }
+
+        [Server]
         public void Damage(float amount)
         {
-            health -= health;
+            health -= amount;
 
             if (health <= 0)
             {
