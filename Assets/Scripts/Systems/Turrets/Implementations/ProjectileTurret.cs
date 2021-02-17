@@ -44,7 +44,7 @@ namespace TDGame.Systems.Turrets.Implementations
         {
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             var bulletComponent = projectile.GetComponent<TurretProjectile>();
-            bulletComponent.Setup(target, hitDamage);
+            bulletComponent.Setup(target.transform.position, hitDamage);
             nextFire = Time.time + fireRate;
 
             Rpc_ShootDummyProjectile();
@@ -55,7 +55,7 @@ namespace TDGame.Systems.Turrets.Implementations
         {
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             var bulletComponent = projectile.GetComponent<TurretProjectile>();
-            bulletComponent.Setup(target, 0);
+            bulletComponent.Setup(target.transform.position, 0);
         }
 
         private void Update()

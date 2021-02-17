@@ -8,10 +8,10 @@ namespace TDGame.Systems.Projectiles
         [SerializeField]
         private float speed = 5;
         
-        private GameObject target;
+        private Vector3 target;
         private float hitDamage;
 
-        public void Setup(GameObject target, float hitDamage)
+        public void Setup(Vector3 target, float hitDamage)
         {
             this.target = target;
             this.hitDamage = hitDamage;
@@ -19,7 +19,7 @@ namespace TDGame.Systems.Projectiles
 
         private void Start()
         {
-            transform.LookAt(target.transform);
+            transform.LookAt(target);
             Destroy(gameObject, 10);
         }
 

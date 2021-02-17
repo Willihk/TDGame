@@ -66,7 +66,6 @@ namespace TDGame.Enemy.Base
         [ServerCallback]
         public void Damage(float hitDamage)
         {
-            EnemyTargetsController.Instance.targets.Remove(gameObject);
             healthSystem.Damage(hitDamage);
             Debug.Log("hit  " + healthSystem.Health);
 
