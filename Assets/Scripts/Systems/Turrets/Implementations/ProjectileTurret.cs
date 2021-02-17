@@ -35,8 +35,11 @@ namespace TDGame.Systems.Turrets.Implementations
         protected Transform partToRotate;
 
         [SerializeField]
-        [SyncVar]
         private GameObject target;
+        
+        [SerializeField]
+        [SyncVar]
+        private Vector3 clientTargetPosition;
 
         private float nextFire;
 
@@ -62,16 +65,21 @@ namespace TDGame.Systems.Turrets.Implementations
         {
             if (target != null)
             {
-                LookAtTarget();
-
-                if (!targetSystem.IsValidTarget(target))
+                if (isClient)
                 {
-                    target = null;
-                    return;
+                    LookAtTarget();
                 }
 
                 if (isServer)
                 {
+                    if (!targetSystem.IsValidTarget(target))
+                    {
+                        target = null;
+                        return;
+                    }
+
+                    clientTargetPosition = target.transform.position;
+                    
                     if (nextFire < Time.time)
                     {
                         ShootProjectile();
@@ -87,7 +95,7 @@ namespace TDGame.Systems.Turrets.Implementations
 
         protected void LookAtTarget()
         {
-            Vector3 dir = target.transform.position - transform.position;
+            Vector3 dir = clientTargetPosition - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(dir);
             Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnRate)
                 .eulerAngles;
