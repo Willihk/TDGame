@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4076306509969952000}
   - component: {fileID: 1712145836020918238}
   - component: {fileID: 3463123627437871259}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rock Pillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9093327893261682194}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -932,7 +932,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2083112606924002729}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tower Fields
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1017,7 +1017,7 @@ GameObject:
   - component: {fileID: 3433046622920686689}
   - component: {fileID: 2711644794172330395}
   - component: {fileID: 4867951435458454957}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Big Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1915,7 +1915,7 @@ GameObject:
   - component: {fileID: 4425388509533144319}
   - component: {fileID: 595586787483120603}
   - component: {fileID: 8666503741608300215}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Big Rock (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2640,7 +2640,7 @@ GameObject:
   - component: {fileID: 7258908053816767312}
   - component: {fileID: 707731231032399854}
   - component: {fileID: 3515584697720965804}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

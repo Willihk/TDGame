@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Mirror;
 using TDGame.Enemy.Base;
 using TDGame.Enemy.Data;
+using TDGame.Map;
 using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
@@ -17,11 +19,17 @@ namespace TDGame.Enemy
         private Transform enemyHolder;
 
         [SerializeField]
+        private NetworkedMapController mapController;
+        
+        [SerializeField]
         private List<Vector3> waypoints;
 
-        public override void OnStartServer()
+        public void OnMapLoaded()
         {
-            base.OnStartServer();
+            if (!isServer)
+                return;
+
+            waypoints = mapController.GetWaypoints().Select(x => x.position).ToList();
             StartCoroutine(nameof(SpawnTestEnemies));
         }
 
@@ -40,6 +48,8 @@ namespace TDGame.Enemy
         {
             GameObject enemyObject = Instantiate(prefab, enemyHolder);
             enemyObject.GetComponent<NetworkedEnemy>().Setup(waypoints);
+
+            enemyObject.transform.position = waypoints[0];
             
             NetworkServer.Spawn(enemyObject);
             

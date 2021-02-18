@@ -111,6 +111,7 @@ namespace TDGame.Building.Placement
             else
             {
                 isValidPlacement = false;
+                localMaterial.SetInt(IsValid, 0);
                 return;
             }
 
