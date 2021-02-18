@@ -70,6 +70,8 @@ namespace TDGame.Enemy.Base
         void ReachedEnd()
         {
             GlobalHealthSystem.Instance.ReduceHealth(3);
+            EnemyTargetsController.Instance.targets.Remove(gameObject);
+            NetworkServer.Destroy(gameObject);
         }
 
         [ServerCallback]

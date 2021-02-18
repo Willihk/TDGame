@@ -44,13 +44,14 @@ namespace TDGame.Systems.Health.Data
         public void Reduce(float amount)
         {
             health -= amount;
-            healthChangedEvent.Raise(health);
 
             if (health <= 0)
             {
                 health = 0;
                 healthDepletedEvent.Raise();
             }
+
+            healthChangedEvent.Raise(health);
         }
 
         public void Add(float amount)
