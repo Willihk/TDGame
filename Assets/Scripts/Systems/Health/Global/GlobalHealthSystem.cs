@@ -8,6 +8,7 @@ namespace TDGame.Systems.Health.Global
     {
         public static GlobalHealthSystem Instance;
     
+        [SerializeField]
         private HealthData healthData;
 
         [SyncVar(hook = nameof(SyncToServer))]
