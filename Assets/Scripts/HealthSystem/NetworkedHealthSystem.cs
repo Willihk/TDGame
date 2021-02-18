@@ -1,6 +1,7 @@
 ﻿using System;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDGame.HealthSystem
 {
@@ -13,7 +14,10 @@ namespace TDGame.HealthSystem
         protected float startHealth;
         
         [SyncVar]
-        protected float health;
+        private float health;
+
+        public UnityEvent OnDeath;
+        public UnityEvent OnHealthChanged;
         
         public bool IsAtMaxHealth => health >= startHealth;
         public float Health => health;
@@ -21,16 +25,20 @@ namespace TDGame.HealthSystem
         private void Awake()
         {
             health = startHealth;
+            OnHealthChanged ??= new UnityEvent();
+            OnDeath ??= new UnityEvent();
         }
 
         [Server]
         public void Damage(float amount)
         {
             health -= amount;
+            OnHealthChanged.Invoke();
 
             if (health <= 0)
             {
                 // TODO: DIE
+                OnDeath.Invoke();
             }
         }
     }
