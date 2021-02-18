@@ -25,6 +25,12 @@ namespace TDGame.Systems.Economy
             localEconomy.ReduceCurrency(amount);
         }
 
+        [Server]
+        public void AddCurrency(int amount)
+        {
+            localEconomy.AddCurrency(amount);
+        }
+
         /// <summary>
         /// 
         /// </summary>
