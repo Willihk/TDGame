@@ -1834,6 +1834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15eaf3615d540e4e9a2714ed5872943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameText: {fileID: 0}
 --- !u!1 &759111529
 GameObject:
   m_ObjectHideFlags: 0
@@ -4123,8 +4124,8 @@ MonoBehaviour:
   Interval: 10
   FastResend: 2
   CongestionWindow: 0
-  SendWindowSize: 128
-  ReceiveWindowSize: 128
+  SendWindowSize: 2048
+  ReceiveWindowSize: 2048
   debugLog: 1
   statisticsGUI: 1
   statisticsLog: 0
