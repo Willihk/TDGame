@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8314502480742944116}
   - component: {fileID: 220334520748180566}
   - component: {fileID: -9159035424391176903}
+  - component: {fileID: 6006341384634573695}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -82,9 +83,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  Name: 
+  name: 
   connectionId: 0
-  networkedBuildingList: {fileID: 11400000, guid: 805a3508962bf0c40bf24af168859488, type: 2}
   placementPrefab: {fileID: 6623300880123839917, guid: dd0d44f7fab27e54ea0496e0145b54ab, type: 3}
 --- !u!114 &-9159035424391176903
 MonoBehaviour:
@@ -115,3 +115,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6006341384634573695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8314502480742944117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a6e6ddc4a3c4e01b553a38ddde7bb38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  localEconomy: {fileID: 11400000, guid: 9b7f2b8fcfed78d4da0fced12e3a6b93, type: 2}
