@@ -1,9 +1,8 @@
-﻿using System;
-using Mirror;
+﻿using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TDGame.HealthSystem
+namespace TDGame.Systems.Health.Unit
 {
     public class NetworkedHealthSystem : NetworkBehaviour
     {

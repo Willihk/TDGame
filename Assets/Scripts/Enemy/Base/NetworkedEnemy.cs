@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Mirror;
-using TDGame.HealthSystem;
+using TDGame.Systems.Health;
+using TDGame.Systems.Health.Unit;
 using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
