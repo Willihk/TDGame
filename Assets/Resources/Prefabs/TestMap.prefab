@@ -668,6 +668,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4170007473590669851}
+  - component: {fileID: 1328854078354992057}
   m_Layer: 0
   m_Name: Waypoints
   m_TagString: Untagged
@@ -695,6 +696,25 @@ Transform:
   m_Father: {fileID: 5141700347342529444}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1328854078354992057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4169070813941943569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34039ba7070e49698c3d157ca7811559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 7704606102683549806}
+  - {fileID: 1278201038401452437}
+  - {fileID: 445876689627812581}
+  - {fileID: 3001917721437933409}
+  - {fileID: 6275572696795761775}
+  - {fileID: 4086990473607813461}
 --- !u!1 &4205037600461282965
 GameObject:
   m_ObjectHideFlags: 0

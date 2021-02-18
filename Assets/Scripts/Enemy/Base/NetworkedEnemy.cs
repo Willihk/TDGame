@@ -17,6 +17,9 @@ namespace TDGame.Enemy.Base
         [SerializeField]
         private float speed;
 
+        [SerializeField]
+        private float reachedEndDamage = 3;
+
         [SyncVar]
         private Vector3 currentWaypoint;
 
@@ -28,24 +31,21 @@ namespace TDGame.Enemy.Base
 
         private void Update()
         {
-            if (isServer)
+            if (isServer && Vector3.Distance(transform.position, currentWaypoint) < .1f)
             {
-                if (Vector3.Distance(transform.position, currentWaypoint) < .1f)
+                transform.position = currentWaypoint;
+                currentWaypointIndex++;
+                if (currentWaypointIndex >= waypoints.Count)
                 {
-                    transform.position = currentWaypoint;
-                    currentWaypointIndex++;
-                    if (currentWaypointIndex >= waypoints.Count)
-                    {
-                        hasWaypoint = false;
-                        ReachedEnd();
-                        return;
-                    }
-
-                    currentWaypoint = waypoints[currentWaypointIndex];
-                    transform.LookAt(currentWaypoint);
-                    Rpc_WaypointReached(transform.position);
+                    hasWaypoint = false;
+                    ReachedEnd();
                     return;
                 }
+
+                currentWaypoint = waypoints[currentWaypointIndex];
+                transform.LookAt(currentWaypoint);
+                Rpc_WaypointReached(transform.position);
+                return;
             }
 
             if (Vector3.Distance(transform.position, currentWaypoint) > .1f)
@@ -69,7 +69,7 @@ namespace TDGame.Enemy.Base
         [Server]
         void ReachedEnd()
         {
-            GlobalHealthSystem.Instance.ReduceHealth(3);
+            GlobalHealthSystem.Instance.ReduceHealth(reachedEndDamage);
             EnemyTargetsController.Instance.targets.Remove(gameObject);
             NetworkServer.Destroy(gameObject);
         }
