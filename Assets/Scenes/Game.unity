@@ -296,7 +296,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1431124423}
   m_Direction: 2
   m_Value: 0.071428575
-  m_Size: 0.07142804
+  m_Size: 0.99999535
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1130,7 +1130,7 @@ GameObject:
   - component: {fileID: 1081310658}
   m_Layer: 10
   m_Name: Ground
-  m_TagString: Ground
+  m_TagString: TowerPlacementArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1482,7 +1482,7 @@ GameObject:
   - component: {fileID: 1487976857}
   m_Layer: 0
   m_Name: Map v2
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

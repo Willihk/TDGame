@@ -102,7 +102,7 @@ namespace TDGame.Building.Placement
             }
 
             Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("TowerPlacementArea")))
             {
                 var hitPoint = math.round(hit.point);
                 transform.position = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
@@ -156,21 +156,21 @@ namespace TDGame.Building.Placement
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Ground"))
+            if (other.CompareTag("TowerPlacementArea"))
                 return;
             isColliding = true;
         }
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Ground"))
+            if (other.CompareTag("TowerPlacementArea"))
                 return;
             isColliding = true;
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Ground"))
+            if (other.CompareTag("TowerPlacementArea"))
                 return;
             isColliding = false;
         }
