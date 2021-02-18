@@ -25,6 +25,22 @@ namespace TDGame.Systems.Health.Data
         [SerializeField]
         private GameEvent healthDepletedEvent;
 
+        private void Awake()
+        {
+            health = startHealth;
+        }
+
+        public void ResetHealth()
+        {
+            health = startHealth;
+        }
+
+        public void Set(float value)
+        {
+            health = value;
+            healthChangedEvent.Raise(health);
+        }
+
         public void Reduce(float amount)
         {
             health -= amount;
