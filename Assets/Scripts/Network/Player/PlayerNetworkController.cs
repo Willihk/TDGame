@@ -27,7 +27,8 @@ namespace TDGame.Network.Player
 
         public void SpawnPlacementForPrefab(string prefabName)
         {
-            Cmd_SpawnPrefabPlacer(prefabName);
+            if (hasAuthority)
+                Cmd_SpawnPrefabPlacer(prefabName);
         }
 
         [Command]
