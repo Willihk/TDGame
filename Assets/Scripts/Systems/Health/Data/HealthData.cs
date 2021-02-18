@@ -48,6 +48,7 @@ namespace TDGame.Systems.Health.Data
 
             if (health <= 0)
             {
+                health = 0;
                 healthDepletedEvent.Raise();
             }
         }

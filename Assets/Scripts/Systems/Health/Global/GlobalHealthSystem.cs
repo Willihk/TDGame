@@ -26,6 +26,7 @@ namespace TDGame.Systems.Health.Global
         public void ReduceHealth(float amount)
         {
             healthData.Reduce(amount);
+            health = healthData.Health;
         }
 
         void SyncToServer(float oldHealth, float newHealth)
