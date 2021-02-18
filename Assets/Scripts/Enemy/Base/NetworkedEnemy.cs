@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Mirror;
 using TDGame.Systems.Health;
+using TDGame.Systems.Health.Global;
 using TDGame.Systems.Health.Unit;
 using TDGame.Systems.Targeting.Data;
 using UnityEngine;
@@ -36,6 +37,7 @@ namespace TDGame.Enemy.Base
                     if (currentWaypointIndex >= waypoints.Count)
                     {
                         hasWaypoint = false;
+                        ReachedEnd();
                         return;
                     }
 
@@ -62,6 +64,12 @@ namespace TDGame.Enemy.Base
             this.waypoints = waypoints;
             currentWaypoint = waypoints[0];
             hasWaypoint = true;
+        }
+
+        [Server]
+        void ReachedEnd()
+        {
+            GlobalHealthSystem.Instance.ReduceHealth(3);
         }
 
         [ServerCallback]
