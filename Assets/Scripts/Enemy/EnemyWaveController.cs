@@ -31,7 +31,7 @@ namespace TDGame.Enemy
             while (true)
             {
                 SpawnEnemy(prefab);
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.1f);
             }
         }
 
