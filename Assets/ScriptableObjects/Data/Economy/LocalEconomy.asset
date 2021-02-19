@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LocalEconomy
   m_EditorClassIdentifier: 
   startCurrency: 100
-  currency: 0
+  currency: 100
   economyChanged: {fileID: 11400000, guid: 3b65fbca2450bc34a9703a50762de857, type: 2}

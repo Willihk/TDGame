@@ -56,19 +56,5 @@ namespace TDGame.Network.Player
             PlayerDatas.Clear();
             PlayerDatas.AddRange(TDGameNetworkManager.Instance.connectedPlayers.Values.ToArray());
         }
-
-        [Server]
-        public void PlayerConnected(NetworkConnection connection)
-        {
-            var connected = TDGameNetworkManager.Instance.connectedPlayers[connection.connectionId];
-            PlayerDatas.Add(TDGameNetworkManager.Instance.connectedPlayers[connection.connectionId]);
-        }
-
-        [Server]
-        public void PlayerDisconnected()
-        {
-            PlayerDatas.Clear();
-            PlayerDatas.AddRange(TDGameNetworkManager.Instance.connectedPlayers.Values.ToArray());
-        }
     }
 }

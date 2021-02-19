@@ -16,7 +16,13 @@ namespace TDGame.Systems.Economy
         public override void OnStartServer()
         {
             base.OnStartServer();
-            localEconomy.ResetEconomy();
+            syncedCurrency = localEconomy.startCurrency;
+        }
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            UpdateCurrency(0, syncedCurrency);
         }
 
         [Server]
@@ -48,7 +54,7 @@ namespace TDGame.Systems.Economy
 
         void UpdateCurrency(int oldCurrency, int newCurrency)
         {
-            if (isLocalPlayer)
+            if (hasAuthority)
                 localEconomy.SetCurrency(newCurrency);
         }
     }

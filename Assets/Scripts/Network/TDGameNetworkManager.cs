@@ -68,10 +68,6 @@ namespace TDGame.Network
 
             var playerData = new PlayerData {Name = message.Name};
 
-            PlayerNetworkController player = gameobject.GetComponent<PlayerNetworkController>();
-            player.Setup(playerData);
-
-            // if (!connectedPlayers.ContainsKey(conn.connectionId))
             connectedPlayers.Add(conn.connectionId, playerData);
 
             eventBinder.ServerOnClientConnect(conn);

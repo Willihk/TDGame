@@ -8,7 +8,7 @@ namespace TDGame.Systems.Economy.Data
     public class EconomyData : ScriptableObject
     {
         [SerializeField]
-        private int startCurrency = 100;
+        public int startCurrency = 100;
         
         [SerializeField]
         private int currency;
@@ -16,7 +16,6 @@ namespace TDGame.Systems.Economy.Data
 
         [SerializeField]
         private GameEvent<int> economyChanged;
-
 
         public void ResetEconomy()
         {
@@ -26,16 +25,19 @@ namespace TDGame.Systems.Economy.Data
         public void SetCurrency(int amount)
         {
             currency = amount;
+            economyChanged.Raise(currency);
         }
 
         public void AddCurrency(int amount)
         {
             currency += amount;
+            economyChanged.Raise(currency);
         }
 
         public void ReduceCurrency(int amount)
         {
             currency = Math.Max(currency -= amount, 0);
+            economyChanged.Raise(currency);
         }
 
         public bool CanAfford(int amount)
