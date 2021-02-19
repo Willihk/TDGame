@@ -48,7 +48,7 @@ namespace TDGame.Systems.Economy
 
         void UpdateCurrency(int oldCurrency, int newCurrency)
         {
-            if (isLocalPlayer)
+            if (hasAuthority)
                 localEconomy.SetCurrency(newCurrency);
         }
     }

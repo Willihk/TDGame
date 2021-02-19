@@ -13,16 +13,19 @@ namespace TDGame.Network.Player
         [SerializeField]
         string name;
 
-        [SyncVar]
-        [SerializeField]
-        int connectionId;
+        int playerId;
 
         [SerializeField]
         private GameObject placementPrefab;
 
-        public void Setup(PlayerData playerData)
+        public void Setup(string playerName)
         {
-            name = playerData.Name;
+            name = playerName;
+        }
+
+        public void Initialize(int id)
+        {
+            playerId = id;
         }
 
         public void SpawnPlacementForPrefab(string prefabName)
