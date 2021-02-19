@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Mirror;
+using TDGame.Systems.Economy;
 using TDGame.Systems.Health;
 using TDGame.Systems.Health.Global;
 using TDGame.Systems.Health.Unit;
@@ -84,6 +85,7 @@ namespace TDGame.Enemy.Base
             {
                 EnemyTargetsController.Instance.targets.Remove(gameObject);
                 NetworkServer.Destroy(gameObject);
+                PlayerEconomyManager.Instance.AddCurrencyToAllPlayers((int) reachedEndDamage);
             }
         }
     }

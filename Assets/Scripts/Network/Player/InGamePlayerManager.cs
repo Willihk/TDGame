@@ -11,11 +11,10 @@ namespace TDGame.Network.Player
     {
         [SerializeField]
         private GameObject playerPrefab;
-        
-        private Dictionary<int, GameObject> playerObjects;
-        
-        private Dictionary<int, GameObject> freePlayerObjects;
 
+        private Dictionary<int, GameObject> playerObjects;
+
+        private Dictionary<int, GameObject> freePlayerObjects;
 
         private Dictionary<int, NetworkConnection> connectionRelations;
 
@@ -26,6 +25,11 @@ namespace TDGame.Network.Player
             connectionRelations = new Dictionary<int, NetworkConnection>();
         }
 
+        public GameObject[] GetPlayerObjects()
+        {
+            return playerObjects.Values.ToArray();
+        }
+
         public void PlayerConnected(NetworkConnection connection)
         {
             print("Player Connected");
@@ -33,7 +37,7 @@ namespace TDGame.Network.Player
             {
                 CreateNewPlayerObject(connection);
                 var pair = freePlayerObjects.First();
-            
+
                 freePlayerObjects.Remove(pair.Key);
                 playerObjects.Add(pair.Key, pair.Value);
                 connectionRelations.Add(pair.Key, connection);
@@ -65,8 +69,8 @@ namespace TDGame.Network.Player
 
         GameObject GetPlayerById(int id)
         {
-             playerObjects.TryGetValue(id, out GameObject playerObject);
-             return playerObject;
+            playerObjects.TryGetValue(id, out GameObject playerObject);
+            return playerObject;
         }
     }
 }
