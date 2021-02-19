@@ -18,7 +18,6 @@ namespace TDGame.Systems.Economy
         private void Awake()
         {
             Instance = this;
-            GetEconomies();
         }
 
         [Server]
