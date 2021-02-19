@@ -16,7 +16,7 @@ namespace TDGame.Systems.Economy
         public override void OnStartServer()
         {
             base.OnStartServer();
-            localEconomy.ResetEconomy();
+            syncedCurrency = localEconomy.startCurrency;
         }
 
         public override void OnStartClient()

@@ -8,7 +8,7 @@ namespace TDGame.Systems.Economy.Data
     public class EconomyData : ScriptableObject
     {
         [SerializeField]
-        private int startCurrency = 100;
+        public int startCurrency = 100;
         
         [SerializeField]
         private int currency;
