@@ -17,7 +17,6 @@ namespace TDGame.Systems.Economy.Data
         [SerializeField]
         private GameEvent<int> economyChanged;
 
-
         public void ResetEconomy()
         {
             currency = startCurrency;
@@ -26,16 +25,19 @@ namespace TDGame.Systems.Economy.Data
         public void SetCurrency(int amount)
         {
             currency = amount;
+            economyChanged.Raise(currency);
         }
 
         public void AddCurrency(int amount)
         {
             currency += amount;
+            economyChanged.Raise(currency);
         }
 
         public void ReduceCurrency(int amount)
         {
             currency = Math.Max(currency -= amount, 0);
+            economyChanged.Raise(currency);
         }
 
         public bool CanAfford(int amount)

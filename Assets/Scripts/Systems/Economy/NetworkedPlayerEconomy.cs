@@ -19,6 +19,12 @@ namespace TDGame.Systems.Economy
             localEconomy.ResetEconomy();
         }
 
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            UpdateCurrency(0, syncedCurrency);
+        }
+
         [Server]
         public void ReduceCurrency(int amount)
         {
