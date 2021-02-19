@@ -28,13 +28,13 @@ namespace TDGame.Systems.Economy
         [Server]
         public void ReduceCurrency(int amount)
         {
-            localEconomy.ReduceCurrency(amount);
+            syncedCurrency -= amount;
         }
 
         [Server]
         public void AddCurrency(int amount)
         {
-            localEconomy.AddCurrency(amount);
+            syncedCurrency += amount;
         }
 
         /// <summary>
