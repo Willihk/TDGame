@@ -44,6 +44,14 @@ namespace TDGame.Network.Player
             }
         }
 
+        public void PlayerDisconnected(NetworkConnection connection)
+        {
+            int id = GetIdByConnection(connection);
+            connectionRelations.Remove(id);
+            playerObjects.Remove(id);
+            freePlayerObjects.Remove(id);
+        }
+
         void CreateNewPlayerObject(NetworkConnection connection)
         {
             print("creating player object");
@@ -71,6 +79,14 @@ namespace TDGame.Network.Player
         {
             playerObjects.TryGetValue(id, out GameObject playerObject);
             return playerObject;
+        }
+
+        int GetIdByConnection(NetworkConnection connection)
+        {
+            if (connectionRelations.ContainsValue(connection))
+                return (from c in connectionRelations where c.Value.Equals(connection) select c.Key).FirstOrDefault();
+            
+            return -1;
         }
     }
 }
