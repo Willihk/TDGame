@@ -52,16 +52,24 @@ namespace TDGame.Enemy
         {
             var prefab = enemyList.GetEnemy(0);
             var boss = enemyList.GetEnemy(1);
+            var spider = enemyList.GetEnemy(2);
             CurrentWave++;
 
             int waveEnemyCount = (int)(5 * Mathf.Sqrt(Mathf.Pow(CurrentWave, 3)));
-            float spawnDelay = Mathf.Max(5 / CurrentWave, 0.1f);
+            float spawnDelay = Mathf.Max(5 / CurrentWave, 0.05f);
             Queue<WaveCommand> commands = new Queue<WaveCommand>();
 
             yield return new WaitForSeconds(6f);
 
             switch (CurrentWave)
             {
+                case 7:
+                    for (int i = 0; i < (waveEnemyCount / 3); i++)
+                    {
+                        commands.Enqueue(new SpawnPrefab(spider, enemyHolder, waypoints[0], waypoints));
+                        spawnDelay = 0.25f;
+                    }
+                    break;
                 case 10:
                     commands.Enqueue(new SpawnPrefab(boss, enemyHolder, waypoints[0], waypoints));
                     break;

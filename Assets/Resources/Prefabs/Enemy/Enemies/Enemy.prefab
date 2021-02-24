@@ -98,6 +98,12 @@ MonoBehaviour:
   syncInterval: 0.1
   maxHealth: 100
   startHealth: 100
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1672092839135950082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +120,7 @@ MonoBehaviour:
   syncInterval: 0.1
   healthSystem: {fileID: 1672092839135950083}
   speed: 1
+  reachedEndDamage: 1
 --- !u!135 &2269779280510175309
 SphereCollider:
   m_ObjectHideFlags: 0
