@@ -73,9 +73,6 @@ namespace TDGame.Enemy
                     break;
             }
 
-            
-
-
             for (int i = 0; i < waveEnemyCount; i++)
             {
                 commands.Dequeue().Execute();

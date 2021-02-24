@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using TDGame.Enemy.Base;
@@ -8,18 +7,17 @@ using TDGame.Systems.Turrets.Base;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TDGame.Systems.Turrets.Implementations
+namespace TDGame.Systems.Turrets.Implementations.Tesla
 {
     public class TeslaTurret : BaseNetworkedTurret
     {
-        [SerializeField]
-        private MultiTargetSystem targetSystem;
+        public MultiTargetSystem targetSystem;
 
         private List<GameObject> targets = new List<GameObject>();
 
         public UnityEvent ClientHitEvent;
 
-        private SyncList<Vector3> syncedTargetPositions = new SyncList<Vector3>();
+        public SyncList<Vector3> syncedTargetPositions = new SyncList<Vector3>();
 
         [Header("Stats")]
         [Space(10)]

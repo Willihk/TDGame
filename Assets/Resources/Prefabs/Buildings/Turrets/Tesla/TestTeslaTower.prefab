@@ -573,7 +573,19 @@ MonoBehaviour:
   targetSystem: {fileID: 897508154960977226}
   ClientHitEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8848312922793457455}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hitDamage: 5
   hitRate: 0.1
 --- !u!1 &4855526839087809882
@@ -968,6 +980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4887860187344704538}
   - component: {fileID: 7162597222899963175}
+  - component: {fileID: 586516966288553407}
   m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
@@ -1011,3 +1024,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 4, z: 1.8}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &586516966288553407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848312922793457455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7125dd4f5e44e8aaf93efb29021aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teslaTurret: {fileID: 5529470539276590808}
+  vfxPrefab: {fileID: 3392494619207114379, guid: f1f579189009de5408128387024855b3, type: 3}
+  effectPosition: {fileID: 4081860535997958457}
