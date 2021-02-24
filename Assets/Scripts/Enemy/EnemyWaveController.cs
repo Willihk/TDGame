@@ -51,18 +51,29 @@ namespace TDGame.Enemy
         IEnumerator SpawnTestEnemies()
         {
             var prefab = enemyList.GetEnemy(0);
+            var boss = enemyList.GetEnemy(1);
             CurrentWave++;
-            
+
             int waveEnemyCount = (int)(5 * Mathf.Sqrt(Mathf.Pow(CurrentWave, 3)));
             float spawnDelay = Mathf.Max(5 / CurrentWave, 0.1f);
             Queue<WaveCommand> commands = new Queue<WaveCommand>();
 
             yield return new WaitForSeconds(6f);
 
-            for (int i = 0; i < waveEnemyCount; i++)
+            switch (CurrentWave)
             {
-                commands.Enqueue(new SpawnPrefab(prefab, enemyHolder, waypoints[0], waypoints));
+                case 10:
+                    commands.Enqueue(new SpawnPrefab(boss, enemyHolder, waypoints[0], waypoints));
+                    break;
+                default:
+                    for (int i = 0; i < waveEnemyCount; i++)
+                    {
+                        commands.Enqueue(new SpawnPrefab(prefab, enemyHolder, waypoints[0], waypoints));
+                    }
+                    break;
             }
+
+            
 
 
             for (int i = 0; i < waveEnemyCount; i++)
