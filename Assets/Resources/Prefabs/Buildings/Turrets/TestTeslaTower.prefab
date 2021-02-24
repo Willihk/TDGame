@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 1590048690981476232}
   - component: {fileID: 394382782518783544}
   - component: {fileID: 897508154960977226}
+  - component: {fileID: 5529470539276590808}
   m_Layer: 11
   m_Name: TestTeslaTower
   m_TagString: Untagged
@@ -555,6 +556,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acquisitionSystem: {fileID: 394382782518783544}
   maxTargets: 4
+--- !u!114 &5529470539276590808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4127407909252469587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e9771f1905471ca51b4b9cb93c1d81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  targetSystem: {fileID: 897508154960977226}
+  ClientHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  hitDamage: 5
+  hitRate: 0.1
 --- !u!1 &4855526839087809882
 GameObject:
   m_ObjectHideFlags: 0

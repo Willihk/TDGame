@@ -8,16 +8,20 @@ namespace TDGame.Systems.Targeting.Implementations
 {
     public class MultiTargetSystem : BaseTargetingSystem
     {
-        [SerializeField]
-        protected int maxTargets = 4;
+        public int maxTargets = 4;
         
         public IEnumerable<GameObject> GetTargets()
+        {
+            return GetTargets(maxTargets);
+        }
+
+        public IEnumerable<GameObject> GetTargets(int amount)
         {
             var localPosition = transform.position;
 
             var availableTargets = acquisitionSystem.GetAvailableTargets().ToArray();
 
-            return availableTargets.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).Take(maxTargets);
+            return availableTargets.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).Take(amount);
         }
         
         public bool IsValidTarget(GameObject target)
