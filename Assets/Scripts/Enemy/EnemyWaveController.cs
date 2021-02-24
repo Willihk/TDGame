@@ -73,13 +73,12 @@ namespace TDGame.Enemy
                     break;
             }
 
-            for (int i = 0; i < waveEnemyCount; i++)
+            while (commands.Count > 0)
             {
                 commands.Dequeue().Execute();
                 yield return new WaitForSeconds(spawnDelay);
             }
             
-            //WaveContent.Clear();
             yield return new WaitForSeconds(1f);
 
             AwaitingNextWave = true;
