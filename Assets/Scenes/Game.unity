@@ -1869,6 +1869,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1434984863}
+  - component: {fileID: 1434984865}
+  - component: {fileID: 1434984864}
   m_Layer: 5
   m_Name: WaveCounter
   m_TagString: Untagged
@@ -1897,6 +1899,47 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 503.47}
   m_SizeDelta: {x: -1846.1, y: -1038.3936}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1434984864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434984862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c817d96e37b20224e95fa82919f43325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 8adabc917caa66a4ea411b7a4a9f65f8, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1434984865}
+        m_TargetAssemblyTypeName: TDGame.UI.InGame.Wave.WaveUIController, Assembly-CSharp
+        m_MethodName: UpdateWave
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1434984865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434984862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bbfff1b3801407daa963c395ddcf4e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveText: {fileID: 371403873}
 --- !u!1 &1489765545
 GameObject:
   m_ObjectHideFlags: 0
