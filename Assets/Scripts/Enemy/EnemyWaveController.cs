@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
+using TDGame.Command.Implementations.Wave;
 using TDGame.Enemy.Base;
 using TDGame.Enemy.Data;
 using TDGame.Map;
@@ -30,30 +31,51 @@ namespace TDGame.Enemy
                 return;
 
             waypoints = mapController.GetWaypoints().Select(x => x.position).ToList();
-            StartCoroutine(nameof(SpawnTestEnemies));
+        }
+
+        private int CurrentWave = 0;
+        private bool AwaitingNextWave = true;
+
+        void Update()
+        {
+            if (!isServer)
+                return;
+
+            if (EnemyTargetsController.Instance.targets.Count == 0 && AwaitingNextWave)
+            {
+                AwaitingNextWave = false;
+                StartCoroutine(nameof(SpawnTestEnemies));
+            }
         }
 
         IEnumerator SpawnTestEnemies()
         {
             var prefab = enemyList.GetEnemy(0);
-            while (true)
+            CurrentWave++;
+            
+            int waveEnemyCount = (int)(5 * Mathf.Sqrt(Mathf.Pow(CurrentWave, CurrentWave)));
+            float spawnDelay = 5 / (CurrentWave * CurrentWave);
+
+            Queue<WaveCommand> commands = new Queue<WaveCommand>();
+
+            yield return new WaitForSeconds(1f);
+
+            for (int i = 0; i < waveEnemyCount; i++)
             {
-                SpawnEnemy(prefab);
-                yield return new WaitForSeconds(0.1f);
+                commands.Enqueue(new SpawnPrefab(prefab, enemyHolder, waypoints[0], waypoints));
             }
-        }
 
-        [Server]
-        void SpawnEnemy(GameObject prefab)
-        {
-            GameObject enemyObject = Instantiate(prefab, enemyHolder);
-            enemyObject.GetComponent<NetworkedEnemy>().Setup(waypoints);
 
-            enemyObject.transform.position = waypoints[0];
+            for (int i = 0; i < waveEnemyCount; i++)
+            {
+                commands.Dequeue().Execute();
+                yield return new WaitForSeconds(spawnDelay);
+            }
             
-            NetworkServer.Spawn(enemyObject);
-            
-            EnemyTargetsController.Instance.targets.Add(enemyObject);
+            //WaveContent.Clear();
+            yield return new WaitForSeconds(1f);
+
+            AwaitingNextWave = true;
         }
     }
 }
