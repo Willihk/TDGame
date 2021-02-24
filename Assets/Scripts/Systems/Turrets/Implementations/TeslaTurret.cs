@@ -38,7 +38,6 @@ namespace TDGame.Systems.Turrets.Implementations
                 if (IsTargetUpdateNeeded())
                 {
                     UpdateTargets();
-                    return;
                 }
 
                 syncedTargetPositions.Clear();
@@ -78,7 +77,7 @@ namespace TDGame.Systems.Turrets.Implementations
 
         bool IsTargetUpdateNeeded()
         {
-            return targets.Any(x => x == null) || targets.Count < targetSystem.maxTargets || targets.Any(x => targetSystem.IsValidTarget(x));
+            return targets.Any(x => x == null) || targets.Count < targetSystem.maxTargets || targets.Any(x => !targetSystem.IsValidTarget(x));
         }
     }
 }
