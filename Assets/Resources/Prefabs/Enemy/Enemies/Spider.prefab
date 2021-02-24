@@ -1614,7 +1614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  healthSystem: {fileID: 0}
+  healthSystem: {fileID: -3711417065623968407}
   speed: 5
   reachedEndDamage: 1
 --- !u!135 &-2472176237593110970
