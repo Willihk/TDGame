@@ -53,12 +53,11 @@ namespace TDGame.Enemy
             var prefab = enemyList.GetEnemy(0);
             CurrentWave++;
             
-            int waveEnemyCount = (int)(5 * Mathf.Sqrt(Mathf.Pow(CurrentWave, CurrentWave)));
-            float spawnDelay = 5 / (CurrentWave * CurrentWave);
-
+            int waveEnemyCount = (int)(5 * Mathf.Sqrt(Mathf.Pow(CurrentWave, 3)));
+            float spawnDelay = Mathf.Max(5 / CurrentWave, 0.1f);
             Queue<WaveCommand> commands = new Queue<WaveCommand>();
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(6f);
 
             for (int i = 0; i < waveEnemyCount; i++)
             {
