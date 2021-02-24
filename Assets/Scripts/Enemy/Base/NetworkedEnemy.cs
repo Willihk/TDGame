@@ -79,7 +79,6 @@ namespace TDGame.Enemy.Base
         public void Damage(float hitDamage)
         {
             healthSystem.Damage(hitDamage);
-            Debug.Log("hit  " + healthSystem.Health);
 
             if (healthSystem.Health <= 0)
             {
