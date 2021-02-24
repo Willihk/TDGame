@@ -5,6 +5,7 @@ using Mirror;
 using TDGame.Command.Implementations.Wave;
 using TDGame.Enemy.Base;
 using TDGame.Enemy.Data;
+using TDGame.Events.Base;
 using TDGame.Map;
 using TDGame.Systems.Targeting.Data;
 using UnityEngine;
@@ -13,6 +14,9 @@ namespace TDGame.Enemy
 {
     public class EnemyWaveController : NetworkBehaviour
     {
+        [SerializeField]
+        private GameEvent<int> waveChangedEvent;
+        
         [SerializeField]
         private EnemyList enemyList;
 
@@ -25,6 +29,11 @@ namespace TDGame.Enemy
         [SerializeField]
         private List<Vector3> waypoints;
 
+        [SyncVar(hook = nameof(WaveChanged))]
+        private int currentWave = 0;
+
+        private bool AwaitingNextWave = true;
+
         public void OnMapLoaded()
         {
             if (!isServer)
@@ -33,8 +42,10 @@ namespace TDGame.Enemy
             waypoints = mapController.GetWaypoints().Select(x => x.position).ToList();
         }
 
-        private int CurrentWave = 0;
-        private bool AwaitingNextWave = true;
+        void WaveChanged(int oldWave, int newWave)
+        {
+            waveChangedEvent.Raise(newWave);
+        }
 
         void Update()
         {
@@ -53,15 +64,17 @@ namespace TDGame.Enemy
             var prefab = enemyList.GetEnemy(0);
             var boss = enemyList.GetEnemy(1);
             var spider = enemyList.GetEnemy(2);
-            CurrentWave++;
+            currentWave++;
+            
+            WaveChanged(currentWave, currentWave);
 
-            int waveEnemyCount = (int)(5 * Mathf.Sqrt(Mathf.Pow(CurrentWave, 3)));
-            float spawnDelay = Mathf.Max(5 / CurrentWave, 0.05f);
+            int waveEnemyCount = (int)(5 * Mathf.Sqrt(Mathf.Pow(currentWave, 3)));
+            float spawnDelay = Mathf.Max(5f / currentWave, 0.05f);
             Queue<WaveCommand> commands = new Queue<WaveCommand>();
 
             yield return new WaitForSeconds(6f);
 
-            switch (CurrentWave)
+            switch (currentWave)
             {
                 case 7:
                     for (int i = 0; i < (waveEnemyCount / 3); i++)
