@@ -19,7 +19,7 @@ namespace TDGame.Systems.Turrets.Implementations.Tesla
 
         private List<VisualEffect> effectPool;
 
-        private int nameId = Shader.PropertyToID("Target");
+        private int nameId = Shader.PropertyToID("BasePosition");
 
         private void Start()
         {
