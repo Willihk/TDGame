@@ -24,7 +24,6 @@ namespace TDGame.Systems.Economy
         public void AddCurrencyToAllPlayers(int amount)
         {
             GetEconomies();
-            Debug.Log(economies.Length);
             foreach (var economy in economies)
             {
                 economy.AddCurrency(amount);
