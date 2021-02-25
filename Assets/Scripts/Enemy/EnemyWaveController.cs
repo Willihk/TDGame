@@ -16,7 +16,7 @@ namespace TDGame.Enemy
     {
         [SerializeField]
         private GameEvent<int> waveChangedEvent;
-        
+
         [SerializeField]
         private EnemyList enemyList;
 
@@ -25,7 +25,7 @@ namespace TDGame.Enemy
 
         [SerializeField]
         private NetworkedMapController mapController;
-        
+
         [SerializeField]
         private List<Vector3> waypoints;
 
@@ -65,10 +65,10 @@ namespace TDGame.Enemy
             var boss = enemyList.GetEnemy(1);
             var spider = enemyList.GetEnemy(2);
             currentWave++;
-            
+
             WaveChanged(currentWave, currentWave);
 
-            int waveEnemyCount = (int)(5 * Mathf.Sqrt(Mathf.Pow(currentWave, 3)));
+            int waveEnemyCount = (int) (5 * Mathf.Sqrt(Mathf.Pow(currentWave, 3)));
             float spawnDelay = Mathf.Max(5f / currentWave, 0.05f);
             Queue<WaveCommand> commands = new Queue<WaveCommand>();
 
@@ -82,6 +82,7 @@ namespace TDGame.Enemy
                         commands.Enqueue(new SpawnPrefab(spider, enemyHolder, waypoints[0], waypoints));
                         spawnDelay = 0.25f;
                     }
+
                     break;
                 case 10:
                     commands.Enqueue(new SpawnPrefab(boss, enemyHolder, waypoints[0], waypoints));
@@ -91,6 +92,7 @@ namespace TDGame.Enemy
                     {
                         commands.Enqueue(new SpawnPrefab(prefab, enemyHolder, waypoints[0], waypoints));
                     }
+
                     break;
             }
 
@@ -99,7 +101,7 @@ namespace TDGame.Enemy
                 commands.Dequeue().Execute();
                 yield return new WaitForSeconds(spawnDelay);
             }
-            
+
             yield return new WaitForSeconds(1f);
 
             AwaitingNextWave = true;
