@@ -137,7 +137,7 @@ namespace TDGame.Building.Placement
             if (!isValidPlacement || isColliding)
                 return;
 
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && playerEconomy.CanAfford(price))
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && canAfford)
             {
                 cursorState.State = CursorState.None;
                 Cmd_ConfirmPlacement(transform.position);
