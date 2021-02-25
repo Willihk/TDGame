@@ -4234,7 +4234,7 @@ MonoBehaviour:
   serverBatching: 0
   serverBatchInterval: 0
   offlineScene: Assets/Scenes/MainMenu.unity
-  onlineScene: Assets/Scenes/Game.unity
+  onlineScene: Assets/Scenes/GameLobby.unity
   transport: {fileID: 1992914370}
   networkAddress: localhost
   maxConnections: 4
@@ -4242,11 +4242,19 @@ MonoBehaviour:
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 6665847003554966563, guid: 555628f163461cc4c9b98654acb09205, type: 3}
-  autoCreatePlayer: 0
+  autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 6623300880123839917, guid: dd0d44f7fab27e54ea0496e0145b54ab, type: 3}
   - {fileID: 8314502480742944117, guid: 9559a9f85e0caa84aa3b6925327c2c5d, type: 3}
+  showRoomGUI: 1
+  minPlayers: 1
+  roomPlayerPrefab: {fileID: 1527579085887949228, guid: d8f2d28eef7dacc4b92dc1dc1abb6042, type: 3}
+  RoomScene: Assets/Scenes/GameLobby.unity
+  GameplayScene: Assets/Scenes/Game.unity
+  _allPlayersReady: 0
+  roomSlots: []
+  clientIndex: 0
   eventBinder: {fileID: 1992914373}
   networkedBuildingList: {fileID: 11400000, guid: 805a3508962bf0c40bf24af168859488, type: 2}
   networkedEnemyList: {fileID: 11400000, guid: 8f4177618bd739b4cb8e356640f4aa28, type: 2}

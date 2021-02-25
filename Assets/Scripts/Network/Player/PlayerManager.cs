@@ -15,7 +15,7 @@ namespace TDGame.Network.Player
 
         public void Awake()
         {
-            Instance ??= this;
+            Instance = this;
         }
 
         public override void OnStopClient()

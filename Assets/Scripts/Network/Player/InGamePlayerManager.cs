@@ -30,6 +30,14 @@ namespace TDGame.Network.Player
             return playerObjects.Values.ToArray();
         }
 
+        public override void OnStartServer()
+        {
+            foreach (var connection in NetworkServer.connections.Values)
+            {
+                PlayerConnected(connection);
+            }
+        }
+
         public void PlayerConnected(NetworkConnection connection)
         {
             print("Player Connected");

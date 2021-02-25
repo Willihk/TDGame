@@ -7,14 +7,9 @@ using TDGame.Enemy.Data;
 using TDGame.Network.EventBinding;
 using TDGame.Network.Message.Player;
 
-/*
-	Documentation: https://mirror-networking.com/docs/Components/NetworkManager.html
-	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
-*/
-
 namespace TDGame.Network
 {
-    public class TDGameNetworkManager : NetworkManager
+    public class TDGameNetworkManager : NetworkRoomManager
     {
         public static TDGameNetworkManager Instance;
 
@@ -38,41 +33,22 @@ namespace TDGame.Network
 
         public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
 
-        /// <summary>
-        /// This is invoked when a server is started - including when a host is started.
-        /// </summary>
-        public override void OnStartServer()
+        public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
         {
-            base.OnStartServer();
+            GameObject gameobject = Instantiate(roomPlayerPrefab.gameObject);
 
-            NetworkServer.RegisterHandler<CreatePlayerMessage>(OnCreatePlayer);
-        }
-
-        /// <summary>
-        /// Called on the client when connected to a server.
-        /// <para>The default implementation of this function sets the client as ready and adds a player. Override the function to dictate what happens when the client connects.</para>
-        /// </summary>
-        /// <param name="conn">Connection to the server.</param>
-        public override void OnClientConnect(NetworkConnection conn)
-        {
-            base.OnClientConnect(conn);
-
-            CreatePlayerMessage message = new CreatePlayerMessage {Name = "Player " + Random.Range(0, 10000)};
-
-            conn.Send(message);
-        }
-
-        private void OnCreatePlayer(NetworkConnection conn, CreatePlayerMessage message)
-        {
-            GameObject gameobject = Instantiate(playerPrefab);
-
-            var playerData = new PlayerData {Name = message.Name};
+            var playerData = new PlayerData {Name = "Name"};
 
             connectedPlayers.Add(conn.connectionId, playerData);
 
             eventBinder.ServerOnClientConnect(conn);
 
-            NetworkServer.AddPlayerForConnection(conn, gameobject);
+            return gameobject;
+        }
+
+        public override void OnRoomServerPlayersReady()
+        {
+            ServerChangeScene(GameplayScene);
         }
 
         /// <summary>
