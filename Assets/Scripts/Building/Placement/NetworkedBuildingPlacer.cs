@@ -31,6 +31,9 @@ namespace TDGame.Building.Placement
         [SyncVar]
         private int price;
 
+        [SyncVar]
+        private bool canAfford;
+
         [SerializeField]
         private BuildingList buildingList;
 
@@ -93,12 +96,16 @@ namespace TDGame.Building.Placement
 
         private void Update()
         {
+            if (isServer)
+            {
+                canAfford = playerEconomy.CanAfford(price);
+            }
             if (isClient)
             {
                 // TODO: Only set value when it's actually changed
                 isValidPlacement = !isColliding;
 
-                isValidPlacement = playerEconomy.CanAfford(price);
+                isValidPlacement = canAfford && isValidPlacement;
 
                 if (localMaterial)
                     localMaterial.SetInt(IsValid, isValidPlacement ? 1 : 0);
