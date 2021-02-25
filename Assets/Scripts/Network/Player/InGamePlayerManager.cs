@@ -75,17 +75,17 @@ namespace TDGame.Network.Player
             identity.AssignClientAuthority(connection);
         }
 
-        GameObject GetPlayerById(int id)
+        public GameObject GetPlayerById(int id)
         {
             playerObjects.TryGetValue(id, out GameObject playerObject);
             return playerObject;
         }
 
-        int GetIdByConnection(NetworkConnection connection)
+        public int GetIdByConnection(NetworkConnection connection)
         {
             if (connectionRelations.ContainsValue(connection))
                 return (from c in connectionRelations where c.Value.Equals(connection) select c.Key).FirstOrDefault();
-            
+
             return -1;
         }
     }

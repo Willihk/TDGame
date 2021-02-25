@@ -45,11 +45,16 @@ namespace TDGame.Systems.Economy
         [Server]
         public bool Purchase(int amount)
         {
-            if (!localEconomy.CanAfford(amount))
+            if (!CanAfford(amount))
                 return false;
 
             ReduceCurrency(amount);
             return true;
+        }
+        
+        public bool CanAfford(int amount)
+        {
+            return syncedCurrency >= amount;
         }
 
         void UpdateCurrency(int oldCurrency, int newCurrency)

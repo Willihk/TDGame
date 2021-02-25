@@ -570,6 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  price: 100
   targetSystem: {fileID: 897508154960977226}
   ClientHitEvent:
     m_PersistentCalls:

@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using Mirror;
 using TDGame.Cursor;
+using TDGame.Systems.Economy;
+using TDGame.Systems.Economy.Data;
+using TDGame.Systems.Turrets.Base;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,6 +28,9 @@ namespace TDGame.Building.Placement
         [SyncVar]
         private string prefabName;
 
+        [SyncVar]
+        private int price;
+
         [SerializeField]
         private BuildingList buildingList;
 
@@ -42,6 +48,8 @@ namespace TDGame.Building.Placement
 
         private Material localMaterial;
 
+        private NetworkedPlayerEconomy playerEconomy;
+
         private static readonly int IsValid = Shader.PropertyToID("IsValid");
 
         public override void OnStartClient()
@@ -54,6 +62,8 @@ namespace TDGame.Building.Placement
         {
             base.OnStartServer();
             collider = GetComponent<Collider>();
+
+            playerEconomy = PlayerEconomyManager.Instance.GetEconomy(connectionToClient);
         }
 
         private void Setup()
@@ -88,6 +98,8 @@ namespace TDGame.Building.Placement
                 // TODO: Only set value when it's actually changed
                 isValidPlacement = !isColliding;
 
+                isValidPlacement = playerEconomy.CanAfford(price);
+
                 if (localMaterial)
                     localMaterial.SetInt(IsValid, isValidPlacement ? 1 : 0);
             }
@@ -118,7 +130,7 @@ namespace TDGame.Building.Placement
             if (!isValidPlacement || isColliding)
                 return;
 
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && playerEconomy.CanAfford(price))
             {
                 cursorState.State = CursorState.None;
                 Cmd_ConfirmPlacement(transform.position);
@@ -129,6 +141,7 @@ namespace TDGame.Building.Placement
         public void Setup(string prefabName)
         {
             this.prefabName = prefabName;
+            price = buildingList.GetBuilding(prefabName).GetComponent<BaseNetworkedTurret>().price;
             isValidPlacement = true;
         }
 
@@ -141,7 +154,7 @@ namespace TDGame.Building.Placement
         [Command]
         void Cmd_ConfirmPlacement(Vector3 position)
         {
-            if (!isValidPlacement || isColliding)
+            if (!isValidPlacement || isColliding || !playerEconomy.CanAfford(price))
                 return;
 
             netIdentity.RemoveClientAuthority();
@@ -149,6 +162,8 @@ namespace TDGame.Building.Placement
 
             var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
             placedObject.transform.position = position;
+
+            playerEconomy.Purchase(price);
 
             NetworkServer.Spawn(placedObject, connectionToClient);
 
