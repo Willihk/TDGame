@@ -141,7 +141,8 @@ namespace TDGame.Building.Placement
         public void Setup(string prefabName)
         {
             this.prefabName = prefabName;
-            price = buildingList.GetBuilding(prefabName).GetComponent<BaseNetworkedTurret>().price;
+            price = buildingList.GetBuilding(prefabName).TryGetComponent(out BaseNetworkedTurret turret) ? turret.price : 0;
+            
             isValidPlacement = true;
         }
 
