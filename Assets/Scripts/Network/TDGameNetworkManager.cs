@@ -40,10 +40,14 @@ namespace TDGame.Network
             var playerData = new PlayerData {Name = "Name"};
 
             connectedPlayers.Add(conn.connectionId, playerData);
-
             eventBinder.ServerOnClientConnect(conn);
-
+            
             return gameobject;
+        }
+
+        public override void OnRoomServerConnect(NetworkConnection conn)
+        {
+            eventBinder.ServerOnClientConnect(conn);
         }
 
         public override void OnRoomServerPlayersReady()
@@ -51,14 +55,8 @@ namespace TDGame.Network
             ServerChangeScene(GameplayScene);
         }
 
-        /// <summary>
-        /// Called on the server when a client disconnects.
-        /// <para>This is called on the Server when a Client disconnects from the Server. Use an override to decide what should happen when a disconnection is detected.</para>
-        /// </summary>
-        /// <param name="conn">Connection from client.</param>
-        public override void OnServerDisconnect(NetworkConnection conn)
+        public override void OnRoomServerDisconnect(NetworkConnection conn)
         {
-            base.OnServerDisconnect(conn);
             if (connectedPlayers.ContainsKey(conn.connectionId))
                 connectedPlayers.Remove(conn.connectionId);
 

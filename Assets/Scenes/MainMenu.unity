@@ -4249,7 +4249,7 @@ MonoBehaviour:
   - {fileID: 8314502480742944117, guid: 9559a9f85e0caa84aa3b6925327c2c5d, type: 3}
   showRoomGUI: 1
   minPlayers: 1
-  roomPlayerPrefab: {fileID: 1527579085887949228, guid: d8f2d28eef7dacc4b92dc1dc1abb6042, type: 3}
+  roomPlayerPrefab: {fileID: -5675715792116510931, guid: d8f2d28eef7dacc4b92dc1dc1abb6042, type: 3}
   RoomScene: Assets/Scenes/GameLobby.unity
   GameplayScene: Assets/Scenes/Game.unity
   _allPlayersReady: 0
