@@ -10,6 +10,8 @@ namespace TDGame.Network.Player
         public static PlayerManager Instance;
 
         public readonly SyncList<PlayerData> PlayerDatas = new SyncList<PlayerData>();
+        
+        
 
         [SerializeField] private GameEvent clientPlayersChangedEvent;
 

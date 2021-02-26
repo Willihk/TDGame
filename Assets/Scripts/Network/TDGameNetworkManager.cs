@@ -6,6 +6,7 @@ using TDGame.Building;
 using TDGame.Enemy.Data;
 using TDGame.Network.EventBinding;
 using TDGame.Network.Message.Player;
+using UnityEngine.SceneManagement;
 
 namespace TDGame.Network
 {
@@ -27,27 +28,31 @@ namespace TDGame.Network
 
         [SerializeField]
         private BuildingList networkedBuildingList;
-        
+
         [SerializeField]
         private EnemyList networkedEnemyList;
 
         public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
 
+        public Dictionary<NetworkConnection, int> connectionRelations = new Dictionary<NetworkConnection, int>();
+
         public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
         {
             GameObject gameobject = Instantiate(roomPlayerPrefab.gameObject);
 
-            var playerData = new PlayerData {Name = "Name"};
+            var playerData = new PlayerData {Name = "Name " + connectionRelations[conn]};
 
-            connectedPlayers.Add(conn.connectionId, playerData);
+            connectedPlayers.Add(connectionRelations[conn], playerData);
             eventBinder.ServerOnClientConnect(conn);
-            
+
             return gameobject;
         }
 
         public override void OnRoomServerConnect(NetworkConnection conn)
         {
             eventBinder.ServerOnClientConnect(conn);
+            int id = Random.Range(0, int.MaxValue);
+            connectionRelations.Add(conn, id);
         }
 
         public override void OnRoomServerPlayersReady()
@@ -57,16 +62,32 @@ namespace TDGame.Network
 
         public override void OnRoomServerDisconnect(NetworkConnection conn)
         {
-            if (connectedPlayers.ContainsKey(conn.connectionId))
-                connectedPlayers.Remove(conn.connectionId);
+            if (connectedPlayers.ContainsKey(connectionRelations[conn]))
+                connectedPlayers.Remove(connectionRelations[conn]);
+
+            connectionRelations.Remove(conn);
 
             eventBinder.ServerOnClientDisconnect(conn);
         }
 
-        public override void OnStopServer()
+        void RemoveFromDontDestroyOnLoad()
         {
-            base.OnStopServer();
+            if (gameObject.scene.name == "DontDestroyOnLoad" && !string.IsNullOrEmpty(offlineScene) && SceneManager.GetActiveScene().path != offlineScene)
+                SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+        }
+
+        public override void OnRoomStopClient()
+        {
+            RemoveFromDontDestroyOnLoad();
             connectedPlayers.Clear();
+            connectionRelations.Clear();
+        }
+
+        public override void OnRoomStopServer()
+        {
+            RemoveFromDontDestroyOnLoad();
+            connectedPlayers.Clear();
+            connectionRelations.Clear();
         }
     }
 }
