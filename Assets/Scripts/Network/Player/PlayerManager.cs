@@ -11,8 +11,6 @@ namespace TDGame.Network.Player
 
         public readonly SyncList<PlayerData> PlayerDatas = new SyncList<PlayerData>();
         
-        
-
         [SerializeField] private GameEvent clientPlayersChangedEvent;
 
         public void Awake()

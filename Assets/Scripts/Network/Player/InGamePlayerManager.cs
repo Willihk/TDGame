@@ -16,13 +16,10 @@ namespace TDGame.Network.Player
 
         private Dictionary<int, GameObject> freePlayerObjects;
 
-        private Dictionary<int, NetworkConnection> connectionRelations;
-
         private void Awake()
         {
             playerObjects = new Dictionary<int, GameObject>();
             freePlayerObjects = new Dictionary<int, GameObject>();
-            connectionRelations = new Dictionary<int, NetworkConnection>();
         }
 
         public GameObject[] GetPlayerObjects()
@@ -48,14 +45,12 @@ namespace TDGame.Network.Player
 
                 freePlayerObjects.Remove(pair.Key);
                 playerObjects.Add(pair.Key, pair.Value);
-                connectionRelations.Add(pair.Key, connection);
             }
         }
 
         public void PlayerDisconnected(NetworkConnection connection)
         {
             int id = GetIdByConnection(connection);
-            connectionRelations.Remove(id);
             playerObjects.Remove(id);
             freePlayerObjects.Remove(id);
         }
@@ -63,12 +58,12 @@ namespace TDGame.Network.Player
         void CreateNewPlayerObject(NetworkConnection connection)
         {
             print("creating player object");
-            int id = Random.Range(0, int.MaxValue);
+            int id = GetIdByConnection(connection);
 
             var playerObject = Instantiate(playerPrefab);
             var player = playerObject.GetComponent<PlayerNetworkController>();
 
-            var playerData = TDGameNetworkManager.Instance.connectedPlayers[connection.connectionId];
+            var playerData = TDGameNetworkManager.Instance.connectedPlayers[GetIdByConnection(connection)];
             player.Initialize(id);
             player.Setup(playerData.Name);
             NetworkServer.Spawn(playerObject, connection);
@@ -91,8 +86,8 @@ namespace TDGame.Network.Player
 
         public int GetIdByConnection(NetworkConnection connection)
         {
-            if (connectionRelations.ContainsValue(connection))
-                return (from c in connectionRelations where c.Value.Equals(connection) select c.Key).FirstOrDefault();
+            if (TDGameNetworkManager.Instance.connectionRelations.ContainsKey(connection))
+                return TDGameNetworkManager.Instance.connectionRelations[connection];
 
             return -1;
         }
