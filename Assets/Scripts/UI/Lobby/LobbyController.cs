@@ -11,9 +11,12 @@ namespace TDGame.UI.Lobby
         [SerializeField]
         private LobbyPlayerList lobbyPlayerList;
         
-
         public void OnClickStart()
         {
+            if (TDGameNetworkManager.Instance.allPlayersReady)
+            {
+                TDGameNetworkManager.Instance.GotoGameScene();
+            }
         }
 
         public void OnClickReady()

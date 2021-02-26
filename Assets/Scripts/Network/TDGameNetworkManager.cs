@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TDGame.Building;
 using TDGame.Enemy.Data;
 using TDGame.Network.EventBinding;
+using TDGame.Network.Lobby;
 using TDGame.Network.Message.Player;
 using UnityEngine.SceneManagement;
 
@@ -38,9 +39,13 @@ namespace TDGame.Network
 
         public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
         {
-            GameObject gameobject = Instantiate(roomPlayerPrefab.gameObject);
+            var playerData = new PlayerData
+                {Name = "Name " + connectionRelations[conn], Id = connectionRelations[conn]};
 
-            var playerData = new PlayerData {Name = "Name " + connectionRelations[conn]};
+            GameObject gameobject = Instantiate(roomPlayerPrefab.gameObject);
+            var lobbyPlayer = gameobject.GetComponent<NetworkedLobbyPlayer>();
+            lobbyPlayer.Setup(playerData);
+
 
             connectedPlayers.Add(connectionRelations[conn], playerData);
             eventBinder.ServerOnClientConnect(conn);
@@ -55,11 +60,6 @@ namespace TDGame.Network
             connectionRelations.Add(conn, id);
         }
 
-        public override void OnRoomServerPlayersReady()
-        {
-            ServerChangeScene(GameplayScene);
-        }
-
         public override void OnRoomServerDisconnect(NetworkConnection conn)
         {
             if (connectedPlayers.ContainsKey(connectionRelations[conn]))
@@ -70,9 +70,22 @@ namespace TDGame.Network
             eventBinder.ServerOnClientDisconnect(conn);
         }
 
+        public override void OnRoomServerPlayersReady()
+        {
+        }
+
+        public void GotoGameScene()
+        {
+            if (NetworkServer.active)
+            {
+                ServerChangeScene(GameplayScene);
+            }
+        }
+
         void RemoveFromDontDestroyOnLoad()
         {
-            if (gameObject.scene.name == "DontDestroyOnLoad" && !string.IsNullOrEmpty(offlineScene) && SceneManager.GetActiveScene().path != offlineScene)
+            if (gameObject.scene.name == "DontDestroyOnLoad" && !string.IsNullOrEmpty(offlineScene) &&
+                SceneManager.GetActiveScene().path != offlineScene)
                 SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
         }
 

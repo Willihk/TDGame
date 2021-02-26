@@ -6,5 +6,6 @@ namespace TDGame.Network.Player
     public struct PlayerData
     {
         public string Name;
+        public int Id;
     }
 }

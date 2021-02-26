@@ -8,9 +8,13 @@ namespace TDGame.UI.Lobby
         [SerializeField]
         TextMeshProUGUI playerNameText;
 
-        public void Initialize(string name)
+        [SerializeField]
+        private GameObject readyIndicator;
+
+        public void Initialize(string name, bool isReady)
         {
             playerNameText.text = name;
+            readyIndicator.gameObject.SetActive(isReady);
         }
     }
 }

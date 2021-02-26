@@ -2,6 +2,7 @@
 using System.Linq;
 using Mirror;
 using TDGame.Network;
+using TDGame.Network.Lobby;
 using TDGame.Network.Player;
 using TDGame.UI.PlayerList;
 using UnityEngine;
@@ -43,17 +44,17 @@ namespace TDGame.UI.Lobby
             cachedPlayerEntries.ForEach(x => Destroy(x));
             cachedPlayerEntries.Clear();
 
-            foreach (var player in players)
+            foreach (var networkRoomPlayer in TDGameNetworkManager.Instance.roomSlots)
             {
-                AddPlayerEntry(player.Name);
+                var player = (NetworkedLobbyPlayer) networkRoomPlayer;
+                AddPlayerEntry(player);
             }
         }
 
-        void AddPlayerEntry(string playerName)
+        void AddPlayerEntry(NetworkedLobbyPlayer player)
         {
-            print(playerName);
             var entryObject = Instantiate(entryPrefab, content);
-            entryObject.GetComponent<LobbyPlayerListEntry>().Initialize(playerName);
+            entryObject.GetComponent<LobbyPlayerListEntry>().Initialize(player.playerData.Name, player.readyToBegin);
 
             cachedPlayerEntries.Add(entryObject);
         }
