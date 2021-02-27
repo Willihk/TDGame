@@ -19,7 +19,6 @@ namespace TDGame.Systems.Tower.Implementations
         [SerializeField]
         protected float hitDamage = 5;
 
-
         [SerializeField]
         protected float fireRate = .4f;
 
@@ -37,7 +36,7 @@ namespace TDGame.Systems.Tower.Implementations
             bulletComponent.Setup(targetSystem.target.transform.position, hitDamage);
             nextFire = Time.time + fireRate;
 
-            Rpc_ShootDummyProjectile(targetSystem.transform.position);
+            Rpc_ShootDummyProjectile(targetSystem.target.transform.position);
         }
 
         [ClientRpc]

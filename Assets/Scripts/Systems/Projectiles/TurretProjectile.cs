@@ -20,7 +20,7 @@ namespace TDGame.Systems.Projectiles
         private void Start()
         {
             transform.LookAt(target);
-            Destroy(gameObject, 10);
+            Destroy(gameObject, 3);
         }
 
         private void OnTriggerEnter(Collider other)
