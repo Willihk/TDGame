@@ -45,10 +45,6 @@ namespace TDGame.Building.Placement
 
         private Camera referenceCamera;
 
-        private GameObject prefab;
-
-        private Collider collider;
-
         private Material localMaterial;
 
         private NetworkedPlayerEconomy playerEconomy;
@@ -64,7 +60,6 @@ namespace TDGame.Building.Placement
         public override void OnStartServer()
         {
             base.OnStartServer();
-            collider = GetComponent<Collider>();
 
             playerEconomy = PlayerEconomyManager.Instance.GetEconomy(connectionToClient);
         }
