@@ -5,16 +5,13 @@ using System.Collections.Generic;
 using TDGame.Building;
 using TDGame.Enemy.Data;
 using TDGame.Network.EventBinding;
+using TDGame.Network.Lobby;
 using TDGame.Network.Message.Player;
-
-/*
-	Documentation: https://mirror-networking.com/docs/Components/NetworkManager.html
-	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
-*/
+using UnityEngine.SceneManagement;
 
 namespace TDGame.Network
 {
-    public class TDGameNetworkManager : NetworkManager
+    public class TDGameNetworkManager : NetworkRoomManager
     {
         public static TDGameNetworkManager Instance;
 
@@ -32,67 +29,78 @@ namespace TDGame.Network
 
         [SerializeField]
         private BuildingList networkedBuildingList;
-        
+
         [SerializeField]
         private EnemyList networkedEnemyList;
 
         public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
 
-        /// <summary>
-        /// This is invoked when a server is started - including when a host is started.
-        /// </summary>
-        public override void OnStartServer()
+        public Dictionary<NetworkConnection, int> connectionRelations = new Dictionary<NetworkConnection, int>();
+
+        public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
         {
-            base.OnStartServer();
+            var playerData = new PlayerData
+                {Name = "Name " + connectionRelations[conn], Id = connectionRelations[conn]};
 
-            NetworkServer.RegisterHandler<CreatePlayerMessage>(OnCreatePlayer);
-        }
+            GameObject gameobject = Instantiate(roomPlayerPrefab.gameObject);
+            var lobbyPlayer = gameobject.GetComponent<NetworkedLobbyPlayer>();
+            lobbyPlayer.Setup(playerData);
 
-        /// <summary>
-        /// Called on the client when connected to a server.
-        /// <para>The default implementation of this function sets the client as ready and adds a player. Override the function to dictate what happens when the client connects.</para>
-        /// </summary>
-        /// <param name="conn">Connection to the server.</param>
-        public override void OnClientConnect(NetworkConnection conn)
-        {
-            base.OnClientConnect(conn);
 
-            CreatePlayerMessage message = new CreatePlayerMessage {Name = "Player " + Random.Range(0, 10000)};
-
-            conn.Send(message);
-        }
-
-        private void OnCreatePlayer(NetworkConnection conn, CreatePlayerMessage message)
-        {
-            GameObject gameobject = Instantiate(playerPrefab);
-
-            var playerData = new PlayerData {Name = message.Name};
-
-            connectedPlayers.Add(conn.connectionId, playerData);
-
+            connectedPlayers.Add(connectionRelations[conn], playerData);
             eventBinder.ServerOnClientConnect(conn);
 
-            NetworkServer.AddPlayerForConnection(conn, gameobject);
+            return gameobject;
         }
 
-        /// <summary>
-        /// Called on the server when a client disconnects.
-        /// <para>This is called on the Server when a Client disconnects from the Server. Use an override to decide what should happen when a disconnection is detected.</para>
-        /// </summary>
-        /// <param name="conn">Connection from client.</param>
-        public override void OnServerDisconnect(NetworkConnection conn)
+        public override void OnRoomServerConnect(NetworkConnection conn)
         {
-            base.OnServerDisconnect(conn);
-            if (connectedPlayers.ContainsKey(conn.connectionId))
-                connectedPlayers.Remove(conn.connectionId);
+            eventBinder.ServerOnClientConnect(conn);
+            int id = Random.Range(0, int.MaxValue);
+            connectionRelations.Add(conn, id);
+        }
+
+        public override void OnRoomServerDisconnect(NetworkConnection conn)
+        {
+            if (connectedPlayers.ContainsKey(connectionRelations[conn]))
+                connectedPlayers.Remove(connectionRelations[conn]);
+
+            connectionRelations.Remove(conn);
 
             eventBinder.ServerOnClientDisconnect(conn);
         }
 
-        public override void OnStopServer()
+        public override void OnRoomServerPlayersReady()
         {
-            base.OnStopServer();
+        }
+
+        public void GotoGameScene()
+        {
+            if (NetworkServer.active)
+            {
+                ServerChangeScene(GameplayScene);
+            }
+        }
+
+        void RemoveFromDontDestroyOnLoad()
+        {
+            if (gameObject.scene.name == "DontDestroyOnLoad" && !string.IsNullOrEmpty(offlineScene) &&
+                SceneManager.GetActiveScene().path != offlineScene)
+                SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+        }
+
+        public override void OnRoomStopClient()
+        {
+            RemoveFromDontDestroyOnLoad();
             connectedPlayers.Clear();
+            connectionRelations.Clear();
+        }
+
+        public override void OnRoomStopServer()
+        {
+            RemoveFromDontDestroyOnLoad();
+            connectedPlayers.Clear();
+            connectionRelations.Clear();
         }
     }
 }

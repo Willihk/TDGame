@@ -22,12 +22,12 @@ namespace Mirror
 
         [Header("Diagnostics")]
 
+        [Tooltip("Diagnostic flag indicating whether this player is ready for the game to begin")]
         /// <summary>
         /// Diagnostic flag indicating whether this player is ready for the game to begin.
         /// <para>Invoke CmdChangeReadyState method on the client to set this flag.</para>
         /// <para>When all players are ready to begin, the game will start. This should not be set directly, CmdChangeReadyState should be called on the client to set it on the server.</para>
         /// </summary>
-        [Tooltip("Diagnostic flag indicating whether this player is ready for the game to begin")]
         [SyncVar(hook = nameof(ReadyStateChanged))]
         public bool readyToBegin;
 
@@ -41,7 +41,7 @@ namespace Mirror
         #region Unity Callbacks
 
         /// <summary>
-        /// Do not use Start - Override OnStartrHost / OnStartClient instead!
+        /// Do not use Start - Override OnStartHost / OnStartClient instead!
         /// </summary>
         public void Start()
         {
@@ -49,7 +49,7 @@ namespace Mirror
             {
                 // NetworkRoomPlayer object must be set to DontDestroyOnLoad along with NetworkRoomManager
                 // in server and all clients, otherwise it will be respawned in the game scene which would
-                // have undesireable effects.
+                // have undesirable effects.
                 if (room.dontDestroyOnLoad)
                     DontDestroyOnLoad(gameObject);
 

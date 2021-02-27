@@ -45,8 +45,7 @@ namespace TDGame.Building
         /// </summary>
         public override void OnStartServer()
         {
-            if (Instance is null)
-                Instance = this;
+            Instance = this;
 
             LoadPrefabs();
         }
@@ -57,8 +56,7 @@ namespace TDGame.Building
         /// </summary>
         public override void OnStartClient()
         {
-            if (Instance is null)
-                Instance = this;
+            Instance = this;
             LoadPrefabs();
         }
     }

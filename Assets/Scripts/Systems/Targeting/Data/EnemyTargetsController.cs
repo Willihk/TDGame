@@ -11,7 +11,7 @@ namespace TDGame.Systems.Targeting.Data
         public List<GameObject> targets;
         private void Awake()
         {
-            Instance ??= this;
+            Instance = this;
         }
 
         public List<GameObject> GetTargets()
