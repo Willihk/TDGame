@@ -6,7 +6,6 @@ using TDGame.Building;
 using TDGame.Enemy.Data;
 using TDGame.Network.EventBinding;
 using TDGame.Network.Lobby;
-using TDGame.Network.Message.Player;
 using UnityEngine.SceneManagement;
 
 namespace TDGame.Network
