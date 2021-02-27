@@ -4,7 +4,6 @@ using System.Linq;
 using TDGame.Extensions;
 using UnityEngine;
 
-
 namespace TDGame.Systems.Stats
 {
     public class Stat
