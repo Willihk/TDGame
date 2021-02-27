@@ -1,13 +1,12 @@
-﻿using System;
-using Mirror;
+﻿using Mirror;
 using TDGame.Systems.Projectiles;
 using TDGame.Systems.Targeting.Implementations;
-using TDGame.Systems.Turrets.Base;
+using TDGame.Systems.Tower.Base;
 using UnityEngine;
 
-namespace TDGame.Systems.Turrets.Implementations
+namespace TDGame.Systems.Tower.Implementations
 {
-    public class ProjectileTurret : BaseNetworkedTurret
+    public class ProjectileTower : BaseNetworkedTower
     {
         [SerializeField]
         protected SingleTargetSystem targetSystem;

@@ -3,13 +3,13 @@ using System.Linq;
 using Mirror;
 using TDGame.Enemy.Base;
 using TDGame.Systems.Targeting.Implementations;
-using TDGame.Systems.Turrets.Base;
+using TDGame.Systems.Tower.Base;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TDGame.Systems.Turrets.Implementations.Tesla
+namespace TDGame.Systems.Tower.Implementations.Tesla
 {
-    public class TeslaTurret : BaseNetworkedTurret
+    public class TeslaTower : BaseNetworkedTower
     {
         public MultiTargetSystem targetSystem;
 

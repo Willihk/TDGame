@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Mirror;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-namespace TDGame.Systems.Turrets.Implementations.Tesla
+namespace TDGame.Systems.Tower.Implementations.Tesla
 {
     public class TeslaHitVisualController : MonoBehaviour
     {
         [SerializeField]
-        private TeslaTurret teslaTurret;
+        private TeslaTower teslaTower;
 
         public GameObject vfxPrefab;
 
@@ -28,27 +25,27 @@ namespace TDGame.Systems.Turrets.Implementations.Tesla
 
         void Setup()
         {
-            CreateEffectPool(teslaTurret.targetSystem.maxTargets);
+            CreateEffectPool(teslaTower.targetSystem.maxTargets);
         }
 
         private void Update()
         {
-            if (teslaTurret == null)
+            if (teslaTower == null)
             {
                 Destroy(this);
                 return;
             }
             
-            for (int i = 0; i < teslaTurret.syncedTargetPositions.Count; i++)
+            for (int i = 0; i < teslaTower.syncedTargetPositions.Count; i++)
             {
                 if (i >= effectPool.Count)
                     break;
 
-                effectPool[i].transform.position = teslaTurret.syncedTargetPositions[i];
+                effectPool[i].transform.position = teslaTower.syncedTargetPositions[i];
                 effectPool[i].gameObject.SetActive(true);
             }
             
-            for (int i = teslaTurret.syncedTargetPositions.Count; i < effectPool.Count; i++)
+            for (int i = teslaTower.syncedTargetPositions.Count; i < effectPool.Count; i++)
             {
                 effectPool[i].gameObject.SetActive(false);
             }

@@ -4,7 +4,7 @@ using Mirror;
 using TDGame.Cursor;
 using TDGame.Systems.Economy;
 using TDGame.Systems.Economy.Data;
-using TDGame.Systems.Turrets.Base;
+using TDGame.Systems.Tower.Base;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -143,7 +143,7 @@ namespace TDGame.Building.Placement
         public void Setup(string prefabName)
         {
             this.prefabName = prefabName;
-            price = buildingList.GetBuilding(prefabName).TryGetComponent(out BaseNetworkedTurret turret) ? turret.price : 0;
+            price = buildingList.GetBuilding(prefabName).TryGetComponent(out BaseNetworkedTower turret) ? turret.price : 0;
             
             isValidPlacement = true;
         }
