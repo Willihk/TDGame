@@ -13,11 +13,7 @@ namespace TDGame.Systems.Tower.Implementations.Tesla
     {
         public MultiTargetSystem targetSystem;
 
-        private List<GameObject> targets = new List<GameObject>();
-
         public UnityEvent ClientHitEvent;
-
-        public SyncList<Vector3> syncedTargetPositions = new SyncList<Vector3>();
 
         [Header("Stats")]
         [Space(10)]
@@ -33,14 +29,6 @@ namespace TDGame.Systems.Tower.Implementations.Tesla
         {
             if (isServer)
             {
-                if (IsTargetUpdateNeeded())
-                {
-                    UpdateTargets();
-                }
-
-                syncedTargetPositions.Clear();
-                syncedTargetPositions.AddRange(targets.Select(x => x.transform.position));
-
                 if (nexthit < Time.time)
                 {
                     Hit();
@@ -53,7 +41,7 @@ namespace TDGame.Systems.Tower.Implementations.Tesla
         {
             nexthit = Time.time + hitRate;
 
-            foreach (var target in targets.Select(x => x.GetComponent<NetworkedEnemy>()))
+            foreach (var target in targetSystem.targets.Select(x => x.GetComponent<NetworkedEnemy>()))
             {
                 target.Damage(hitDamage);
             }
@@ -65,17 +53,6 @@ namespace TDGame.Systems.Tower.Implementations.Tesla
         void Rpc_DummyHit()
         {
             ClientHitEvent.Invoke();
-        }
-
-        void UpdateTargets()
-        {
-            targets.Clear();
-            targets.AddRange(targetSystem.GetTargets());
-        }
-
-        bool IsTargetUpdateNeeded()
-        {
-            return targets.Any(x => x == null) || targets.Count < targetSystem.maxTargets || targets.Any(x => !targetSystem.IsValidTarget(x));
         }
     }
 }

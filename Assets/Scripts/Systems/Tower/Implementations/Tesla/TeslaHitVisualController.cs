@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TDGame.Systems.Targeting.Implementations;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -7,7 +8,7 @@ namespace TDGame.Systems.Tower.Implementations.Tesla
     public class TeslaHitVisualController : MonoBehaviour
     {
         [SerializeField]
-        private TeslaTower teslaTower;
+        private MultiTargetSystem targetSystem;
 
         public GameObject vfxPrefab;
 
@@ -25,27 +26,27 @@ namespace TDGame.Systems.Tower.Implementations.Tesla
 
         void Setup()
         {
-            CreateEffectPool(teslaTower.targetSystem.maxTargets);
+            CreateEffectPool(targetSystem.maxTargets);
         }
 
         private void Update()
         {
-            if (teslaTower == null)
+            if (targetSystem == null)
             {
                 Destroy(this);
                 return;
             }
             
-            for (int i = 0; i < teslaTower.syncedTargetPositions.Count; i++)
+            for (int i = 0; i < targetSystem.syncedTargetPositions.Count; i++)
             {
                 if (i >= effectPool.Count)
                     break;
 
-                effectPool[i].transform.position = teslaTower.syncedTargetPositions[i];
+                effectPool[i].transform.position = targetSystem.syncedTargetPositions[i];
                 effectPool[i].gameObject.SetActive(true);
             }
             
-            for (int i = teslaTower.syncedTargetPositions.Count; i < effectPool.Count; i++)
+            for (int i = targetSystem.syncedTargetPositions.Count; i < effectPool.Count; i++)
             {
                 effectPool[i].gameObject.SetActive(false);
             }

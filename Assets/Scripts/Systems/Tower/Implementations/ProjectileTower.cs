@@ -33,23 +33,16 @@ namespace TDGame.Systems.Tower.Implementations
         [SerializeField]
         protected Transform partToRotate;
 
-        [SerializeField]
-        private GameObject target;
-
-        [SerializeField]
-        [SyncVar]
-        private Vector3 clientTargetPosition;
-
         private float nextFire;
 
         void ShootProjectile()
         {
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             var bulletComponent = projectile.GetComponent<TurretProjectile>();
-            bulletComponent.Setup(target.transform.position, hitDamage);
+            bulletComponent.Setup(targetSystem.target.transform.position, hitDamage);
             nextFire = Time.time + fireRate;
 
-            Rpc_ShootDummyProjectile(target.transform.position);
+            Rpc_ShootDummyProjectile(targetSystem.transform.position);
         }
 
         [ClientRpc]
@@ -67,34 +60,18 @@ namespace TDGame.Systems.Tower.Implementations
                 LookAtTarget();
             }
 
-            if (target != null)
+            if (targetSystem.target != null && isServer)
             {
-                if (isServer)
+                if (nextFire < Time.time)
                 {
-                    if (!targetSystem.IsValidTarget(target))
-                    {
-                        target = null;
-                        return;
-                    }
-
-                    clientTargetPosition = target.transform.position;
-
-                    if (nextFire < Time.time)
-                    {
-                        ShootProjectile();
-                    }
+                    ShootProjectile();
                 }
-            }
-            else
-            {
-                if (isServer)
-                    target = targetSystem.GetTarget();
             }
         }
 
         protected void LookAtTarget()
         {
-            Vector3 dir = clientTargetPosition - transform.position;
+            Vector3 dir = targetSystem.clientTargetPosition - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(dir);
             Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnRate)
                 .eulerAngles;

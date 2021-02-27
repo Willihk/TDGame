@@ -554,8 +554,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bbbb404b2524ad8bf0bb525eff2cd27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   acquisitionSystem: {fileID: 394382782518783544}
   maxTargets: 8
+  targets: []
 --- !u!114 &5529470539276590808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,23 +573,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  price: 120
+  price: 1
   targetSystem: {fileID: 897508154960977226}
   ClientHitEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8848312922793457455}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   hitDamage: 3
   hitRate: 0.1
 --- !u!1 &4855526839087809882
@@ -1037,6 +1028,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7125dd4f5e44e8aaf93efb29021aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teslaTurret: {fileID: 5529470539276590808}
+  targetSystem: {fileID: 897508154960977226}
   vfxPrefab: {fileID: 3392494619207114379, guid: f1f579189009de5408128387024855b3, type: 3}
   effectPosition: {fileID: 4081860535997958457}
