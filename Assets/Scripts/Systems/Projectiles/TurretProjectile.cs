@@ -7,7 +7,7 @@ namespace TDGame.Systems.Projectiles
     {
         [SerializeField]
         private float speed = 5;
-        
+
         private Vector3 target;
         private float hitDamage;
 
@@ -25,14 +25,12 @@ namespace TDGame.Systems.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            
             if (other.gameObject.TryGetComponent(out NetworkedEnemy enemy))
             {
                 enemy.Damage(hitDamage);
                 Destroy(gameObject);
             }
         }
-
 
         private void Update()
         {
