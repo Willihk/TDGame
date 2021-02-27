@@ -11,12 +11,12 @@ namespace TDGame
 
         public void DisplayUI(GameObject gameObject)
         {
-            if (gameObject != null)
+            if (gameObject == null)
             {
-                selectionUI.SetActive(true);
-            }
-            else
                 selectionUI.SetActive(false);
+                return;
+            }
+            selectionUI.SetActive(true);
         }
     }
 }
