@@ -19,8 +19,6 @@ namespace TDGame.Systems.Tower.Implementations
         [SerializeField]
         protected float hitDamage = 5;
 
-        [SerializeField]
-        protected float turnRate = 20;
 
         [SerializeField]
         protected float fireRate = .4f;
@@ -29,9 +27,6 @@ namespace TDGame.Systems.Tower.Implementations
         [Space(10)]
         [SerializeField]
         protected Transform firePoint;
-
-        [SerializeField]
-        protected Transform partToRotate;
 
         private float nextFire;
 
@@ -55,11 +50,6 @@ namespace TDGame.Systems.Tower.Implementations
 
         private void Update()
         {
-            if (isClient)
-            {
-                LookAtTarget();
-            }
-
             if (targetSystem.target != null && isServer)
             {
                 if (nextFire < Time.time)
@@ -67,15 +57,6 @@ namespace TDGame.Systems.Tower.Implementations
                     ShootProjectile();
                 }
             }
-        }
-
-        protected void LookAtTarget()
-        {
-            Vector3 dir = targetSystem.clientTargetPosition - transform.position;
-            Quaternion lookRotation = Quaternion.LookRotation(dir);
-            Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnRate)
-                .eulerAngles;
-            partToRotate.rotation = Quaternion.Euler(transform.eulerAngles.x, rotation.y, transform.eulerAngles.z);
         }
     }
 }

@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 2423641359034175011}
   - component: {fileID: 1411104683845958684}
   - component: {fileID: 5011157071691479299}
+  - component: {fileID: 2983138713117913056}
   m_Layer: 0
   m_Name: StressTurret
   m_TagString: Untagged
@@ -220,7 +221,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 665e6f244e2f4d13ac89c2b682f3bbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   acquisitionSystem: {fileID: 2423641359034175011}
+  target: {fileID: 0}
+  clientTargetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &5011157071691479299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,15 +240,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  price: 40
   targetSystem: {fileID: 1411104683845958684}
   projectilePrefab: {fileID: 8666251184099593094, guid: 1eeeae7fcbfc16e4bb235105876569f1, type: 3}
   hitDamage: 0
-  turnRate: 20
   fireRate: 0.01
   firePoint: {fileID: 5186397471957115136}
+--- !u!114 &2983138713117913056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711880627919443429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5445b2a3bc954060a2671f074d36bd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSystem: {fileID: 1411104683845958684}
+  turnRate: 20
   partToRotate: {fileID: 5468767483434081998}
-  target: {fileID: 0}
-  clientTargetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &8886254440058557013
 GameObject:
   m_ObjectHideFlags: 0
