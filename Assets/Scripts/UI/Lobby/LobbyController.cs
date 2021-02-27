@@ -1,4 +1,5 @@
 ﻿using TDGame.Network;
+using TDGame.Network.Lobby;
 using UnityEngine;
 
 namespace TDGame.UI.Lobby
@@ -10,7 +11,7 @@ namespace TDGame.UI.Lobby
 
         [SerializeField]
         private LobbyPlayerList lobbyPlayerList;
-        
+
         public void OnClickStart()
         {
             if (TDGameNetworkManager.Instance.allPlayersReady)
@@ -21,7 +22,10 @@ namespace TDGame.UI.Lobby
 
         public void OnClickReady()
         {
-            
+            if (NetworkedLobbyPlayer.LocalPlayer)
+            {
+                NetworkedLobbyPlayer.LocalPlayer.CmdChangeReadyState(!NetworkedLobbyPlayer.LocalPlayer.readyToBegin);
+            }
         }
     }
 }

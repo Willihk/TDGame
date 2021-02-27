@@ -8,6 +8,8 @@ namespace TDGame.Network.Lobby
 {
     public class NetworkedLobbyPlayer : NetworkRoomPlayer
     {
+        public static NetworkedLobbyPlayer LocalPlayer;
+        
         [SyncVar]
         public int id;
 
@@ -16,6 +18,11 @@ namespace TDGame.Network.Lobby
         
         [SerializeField]
         private GameEvent lobbyPlayersChangedEvent;
+
+        public override void OnStartLocalPlayer()
+        {
+            LocalPlayer = this;
+        }
 
         public override void OnStartClient()
         {
