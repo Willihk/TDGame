@@ -146,8 +146,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  maxHealth: 10000
-  startHealth: 10000
+  maxHealth: 6000
+  startHealth: 6000
   OnDeath:
     m_PersistentCalls:
       m_Calls: []

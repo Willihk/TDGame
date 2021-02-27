@@ -96,8 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  maxHealth: 100
-  startHealth: 100
+  maxHealth: 40
+  startHealth: 40
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -119,7 +119,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   healthSystem: {fileID: 1672092839135950083}
-  speed: 1
+  speed: 1.5
   reachedEndDamage: 1
 --- !u!135 &2269779280510175309
 SphereCollider:

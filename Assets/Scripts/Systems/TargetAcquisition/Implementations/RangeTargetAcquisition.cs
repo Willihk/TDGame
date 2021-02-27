@@ -8,7 +8,7 @@ namespace TDGame.Systems.TargetAcquisition.Implementations
     public class RangeTargetAcquisition : BaseTargetAcquisitionSystem
     {
         [SerializeField]
-        protected float range;
+        public float range;
 
         public override IEnumerable<GameObject> GetAvailableTargets()
         {
