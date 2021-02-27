@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace TDGame
+namespace TDGame.UI.InGame
 {
     public class HealthController : MonoBehaviour
     {

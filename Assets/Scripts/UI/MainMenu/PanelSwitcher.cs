@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace TDGame
+namespace TDGame.UI.MainMenu
 {
     public class PanelSwitcher : MonoBehaviour
     {

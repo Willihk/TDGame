@@ -1,7 +1,7 @@
 using TDGame.Systems.TargetAcquisition.Implementations;
 using UnityEngine;
 
-namespace TDGame
+namespace TDGame.Building
 {
     public class SelectionRangeIndicatorController : MonoBehaviour
     {
