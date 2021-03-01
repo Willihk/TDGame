@@ -388,8 +388,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1431124424}
   m_HandleRect: {fileID: 1431124423}
   m_Direction: 2
-  m_Value: 0.071428575
-  m_Size: 0.99999535
+  m_Value: -0.01754386
+  m_Size: 0.9999953
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2166,6 +2166,7 @@ GameObject:
   - component: {fileID: 1514074423}
   - component: {fileID: 1514074422}
   - component: {fileID: 1514074424}
+  - component: {fileID: 1514074425}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -2361,6 +2362,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionUI: {fileID: 1024269518}
+--- !u!114 &1514074425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514074414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69396d8044374d698a3b696a49f4077b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  prefabList: {fileID: 11400000, guid: 805a3508962bf0c40bf24af168859488, type: 2}
 --- !u!1 &1544437429
 GameObject:
   m_ObjectHideFlags: 0
@@ -2737,7 +2753,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0015563965}
+  m_AnchoredPosition: {x: 0, y: 0.0016784668}
   m_SizeDelta: {x: 0, y: 367.93}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1674562969
