@@ -2,6 +2,7 @@
 using System.Linq;
 using Mirror;
 using TDGame.Enemy.Base;
+using TDGame.Systems.Stats;
 using TDGame.Systems.Targeting.Implementations;
 using TDGame.Systems.Tower.Base;
 using UnityEngine;
@@ -18,10 +19,10 @@ namespace TDGame.Systems.Tower.Implementations.Tesla
         [Header("Stats")]
         [Space(10)]
         [SerializeField]
-        protected float hitDamage = 5;
+        protected StatWrapper hitDamageStat;
 
         [SerializeField]
-        protected float hitRate = .4f;
+        protected StatWrapper hitRateStat;
 
         private float nexthit;
 
@@ -39,11 +40,11 @@ namespace TDGame.Systems.Tower.Implementations.Tesla
         [Server]
         void Hit()
         {
-            nexthit = Time.time + hitRate;
+            nexthit = Time.time + hitRateStat.stat.Value;
 
             foreach (var target in targetSystem.targets.Select(x => x.GetComponent<NetworkedEnemy>()))
             {
-                target.Damage(hitDamage);
+                target.Damage(hitDamageStat.stat.Value);
             }
 
             Rpc_DummyHit();

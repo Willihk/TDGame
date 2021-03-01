@@ -18,7 +18,7 @@ namespace TDGame.Building
             {
                 rangeIndicator.SetActive(true);
 
-                float rangeDiameter = rangeComponent.range * 2;
+                float rangeDiameter = rangeComponent.rangeStat.stat.Value * 2;
 
                 rangeIndicator.transform.position = gameObject.transform.position + new Vector3(0, 0.2f, 0);
                 rangeIndicator.transform.localScale = new Vector3(rangeDiameter, rangeDiameter, 0);
