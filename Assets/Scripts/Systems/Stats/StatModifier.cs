@@ -1,18 +1,26 @@
-﻿namespace TDGame.Systems.Stats
+﻿using System;
+
+namespace TDGame.Systems.Stats
 {
+    [Serializable]
     public class StatModifier
     {
         public readonly float Value;
         public readonly StatModType Type;
         public readonly int Order;
-        public readonly object Soure;
+        public readonly object Source;
 
-        public StatModifier(float value, StatModType type, int order, object soure)
+        public StatModifier()
+        {
+            
+        }
+        
+        public StatModifier(float value, StatModType type, int order, object source)
         {
             Value = value;
             Type = type;
             Order = order;
-            Soure = soure;
+            Source = source;
         }
 
         // Requires Value and Type. Calls the "Main" constructor and sets Order and Source to their default values: (int)type and null, respectively.

@@ -6,9 +6,12 @@ using UnityEngine;
 
 namespace TDGame.Systems.Stats
 {
+    [Serializable]
     public class Stat
     {
+        public string Name;
         public float BaseValue;
+        
         public readonly IReadOnlyCollection<StatModifier> StatModifiers;
 
         [Tooltip("Should be '0' if the cap should be ignored")]
@@ -30,7 +33,7 @@ namespace TDGame.Systems.Stats
 
         protected bool useCap;
         protected float value;
-
+        
         protected bool isDirty = true;
         protected readonly List<StatModifier> modifiers;
 
@@ -64,7 +67,7 @@ namespace TDGame.Systems.Stats
 
         public void RemoveAllModifiersFromSource(object source)
         {
-            modifiers.RemoveAll(x => x.Soure == source);
+            modifiers.RemoveAll(x => x.Source == source);
         }
 
         public void AddModifier(StatModifier mod)
