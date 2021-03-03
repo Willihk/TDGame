@@ -20,11 +20,11 @@ namespace TDGame.Systems.TowerUpgrade
         [Server]
         public void TryUpgradeTower(UpgradableTower tower)
         {
-            ReplaceTower(tower.upgradePrefab.name, tower.gameObject);
+            ReplaceTower(tower.upgradePrefab.name, tower.gameObject, tower.connectionToClient);
         }
 
         [Server]
-        public void ReplaceTower(string prefabName, GameObject oldGameObject)
+        public void ReplaceTower(string prefabName, GameObject oldGameObject, NetworkConnection owner)
         {
             var prefab = prefabList.GetBuilding(prefabName);
 
@@ -32,7 +32,7 @@ namespace TDGame.Systems.TowerUpgrade
             spawned.transform.position = oldGameObject.transform.position;
             spawned.transform.rotation = oldGameObject.transform.rotation;
             
-            NetworkServer.Spawn(spawned);
+            NetworkServer.Spawn(spawned, owner);
 
             NetworkServer.Destroy(oldGameObject);
         }
