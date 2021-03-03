@@ -558,7 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429afd4b7f3f401ba832b7f8a70a46de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 8
+  rangeStat: {fileID: 0}
 --- !u!114 &7951545150276504662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSystem: {fileID: 7951545150276504662}
-  turnRate: 50
+  turnRate: 30
   partToRotate: {fileID: 6652691574792108930}
 --- !u!1 &7205599211947450682
 GameObject:

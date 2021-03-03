@@ -5,16 +5,16 @@ namespace TDGame.Systems.Projectiles
 {
     public class TurretProjectile : MonoBehaviour
     {
-        [SerializeField]
-        private float speed = 5;
 
         private Vector3 target;
         private float hitDamage;
+        private float speed;
 
-        public void Setup(Vector3 target, float hitDamage)
+        public void Setup(Vector3 target, float hitDamage, float speed)
         {
             this.target = target;
             this.hitDamage = hitDamage;
+            this.speed = speed;
         }
 
         private void Start()

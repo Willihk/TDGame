@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using TDGame.Systems.Projectiles;
+using TDGame.Systems.Stats;
 using TDGame.Systems.Targeting.Implementations;
 using TDGame.Systems.Tower.Base;
 using UnityEngine;
@@ -17,10 +18,13 @@ namespace TDGame.Systems.Tower.Implementations
         [Header("Stats")]
         [Space(10)]
         [SerializeField]
-        protected float hitDamage = 5;
+        protected StatWrapper hitDamage;
 
         [SerializeField]
-        protected float fireRate = .4f;
+        protected StatWrapper fireRate;
+
+        [SerializeField]
+        protected StatWrapper projectileSpeed;
 
         [Header("Visual")]
         [Space(10)]
@@ -33,8 +37,8 @@ namespace TDGame.Systems.Tower.Implementations
         {
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             var bulletComponent = projectile.GetComponent<TurretProjectile>();
-            bulletComponent.Setup(targetSystem.target.transform.position, hitDamage);
-            nextFire = Time.time + fireRate;
+            bulletComponent.Setup(targetSystem.target.transform.position, hitDamage.stat.Value, projectileSpeed.stat.Value);
+            nextFire = Time.time + fireRate.stat.Value;
 
             Rpc_ShootDummyProjectile(targetSystem.target.transform.position);
         }
@@ -44,7 +48,7 @@ namespace TDGame.Systems.Tower.Implementations
         {
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             var bulletComponent = projectile.GetComponent<TurretProjectile>();
-            bulletComponent.Setup(position, 0);
+            bulletComponent.Setup(position, 0, projectileSpeed.stat.Value);
         }
 
         private void Update()

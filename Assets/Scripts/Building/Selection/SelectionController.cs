@@ -2,6 +2,7 @@ using Mirror;
 using TDGame.Cursor;
 using TDGame.Events.Base;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TDGame.Building
 {
@@ -33,10 +34,16 @@ namespace TDGame.Building
                 GameObject hitPoint = hit.collider.gameObject;
                 FindTowerCoreRecursive(hitPoint.transform);
             }
-            else if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            else if (Input.GetMouseButtonDown(1))
             {
                 CheckIfAlreadySelecting();
             }
+        }
+
+        public void ChangeSelection(GameObject gameObject)
+        {
+            selectedTower = gameObject;
+            gameEvent.Raise(selectedTower);
         }
 
         private void CheckIfAlreadySelecting()

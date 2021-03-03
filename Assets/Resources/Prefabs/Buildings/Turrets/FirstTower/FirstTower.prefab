@@ -1,5 +1,103 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &728794932015312795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2503392961184963008}
+  - component: {fileID: 7993251707875962749}
+  - component: {fileID: 3246614750070098638}
+  - component: {fileID: 7710484740629147980}
+  - component: {fileID: 4544321436026212195}
+  m_Layer: 0
+  m_Name: Stats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2503392961184963008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728794932015312795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 738397799458106079}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7993251707875962749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728794932015312795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fe119f4fe54c168cc52c6db9060d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat:
+    Name: Range
+    BaseValue: 6
+    Cap: 0
+--- !u!114 &3246614750070098638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728794932015312795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fe119f4fe54c168cc52c6db9060d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat:
+    Name: Hit Damage
+    BaseValue: 8
+    Cap: 0
+--- !u!114 &7710484740629147980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728794932015312795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fe119f4fe54c168cc52c6db9060d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat:
+    Name: Hit Rate
+    BaseValue: 1.25
+    Cap: 0
+--- !u!114 &4544321436026212195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728794932015312795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fe119f4fe54c168cc52c6db9060d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat:
+    Name: Projectile Speed
+    BaseValue: 10
+    Cap: 0
 --- !u!1 &1767525108878390668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1773,7 +1871,7 @@ Transform:
   - {fileID: 740408944499400684}
   - {fileID: 1515923975132805035}
   m_Father: {fileID: 738397799458106079}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2419895224506525631
 BoxCollider:
@@ -2474,6 +2572,8 @@ GameObject:
   - component: {fileID: -275784450936522778}
   - component: {fileID: 3301440482238521130}
   - component: {fileID: -5194853051994140779}
+  - component: {fileID: -950736533730844553}
+  - component: {fileID: 5812045682895858413}
   m_Layer: 0
   m_Name: FirstTower
   m_TagString: Untagged
@@ -2492,6 +2592,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2503392961184963008}
   - {fileID: 1564419746414411300}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2524,7 +2625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429afd4b7f3f401ba832b7f8a70a46de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 6
+  rangeStat: {fileID: 7993251707875962749}
 --- !u!114 &-275784450936522778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2563,8 +2664,9 @@ MonoBehaviour:
   price: 40
   targetSystem: {fileID: -275784450936522778}
   projectilePrefab: {fileID: 891649866036199970, guid: 0252f1e91c1902f4db9391921de6988f, type: 3}
-  hitDamage: 8
-  fireRate: 0.8
+  hitDamage: {fileID: 3246614750070098638}
+  fireRate: {fileID: 7710484740629147980}
+  projectileSpeed: {fileID: 4544321436026212195}
   firePoint: {fileID: 5024062222425829367}
 --- !u!114 &-5194853051994140779
 MonoBehaviour:
@@ -2579,8 +2681,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSystem: {fileID: -275784450936522778}
-  turnRate: 50
+  turnRate: 30
   partToRotate: {fileID: 1515923975132805035}
+--- !u!114 &-950736533730844553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7267651802531049404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf851b12a214319829c1b54a0274247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  upgradePrefab: {fileID: 6863794220617585754, guid: c43c5147b95a2b44b8d59fd10fc149c2, type: 3}
+--- !u!114 &5812045682895858413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7267651802531049404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0088ccf731db43dfb6cbccc7b99c4425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  statHolder: {fileID: 2503392961184963008}
+  stats: []
 --- !u!1 &7793827022161238528
 GameObject:
   m_ObjectHideFlags: 0
