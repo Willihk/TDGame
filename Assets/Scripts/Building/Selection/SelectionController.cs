@@ -2,6 +2,7 @@ using Mirror;
 using TDGame.Cursor;
 using TDGame.Events.Base;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace TDGame.Building
@@ -11,9 +12,6 @@ namespace TDGame.Building
         private Camera referenceCamera;
 
         private GameObject selectedTower;
-
-        [SerializeField]
-        private Material rangeCircleMaterial;
 
         [SerializeField]
         private LocalCursorState cursorState;
@@ -29,20 +27,21 @@ namespace TDGame.Building
         void Update()
         {
             Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
-            if (Input.GetMouseButtonDown(0) && cursorState.State == CursorState.None && Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Tower")))
+            if (Input.GetMouseButtonDown(0) && cursorState.State == CursorState.None &&
+                Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Tower")))
             {
                 GameObject hitPoint = hit.collider.gameObject;
                 FindTowerCoreRecursive(hitPoint.transform);
             }
-            else if (Input.GetMouseButtonDown(1))
+            else if (Input.GetMouseButtonDown(1) || (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()))
             {
                 CheckIfAlreadySelecting();
             }
         }
 
-        public void ChangeSelection(GameObject gameObject)
+        public void ChangeSelection(GameObject selection)
         {
-            selectedTower = gameObject;
+            selectedTower = selection;
             gameEvent.Raise(selectedTower);
         }
 
@@ -50,25 +49,23 @@ namespace TDGame.Building
         {
             if (selectedTower != null)
             {
-                selectedTower = null;
-                gameEvent.Raise(selectedTower);
+                ChangeSelection(null);
             }
         }
 
-        private void FindTowerCoreRecursive(Transform transform)
+        private void FindTowerCoreRecursive(Transform transformToCheck)
         {
-            if (transform.GetComponent(typeof(NetworkIdentity)))
+            if (transformToCheck.GetComponent(typeof(NetworkIdentity)))
             {
-                if (selectedTower == transform.gameObject)
+                if (selectedTower == transformToCheck.gameObject)
                     return;
 
                 CheckIfAlreadySelecting();
 
-                selectedTower = transform.gameObject;
-                gameEvent.Raise(selectedTower);
+                ChangeSelection(transformToCheck.gameObject);
             }
             else
-                FindTowerCoreRecursive(transform.parent);
+                FindTowerCoreRecursive(transformToCheck.parent);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace TDGame.Systems.TowerUpgrade
             Instance = this;
         }
 
-        [Command]
+        [Server]
         public void TryUpgradeTower(UpgradableTower tower)
         {
             ReplaceTower(tower.upgradePrefab.name, tower.gameObject);
@@ -28,7 +28,7 @@ namespace TDGame.Systems.TowerUpgrade
         {
             var prefab = prefabList.GetBuilding(prefabName);
 
-            var spawned = Instantiate(gameObject);
+            var spawned = Instantiate(prefab);
             spawned.transform.position = oldGameObject.transform.position;
             spawned.transform.rotation = oldGameObject.transform.rotation;
             
