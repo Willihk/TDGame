@@ -160,7 +160,6 @@ namespace TDGame.Building.Placement
             if (!isValidPlacement || isColliding || !playerEconomy.CanAfford(price))
                 return;
 
-            netIdentity.RemoveClientAuthority();
             // TODO: Check for collisions based on position given by client
 
             var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
@@ -168,7 +167,7 @@ namespace TDGame.Building.Placement
 
             playerEconomy.Purchase(price);
 
-            NetworkServer.Spawn(placedObject, connectionToClient);
+            NetworkServer.Spawn(placedObject, netIdentity.connectionToClient);
 
             NetworkServer.Destroy(gameObject);
         }
