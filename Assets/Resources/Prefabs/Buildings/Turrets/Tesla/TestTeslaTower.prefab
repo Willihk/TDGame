@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4751108358411207351}
   - component: {fileID: 361224593663587283}
   - component: {fileID: 2177715576457284941}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 3891271596122740169}
   - component: {fileID: 6197919803510757105}
   - component: {fileID: 1746032053965299957}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 2775816344038612535}
   - component: {fileID: 4183836113199754086}
   - component: {fileID: 2757512683618357620}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Body Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 7062061280627119245}
   - component: {fileID: 1776772887043356857}
   - component: {fileID: 284163574437725196}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Support Beam Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 3263127180247942684}
   - component: {fileID: 1073613283170366479}
   - component: {fileID: 3136685819684926824}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Support Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 6160084782227686680}
   - component: {fileID: 1141814822310306159}
   - component: {fileID: 4537231152761403698}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Mid Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 5231656384578879816}
   - component: {fileID: 8142168303478604809}
   - component: {fileID: 5391109508977158491}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Tesla Orb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -886,7 +886,7 @@ GameObject:
   - component: {fileID: 8440618164063179631}
   - component: {fileID: 301657944733333247}
   - component: {fileID: 181325487308824773}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Support Beam Top (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -982,7 +982,7 @@ GameObject:
   - component: {fileID: 8041682157113846595}
   - component: {fileID: 8770240017226059338}
   - component: {fileID: 1463178278382105885}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Support Beam (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
