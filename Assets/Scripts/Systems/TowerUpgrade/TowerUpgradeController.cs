@@ -12,9 +12,6 @@ namespace TDGame.Systems.TowerUpgrade
         [SerializeField]
         private BuildingList prefabList;
 
-        [SerializeField]
-        private GameEvent<GameObject> gameEvent;
-
         private void Awake()
         {
             Instance = this;
