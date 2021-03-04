@@ -9,6 +9,8 @@ namespace TDGame.Building
 {
     public class SelectionController : MonoBehaviour
     {
+        public static SelectionController Instance;
+
         private Camera referenceCamera;
 
         private GameObject selectedTower;
@@ -18,6 +20,11 @@ namespace TDGame.Building
 
         [SerializeField]
         private GameEvent<GameObject> gameEvent;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Start()
         {

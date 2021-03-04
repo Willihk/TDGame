@@ -12,26 +12,27 @@ namespace TDGame.Building
         private GameObject entryPrefab;
 
         [SerializeField]
-        private Transform parent;
+        private Transform content;
 
         public void DisplayUI(GameObject gameObject)
         {
             if (gameObject == null)
             {
                 selectionUI.SetActive(false);
-                foreach (var child in parent)
-                {
-                    Destroy(parent.transform.GetChild(0).gameObject);
-                }
                 return;
             }
 
             selectionUI.SetActive(true);
 
+            foreach (Transform child in content)
+            {
+                Destroy(child.gameObject);
+            }
+
             foreach (var item in gameObject.GetComponents<UpgradableTower>())
             {
-                var entryObject = Instantiate(entryPrefab, parent);
-                entryObject.GetComponent<TowerUpgradeEntry>().Initialize(item, item.name);
+                var entryObject = Instantiate(entryPrefab, content);
+                entryObject.GetComponent<TowerUpgradeEntry>().Initialize(item, item.upgradePrefab.name);
             }
         }
     }

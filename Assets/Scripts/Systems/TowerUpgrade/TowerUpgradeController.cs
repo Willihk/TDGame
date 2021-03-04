@@ -1,6 +1,7 @@
 ﻿using System;
 using Mirror;
 using TDGame.Building;
+using TDGame.Events.Base;
 using UnityEngine;
 
 namespace TDGame.Systems.TowerUpgrade
@@ -11,6 +12,9 @@ namespace TDGame.Systems.TowerUpgrade
 
         [SerializeField]
         private BuildingList prefabList;
+
+        [SerializeField]
+        private GameEvent<GameObject> gameEvent;
 
         private void Awake()
         {
@@ -31,7 +35,9 @@ namespace TDGame.Systems.TowerUpgrade
             var spawned = Instantiate(prefab);
             spawned.transform.position = oldGameObject.transform.position;
             spawned.transform.rotation = oldGameObject.transform.rotation;
-            
+
+            SelectionController.Instance.ChangeSelection(spawned);
+
             NetworkServer.Spawn(spawned, owner);
 
             NetworkServer.Destroy(oldGameObject);

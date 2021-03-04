@@ -389,7 +389,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1431124423}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999535
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2354,7 +2354,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27532fc7f8f85774386fd674a15e5375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeCircleMaterial: {fileID: 2100000, guid: ef353601c8a41974496f5f021f2ebca9, type: 2}
   cursorState: {fileID: 11400000, guid: dd6c8f789eb0a5841b07001f7eaf3474, type: 2}
   gameEvent: {fileID: 11400000, guid: fcd4c65abb720a444add42ce09c803fd, type: 2}
 --- !u!114 &1514074422
@@ -2424,7 +2423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionUI: {fileID: 1024269518}
   entryPrefab: {fileID: 1987223148508376800, guid: c0df05e89d00f1a40bd615314affd49b, type: 3}
-  parent: {fileID: 750992340}
+  content: {fileID: 750992340}
 --- !u!114 &1514074425
 MonoBehaviour:
   m_ObjectHideFlags: 0

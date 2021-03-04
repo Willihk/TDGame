@@ -120,7 +120,7 @@ MonoBehaviour:
   syncInterval: 0.1
   healthSystem: {fileID: 1672092839135950083}
   speed: 1.5
-  reachedEndDamage: 1
+  reachedEndDamage: 5
 --- !u!135 &2269779280510175309
 SphereCollider:
   m_ObjectHideFlags: 0

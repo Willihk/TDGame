@@ -1696,6 +1696,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5603730584830890896}
+  - component: {fileID: 2579140715289930493}
+  - component: {fileID: -7429397257486150205}
   m_Layer: 0
   m_Name: ArrowProjectile
   m_TagString: Untagged
@@ -1718,3 +1720,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2579140715289930493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155687850410582466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48d3ac1655cd4a0ab1d2cd07d908e911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &-7429397257486150205
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155687850410582466}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
