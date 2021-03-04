@@ -1,7 +1,6 @@
 ﻿using System;
 using Mirror;
 using TDGame.Building;
-using TDGame.Events.Base;
 using UnityEngine;
 
 namespace TDGame.Systems.TowerUpgrade
