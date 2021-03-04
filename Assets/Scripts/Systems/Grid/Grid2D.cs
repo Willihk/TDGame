@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using TDGame.Systems.Grid.Cell.Base;
 using TDGame.Systems.Grid.Cell.Implementations;
+using TDGame.Systems.Grid.Data;
 using UnityEngine;
 
 namespace TDGame.Systems.Grid
@@ -34,12 +36,22 @@ namespace TDGame.Systems.Grid
             }
         }
 
-        public void SetCell(int x, int y, BaseCell value)
+        public void SetCell(int x, int y, BaseCell newCell)
         {
             if (!IsValidPoint(x, y))
                 return;
             
-            grid[getIndex(x, y)] = value;
+            grid[getIndex(x, y)] = newCell;
+        }
+
+        public void SetAreaToCell(GridArea area, BaseCell newCell)
+        {
+            var points = area.GetPoints();
+
+            foreach (var point in points)
+            {
+                SetCell(point.x, point.y, newCell);
+            }
         }
 
         public bool SetCellIfEmpty(int x, int y, BaseCell newCell)
@@ -68,7 +80,7 @@ namespace TDGame.Systems.Grid
             return grid[getIndex(x, y)];
         }
 
-        public Vector3 GetWorldPosition(int x, int y)
+        public Vector3 GridToWorldPosition(int x, int y)
         {
             return new Vector3(x, 0, y) * cellSize;
         }
@@ -81,6 +93,24 @@ namespace TDGame.Systems.Grid
             }
             Debug.Log($"{x}-{y} is invalid");
             return false;
+        }
+
+        public bool IsAreaValid(GridArea area)
+        {
+            var points = area.GetPoints();
+
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (!IsValidPoint(points[i].x, points[i].y))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public bool IsAreaEmpty(GridArea area)
+        {
+            return area.GetPoints().All(p => IsCellEmpty(p.x, p.y));
         }
 
         public Vector2Int ConvertToGridPosition(Vector3 worldPosition)

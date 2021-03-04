@@ -1,10 +1,10 @@
-﻿using System;
-using Mirror;
+﻿using Mirror;
 using TDGame.Systems.Grid.Cell.Implementations;
 using TDGame.Systems.Grid.Cell.Interfaces;
+using TDGame.Systems.Grid.Data;
 using UnityEngine;
 
-namespace TDGame.Systems.Grid
+namespace TDGame.Systems.Grid.InGame
 {
     public class GridController : NetworkBehaviour
     {
@@ -36,15 +36,15 @@ namespace TDGame.Systems.Grid
         }
 
         [Server]
-        public void PlaceTowerOnGrid(GameObject tower)
+        public void PlaceTowerOnGrid(GameObject tower, GridArea area)
         {
             // TODO: check validity of placement
             var gridPos = mapGrid.ConvertToGridPosition(tower.transform.position);
-            towerGrid.SetCell(gridPos.x, gridPos.y, new GameObjectCell() {Owner = tower});
+            towerGrid.SetAreaToCell(area, new GameObjectCell() {Owner = tower});
 
             Rpc_AddTowerToGrid(tower);
         }
-
+        
         [ClientRpc]
         public void Rpc_AddTowerToGrid(GameObject tower)
         {
@@ -71,16 +71,16 @@ namespace TDGame.Systems.Grid
                     if (cell is GameObjectCell)
                         color = Color.red;
 
-                    Debug.DrawLine(mapGrid.GetWorldPosition(x, y), mapGrid.GetWorldPosition(x, y + 1), color, 1);
-                    Debug.DrawLine(mapGrid.GetWorldPosition(x, y), mapGrid.GetWorldPosition(x + 1, y), color, 1);
+                    Debug.DrawLine(mapGrid.GridToWorldPosition(x, y), mapGrid.GridToWorldPosition(x, y + 1), color, 1);
+                    Debug.DrawLine(mapGrid.GridToWorldPosition(x, y), mapGrid.GridToWorldPosition(x + 1, y), color, 1);
                 }
             }
 
-            Debug.DrawLine(mapGrid.GetWorldPosition(0, (int) gridSize.y),
-                mapGrid.GetWorldPosition((int) gridSize.x, (int) gridSize.y),
+            Debug.DrawLine(mapGrid.GridToWorldPosition(0, (int) gridSize.y),
+                mapGrid.GridToWorldPosition((int) gridSize.x, (int) gridSize.y),
                 Color.white, 100f);
-            Debug.DrawLine(mapGrid.GetWorldPosition((int) gridSize.x, 0),
-                mapGrid.GetWorldPosition((int) gridSize.x, (int) gridSize.y),
+            Debug.DrawLine(mapGrid.GridToWorldPosition((int) gridSize.x, 0),
+                mapGrid.GridToWorldPosition((int) gridSize.x, (int) gridSize.y),
                 Color.white, 100f);
         }
     }

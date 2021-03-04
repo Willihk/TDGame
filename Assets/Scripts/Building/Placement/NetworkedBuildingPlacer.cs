@@ -4,6 +4,9 @@ using Mirror;
 using TDGame.Cursor;
 using TDGame.Systems.Economy;
 using TDGame.Systems.Economy.Data;
+using TDGame.Systems.Grid;
+using TDGame.Systems.Grid.Data;
+using TDGame.Systems.Grid.InGame;
 using TDGame.Systems.Tower.Base;
 using Unity.Mathematics;
 using UnityEngine;
@@ -19,10 +22,9 @@ namespace TDGame.Building.Placement
     public class NetworkedBuildingPlacer : NetworkBehaviour
     {
         [SerializeField]
-        private bool isValidPlacement;
+        private bool isValidGridPosition;
 
-        [SerializeField]
-        private bool isColliding;
+        private GridAreaController areaController;
 
         [SerializeField]
         [SyncVar]
@@ -73,6 +75,7 @@ namespace TDGame.Building.Placement
             var model = Instantiate(prefabModel, transform);
             localMaterial = new Material(placementMaterial);
             ReplaceModelMaterialsRecursive(model.transform);
+            areaController = model.GetComponent<GridAreaController>();
         }
 
         private void ReplaceModelMaterialsRecursive(Transform transform)
@@ -91,19 +94,15 @@ namespace TDGame.Building.Placement
 
         private void Update()
         {
+            isValidGridPosition = GridController.Instance.CanPlaceTower(gameObject);
             if (isServer)
             {
                 canAfford = playerEconomy.CanAfford(price);
             }
             if (isClient)
             {
-                // TODO: Only set value when it's actually changed
-                isValidPlacement = !isColliding;
-
-                isValidPlacement = canAfford && isValidPlacement;
-
                 if (localMaterial)
-                    localMaterial.SetInt(IsValid, isValidPlacement ? 1 : 0);
+                    localMaterial.SetInt(IsValid, isValidGridPosition ? 1 : 0);
             }
 
             if (!hasAuthority)
@@ -120,22 +119,20 @@ namespace TDGame.Building.Placement
             {
                 var hitPoint = math.round(hit.point);
                 transform.position = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
-                isValidPlacement = true;
             }
             else
             {
-                isValidPlacement = false;
                 localMaterial.SetInt(IsValid, 0);
                 return;
             }
 
-            if (!isValidPlacement || isColliding)
+            if (!isValidGridPosition)
                 return;
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && canAfford)
             {
                 cursorState.State = CursorState.None;
-                Cmd_ConfirmPlacement(transform.position);
+                Cmd_ConfirmPlacement(areaController.area);
             }
         }
 
@@ -144,8 +141,6 @@ namespace TDGame.Building.Placement
         {
             this.prefabName = prefabName;
             price = buildingList.GetBuilding(prefabName).TryGetComponent(out BaseNetworkedTower turret) ? turret.price : 0;
-            
-            isValidPlacement = true;
         }
 
         [Command]
@@ -155,42 +150,22 @@ namespace TDGame.Building.Placement
         }
 
         [Command]
-        void Cmd_ConfirmPlacement(Vector3 position)
+        void Cmd_ConfirmPlacement(GridArea area)
         {
-            if (!isValidPlacement || isColliding || !playerEconomy.CanAfford(price))
+            if (!isValidGridPosition || !playerEconomy.CanAfford(price))
                 return;
 
             // TODO: Check for collisions based on position given by client
 
             var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
-            placedObject.transform.position = position;
+            placedObject.transform.position = area.GetWorldPosition();
 
             playerEconomy.Purchase(price);
 
             NetworkServer.Spawn(placedObject, netIdentity.connectionToClient);
+            GridController.Instance.PlaceTowerOnGrid(placedObject, area);
 
             NetworkServer.Destroy(gameObject);
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("TowerPlacementArea"))
-                return;
-            isColliding = true;
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            if (other.CompareTag("TowerPlacementArea"))
-                return;
-            isColliding = true;
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("TowerPlacementArea"))
-                return;
-            isColliding = false;
         }
     }
 }

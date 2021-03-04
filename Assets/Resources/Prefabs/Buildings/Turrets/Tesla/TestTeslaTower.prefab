@@ -602,6 +602,36 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 3117236172046791445}
   stats: []
+--- !u!1 &4645832721534905151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8033085242713524000}
+  m_Layer: 11
+  m_Name: Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8033085242713524000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4645832721534905151}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4887860187344704538}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4855526839087809882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,6 +1106,7 @@ GameObject:
   - component: {fileID: 4887860187344704538}
   - component: {fileID: 7162597222899963175}
   - component: {fileID: 586516966288553407}
+  - component: {fileID: 7909284047732167579}
   m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
@@ -1103,6 +1134,7 @@ Transform:
   - {fileID: 5235074805828339568}
   - {fileID: 4081860535997958457}
   - {fileID: 349230422335490598}
+  - {fileID: 8033085242713524000}
   m_Father: {fileID: 3797238412878974685}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1134,3 +1166,20 @@ MonoBehaviour:
   targetSystem: {fileID: 897508154960977226}
   vfxPrefab: {fileID: 3392494619207114379, guid: f1f579189009de5408128387024855b3, type: 3}
   effectPosition: {fileID: 4081860535997958457}
+--- !u!114 &7909284047732167579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848312922793457455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75869f8508234affbf0adeb06fd60d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originPoint: {fileID: 8033085242713524000}
+  area:
+    position: {x: 0, y: 0}
+    width: 4
+    height: 4
