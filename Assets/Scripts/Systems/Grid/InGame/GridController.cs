@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using TDGame.Map;
 using TDGame.Systems.Grid.Cell.Implementations;
 using TDGame.Systems.Grid.Cell.Interfaces;
 using TDGame.Systems.Grid.Data;
@@ -24,6 +25,31 @@ namespace TDGame.Systems.Grid.InGame
             towerGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
         }
 
+        void CreateGrid()
+        {
+            mapGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
+            towerGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
+        }
+
+        void RegisterObstacles()
+        {
+            var obstacles = FindObjectsOfType<GridObstacle>();
+            foreach (var gridObstacle in obstacles)
+            {
+                gridObstacle.area.position = mapGrid.WorldToGridPosition(gridObstacle.originPoint.position);
+                mapGrid.SetAreaToCell(gridObstacle.area, new GameObjectCell() {Owner = gridObstacle.gameObject});
+            }
+        }
+
+        public void OnMapLoaded()
+        {
+            var mapdetails = FindObjectOfType<MapDetailsController>();
+
+            gridSize = mapGrid.WorldToGridPosition(mapdetails.gridTopRightCorner.transform.position);
+            CreateGrid();
+            RegisterObstacles();
+        }
+
         private void Start()
         {
             InvokeRepeating(nameof(DrawGrid), 0, 1);
@@ -44,7 +70,7 @@ namespace TDGame.Systems.Grid.InGame
 
             Rpc_AddTowerToGrid(tower);
         }
-        
+
         [ClientRpc]
         public void Rpc_AddTowerToGrid(GameObject tower)
         {
