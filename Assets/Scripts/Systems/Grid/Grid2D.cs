@@ -92,7 +92,7 @@ namespace TDGame.Systems.Grid
 
         public bool IsValidGridPosition(int x, int y)
         {
-            if (x < sizeX && y < sizeY && x > 0 && y > 0)
+            if (x < sizeX && y < sizeY && x >= 0 && y >= 0)
             {
                 return true;
             }
