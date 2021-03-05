@@ -32,6 +32,7 @@ jobs:
       - uses: game-ci/unity-test-runner@v2
         id: tests
         with:
+          unityVersion: 2020.2.3f1
           projectPath: ${{ matrix.projectPath }}
           testMode: ${{ matrix.testMode }}
           artifactsPath: ${{ matrix.testMode }}-artifacts
