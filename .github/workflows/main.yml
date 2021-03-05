@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         projectPath:
-          - TDGame
+          - .
         testMode:
           - playmode
           - editmode
