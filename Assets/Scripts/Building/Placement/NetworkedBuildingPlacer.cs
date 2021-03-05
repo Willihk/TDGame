@@ -94,13 +94,14 @@ namespace TDGame.Building.Placement
 
         private void Update()
         {
-            isValidGridPosition = GridController.Instance.CanPlaceTower(gameObject);
             if (isServer)
             {
                 canAfford = playerEconomy.CanAfford(price);
             }
             if (isClient)
             {
+                isValidGridPosition = GridController.Instance.CanPlaceTower(gameObject, areaController.area);
+
                 if (localMaterial)
                     localMaterial.SetInt(IsValid, isValidGridPosition ? 1 : 0);
             }
@@ -152,13 +153,15 @@ namespace TDGame.Building.Placement
         [Command]
         void Cmd_ConfirmPlacement(GridArea area)
         {
-            if (!isValidGridPosition || !playerEconomy.CanAfford(price))
+            if (!GridController.Instance.CanPlaceTower(gameObject, area) || !playerEconomy.CanAfford(price))
                 return;
 
             // TODO: Check for collisions based on position given by client
 
             var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
-            placedObject.transform.position = area.GetWorldPosition();
+
+            var worldSize = area.ConvertToWorldSize();
+            placedObject.transform.position = area.GetWorldPosition() + (new Vector3(worldSize.x, 0, worldSize.y) * 0.5f);
 
             playerEconomy.Purchase(price);
 

@@ -29,10 +29,10 @@ namespace TDGame.Systems.Grid.InGame
             InvokeRepeating(nameof(DrawGrid), 0, 1);
         }
 
-        public bool CanPlaceTower(GameObject tower)
+        public bool CanPlaceTower(GameObject tower, GridArea area)
         {
             var gridPos = mapGrid.ConvertToGridPosition(tower.transform.position);
-            return mapGrid.IsCellEmpty(gridPos.x, gridPos.y) && towerGrid.IsCellEmpty(gridPos.x, gridPos.y);
+            return mapGrid.IsAreaEmpty(area) && towerGrid.IsAreaEmpty(area);
         }
 
         [Server]
