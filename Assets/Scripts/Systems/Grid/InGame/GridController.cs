@@ -31,7 +31,7 @@ namespace TDGame.Systems.Grid.InGame
 
         public bool CanPlaceTower(GameObject tower, GridArea area)
         {
-            var gridPos = mapGrid.ConvertToGridPosition(tower.transform.position);
+            var gridPos = mapGrid.WorldToGridPosition(tower.transform.position);
             return mapGrid.IsAreaEmpty(area) && towerGrid.IsAreaEmpty(area);
         }
 
@@ -39,7 +39,7 @@ namespace TDGame.Systems.Grid.InGame
         public void PlaceTowerOnGrid(GameObject tower, GridArea area)
         {
             // TODO: check validity of placement
-            var gridPos = mapGrid.ConvertToGridPosition(tower.transform.position);
+            var gridPos = mapGrid.WorldToGridPosition(tower.transform.position);
             towerGrid.SetAreaToCell(area, new GameObjectCell() {Owner = tower});
 
             Rpc_AddTowerToGrid(tower);
@@ -51,7 +51,7 @@ namespace TDGame.Systems.Grid.InGame
             if (isServer)
                 return;
 
-            var gridPos = mapGrid.ConvertToGridPosition(tower.transform.position);
+            var gridPos = mapGrid.WorldToGridPosition(tower.transform.position);
             towerGrid.SetCell(gridPos.x, gridPos.y, new GameObjectCell() {Owner = tower});
         }
 

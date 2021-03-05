@@ -11,7 +11,9 @@ namespace TDGame.Systems.Grid
     {
         public BaseCell[] grid;
 
-        private float cellSize = 0.5f;
+        public float CellSize => cellSize;
+
+        private readonly float cellSize = 0.5f;
 
         private int sizeX;
         private int sizeY;
@@ -28,6 +30,7 @@ namespace TDGame.Systems.Grid
             this.cellSize = cellSize;
         }
 
+
         public void SetEmpty()
         {
             for (var i = 0; i < grid.Length; i++)
@@ -36,12 +39,14 @@ namespace TDGame.Systems.Grid
             }
         }
 
-        public void SetCell(int x, int y, BaseCell newCell)
+        public bool SetCell(int x, int y, BaseCell newCell)
         {
-            if (!IsValidPoint(x, y))
-                return;
-            
+            if (!IsValidGridPosition(x, y))
+                return false;
+
             grid[getIndex(x, y)] = newCell;
+
+            return true;
         }
 
         public void SetAreaToCell(GridArea area, BaseCell newCell)
@@ -65,7 +70,7 @@ namespace TDGame.Systems.Grid
 
         public bool IsCellEmpty(int x, int y)
         {
-            if (!IsValidPoint(x, y))
+            if (!IsValidGridPosition(x, y))
                 return false;
 
             var cell = grid[getIndex(x, y)];
@@ -74,9 +79,9 @@ namespace TDGame.Systems.Grid
 
         public BaseCell GetCell(int x, int y)
         {
-            if (!IsValidPoint(x, y))
+            if (!IsValidGridPosition(x, y))
                 return null;
-            
+
             return grid[getIndex(x, y)];
         }
 
@@ -85,13 +90,13 @@ namespace TDGame.Systems.Grid
             return new Vector3(x, 0, y) * cellSize;
         }
 
-        bool IsValidPoint(int x, int y)
+        public bool IsValidGridPosition(int x, int y)
         {
             if (x < sizeX && y < sizeY && x > 0 && y > 0)
             {
                 return true;
             }
-            Debug.Log($"{x}-{y} is invalid");
+
             return false;
         }
 
@@ -101,7 +106,7 @@ namespace TDGame.Systems.Grid
 
             for (int i = 0; i < points.Length; i++)
             {
-                if (!IsValidPoint(points[i].x, points[i].y))
+                if (!IsValidGridPosition(points[i].x, points[i].y))
                     return false;
             }
 
@@ -113,7 +118,7 @@ namespace TDGame.Systems.Grid
             return area.GetPoints().All(p => IsCellEmpty(p.x, p.y));
         }
 
-        public Vector2Int ConvertToGridPosition(Vector3 worldPosition)
+        public Vector2Int WorldToGridPosition(Vector3 worldPosition)
         {
             int x = Mathf.FloorToInt(worldPosition.x / cellSize);
             int y = Mathf.FloorToInt(worldPosition.z / cellSize);

@@ -15,7 +15,7 @@ namespace TDGame.Systems.Grid.InGame
         {
             var worldPosition = originPoint.position;
 
-            area.position = GridController.Instance.towerGrid.ConvertToGridPosition(worldPosition);
+            area.position = GridController.Instance.towerGrid.WorldToGridPosition(worldPosition);
         }
 
         void OnDrawGizmosSelected()
