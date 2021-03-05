@@ -19,6 +19,7 @@ namespace Tests.Systems.Grid
         [TestCase(20, 13, 3, 4, true)]
         [TestCase(20, 13, 20, 13, false)]
         [TestCase(200, 13, 123, 12, true)]
+        [TestCase(120, 120, 0, 0, true)]
         public void TestGridIsValidPoint(int sizeX, int sizeY, int x, int y, bool expected)
         {
             var grid = new Grid2D(sizeX, sizeY);
