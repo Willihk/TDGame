@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mirror;
 using TDGame.Events.Base;
 using UnityEngine;
@@ -17,15 +18,9 @@ namespace TDGame.Map
 
         GameObject mapObject;
 
-        public override void OnStartClient()
+        private void Start()
         {
             mapObject = Instantiate(mapPrefab);
-            mapLoadedEvent.Raise();
-        }
-
-        public override void OnStartServer()
-        {
-            base.OnStartServer();
             mapLoadedEvent.Raise();
         }
 
