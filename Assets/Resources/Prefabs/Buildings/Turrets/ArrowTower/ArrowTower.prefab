@@ -1588,7 +1588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Projectile Speed
-    BaseValue: 12
+    BaseValue: 6
     Cap: 0
 --- !u!1 &6173804767927434880
 GameObject:
