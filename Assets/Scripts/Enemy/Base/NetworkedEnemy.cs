@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace TDGame.Enemy.Base
 {
+    [Obsolete("Getting replaced by new enemy system")]
     public class NetworkedEnemy : NetworkBehaviour
     {
         [SerializeField]

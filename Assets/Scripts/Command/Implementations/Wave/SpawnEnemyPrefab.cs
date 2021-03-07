@@ -8,15 +8,15 @@ using Mirror;
 
 namespace TDGame.Command.Implementations.Wave
 {
-    public class SpawnPrefab : WaveCommand
+    public class SpawnEnemyPrefab : WaveCommand
     {
-        GameObject prefab;
-        Transform holder;
+        private GameObject prefab;
+        private Transform holder;
 
-        Vector3 startPosition;
-        List<Vector3> waypoints;
+        private Vector3 startPosition;
+        private List<Vector3> waypoints;
 
-        public SpawnPrefab(GameObject prefab, Transform holder, Vector3 startPosition, List<Vector3> waypoints)
+        public SpawnEnemyPrefab(GameObject prefab, Transform holder, Vector3 startPosition, List<Vector3> waypoints)
         {
             this.prefab = prefab;
             this.holder = holder;

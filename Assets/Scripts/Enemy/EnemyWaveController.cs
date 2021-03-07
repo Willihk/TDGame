@@ -79,18 +79,18 @@ namespace TDGame.Enemy
                 case 7:
                     for (int i = 0; i < (waveEnemyCount / 3); i++)
                     {
-                        commands.Enqueue(new SpawnPrefab(spider, enemyHolder, waypoints[0], waypoints));
+                        commands.Enqueue(new SpawnEnemyPrefab(spider, enemyHolder, waypoints[0], waypoints));
                         spawnDelay = 0.25f;
                     }
 
                     break;
                 case 10:
-                    commands.Enqueue(new SpawnPrefab(boss, enemyHolder, waypoints[0], waypoints));
+                    commands.Enqueue(new SpawnEnemyPrefab(boss, enemyHolder, waypoints[0], waypoints));
                     break;
                 default:
                     for (int i = 0; i < waveEnemyCount; i++)
                     {
-                        commands.Enqueue(new SpawnPrefab(prefab, enemyHolder, waypoints[0], waypoints));
+                        commands.Enqueue(new SpawnEnemyPrefab(prefab, enemyHolder, waypoints[0], waypoints));
                     }
 
                     break;
