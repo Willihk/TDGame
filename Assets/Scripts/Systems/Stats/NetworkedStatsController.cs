@@ -24,8 +24,8 @@ namespace TDGame.Systems.Stats
 
         public StatWrapper GetStatByName(string name)
         {
-            if (stats.Any(x => x.stat.Name == name))
-                return stats.First(x => x.name == name);
+            if (stats.Any(x => string.Equals(x.stat.Name, name, StringComparison.CurrentCultureIgnoreCase)))
+                return stats.First(x => string.Equals(x.name, name, StringComparison.CurrentCultureIgnoreCase));
 
             return null;
         }
