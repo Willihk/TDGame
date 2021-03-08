@@ -9,6 +9,7 @@ namespace TDGame.Systems.Enemy.ReachedEnd
 {
     public class ReachedEndController : MonoBehaviour
     {
+        [SerializeField]
         private NetworkedStatsController statsController;
         private StatWrapper reachedEndDamageStat;
         

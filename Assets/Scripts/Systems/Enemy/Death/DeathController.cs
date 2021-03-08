@@ -8,6 +8,7 @@ namespace TDGame.Systems.Enemy.Death
 {
     public class DeathController : MonoBehaviour
     {
+        [SerializeField]
         private NetworkedStatsController statsController;
         private StatWrapper currencyRewardStat;
 

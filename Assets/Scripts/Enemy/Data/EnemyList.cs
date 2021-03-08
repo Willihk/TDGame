@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace TDGame.Enemy.Data
@@ -17,6 +18,11 @@ namespace TDGame.Enemy.Data
         public GameObject GetEnemy(int index)
         {
             return prefabs[index];
+        }
+        
+        public GameObject GetEnemy(string prefabName)
+        {
+            return prefabs.First(x => x.name == prefabName);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using TDGame.Enemy.Base;
+using TDGame.Systems.Enemy.DamageReceiver.Base;
 using UnityEngine;
 
 namespace TDGame.Systems.Projectiles
@@ -25,9 +26,9 @@ namespace TDGame.Systems.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.TryGetComponent(out NetworkedEnemy enemy))
+            if (other.gameObject.TryGetComponent(out BaseDamageReceiver damageReceiver))
             {
-                enemy.Damage(hitDamage);
+                damageReceiver.Damage(hitDamage);
                 Destroy(gameObject);
             }
         }

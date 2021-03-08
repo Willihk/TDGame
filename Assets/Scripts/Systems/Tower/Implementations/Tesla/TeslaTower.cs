@@ -2,6 +2,7 @@
 using System.Linq;
 using Mirror;
 using TDGame.Enemy.Base;
+using TDGame.Systems.Enemy.DamageReceiver.Base;
 using TDGame.Systems.Stats;
 using TDGame.Systems.Targeting.Implementations;
 using TDGame.Systems.Tower.Base;
@@ -42,9 +43,9 @@ namespace TDGame.Systems.Tower.Implementations.Tesla
         {
             nexthit = Time.time + hitRateStat.stat.Value;
 
-            foreach (var target in targetSystem.targets.Select(x => x.GetComponent<NetworkedEnemy>()))
+            foreach (var damageReceiver in targetSystem.targets.Select(x => x.GetComponent<BaseDamageReceiver>()))
             {
-                target.Damage(hitDamageStat.stat.Value);
+                damageReceiver.Damage(hitDamageStat.stat.Value);
             }
 
             Rpc_DummyHit();

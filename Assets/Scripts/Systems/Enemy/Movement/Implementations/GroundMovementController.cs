@@ -11,6 +11,9 @@ namespace TDGame.Systems.Enemy.Movement.Implementations
     {
         private StatWrapper speedStat;
 
+        [SerializeField]
+        private string speedStatName = "Speed";
+
         [SyncVar]
         private Vector3 currentWaypoint;
 
@@ -25,7 +28,7 @@ namespace TDGame.Systems.Enemy.Movement.Implementations
 
         private void Start()
         {
-            speedStat = statsController.GetStatByName("Speed");
+            speedStat = statsController.GetStatByName(speedStatName);
             currentWaypoint = waypoints[0];
         }
 

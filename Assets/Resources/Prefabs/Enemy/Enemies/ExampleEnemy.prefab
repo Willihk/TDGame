@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Speed
-    BaseValue: 5
+    BaseValue: 1.5
     Cap: 0
 --- !u!114 &7987993410268024567
 MonoBehaviour:
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: CurrencyReward
-    BaseValue: 3
+    BaseValue: 1
     Cap: 0
 --- !u!1 &1672092838991491432
 GameObject:
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 110647120914065053}
   - component: {fileID: 4230109503580578498}
   m_Layer: 0
-  m_Name: New Enemy
+  m_Name: ExampleEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,6 +246,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   statsController: {fileID: 1941258084243794732}
+  speedStatName: Speed
   reachedEndEvent:
     m_PersistentCalls:
       m_Calls:
@@ -290,6 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb07f812a884e8188d6d995db4ab557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsController: {fileID: 1941258084243794732}
   statName: ReachedEndDamage
 --- !u!114 &4230109503580578498
 MonoBehaviour:
@@ -303,6 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6f2e6443ff47a4a60fb19659e44fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsController: {fileID: 1941258084243794732}
   statName: CurrencyReward
 --- !u!1 &5674486929898313883
 GameObject:
