@@ -11,10 +11,13 @@ namespace TDGame.Systems.Enemy.ReachedEnd
     {
         private NetworkedStatsController statsController;
         private StatWrapper reachedEndDamageStat;
+        
+        [SerializeField]
+        private string statName = "ReachedEndDamage";
 
         private void Start()
         {
-            reachedEndDamageStat = statsController.GetStatByName("ReachedEndDamage");
+            reachedEndDamageStat = statsController.GetStatByName(statName);
         }
 
         public void ReachedEnd()

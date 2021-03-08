@@ -11,9 +11,12 @@ namespace TDGame.Systems.Enemy.Death
         private NetworkedStatsController statsController;
         private StatWrapper currencyRewardStat;
 
+        [SerializeField]
+        private string statName = "CurrencyReward";
+
         private void Start()
         {
-            currencyRewardStat = statsController.GetStatByName("ReachedEndDamage");
+            currencyRewardStat = statsController.GetStatByName(statName);
         }
         
         public void OnDeath()
