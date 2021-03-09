@@ -32,7 +32,6 @@ namespace TDGame.Systems.Health.Unit
         public void Damage(float amount)
         {
             health -= amount;
-            Debug.Log(health);
             OnHealthChanged.Invoke();
 
             if (health <= 0)
