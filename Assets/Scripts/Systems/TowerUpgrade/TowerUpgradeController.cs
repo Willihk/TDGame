@@ -34,10 +34,17 @@ namespace TDGame.Systems.TowerUpgrade
             spawned.transform.rotation = oldGameObject.transform.rotation;
 
             SelectionController.Instance.ChangeSelection(spawned);
+            TargetUpdateSelection(owner, spawned);
 
             NetworkServer.Spawn(spawned, owner);
 
             NetworkServer.Destroy(oldGameObject);
+        }
+
+        [TargetRpc]
+        private void TargetUpdateSelection(NetworkConnection target, GameObject tower)
+        {
+            SelectionController.Instance.ChangeSelection(tower);
         }
     }
 }
