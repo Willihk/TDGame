@@ -35,6 +35,7 @@ namespace TDGame.Building
         {
             Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
             if (Input.GetMouseButtonDown(0) && cursorState.State == CursorState.None &&
+                !EventSystem.current.IsPointerOverGameObject() &&
                 Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("SelectionHitbox")))
             {
                 GameObject hitPoint = hit.collider.gameObject;

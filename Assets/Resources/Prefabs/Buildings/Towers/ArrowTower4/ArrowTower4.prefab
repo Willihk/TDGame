@@ -2632,6 +2632,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &3427500816304821110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2668955650705567324}
+  m_Layer: 11
+  m_Name: Origin Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2668955650705567324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3427500816304821110}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7227605566838503761}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4837759597673307445
 GameObject:
   m_ObjectHideFlags: 0
@@ -4646,7 +4676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7227605566838503761}
-  - component: {fileID: 1419268372095072351}
+  - component: {fileID: 1589469591326724385}
   m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
@@ -4670,22 +4700,27 @@ Transform:
   - {fileID: 1437051842166715959}
   - {fileID: 6149578672935697158}
   - {fileID: 6837872316127328209}
+  - {fileID: 2668955650705567324}
   m_Father: {fileID: 4478803944361082591}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1419268372095072351
-BoxCollider:
+--- !u!114 &1589469591326724385
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5376629865260147096}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 3, z: 2}
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75869f8508234affbf0adeb06fd60d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originPoint: {fileID: 2668955650705567324}
+  area:
+    position: {x: 0, y: 0}
+    width: 4
+    height: 4
 --- !u!1 &6558490411000067878
 GameObject:
   m_ObjectHideFlags: 0
@@ -4816,10 +4851,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   DisplayInfo:
-    Name: Sentry Tower IV
+    Name: Sentry Tower
     Description: 
     Icon: {fileID: 0}
-  price: 400
+  price: 720
   targetSystem: {fileID: 4274996522539365965}
   projectilePrefab: {fileID: 1155687850410582466, guid: 57eb5a246f8a7a049b7ac1353c82cddc, type: 3}
   hitDamage: {fileID: 653461941531014866}

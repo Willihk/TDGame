@@ -1,3 +1,4 @@
+using TDGame.Systems.Tower.Base;
 using TDGame.Systems.TowerUpgrade;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ namespace TDGame.Building
             foreach (var item in gameObject.GetComponents<UpgradableTower>())
             {
                 var entryObject = Instantiate(entryPrefab, content);
-                entryObject.GetComponent<TowerUpgradeEntry>().Initialize(item, item.upgradePrefab.name);
+                entryObject.GetComponent<TowerUpgradeEntry>().Initialize(item, item.upgradePrefab.name, item.upgradePrefab.TryGetComponent(out BaseNetworkedTower towerEntry) ? towerEntry.price - (gameObject.TryGetComponent(out BaseNetworkedTower tower) ? tower.price : 0) : 0);
             }
         }
     }
