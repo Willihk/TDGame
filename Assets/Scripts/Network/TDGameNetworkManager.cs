@@ -3,9 +3,9 @@ using Mirror;
 using TDGame.Network.Player;
 using System.Collections.Generic;
 using TDGame.Building;
-using TDGame.Enemy.Data;
 using TDGame.Network.EventBinding;
 using TDGame.Network.Lobby;
+using TDGame.Systems.Enemy.Data;
 using UnityEngine.SceneManagement;
 
 namespace TDGame.Network
@@ -41,15 +41,15 @@ namespace TDGame.Network
             var playerData = new PlayerData
                 {Name = "Name " + connectionRelations[conn], Id = connectionRelations[conn]};
 
-            GameObject gameobject = Instantiate(roomPlayerPrefab.gameObject);
-            var lobbyPlayer = gameobject.GetComponent<NetworkedLobbyPlayer>();
+            GameObject roomObject = Instantiate(roomPlayerPrefab.gameObject);
+            var lobbyPlayer = roomObject.GetComponent<NetworkedLobbyPlayer>();
             lobbyPlayer.Setup(playerData);
 
 
             connectedPlayers.Add(connectionRelations[conn], playerData);
             eventBinder.ServerOnClientConnect(conn);
 
-            return gameobject;
+            return roomObject;
         }
 
         public override void OnRoomServerConnect(NetworkConnection conn)

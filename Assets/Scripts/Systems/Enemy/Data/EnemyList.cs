@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace TDGame.Enemy.Data
+namespace TDGame.Systems.Enemy.Data
 {
     [CreateAssetMenu(fileName = "EnemyList", menuName = "Data/Enemy/EnemyList", order = 0)]
     public class EnemyList : ScriptableObject

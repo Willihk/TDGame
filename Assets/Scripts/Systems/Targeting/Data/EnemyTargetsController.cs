@@ -9,6 +9,7 @@ namespace TDGame.Systems.Targeting.Data
         public static EnemyTargetsController Instance;
 
         public List<GameObject> targets;
+        
         private void Awake()
         {
             Instance = this;

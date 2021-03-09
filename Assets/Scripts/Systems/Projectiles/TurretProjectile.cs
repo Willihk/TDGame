@@ -1,5 +1,4 @@
-﻿using TDGame.Enemy.Base;
-using TDGame.Systems.Enemy.DamageReceiver.Base;
+﻿using TDGame.Systems.Enemy.DamageReceiver.Base;
 using UnityEngine;
 
 namespace TDGame.Systems.Projectiles

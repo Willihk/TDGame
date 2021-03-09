@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TDGame.Systems.Targeting.Data;
-using TDGame.Enemy.Base;
 using Mirror;
 using TDGame.Systems.Enemy.Movement.Base;
 

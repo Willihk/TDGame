@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using TDGame.Command.Implementations.Wave;
-using TDGame.Enemy.Base;
-using TDGame.Enemy.Data;
 using TDGame.Events.Base;
 using TDGame.Map;
+using TDGame.Systems.Enemy.Data;
 using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
-namespace TDGame.Enemy
+namespace TDGame.Systems.Enemy.Wave
 {
     public class EnemyWaveController : NetworkBehaviour
     {
