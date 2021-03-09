@@ -1,4 +1,5 @@
 ﻿using System;
+using TDGame.Systems.Tower.Base;
 using UnityEngine;
 
 namespace TDGame.UI.BuildingList
@@ -22,7 +23,10 @@ namespace TDGame.UI.BuildingList
             for (int i = 0; i < buildings.Count; i++)
             {
                 var entryObject = Instantiate(entryPrefab, content);
-                entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name,buildings[i].name);
+                if (buildings[i].TryGetComponent(out BaseNetworkedTower component))
+                    entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name, component.DisplayInfo.Name);
+                else
+                    entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name, buildings[i].name);
             }
         }
     }

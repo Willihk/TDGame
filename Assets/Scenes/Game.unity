@@ -388,7 +388,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1431124424}
   m_HandleRect: {fileID: 1431124423}
   m_Direction: 2
-  m_Value: -0.01754386
+  m_Value: 0
   m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2436,7 +2436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionUI: {fileID: 1024269518}
   entryPrefab: {fileID: 1987223148508376800, guid: c0df05e89d00f1a40bd615314affd49b, type: 3}
-  parent: {fileID: 750992340}
+  content: {fileID: 750992340}
 --- !u!114 &1514074425
 MonoBehaviour:
   m_ObjectHideFlags: 0
