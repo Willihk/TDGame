@@ -88,11 +88,7 @@ namespace TDGame.Systems.Grid.InGame
                 for (int y = 0; y < gridSize.y; y++)
                 {
                     var cell = towerGrid.GetCell(x, y);
-                    if (cell is IDisplayCell)
-                    {
-                        Debug.Log($"{x}:{y} is displayed as {cell}");
-                    }
-
+                    
                     var color = Color.white;
                     if (cell is GameObjectCell)
                         color = Color.red;
