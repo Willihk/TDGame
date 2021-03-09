@@ -33,7 +33,6 @@ namespace TDGame.Systems.TowerUpgrade
             spawned.transform.position = oldGameObject.transform.position;
             spawned.transform.rotation = oldGameObject.transform.rotation;
 
-            SelectionController.Instance.ChangeSelection(spawned);
             TargetUpdateSelection(owner, spawned);
 
             NetworkServer.Spawn(spawned, owner);
