@@ -29,6 +29,10 @@ namespace TDGame.Systems.Enemy.Movement.Implementations
         private void Start()
         {
             speedStat = statsController.GetStatByName(speedStatName);
+        }
+
+        public override void OnStartServer()
+        {
             currentWaypoint = waypoints[0];
         }
 
