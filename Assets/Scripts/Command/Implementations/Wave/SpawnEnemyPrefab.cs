@@ -1,22 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TDGame.Systems.Targeting.Data;
-using TDGame.Enemy.Base;
 using Mirror;
+using TDGame.Systems.Enemy.Manager;
+using TDGame.Systems.Enemy.Movement.Base;
 
 
 namespace TDGame.Command.Implementations.Wave
 {
-    public class SpawnPrefab : WaveCommand
+    public class SpawnEnemyPrefab : WaveCommand
     {
-        GameObject prefab;
-        Transform holder;
+        private GameObject prefab;
+        private Transform holder;
 
-        Vector3 startPosition;
-        List<Vector3> waypoints;
+        private Vector3 startPosition;
+        private List<Vector3> waypoints;
 
-        public SpawnPrefab(GameObject prefab, Transform holder, Vector3 startPosition, List<Vector3> waypoints)
+        public SpawnEnemyPrefab(GameObject prefab, Transform holder, Vector3 startPosition, List<Vector3> waypoints)
         {
             this.prefab = prefab;
             this.holder = holder;
@@ -30,11 +30,11 @@ namespace TDGame.Command.Implementations.Wave
 
             spawnedObject.transform.position = startPosition;
 
-            spawnedObject.GetComponent<NetworkedEnemy>().Setup(waypoints);
+            spawnedObject.GetComponent<BaseMovementController>().Setup(waypoints);
 
             NetworkServer.Spawn(spawnedObject);
 
-            EnemyTargetsController.Instance.targets.Add(spawnedObject);
+            EnemyManager.Instance.RegisterTarget(spawnedObject);
         }
     }
 }

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using TDGame.Command.Implementations.Wave;
-using TDGame.Enemy.Base;
-using TDGame.Enemy.Data;
 using TDGame.Events.Base;
 using TDGame.Map;
-using TDGame.Systems.Targeting.Data;
+using TDGame.Systems.Enemy.Data;
+using TDGame.Systems.Enemy.Manager;
 using UnityEngine;
 
-namespace TDGame.Enemy
+namespace TDGame.Systems.Enemy.Wave
 {
     public class EnemyWaveController : NetworkBehaviour
     {
@@ -52,7 +51,7 @@ namespace TDGame.Enemy
             if (!isServer)
                 return;
 
-            if (EnemyTargetsController.Instance.targets.Count == 0 && AwaitingNextWave)
+            if (EnemyManager.Instance.targets.Count == 0 && AwaitingNextWave)
             {
                 AwaitingNextWave = false;
                 StartCoroutine(nameof(SpawnTestEnemies));
@@ -79,18 +78,18 @@ namespace TDGame.Enemy
                 case 7:
                     for (int i = 0; i < (waveEnemyCount / 3); i++)
                     {
-                        commands.Enqueue(new SpawnPrefab(spider, enemyHolder, waypoints[0], waypoints));
+                        commands.Enqueue(new SpawnEnemyPrefab(spider, enemyHolder, waypoints[0], waypoints));
                         spawnDelay = 0.25f;
                     }
 
                     break;
                 case 10:
-                    commands.Enqueue(new SpawnPrefab(boss, enemyHolder, waypoints[0], waypoints));
+                    commands.Enqueue(new SpawnEnemyPrefab(boss, enemyHolder, waypoints[0], waypoints));
                     break;
                 default:
                     for (int i = 0; i < waveEnemyCount; i++)
                     {
-                        commands.Enqueue(new SpawnPrefab(prefab, enemyHolder, waypoints[0], waypoints));
+                        commands.Enqueue(new SpawnEnemyPrefab(prefab, enemyHolder, waypoints[0], waypoints));
                     }
 
                     break;

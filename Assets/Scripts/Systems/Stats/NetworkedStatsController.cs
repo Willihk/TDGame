@@ -25,7 +25,7 @@ namespace TDGame.Systems.Stats
         public StatWrapper GetStatByName(string name)
         {
             if (stats.Any(x => x.stat.Name == name))
-                return stats.First(x => x.name == name);
+                return stats.First(x => x.stat.Name == name);
 
             return null;
         }

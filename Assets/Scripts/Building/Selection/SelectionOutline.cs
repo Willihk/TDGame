@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TDGame.Building
+namespace TDGame.Building.Selection
 {
     public class SelectionOutline : MonoBehaviour
     {

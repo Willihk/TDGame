@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
 namespace TDGame.Systems.TargetAcquisition

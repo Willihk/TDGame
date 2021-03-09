@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using TDGame.Systems.TowerUpgrade;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TDGame.Systems.TowerUpgrade;
-using TDGame.Events.Base;
 
-namespace TDGame
+namespace TDGame.UI.TowerUpgrade
 {
     public class TowerUpgradeEntry : MonoBehaviour
     {

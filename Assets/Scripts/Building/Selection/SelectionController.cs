@@ -3,9 +3,8 @@ using TDGame.Cursor;
 using TDGame.Events.Base;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-namespace TDGame.Building
+namespace TDGame.Building.Selection
 {
     public class SelectionController : MonoBehaviour
     {
