@@ -1,14 +1,12 @@
-using Mirror;
 using System.Collections.Generic;
-using System.Linq;
-using TDGame.Enemy.Base;
+using Mirror;
 using TDGame.Systems.Projectiles;
 using TDGame.Systems.Stats;
 using TDGame.Systems.Targeting.Implementations;
 using TDGame.Systems.Tower.Base;
 using UnityEngine;
 
-namespace TDGame
+namespace TDGame.Systems.Tower.Implementations
 {
     public class MultipleProjectileTower : BaseNetworkedTower
     {

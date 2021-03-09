@@ -1,8 +1,9 @@
 using TDGame.Systems.Tower.Base;
 using TDGame.Systems.TowerUpgrade;
+using TDGame.UI.TowerUpgrade;
 using UnityEngine;
 
-namespace TDGame.Building
+namespace TDGame.Building.Selection
 {
     public class SelectionUIController : MonoBehaviour
     {
