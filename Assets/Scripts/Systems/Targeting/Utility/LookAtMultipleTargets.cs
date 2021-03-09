@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TDGame.Systems.Targeting.Implementations;
 using UnityEngine;
 
-namespace TDGame
+namespace TDGame.Systems.Targeting.Utility
 {
     public class LookAtMultipleTargets : MonoBehaviour
     {
