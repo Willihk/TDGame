@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TDGame.Systems.Targeting.Data;
 using Mirror;
+using TDGame.Systems.Enemy.Manager;
 using TDGame.Systems.Enemy.Movement.Base;
 
 
@@ -34,7 +34,7 @@ namespace TDGame.Command.Implementations.Wave
 
             NetworkServer.Spawn(spawnedObject);
 
-            EnemyTargetsController.Instance.targets.Add(spawnedObject);
+            EnemyManager.Instance.RegisterTarget(spawnedObject);
         }
     }
 }

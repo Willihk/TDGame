@@ -6,7 +6,7 @@ using TDGame.Command.Implementations.Wave;
 using TDGame.Events.Base;
 using TDGame.Map;
 using TDGame.Systems.Enemy.Data;
-using TDGame.Systems.Targeting.Data;
+using TDGame.Systems.Enemy.Manager;
 using UnityEngine;
 
 namespace TDGame.Systems.Enemy.Wave
@@ -51,7 +51,7 @@ namespace TDGame.Systems.Enemy.Wave
             if (!isServer)
                 return;
 
-            if (EnemyTargetsController.Instance.targets.Count == 0 && AwaitingNextWave)
+            if (EnemyManager.Instance.targets.Count == 0 && AwaitingNextWave)
             {
                 AwaitingNextWave = false;
                 StartCoroutine(nameof(SpawnTestEnemies));

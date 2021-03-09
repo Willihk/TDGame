@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TDGame.Systems.Enemy.Manager;
 using TDGame.Systems.Stats;
-using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
 namespace TDGame.Systems.TargetAcquisition.Implementations
@@ -14,7 +14,7 @@ namespace TDGame.Systems.TargetAcquisition.Implementations
         public override IEnumerable<GameObject> GetAvailableTargets()
         {
             var localPosition = transform.position;
-            return EnemyTargetsController.Instance.GetTargets().Where(x => Vector3.Distance(x.transform.position, localPosition) <= rangeStat.stat.Value);
+            return EnemyManager.Instance.GetTargets().Where(x => Vector3.Distance(x.transform.position, localPosition) <= rangeStat.stat.Value);
         }
 
         public override bool IsValidTarget(GameObject target)

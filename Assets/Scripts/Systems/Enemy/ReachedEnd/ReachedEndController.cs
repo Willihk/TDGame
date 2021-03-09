@@ -1,8 +1,8 @@
 ﻿using System;
 using Mirror;
+using TDGame.Systems.Enemy.Manager;
 using TDGame.Systems.Health.Global;
 using TDGame.Systems.Stats;
-using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
 namespace TDGame.Systems.Enemy.ReachedEnd
@@ -24,7 +24,7 @@ namespace TDGame.Systems.Enemy.ReachedEnd
         public void ReachedEnd()
         {
             GlobalHealthSystem.Instance.ReduceHealth(reachedEndDamageStat.stat.Value);
-            EnemyTargetsController.Instance.targets.Remove(gameObject);
+            EnemyManager.Instance.UnregisterTarget(gameObject);
             NetworkServer.Destroy(gameObject);
         }
     }

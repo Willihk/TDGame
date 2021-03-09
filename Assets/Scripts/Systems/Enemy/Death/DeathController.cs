@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using TDGame.Systems.Economy;
+using TDGame.Systems.Enemy.Manager;
 using TDGame.Systems.Stats;
-using TDGame.Systems.Targeting.Data;
 using UnityEngine;
 
 namespace TDGame.Systems.Enemy.Death
@@ -22,7 +22,7 @@ namespace TDGame.Systems.Enemy.Death
         
         public void OnDeath()
         {
-            EnemyTargetsController.Instance.targets.Remove(gameObject);
+            EnemyManager.Instance.UnregisterTarget(gameObject);
             NetworkServer.Destroy(gameObject);
             PlayerEconomyManager.Instance.AddCurrencyToAllPlayers((int) currencyRewardStat.stat.Value);
         }
