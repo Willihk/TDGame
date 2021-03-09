@@ -14,14 +14,18 @@ namespace TDGame
         private TextMeshProUGUI nameText;
 
         [SerializeField]
+        private TextMeshProUGUI costText;
+
+        [SerializeField]
         private Image image;
 
         private UpgradableTower component;
 
-        public void Initialize(UpgradableTower component, string name)
+        public void Initialize(UpgradableTower component, string name, int cost)
         {
             this.component = component;
             nameText.text = name;
+            costText.text = cost.ToString();
         }
 
         public void OnClick()

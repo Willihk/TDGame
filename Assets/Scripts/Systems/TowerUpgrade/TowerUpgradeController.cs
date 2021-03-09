@@ -31,7 +31,9 @@ namespace TDGame.Systems.TowerUpgrade
             var spawned = Instantiate(prefab);
             spawned.transform.position = oldGameObject.transform.position;
             spawned.transform.rotation = oldGameObject.transform.rotation;
-            
+
+            SelectionController.Instance.ChangeSelection(spawned);
+
             NetworkServer.Spawn(spawned, owner);
 
             NetworkServer.Destroy(oldGameObject);

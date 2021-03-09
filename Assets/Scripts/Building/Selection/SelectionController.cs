@@ -9,6 +9,8 @@ namespace TDGame.Building
 {
     public class SelectionController : MonoBehaviour
     {
+        public static SelectionController Instance;
+
         private Camera referenceCamera;
 
         private GameObject selectedTower;
@@ -19,6 +21,11 @@ namespace TDGame.Building
         [SerializeField]
         private GameEvent<GameObject> gameEvent;
 
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         private void Start()
         {
             referenceCamera = Camera.main;
@@ -28,7 +35,8 @@ namespace TDGame.Building
         {
             Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
             if (Input.GetMouseButtonDown(0) && cursorState.State == CursorState.None &&
-                Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Tower")))
+                !EventSystem.current.IsPointerOverGameObject() &&
+                Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("SelectionHitbox")))
             {
                 GameObject hitPoint = hit.collider.gameObject;
                 FindTowerCoreRecursive(hitPoint.transform);
