@@ -2,6 +2,8 @@
 using Mirror;
 using TDGame.Building;
 using TDGame.Building.Selection;
+using TDGame.Systems.Grid.Data;
+using TDGame.Systems.Grid.InGame;
 using UnityEngine;
 
 namespace TDGame.Systems.TowerUpgrade
@@ -35,7 +37,16 @@ namespace TDGame.Systems.TowerUpgrade
 
             TargetUpdateSelection(owner, spawned);
 
+            // TODO: Rework to allow for easier access to grid area
+            var area = oldGameObject.transform.Find("Model").gameObject.GetComponent<GridAreaController>().area;
+
+            GridController.Instance.EmptyGridArea(GridType.Tower, area);
             NetworkServer.Spawn(spawned, owner);
+
+            if (spawned.transform.Find("Model").gameObject.TryGetComponent(out GridAreaController areaController))
+            {
+                GridController.Instance.PlaceTowerOnGrid(spawned, areaController.CalculateArea());
+            }
 
             NetworkServer.Destroy(oldGameObject);
         }

@@ -31,11 +31,11 @@ namespace TDGame.Systems.Grid
         }
 
 
-        public void SetEmpty()
+        public void ClearGrid()
         {
             for (var i = 0; i < grid.Length; i++)
             {
-                grid[i] = new EmptyCell();
+                grid[i] = null;
             }
         }
 

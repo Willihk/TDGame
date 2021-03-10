@@ -1,5 +1,7 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
 using TDGame.Map;
+using TDGame.Systems.Grid.Cell.Base;
 using TDGame.Systems.Grid.Cell.Implementations;
 using TDGame.Systems.Grid.Cell.Interfaces;
 using TDGame.Systems.Grid.Data;
@@ -71,6 +73,44 @@ namespace TDGame.Systems.Grid.InGame
             Rpc_AddTowerToGrid(tower);
         }
 
+        [Server]
+        public void EmptyGridArea(GridType gridType, GridArea gridArea)
+        {
+            switch (gridType)
+            {
+                case GridType.Map:
+                    mapGrid.SetAreaToCell(gridArea, null);
+                    break;
+                case GridType.Tower:
+                    towerGrid.SetAreaToCell(gridArea, null);
+                    break;
+                default:
+                    towerGrid.SetAreaToCell(gridArea, null);
+                    break;
+            }
+
+            Rpc_EmptyGridArea(gridType, gridArea);
+        }
+
+        [ClientRpc]
+        void Rpc_EmptyGridArea(GridType gridType, GridArea gridArea)
+        {
+            if (isServer) // Host does not need to run this
+                return;
+            
+            switch (gridType)
+            {
+                case GridType.Map:
+                    mapGrid.SetAreaToCell(gridArea, null);
+                    break;
+                case GridType.Tower:
+                    towerGrid.SetAreaToCell(gridArea, null);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(gridType), gridType, "Invalid grid type");
+            }
+        }
+
         [ClientRpc]
         public void Rpc_AddTowerToGrid(GameObject tower)
         {
@@ -88,7 +128,7 @@ namespace TDGame.Systems.Grid.InGame
                 for (int y = 0; y < gridSize.y; y++)
                 {
                     var cell = towerGrid.GetCell(x, y);
-                    
+
                     var color = Color.white;
                     if (cell is GameObjectCell)
                         color = Color.red;
