@@ -1,23 +1,22 @@
-﻿namespace TDGame.Command.Implementations.Wave
+﻿using TDGame.Systems.Enemy.Wave;
+
+namespace TDGame.Command.Implementations.Wave
 {
     public class DelayCommand : WaveCommand
     {
-        private unsafe float* target;
+        private EnemyWaveController waveController;
 
         private readonly float amount;
 
-        public unsafe DelayCommand(float* delayTarget, float delayAmount)
+        public DelayCommand(EnemyWaveController waveController, float delayAmount)
         {
-                target = delayTarget;
-                amount = delayAmount;
+            this.waveController = waveController;
+            amount = delayAmount;
         }
 
         public override void Execute()
         {
-            unsafe
-            {
-                *target = amount;
-            }
+            waveController.delay = amount;
         }
     }
 }

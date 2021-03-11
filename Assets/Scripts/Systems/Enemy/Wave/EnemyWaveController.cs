@@ -122,12 +122,7 @@ namespace TDGame.Systems.Enemy.Wave
                     for (int i = 0; i < waveEnemyCount; i++)
                     {
                         commands.Enqueue(new SpawnEnemyPrefab(prefab, enemyHolder, waypoints[0], waypoints));
-                        
-                        unsafe
-                        {
-                            fixed (float* delayPointer = &delay)
-                                commands.Enqueue(new DelayCommand(delayPointer, 5));
-                        }
+                        commands.Enqueue(new DelayCommand(this, 5));
                     }
 
                     break;
