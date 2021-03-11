@@ -26,7 +26,7 @@ namespace TDGame.UI.BuildingList
                 if (buildings[i].TryGetComponent(out BaseNetworkedTower component))
                     entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name, component.DisplayInfo.Name, component.price);
                 else
-                    entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name, buildings[i].name, component.price);
+                    entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name, buildings[i].name, 0);
             }
         }
     }

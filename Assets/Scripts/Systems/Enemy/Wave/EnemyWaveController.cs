@@ -17,7 +17,7 @@ namespace TDGame.Systems.Enemy.Wave
     {
         [SerializeField]
         private List<WaveData> predefinedWaves;
-        
+
         [SerializeField]
         private GameEvent<int> waveChangedEvent;
 
@@ -37,6 +37,8 @@ namespace TDGame.Systems.Enemy.Wave
         private int currentWave = 0;
 
         private bool AwaitingNextWave = true;
+
+        private float delay;
 
         public void OnMapLoaded()
         {
@@ -59,7 +61,7 @@ namespace TDGame.Systems.Enemy.Wave
             if (EnemyManager.Instance.targets.Count == 0 && AwaitingNextWave)
             {
                 Queue<WaveCommand> commands;
-                if (predefinedWaves?.Count > 0)
+                if (predefinedWaves?.Count > 99999)
                 {
                     var wave = predefinedWaves[0];
                     commands = LoadWave(wave);
@@ -67,7 +69,8 @@ namespace TDGame.Systems.Enemy.Wave
                 else
                 {
                     commands = CreateTestWave();
-                } 
+                }
+
                 AwaitingNextWave = false;
                 StartCoroutine(nameof(SpawnWave), commands);
             }
@@ -98,7 +101,7 @@ namespace TDGame.Systems.Enemy.Wave
             var prefab = enemyList.GetEnemy(0);
             var boss = enemyList.GetEnemy(1);
             var spider = enemyList.GetEnemy(2);
-           
+
 
             int waveEnemyCount = (int) (5 * Mathf.Sqrt(Mathf.Pow(currentWave, 3)));
             Queue<WaveCommand> commands = new Queue<WaveCommand>();
@@ -119,6 +122,12 @@ namespace TDGame.Systems.Enemy.Wave
                     for (int i = 0; i < waveEnemyCount; i++)
                     {
                         commands.Enqueue(new SpawnEnemyPrefab(prefab, enemyHolder, waypoints[0], waypoints));
+                        
+                        unsafe
+                        {
+                            fixed (float* delayPointer = &delay)
+                                commands.Enqueue(new DelayCommand(delayPointer, 5));
+                        }
                     }
 
                     break;
@@ -132,12 +141,13 @@ namespace TDGame.Systems.Enemy.Wave
             currentWave++;
 
             WaveChanged(currentWave, currentWave);
-            
+
             float spawnDelay = Mathf.Max(5f / currentWave, 0.05f);
             while (commands.Count > 0)
             {
                 commands.Dequeue().Execute();
-                yield return new WaitForSeconds(spawnDelay);
+                yield return new WaitForSeconds(delay);
+                delay = 0;
             }
 
             yield return new WaitForSeconds(1f);
