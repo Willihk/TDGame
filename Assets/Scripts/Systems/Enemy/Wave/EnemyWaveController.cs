@@ -38,7 +38,7 @@ namespace TDGame.Systems.Enemy.Wave
 
         private bool AwaitingNextWave = true;
 
-        private float delay;
+        public float delay;
 
         public void OnMapLoaded()
         {
