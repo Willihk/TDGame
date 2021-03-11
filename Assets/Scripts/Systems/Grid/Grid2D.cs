@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
-using TDGame.Systems.Grid.Cell.Base;
-using TDGame.Systems.Grid.Cell.Implementations;
+using TDGame.Systems.Grid.Cell;
 using TDGame.Systems.Grid.Data;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace TDGame.Systems.Grid
 {
     public class Grid2D : IDisposable
     {
-        public BaseCell[] grid;
+        public GridCell[] grid;
 
         public float CellSize => cellSize;
 
@@ -22,7 +21,7 @@ namespace TDGame.Systems.Grid
         {
             sizeX = x;
             sizeY = y;
-            grid = new BaseCell[x * y];
+            grid = new GridCell[x * y];
         }
 
         public Grid2D(int x, int y, float cellSize) : this(x, y)
@@ -35,11 +34,11 @@ namespace TDGame.Systems.Grid
         {
             for (var i = 0; i < grid.Length; i++)
             {
-                grid[i] = null;
+                grid[i] = new GridCell();
             }
         }
 
-        public bool SetCell(int x, int y, BaseCell newCell)
+        public bool SetCell(int x, int y, GridCell newCell)
         {
             if (!IsValidGridPosition(x, y))
                 return false;
@@ -49,7 +48,7 @@ namespace TDGame.Systems.Grid
             return true;
         }
 
-        public void SetAreaToCell(GridArea area, BaseCell newCell)
+        public void SetAreaToCell(GridArea area, GridCell newCell)
         {
             var points = area.GetPoints();
 
@@ -59,7 +58,7 @@ namespace TDGame.Systems.Grid
             }
         }
 
-        public bool SetCellIfEmpty(int x, int y, BaseCell newCell)
+        public bool SetCellIfEmpty(int x, int y, GridCell newCell)
         {
             if (!IsCellEmpty(x, y))
                 return false;
@@ -74,13 +73,13 @@ namespace TDGame.Systems.Grid
                 return false;
 
             var cell = grid[getIndex(x, y)];
-            return cell == null || cell is EmptyCell;
+            return cell.State == GridCellState.Empty;
         }
 
-        public BaseCell GetCell(int x, int y)
+        public GridCell GetCell(int x, int y)
         {
             if (!IsValidGridPosition(x, y))
-                return null;
+                throw new ArgumentException("");
 
             return grid[getIndex(x, y)];
         }

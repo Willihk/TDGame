@@ -1,9 +1,7 @@
 ﻿using System;
 using Mirror;
 using TDGame.Map;
-using TDGame.Systems.Grid.Cell.Base;
-using TDGame.Systems.Grid.Cell.Implementations;
-using TDGame.Systems.Grid.Cell.Interfaces;
+using TDGame.Systems.Grid.Cell;
 using TDGame.Systems.Grid.Data;
 using UnityEngine;
 
@@ -39,7 +37,7 @@ namespace TDGame.Systems.Grid.InGame
             foreach (var gridObstacle in obstacles)
             {
                 gridObstacle.area.position = mapGrid.WorldToGridPosition(gridObstacle.originPoint.position);
-                mapGrid.SetAreaToCell(gridObstacle.area, new GameObjectCell() {Owner = gridObstacle.gameObject});
+                mapGrid.SetAreaToCell(gridObstacle.area, new GridCell() {State = GridCellState.Occupied});
             }
         }
 
@@ -68,7 +66,7 @@ namespace TDGame.Systems.Grid.InGame
         {
             // TODO: check validity of placement
             var gridPos = mapGrid.WorldToGridPosition(tower.transform.position);
-            towerGrid.SetAreaToCell(area, new GameObjectCell() {Owner = tower});
+            towerGrid.SetAreaToCell(area, new GridCell() {State = GridCellState.Occupied});
 
             Rpc_AddTowerToGrid(tower);
         }
@@ -79,13 +77,13 @@ namespace TDGame.Systems.Grid.InGame
             switch (gridType)
             {
                 case GridType.Map:
-                    mapGrid.SetAreaToCell(gridArea, null);
+                    mapGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
                     break;
                 case GridType.Tower:
-                    towerGrid.SetAreaToCell(gridArea, null);
+                    towerGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
                     break;
                 default:
-                    towerGrid.SetAreaToCell(gridArea, null);
+                    towerGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
                     break;
             }
 
@@ -97,14 +95,14 @@ namespace TDGame.Systems.Grid.InGame
         {
             if (isServer) // Host does not need to run this
                 return;
-            
+
             switch (gridType)
             {
                 case GridType.Map:
-                    mapGrid.SetAreaToCell(gridArea, null);
+                    mapGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
                     break;
                 case GridType.Tower:
-                    towerGrid.SetAreaToCell(gridArea, null);
+                    towerGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gridType), gridType, "Invalid grid type");
@@ -118,7 +116,7 @@ namespace TDGame.Systems.Grid.InGame
                 return;
 
             var gridPos = mapGrid.WorldToGridPosition(tower.transform.position);
-            towerGrid.SetCell(gridPos.x, gridPos.y, new GameObjectCell() {Owner = tower});
+            towerGrid.SetCell(gridPos.x, gridPos.y, new GridCell() {State = GridCellState.Occupied});
         }
 
         void DrawGrid()
@@ -130,7 +128,7 @@ namespace TDGame.Systems.Grid.InGame
                     var cell = towerGrid.GetCell(x, y);
 
                     var color = Color.white;
-                    if (cell is GameObjectCell)
+                    if (cell.State != GridCellState.Empty)
                         color = Color.red;
 
                     Debug.DrawLine(mapGrid.GridToWorldPosition(x, y), mapGrid.GridToWorldPosition(x, y + 1), color, 1);
