@@ -50,8 +50,8 @@ MonoBehaviour:
   originPoint: {fileID: 1626437063688540508}
   area:
     position: {x: 0, y: 0}
-    width: 2
-    height: 2
+    width: 3
+    height: 3
 --- !u!1 &3328605900019788229
 GameObject:
   m_ObjectHideFlags: 0

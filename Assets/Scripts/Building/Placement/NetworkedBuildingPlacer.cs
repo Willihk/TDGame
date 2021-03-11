@@ -118,7 +118,9 @@ namespace TDGame.Building.Placement
             Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("TowerPlacementArea")))
             {
-                var hitPoint = math.round(hit.point);
+                float gridOffset = 1f / GridController.Instance.cellSize;
+                var hitPoint = math.round(((float3)hit.point) * gridOffset) / gridOffset;
+
                 transform.position = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
             }
             else

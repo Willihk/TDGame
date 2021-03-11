@@ -35,13 +35,13 @@ namespace TDGame.Systems.TowerUpgrade
             spawned.transform.position = oldGameObject.transform.position;
             spawned.transform.rotation = oldGameObject.transform.rotation;
 
-            TargetUpdateSelection(owner, spawned);
-
             // TODO: Rework to allow for easier access to grid area
             var area = oldGameObject.transform.Find("Model").gameObject.GetComponent<GridAreaController>().area;
 
             GridController.Instance.EmptyGridArea(GridType.Tower, area);
             NetworkServer.Spawn(spawned, owner);
+
+            TargetUpdateSelection(owner, spawned);
 
             if (spawned.transform.Find("Model").gameObject.TryGetComponent(out GridAreaController areaController))
             {
