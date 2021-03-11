@@ -77,13 +77,10 @@ namespace TDGame.Systems.Grid.InGame
             switch (gridType)
             {
                 case GridType.Map:
-                    mapGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
+                    mapGrid.SetAreaCellState(gridArea, GridCellState.Empty);
                     break;
                 case GridType.Tower:
-                    towerGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
-                    break;
-                default:
-                    towerGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
+                    towerGrid.SetAreaCellState(gridArea, GridCellState.Empty);
                     break;
             }
 
@@ -99,10 +96,10 @@ namespace TDGame.Systems.Grid.InGame
             switch (gridType)
             {
                 case GridType.Map:
-                    mapGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
+                    mapGrid.SetAreaCellState(gridArea, GridCellState.Empty);
                     break;
                 case GridType.Tower:
-                    towerGrid.SetAreaToCell(gridArea, new GridCell() {State = GridCellState.Empty});
+                    towerGrid.SetAreaCellState(gridArea, GridCellState.Empty);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gridType), gridType, "Invalid grid type");
@@ -112,7 +109,7 @@ namespace TDGame.Systems.Grid.InGame
         [ClientRpc]
         public void Rpc_AddTowerToGrid(GameObject tower)
         {
-            if (isServer)
+            if (isServer) // Host does not need to run this
                 return;
 
             var gridPos = mapGrid.WorldToGridPosition(tower.transform.position);

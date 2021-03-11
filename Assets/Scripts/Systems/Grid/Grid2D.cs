@@ -29,7 +29,6 @@ namespace TDGame.Systems.Grid
             this.cellSize = cellSize;
         }
 
-
         public void ClearGrid()
         {
             for (var i = 0; i < grid.Length; i++)
@@ -37,6 +36,30 @@ namespace TDGame.Systems.Grid
                 grid[i] = new GridCell();
             }
         }
+
+        #region CellModifiers
+
+        public bool SetCellState(int x, int y, GridCellState newState)
+        {
+            if (!IsValidGridPosition(x, y))
+                return false;
+            grid[getIndex(x, y)].State = newState;
+            return true;
+        }
+
+        public bool SetAreaCellState(GridArea area, GridCellState newState)
+        {
+            var points = area.GetPoints();
+
+            foreach (var point in points)
+            {
+                SetCellState(point.x, point.y, newState);
+            }
+
+            return true;
+        }
+
+        #endregion
 
         public bool SetCell(int x, int y, GridCell newCell)
         {
@@ -58,15 +81,6 @@ namespace TDGame.Systems.Grid
             }
         }
 
-        public bool SetCellIfEmpty(int x, int y, GridCell newCell)
-        {
-            if (!IsCellEmpty(x, y))
-                return false;
-
-            SetCell(x, y, newCell);
-            return true;
-        }
-
         public bool IsCellEmpty(int x, int y)
         {
             if (!IsValidGridPosition(x, y))
@@ -79,7 +93,7 @@ namespace TDGame.Systems.Grid
         public GridCell GetCell(int x, int y)
         {
             if (!IsValidGridPosition(x, y))
-                throw new ArgumentException("");
+                throw new ArgumentException("Invalid grid position");
 
             return grid[getIndex(x, y)];
         }

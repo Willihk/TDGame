@@ -4,6 +4,6 @@
     {
         public GridCellState State;
 
-        public int OccupiedBy;
+        public int OccupierId;
     }
 }
