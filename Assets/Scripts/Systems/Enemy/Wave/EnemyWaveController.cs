@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
@@ -7,12 +8,16 @@ using TDGame.Events.Base;
 using TDGame.Map;
 using TDGame.Systems.Enemy.Data;
 using TDGame.Systems.Enemy.Manager;
+using TDGame.Systems.Enemy.Wave.Data;
 using UnityEngine;
 
 namespace TDGame.Systems.Enemy.Wave
 {
     public class EnemyWaveController : NetworkBehaviour
     {
+        [SerializeField]
+        private List<WaveData> predefinedWaves;
+        
         [SerializeField]
         private GameEvent<int> waveChangedEvent;
 
@@ -53,25 +58,50 @@ namespace TDGame.Systems.Enemy.Wave
 
             if (EnemyManager.Instance.targets.Count == 0 && AwaitingNextWave)
             {
+                Queue<WaveCommand> commands;
+                if (predefinedWaves?.Count > 0)
+                {
+                    var wave = predefinedWaves[0];
+                    commands = LoadWave(wave);
+                }
+                else
+                {
+                    commands = CreateTestWave();
+                } 
                 AwaitingNextWave = false;
-                StartCoroutine(nameof(SpawnTestEnemies));
+                StartCoroutine(nameof(SpawnWave), commands);
             }
         }
 
-        IEnumerator SpawnTestEnemies()
+
+        Queue<WaveCommand> LoadWave(WaveData waveData)
+        {
+            Queue<WaveCommand> commands = new Queue<WaveCommand>();
+
+            foreach (var action in waveData.Actions)
+            {
+                switch (action.ActionType)
+                {
+                    case WaveActionType.SpawnPrefab:
+                        commands.Enqueue(new SpawnEnemyPrefab(action.Prefab, transform, waypoints[0], waypoints));
+                        break;
+                    case WaveActionType.SetDelay:
+                        throw new NotImplementedException();
+                }
+            }
+
+            return commands;
+        }
+
+        Queue<WaveCommand> CreateTestWave()
         {
             var prefab = enemyList.GetEnemy(0);
             var boss = enemyList.GetEnemy(1);
             var spider = enemyList.GetEnemy(2);
-            currentWave++;
-
-            WaveChanged(currentWave, currentWave);
+           
 
             int waveEnemyCount = (int) (5 * Mathf.Sqrt(Mathf.Pow(currentWave, 3)));
-            float spawnDelay = Mathf.Max(5f / currentWave, 0.05f);
             Queue<WaveCommand> commands = new Queue<WaveCommand>();
-
-            yield return new WaitForSeconds(6f);
 
             switch (currentWave)
             {
@@ -79,7 +109,6 @@ namespace TDGame.Systems.Enemy.Wave
                     for (int i = 0; i < (waveEnemyCount / 3); i++)
                     {
                         commands.Enqueue(new SpawnEnemyPrefab(spider, enemyHolder, waypoints[0], waypoints));
-                        spawnDelay = 0.25f;
                     }
 
                     break;
@@ -95,6 +124,16 @@ namespace TDGame.Systems.Enemy.Wave
                     break;
             }
 
+            return commands;
+        }
+
+        IEnumerator SpawnWave(Queue<WaveCommand> commands)
+        {
+            currentWave++;
+
+            WaveChanged(currentWave, currentWave);
+            
+            float spawnDelay = Mathf.Max(5f / currentWave, 0.05f);
             while (commands.Count > 0)
             {
                 commands.Dequeue().Execute();
