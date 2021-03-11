@@ -49,7 +49,7 @@ namespace TDGame.Systems.Targeting.Implementations
                     return;
                 }
 
-                clientTargetPosition = target.transform.position;
+                clientTargetPosition = target.transform.Find("TargetPoint").position;
             }
             else
             {
