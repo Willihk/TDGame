@@ -60,10 +60,11 @@ namespace TDGame.Systems.Enemy.Wave
 
             if (EnemyManager.Instance.targets.Count == 0 && AwaitingNextWave)
             {
+                currentWave++;
                 Queue<WaveCommand> commands;
-                if (predefinedWaves?.Count > 99999)
+                if (predefinedWaves.Find(x => x.Level == currentWave))
                 {
-                    var wave = predefinedWaves[0];
+                    var wave = predefinedWaves.Find(x => x.Level == currentWave);
                     commands = LoadWave(wave);
                 }
                 else
@@ -89,7 +90,9 @@ namespace TDGame.Systems.Enemy.Wave
                         commands.Enqueue(new SpawnEnemyPrefab(action.Prefab, transform, waypoints[0], waypoints));
                         break;
                     case WaveActionType.SetDelay:
-                        throw new NotImplementedException();
+                        commands.Enqueue(new DelayCommand(this, action.Delay));
+                        break;
+                        //throw new NotImplementedException();
                 }
             }
 
@@ -109,9 +112,10 @@ namespace TDGame.Systems.Enemy.Wave
             switch (currentWave)
             {
                 case 7:
-                    for (int i = 0; i < (waveEnemyCount / 3); i++)
+                    for (int i = 0; i < (100); i++)
                     {
                         commands.Enqueue(new SpawnEnemyPrefab(spider, enemyHolder, waypoints[0], waypoints));
+                        commands.Enqueue(new DelayCommand(this, 0.2f));
                     }
 
                     break;
@@ -133,11 +137,9 @@ namespace TDGame.Systems.Enemy.Wave
 
         IEnumerator SpawnWave(Queue<WaveCommand> commands)
         {
-            currentWave++;
-
             WaveChanged(currentWave, currentWave);
 
-            float spawnDelay = Mathf.Max(5f / currentWave, 0.05f);
+            //float spawnDelay = Mathf.Max(5f / currentWave, 0.05f);
             while (commands.Count > 0)
             {
                 commands.Dequeue().Execute();
