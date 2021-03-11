@@ -119,14 +119,11 @@ namespace TDGame.Systems.Enemy.Wave
                     }
 
                     break;
-                case 10:
-                    commands.Enqueue(new SpawnEnemyPrefab(boss, enemyHolder, waypoints[0], waypoints));
-                    break;
                 default:
                     for (int i = 0; i < waveEnemyCount; i++)
                     {
                         commands.Enqueue(new SpawnEnemyPrefab(prefab, enemyHolder, waypoints[0], waypoints));
-                        commands.Enqueue(new DelayCommand(this, 5));
+                        commands.Enqueue(new DelayCommand(this, 0.1f));
                     }
 
                     break;
