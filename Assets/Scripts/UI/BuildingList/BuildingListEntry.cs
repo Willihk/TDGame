@@ -13,6 +13,9 @@ namespace TDGame.UI.BuildingList
         private TextMeshProUGUI nameText;
 
         [SerializeField]
+        private TextMeshProUGUI costText;
+
+        [SerializeField]
         private Image image;
 
         [SerializeField]
@@ -23,10 +26,11 @@ namespace TDGame.UI.BuildingList
 
         private string prefabName;
 
-        public void Initialize(string prefabName, string name)
+        public void Initialize(string prefabName, string name, int cost)
         {
             this.prefabName = prefabName;
             nameText.text = name;
+            costText.text = cost.ToString();
         }
 
         public void OnClick()
