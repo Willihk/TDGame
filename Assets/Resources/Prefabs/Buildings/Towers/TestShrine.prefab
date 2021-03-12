@@ -765,6 +765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3842811013947022419}
   - component: {fileID: 5128101853707407741}
+  - component: {fileID: -2164234295210660685}
   m_Layer: 11
   m_Name: TestShrine
   m_TagString: Untagged
@@ -803,3 +804,22 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &-2164234295210660685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189453406580734648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc4173577c74e6597aaa0d94f85f69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  DisplayInfo:
+    Name: Shrine
+    Description: 
+    Icon: {fileID: 0}
+  price: 0

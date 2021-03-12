@@ -576,10 +576,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   DisplayInfo:
-    Name: 
+    Name: Test Tesla Tower
     Description: 
     Icon: {fileID: 0}
-  price: 1
+  price: 10
   targetSystem: {fileID: 897508154960977226}
   ClientHitEvent:
     m_PersistentCalls:
