@@ -17,13 +17,12 @@ namespace TDGame.Systems.Grid.InGame
                 area.position = GridController.Instance.towerGrid.WorldToGridPosition(worldPosition);
         }
         
-        void OnDrawGizmosSelected()
+        void OnDrawGizmos()
         {
             var worldPosition = originPoint.position;
             var size = area.ConvertToWorldSize();
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(worldPosition, worldPosition + new Vector3(size.x, 0, 0));
-            Gizmos.DrawLine(worldPosition, worldPosition + new Vector3(0, 0, size.y));
+            Gizmos.DrawCube(worldPosition + (new Vector3(size.x, 0, size.y) / 2), new Vector3(size.x, .1f, size.y));
         }
     }
 }
