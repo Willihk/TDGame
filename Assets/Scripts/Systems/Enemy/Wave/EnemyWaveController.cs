@@ -111,11 +111,11 @@ namespace TDGame.Systems.Enemy.Wave
 
             switch (currentWave)
             {
-                case 7:
-                    for (int i = 0; i < (100); i++)
+                case 13:
+                    for (int i = 0; i < (200); i++)
                     {
                         commands.Enqueue(new SpawnEnemyPrefab(spider, enemyHolder, waypoints[0], waypoints));
-                        commands.Enqueue(new DelayCommand(this, 0.2f));
+                        commands.Enqueue(new DelayCommand(this, 0.1f));
                     }
 
                     break;
