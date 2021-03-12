@@ -3,6 +3,7 @@
     public enum GridCellState
     {
         Empty,
-        Occupied
+        Occupied,
+        Path
     }
 }

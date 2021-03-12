@@ -40,6 +40,16 @@ namespace TDGame.Systems.Grid.InGame
                 mapGrid.SetAreaToCell(gridObstacle.area, new GridCell() {State = GridCellState.Occupied});
             }
         }
+        
+        void RegisterPath()
+        {
+            var paths = FindObjectsOfType<GridPath>();
+            foreach (var gridPath in paths)
+            {
+                gridPath.area.position = mapGrid.WorldToGridPosition(gridPath.originPoint.position);
+                mapGrid.SetAreaToCell(gridPath.area, new GridCell() {State = GridCellState.Path});
+            }
+        }
 
         public void OnMapLoaded()
         {
@@ -48,6 +58,7 @@ namespace TDGame.Systems.Grid.InGame
             gridSize = mapGrid.WorldToGridPosition(mapdetails.gridTopRightCorner.transform.position);
             CreateGrid();
             RegisterObstacles();
+            RegisterPath();
         }
 
         private void Start()

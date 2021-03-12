@@ -6,9 +6,11 @@ using Mirror;
 using TDGame.Command.Implementations.Wave;
 using TDGame.Events.Base;
 using TDGame.Map;
+using TDGame.Pathfinding.BasicAStar;
 using TDGame.Systems.Enemy.Data;
 using TDGame.Systems.Enemy.Manager;
 using TDGame.Systems.Enemy.Wave.Data;
+using TDGame.Systems.Grid.InGame;
 using UnityEngine;
 
 namespace TDGame.Systems.Enemy.Wave
@@ -45,7 +47,7 @@ namespace TDGame.Systems.Enemy.Wave
             if (!isServer)
                 return;
 
-            waypoints = mapController.GetWaypoints().Select(x => x.position).ToList();
+            waypoints = mapController.GetWaypoints().Select(x => GridController.Instance.mapGrid.GridToWorldPosition(x.x, x.y)).ToList();
         }
 
         void WaveChanged(int oldWave, int newWave)

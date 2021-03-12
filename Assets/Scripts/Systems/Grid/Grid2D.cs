@@ -14,8 +14,8 @@ namespace TDGame.Systems.Grid
 
         private readonly float cellSize = 0.5f;
 
-        private int sizeX;
-        private int sizeY;
+        public int sizeX;
+        public int sizeY;
 
         public Grid2D(int x, int y)
         {

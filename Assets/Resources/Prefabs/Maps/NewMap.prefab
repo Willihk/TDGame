@@ -8613,7 +8613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2640966317491493326
 Transform:
   m_ObjectHideFlags: 0
@@ -8653,6 +8653,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34039ba7070e49698c3d157ca7811559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPoint: {fileID: 2136846613257670298}
+  endPoint: {fileID: 6138714520035680306}
   waypoints:
   - {fileID: 2136846613257670298}
   - {fileID: 4123254938911824755}
@@ -21514,7 +21516,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8127980117607611261}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3125, y: 0, z: 16.1875}
+  m_LocalPosition: {x: 28.17, y: 0, z: 13.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2640966317491493326}
