@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Mirror;
 using TDGame.Events.Base;
 using TDGame.Pathfinding.BasicAStar;
@@ -29,7 +30,16 @@ namespace TDGame.Map
 
         public List<Vector2Int> GetWaypoints()
         {
+            var grid = GridController.Instance.mapGrid;
             var waypointController = mapPrefab.GetComponentInChildren<WaypointController>();
+            // var path = new AStar().GetPath(GridController.Instance.mapGrid,
+            //     GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position),
+            //     GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position));
+            return new List<Vector2Int>()
+            {
+                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position),
+                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position)
+            };
             return new AStar().GetPath(GridController.Instance.mapGrid,
                 GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position),
                 GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position));

@@ -20,41 +20,59 @@ namespace TDGame.Pathfinding.BasicAStar
             this.start = start;
             this.end = end;
 
+            int invalidCells = grid.grid.Count(x => x.State != GridCellState.Path);
+            int validCells = grid.grid.Count(x => x.State == GridCellState.Path);
+
             Node startNode = new Node(start);
-            Node targetNode = new Node(end);
+            Node endNode = new Node(end);
+            List<Vector2Int> path = new List<Vector2Int>();
+           
+            Heap<Node> openList = new Heap<Node>(grid.sizeX * grid.sizeY);
+            HashSet<Node> closedList = new HashSet<Node>();
 
-            Heap<Node> openSet = new Heap<Node>(grid.sizeX * grid.sizeY);
-            HashSet<Node> closedSet = new HashSet<Node>();
-            openSet.Add(startNode);
+            openList.Add(startNode);
+            Node currentNode = null;
 
-            while (openSet.Count > 0)
+            while (openList.Count > 0 && !closedList.Select(x => x.Position).Contains(end)) // Loop til end is found
             {
-                Node currentNode = openSet.RemoveFirst();
-                closedSet.Add(currentNode);
+                currentNode = openList.RemoveFirst();
+                int r = closedList.Count(x => grid.GetCell(x.Position.x, x.Position.y).State != GridCellState.Path);
 
-                if (currentNode.Position == end)
-                {
-                    return RetracePath(startNode, targetNode).Select(x => x.Position).ToList();
-                }
+                closedList.Add(currentNode);
 
-                foreach (Node neighbour in GetNeighbours(currentNode))
+                List<Node> children = GetValidAdjacentNodes(currentNode);
+
+                foreach (Node child in children)
                 {
-                    if (grid.GetCell(neighbour.Position.x, neighbour.Position.y).State != GridCellState.Path ||
-                        closedSet.Contains(neighbour))
-                    {
+                    if (closedList.Contains(child) || openList.Contains(child))
                         continue;
-                    }
 
-                    int newMovementCostToNeighbour = currentNode.G + GetDistance(currentNode, neighbour);
-                    if (newMovementCostToNeighbour < neighbour.G || !openSet.Contains(neighbour))
+                    child.parent = currentNode;
+                    int dx = Math.Abs(end.x - child.Position.x);
+                    int dy = Math.Abs(end.y - child.Position.y);
+                    child.H = (int) (Math.Sqrt(dx * dx) + (dy * dy));
+                    child.G = currentNode.G + 1;
+
+                    try
                     {
-                        neighbour.G = newMovementCostToNeighbour;
-                        neighbour.H = GetDistance(neighbour, targetNode);
-                        neighbour.parent = currentNode;
-
-                        if (!openSet.Contains(neighbour))
-                            openSet.Add(neighbour);
+                        openList.Add(child);
                     }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
+            }
+
+            if (currentNode.Equals(endNode)) // Found goal
+            {
+                Node current = currentNode;
+
+                while (current != null)
+                {
+                    path.Add(current.Position);
+                    current = current.parent;
                 }
             }
 
@@ -75,16 +93,6 @@ namespace TDGame.Pathfinding.BasicAStar
             path.Reverse();
 
             return path;
-        }
-
-        int GetDistance(Node nodeA, Node nodeB)
-        {
-            int dstX = Mathf.Abs(nodeA.Position.x - nodeB.Position.x);
-            int dstY = Mathf.Abs(nodeA.Position.y - nodeB.Position.y);
-
-            if (dstX > dstY)
-                return 14 * dstY + 10 * (dstX - dstY);
-            return 14 * dstX + 10 * (dstY - dstX);
         }
 
         List<Node> GetNeighbours(Node node)
@@ -136,10 +144,10 @@ namespace TDGame.Pathfinding.BasicAStar
 
                 if (grid.GetCell(pos.x, pos.y).State == GridCellState.Path)
                 {
-                    if ((pos == start || pos == end) && !pos.Equals(end) && !pos.Equals(start))
-                    {
-                        return false;
-                    }
+                    // if ((pos == start || pos == end) && !pos.Equals(end) && !pos.Equals(start))
+                    // {
+                    //     return false;
+                    // }
 
                     return true;
                 }
@@ -185,7 +193,7 @@ namespace TDGame.Pathfinding.BasicAStar
             public override bool Equals(object obj)
             {
                 if (obj is Node node)
-                    return Position == node.Position;
+                    return Position.x == node.Position.x && Position.y == node.Position.y;
 
                 return false;
             }

@@ -134,10 +134,15 @@ namespace TDGame.Systems.Grid.InGame
                 for (int y = 0; y < gridSize.y; y++)
                 {
                     var cell = towerGrid.GetCell(x, y);
+                    var mapCell = mapGrid.GetCell(x, y);
 
-                    var color = Color.white;
-                    if (cell.State != GridCellState.Empty)
+                    Color color = Color.white;
+                    if (cell.State == GridCellState.Empty && mapCell.State == GridCellState.Empty)
+                        color = Color.white;
+                    else if (cell.State == GridCellState.Occupied)
                         color = Color.red;
+                    else if (mapCell.State == GridCellState.Path)
+                        color = Color.yellow;
 
                     Debug.DrawLine(mapGrid.GridToWorldPosition(x, y), mapGrid.GridToWorldPosition(x, y + 1), color, 1);
                     Debug.DrawLine(mapGrid.GridToWorldPosition(x, y), mapGrid.GridToWorldPosition(x + 1, y), color, 1);
