@@ -627,7 +627,7 @@ GameObject:
   - component: {fileID: 371403874}
   - component: {fileID: 371403873}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -699,12 +699,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 32
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 16
+  m_fontSizeMax: 32
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2318,7 +2318,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   hasLoadedMap: 0
-  mapPrefab: {fileID: 7343262725339288578, guid: 612d3555c87a46e46861d0d81ea42b0b, type: 3}
+  mapPrefab: {fileID: 8432884076576316514, guid: a89f79e0e282c8b408711d99e21b2a7d, type: 3}
   mapLoadedEvent: {fileID: 11400000, guid: ecc5d687101451142a28d22203216feb, type: 2}
 --- !u!114 &1514074420
 MonoBehaviour:
