@@ -1601,7 +1601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Range
-    BaseValue: 6.5
+    BaseValue: 6
     Cap: 0
 --- !u!114 &6011463748276831009
 MonoBehaviour:
@@ -1617,7 +1617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Hit Damage
-    BaseValue: 30
+    BaseValue: 20
     Cap: 0
 --- !u!114 &5712925911852761932
 MonoBehaviour:
@@ -1633,7 +1633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Fire Rate
-    BaseValue: 0.8333333
+    BaseValue: 1
     Cap: 0
 --- !u!114 &1143582013149954009
 MonoBehaviour:
@@ -1649,7 +1649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Projectile Speed
-    BaseValue: 12
+    BaseValue: 10
     Cap: 0
 --- !u!1 &2451450943750830905
 GameObject:
@@ -1755,7 +1755,7 @@ MonoBehaviour:
     Name: Archer Tower III
     Description: 
     Icon: {fileID: 0}
-  price: 320
+  price: 350
   targetSystem: {fileID: 5770753753866830979}
   projectilePrefab: {fileID: 1155687850410582466, guid: 57eb5a246f8a7a049b7ac1353c82cddc, type: 3}
   hitDamage: {fileID: 6011463748276831009}
@@ -5269,6 +5269,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 8420410942960588588}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4

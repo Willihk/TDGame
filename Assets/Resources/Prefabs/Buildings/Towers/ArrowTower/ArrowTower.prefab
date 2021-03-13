@@ -4220,7 +4220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Hit Damage
-    BaseValue: 8
+    BaseValue: 6
     Cap: 0
 --- !u!114 &6072330268834347799
 MonoBehaviour:
@@ -4236,7 +4236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Fire Rate
-    BaseValue: 1.25
+    BaseValue: 1.4
     Cap: 0
 --- !u!114 &1212554958247099649
 MonoBehaviour:
@@ -4252,7 +4252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Projectile Speed
-    BaseValue: 8
+    BaseValue: 10
     Cap: 0
 --- !u!1 &5267556913489664364
 GameObject:
@@ -11592,6 +11592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 5477193013916581056}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4
