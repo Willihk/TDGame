@@ -16,15 +16,6 @@ namespace TDGame.Systems.Enemy.Manager
             Instance = this;
         }
 
-        private void OnDrawGizmosSelected()
-        {
-            foreach (var target in targets.Select(x => x.GetComponent<Collider>().bounds))
-            {
-                Gizmos.DrawCube(target.center, target.size);
-            }
-
-        }
-
         public List<GameObject> GetTargets()
         {
             return targets;
