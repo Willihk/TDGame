@@ -322,9 +322,9 @@ MonoBehaviour:
     Name: Ballista
     Description: 
     Icon: {fileID: 0}
-  price: 350
+  price: 420
   targetSystem: {fileID: 877722806743633727}
-  projectilePrefab: {fileID: 1155687850410582466, guid: 57eb5a246f8a7a049b7ac1353c82cddc, type: 3}
+  projectilePrefab: {fileID: 8582842032198529919, guid: 5021ae53bf1b1814abeeeaddf447ab36, type: 3}
   hitDamage: {fileID: 6290459733551957200}
   fireRate: {fileID: 8653783396684085331}
   projectileSpeed: {fileID: 8999230665588739604}
