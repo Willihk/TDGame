@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Speed
-    BaseValue: 1.2
+    BaseValue: 1
     Cap: 0
 --- !u!114 &7987993410268024567
 MonoBehaviour:
@@ -184,8 +184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  maxHealth: 40
-  startHealth: 40
+  maxHealth: 45
+  startHealth: 45
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -320,7 +320,6 @@ GameObject:
   - component: {fileID: 2024296032656552434}
   - component: {fileID: 4757136027408176457}
   - component: {fileID: 1450984744020982776}
-  - component: {fileID: 464703511604064827}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -391,20 +390,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &464703511604064827
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2192361502581088442}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5674486929898313883
 GameObject:
   m_ObjectHideFlags: 0

@@ -611,5 +611,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: CurrencyReward
-    BaseValue: 350
+    BaseValue: 500
     Cap: 0
