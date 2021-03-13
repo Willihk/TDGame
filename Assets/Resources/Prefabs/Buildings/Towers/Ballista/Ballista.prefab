@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 2200751600107342119}
   - component: {fileID: 3318529956967191169}
   m_Layer: 0
-  m_Name: Baliista
+  m_Name: Ballista
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5445b2a3bc954060a2671f074d36bd78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSystem: {fileID: 0}
+  targetSystem: {fileID: 877722806743633727}
   turnRate: 40
   partToRotate: {fileID: 8341900244473676712}
 --- !u!114 &3318529956967191169
