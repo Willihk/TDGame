@@ -206,13 +206,13 @@ GameObject:
   - component: {fileID: 1044293883188136269}
   - component: {fileID: 566688370562072230}
   - component: {fileID: 7302544547702325963}
-  - component: {fileID: -5572149582025880319}
   - component: {fileID: 5544056917013065526}
   - component: {fileID: 497893191847042235}
   - component: {fileID: 6531821588583023592}
   - component: {fileID: 3537821724482391954}
   - component: {fileID: -3073734489905349819}
   - component: {fileID: -2148662607638874877}
+  - component: {fileID: 7110066075397982566}
   m_Layer: 0
   m_Name: Enemy2
   m_TagString: Untagged
@@ -287,20 +287,6 @@ MonoBehaviour:
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!136 &-5572149582025880319
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5004674288471461673}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2.1
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.05, z: 0}
 --- !u!114 &5544056917013065526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,6 +396,31 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &7110066075397982566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004674288471461673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2107b1995944e087f0d9eba468ad49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoRegisterForCollision: 1
+  centerPoint: {fileID: 6574449433587974845}
+  colliderData:
+    Layer: 1
+    CollidesWithLayer: 0
+    Center:
+      x: 0
+      y: 1.625
+      z: 0
+    Radius: 0.6
+  collisionEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5032946613613922154
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +607,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6509434850563274594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.8, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1044293883188136269}

@@ -24,7 +24,7 @@ namespace TDGame.Systems.Projectiles
             Destroy(gameObject, 3);
         }
 
-        private void OnCollision(DistanceCollider other)
+        public void OnCollision(DistanceCollider other)
         {
             if (other.gameObject.TryGetComponent(out BaseDamageReceiver damageReceiver))
             {

@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &55310365105390819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7919998677610440653}
+  m_Layer: 0
+  m_Name: CenterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7919998677610440653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55310365105390819}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.078125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5603730584830890896}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1092262665970301089
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,7 +1673,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -1684,7 +1714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5603730584830890896}
   - component: {fileID: 2579140715289930493}
-  - component: {fileID: -7429397257486150205}
+  - component: {fileID: 5512544919046577013}
   m_Layer: 0
   m_Name: ArrowProjectile
   m_TagString: Untagged
@@ -1705,6 +1735,7 @@ Transform:
   m_Children:
   - {fileID: 5169439704403607699}
   - {fileID: 3537258726404821809}
+  - {fileID: 7919998677610440653}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1720,22 +1751,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d3ac1655cd4a0ab1d2cd07d908e911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &-7429397257486150205
-Rigidbody:
+--- !u!114 &5512544919046577013
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155687850410582466}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2107b1995944e087f0d9eba468ad49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoRegisterForCollision: 1
+  centerPoint: {fileID: 7919998677610440653}
+  colliderData:
+    Layer: 2
+    CollidesWithLayer: 1
+    Center:
+      x: 0
+      y: 0
+      z: 0.078125
+    Radius: 0.02
+  collisionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2579140715289930493}
+        m_TargetAssemblyTypeName: TDGame.Systems.Projectiles.TurretProjectile, TDGame
+        m_MethodName: OnCollision
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3275348902829704500
 GameObject:
   m_ObjectHideFlags: 0

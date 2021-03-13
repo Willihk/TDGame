@@ -92,13 +92,13 @@ GameObject:
   - component: {fileID: 861486456417271053}
   - component: {fileID: -1393382851552184207}
   - component: {fileID: 5746963256902223166}
-  - component: {fileID: 6185835828024826084}
   - component: {fileID: 5372753103572766896}
   - component: {fileID: 5365210152112228459}
   - component: {fileID: 3930753968494398947}
   - component: {fileID: 7702358129174657919}
   - component: {fileID: -1062068302507949663}
   - component: {fileID: 4872642067181833597}
+  - component: {fileID: 2469663247690093352}
   m_Layer: 0
   m_Name: FirstBoss
   m_TagString: Untagged
@@ -173,19 +173,6 @@ MonoBehaviour:
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!135 &6185835828024826084
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5393522037176692450}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!114 &5372753103572766896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +282,31 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &2469663247690093352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393522037176692450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2107b1995944e087f0d9eba468ad49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoRegisterForCollision: 1
+  centerPoint: {fileID: 3749316940111835132}
+  colliderData:
+    Layer: 0
+    CollidesWithLayer: 0
+    Center:
+      x: 0
+      y: 1.9
+      z: 0
+    Radius: 1.5
+  collisionEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5526287661329693847
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +557,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8228718469271755081}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.9, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 861486456417271053}

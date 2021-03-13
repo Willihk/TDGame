@@ -205,13 +205,13 @@ GameObject:
   - component: {fileID: 5569105280271565042}
   - component: {fileID: 775794030761594343}
   - component: {fileID: 8099435671034801566}
-  - component: {fileID: 9087081827062120425}
   - component: {fileID: 7516301706193863908}
   - component: {fileID: 8636307110807311308}
   - component: {fileID: 5124936930366131368}
   - component: {fileID: 2459582899274885635}
   - component: {fileID: 1781636762893961292}
   - component: {fileID: -8448085224620046169}
+  - component: {fileID: 8065339382317118413}
   m_Layer: 0
   m_Name: GoldEnemy
   m_TagString: Untagged
@@ -286,20 +286,6 @@ MonoBehaviour:
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!136 &9087081827062120425
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7790793655431239870}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.9
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.95, z: 0}
 --- !u!114 &7516301706193863908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,6 +397,31 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &8065339382317118413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7790793655431239870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2107b1995944e087f0d9eba468ad49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoRegisterForCollision: 1
+  centerPoint: {fileID: 6488640250371740163}
+  colliderData:
+    Layer: 0
+    CollidesWithLayer: 0
+    Center:
+      x: 0
+      y: 1.4
+      z: 0
+    Radius: 0.5
+  collisionEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8951861229749203223
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,6 +50,7 @@ namespace TDGame.Systems.Collision.Collider
 
         private void OnDrawGizmosSelected()
         {
+            Update();
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(colliderData.Center, colliderData.Radius);
         }
