@@ -3,6 +3,7 @@ using Mirror;
 using TDGame.Map;
 using TDGame.Systems.Grid.Cell;
 using TDGame.Systems.Grid.Data;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace TDGame.Systems.Grid.InGame
@@ -11,7 +12,7 @@ namespace TDGame.Systems.Grid.InGame
     {
         public static GridController Instance;
 
-        public Vector2 gridSize;
+        public int2 gridSize;
 
         public float cellSize = .5f;
 

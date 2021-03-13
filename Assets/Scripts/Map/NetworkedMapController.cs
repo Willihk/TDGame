@@ -4,7 +4,9 @@ using System.Linq;
 using Mirror;
 using TDGame.Events.Base;
 using TDGame.Pathfinding.BasicAStar;
+using TDGame.Pathfinding.DotsAStar;
 using TDGame.Systems.Grid.InGame;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace TDGame.Map
@@ -28,21 +30,19 @@ namespace TDGame.Map
             mapLoadedEvent.Raise();
         }
 
-        public List<Vector2Int> GetWaypoints()
+        public List<int2> GetWaypoints()
         {
             var grid = GridController.Instance.mapGrid;
             var waypointController = mapPrefab.GetComponentInChildren<WaypointController>();
-            // var path = new AStar().GetPath(GridController.Instance.mapGrid,
-            //     GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position),
-            //     GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position));
-            return new List<Vector2Int>()
-            {
-                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position),
-                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position)
-            };
-            return new AStar().GetPath(GridController.Instance.mapGrid,
-                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position),
-                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position));
+            int2 start =
+                new int2(GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position).x,
+                    GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position).y); 
+            int2 end = new int2(
+                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position).x,
+                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position).y);
+            
+            var path = new PathFinding().FindPath(end, start, new int2(GridController.Instance.gridSize), GridController.Instance.mapGrid);
+            return path;
         }
     }
 }

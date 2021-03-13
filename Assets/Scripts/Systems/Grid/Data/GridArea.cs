@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace TDGame.Systems.Grid.Data
@@ -6,18 +7,18 @@ namespace TDGame.Systems.Grid.Data
     [Serializable]
     public struct GridArea
     {
-        public Vector2Int position;
+        public int2 position;
         public int width;
         public int height;
 
-        public Vector2Int[] GetPoints()
+        public int2[] GetPoints()
         {
-            var points = new Vector2Int[width * height];
+            var points = new int2[width * height];
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    points[y * width + x] = position + new Vector2Int(x, y);
+                    points[y * width + x] = position + new int2(x, y);
                 }
             }
 

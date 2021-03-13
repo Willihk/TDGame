@@ -2,6 +2,7 @@
 using System.Linq;
 using TDGame.Systems.Grid.Cell;
 using TDGame.Systems.Grid.Data;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace TDGame.Systems.Grid
@@ -131,11 +132,11 @@ namespace TDGame.Systems.Grid
             return area.GetPoints().All(p => IsCellEmpty(p.x, p.y));
         }
 
-        public Vector2Int WorldToGridPosition(Vector3 worldPosition)
+        public int2 WorldToGridPosition(Vector3 worldPosition)
         {
             int x = Mathf.FloorToInt(worldPosition.x / cellSize);
             int y = Mathf.FloorToInt(worldPosition.z / cellSize);
-            return new Vector2Int(x, y);
+            return new int2(x, y);
         }
 
         public int getIndex(int x, int y)

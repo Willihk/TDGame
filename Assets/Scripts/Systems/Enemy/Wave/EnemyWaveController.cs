@@ -47,7 +47,7 @@ namespace TDGame.Systems.Enemy.Wave
             if (!isServer)
                 return;
 
-            waypoints = mapController.GetWaypoints().Select(x => GridController.Instance.mapGrid.GridToWorldPosition(x.x, x.y)).Reverse().ToList();
+            waypoints = mapController.GetWaypoints().Select(x => GridController.Instance.mapGrid.GridToWorldPosition(x.x, x.y)).ToList();
         }
 
         void WaveChanged(int oldWave, int newWave)
