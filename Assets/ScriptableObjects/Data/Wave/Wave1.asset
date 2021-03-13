@@ -16,49 +16,271 @@ MonoBehaviour:
   Actions:
   - ActionType: 0
     Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
-    Delay: 0
-  - ActionType: 1
-    Prefab: {fileID: 0}
-    Delay: 0.5
+  - ActionType: 0
+    Delay: 1
   - ActionType: 0
     Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
-    Delay: 0
-  - ActionType: 1
-    Prefab: {fileID: 0}
-    Delay: 0.5
+  - ActionType: 0
+    Delay: 1
   - ActionType: 0
     Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
-    Delay: 0
-  - ActionType: 1
-    Prefab: {fileID: 0}
-    Delay: 0.5
+  - ActionType: 0
+    Delay: 1
   - ActionType: 0
     Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
-    Delay: 0
-  - ActionType: 1
-    Prefab: {fileID: 0}
-    Delay: 0.5
   - ActionType: 0
-    Prefab: {fileID: 2409457754608125768, guid: 09dd8c3db3d22d4448b186b457f36556, type: 3}
-    Delay: 0
-  - ActionType: 1
-    Prefab: {fileID: 0}
     Delay: 6
-  - ActionType: 1
-    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
-    Delay: 0
-  - ActionType: 1
-    Prefab: {fileID: 0}
-    Delay: 0.4
   - ActionType: 0
     Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
-    Delay: 0
-  - ActionType: 1
-    Prefab: {fileID: 0}
-    Delay: 0.4
   - ActionType: 0
-    Prefab: {fileID: 2409457754608125768, guid: 09dd8c3db3d22d4448b186b457f36556, type: 3}
-    Delay: 0
-  - ActionType: 1
-    Prefab: {fileID: 0}
-    Delay: 0.4
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 6
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 6
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 6
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 6
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 4
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 4
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 4
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 4
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 4
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 4
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 4
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
+  - ActionType: 0
+    Delay: 1
+  - ActionType: 0
+    Prefab: {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
