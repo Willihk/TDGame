@@ -9,12 +9,16 @@ namespace TDGame.Systems.Collision.Collider
     {
         public bool autoRegisterForCollision = true;
 
+        [SerializeField]
+        private Transform centerPoint;
+
         public DistanceColliderData colliderData;
 
         public UnityEvent<DistanceCollider> collisionEvent;
 
         private void Awake()
         {
+            centerPoint ??= transform;
             collisionEvent ??= new UnityEvent<DistanceCollider>();
         }
 
@@ -41,7 +45,7 @@ namespace TDGame.Systems.Collision.Collider
 
         private void Update()
         {
-            colliderData.Center = transform.position;
+            colliderData.Center = centerPoint.position;
         }
 
         private void OnDrawGizmosSelected()
