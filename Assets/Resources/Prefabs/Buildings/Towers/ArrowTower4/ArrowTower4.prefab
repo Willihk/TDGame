@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Range
-    BaseValue: 7
+    BaseValue: 6.5
     Cap: 0
 --- !u!114 &653461941531014866
 MonoBehaviour:
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Hit Damage
-    BaseValue: 36
+    BaseValue: 32
     Cap: 0
 --- !u!114 &4052195613612312197
 MonoBehaviour:
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Fire Rate
-    BaseValue: 0.71428573
+    BaseValue: 0.8
     Cap: 0
 --- !u!114 &7518614309487249375
 MonoBehaviour:
@@ -4718,7 +4718,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 2668955650705567324}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4
 --- !u!1 &6558490411000067878

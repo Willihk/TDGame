@@ -3286,7 +3286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Range
-    BaseValue: 7.5
+    BaseValue: 7
     Cap: 0
 --- !u!114 &3321442592711665463
 MonoBehaviour:
@@ -3318,7 +3318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Fire Rate
-    BaseValue: 0.625
+    BaseValue: 0.75
     Cap: 0
 --- !u!114 &8286525542541500836
 MonoBehaviour:
@@ -3334,7 +3334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Projectile Speed
-    BaseValue: 12
+    BaseValue: 14
     Cap: 0
 --- !u!1 &6442358720384780120
 GameObject:
@@ -3481,7 +3481,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 4895897308425091667}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4
 --- !u!1 &8584714170296644242

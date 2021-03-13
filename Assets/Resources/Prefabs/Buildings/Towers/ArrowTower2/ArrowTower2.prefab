@@ -1635,7 +1635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Range
-    BaseValue: 6
+    BaseValue: 5.5
     Cap: 0
 --- !u!114 &1061097708856722390
 MonoBehaviour:
@@ -1651,7 +1651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Hit Damage
-    BaseValue: 18
+    BaseValue: 14
     Cap: 0
 --- !u!114 &6734813196854280232
 MonoBehaviour:
@@ -1667,7 +1667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Fire Rate
-    BaseValue: 1
+    BaseValue: 1.25
     Cap: 0
 --- !u!114 &4850494188148649228
 MonoBehaviour:
@@ -1683,7 +1683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Projectile Speed
-    BaseValue: 12
+    BaseValue: 10
     Cap: 0
 --- !u!1 &3227509307481455940
 GameObject:
@@ -1794,6 +1794,7 @@ GameObject:
   - component: {fileID: 1268532014661796442}
   - component: {fileID: -7203643295507826711}
   - component: {fileID: 5166593127700075143}
+  - component: {fileID: -3106684423048468940}
   m_Layer: 0
   m_Name: ArrowTower2
   m_TagString: Untagged
@@ -1934,6 +1935,21 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   upgradePrefab: {fileID: 2451450943750830905, guid: e5e00a7cf79b5ed4c9356520e0693e6a, type: 3}
+--- !u!114 &-3106684423048468940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305952242223460855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf851b12a214319829c1b54a0274247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  upgradePrefab: {fileID: 4685590787396274160, guid: 0a0574b70994f484eb6b7624c1860317, type: 3}
 --- !u!1 &4669371158762360861
 GameObject:
   m_ObjectHideFlags: 0
@@ -5063,7 +5079,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 7827915647353762170}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4
 --- !u!1 &7096137526144459891

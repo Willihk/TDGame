@@ -2505,7 +2505,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 3967901888781227539}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4
 --- !u!1 &7375831574022462214
@@ -2604,7 +2606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Projectile Speed
-    BaseValue: 6
+    BaseValue: 14
     Cap: 0
 --- !u!1 &8434856879588416157
 GameObject:
