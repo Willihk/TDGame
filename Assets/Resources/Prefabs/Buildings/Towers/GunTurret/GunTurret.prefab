@@ -2049,6 +2049,7 @@ GameObject:
   - component: {fileID: 6581280707357702412}
   - component: {fileID: 4325550289231843637}
   - component: {fileID: 7028463934600148481}
+  - component: {fileID: -2311532231973367382}
   - component: {fileID: -1568086232980423581}
   m_Layer: 0
   m_Name: GunTurret
@@ -2175,6 +2176,21 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 8682321092502671593}
   stats: []
+--- !u!114 &-2311532231973367382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4279384031723286423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf851b12a214319829c1b54a0274247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  upgradePrefab: {fileID: 1658031204799762321, guid: b835d3d406197844ebf2f60aade88eac, type: 3}
 --- !u!114 &-1568086232980423581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2238,7 +2254,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 5743850559681383693}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4
 --- !u!1 &6670454057173193201
@@ -2366,7 +2384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Hit Damage
-    BaseValue: 54
+    BaseValue: 60
     Cap: 0
 --- !u!114 &5620297908653518163
 MonoBehaviour:
@@ -2382,7 +2400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Fire Rate
-    BaseValue: 0.45454547
+    BaseValue: 0.25
     Cap: 0
 --- !u!114 &5118419123226118693
 MonoBehaviour:
@@ -2398,5 +2416,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Projectile Speed
-    BaseValue: 26
+    BaseValue: 30
     Cap: 0
