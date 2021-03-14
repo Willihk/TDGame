@@ -4792,7 +4792,7 @@ MonoBehaviour:
   syncInterval: 0.1
   DisplayInfo:
     Name: Advanced Sentry
-    Description: 
+    Description: It is better
     Icon: {fileID: 0}
   price: 720
   targetSystem: {fileID: 1699909959237219051}

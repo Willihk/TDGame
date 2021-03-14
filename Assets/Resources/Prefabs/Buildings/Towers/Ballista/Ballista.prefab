@@ -320,7 +320,7 @@ MonoBehaviour:
   syncInterval: 0.1
   DisplayInfo:
     Name: Ballista
-    Description: 
+    Description: Big Arrow
     Icon: {fileID: 0}
   price: 420
   targetSystem: {fileID: 877722806743633727}

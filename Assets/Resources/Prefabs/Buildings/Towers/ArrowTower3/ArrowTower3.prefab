@@ -1753,7 +1753,7 @@ MonoBehaviour:
   syncInterval: 0.1
   DisplayInfo:
     Name: Archer Tower III
-    Description: 
+    Description: Projectile Tower that shoots arrows at nearby targets
     Icon: {fileID: 0}
   price: 350
   targetSystem: {fileID: 5770753753866830979}

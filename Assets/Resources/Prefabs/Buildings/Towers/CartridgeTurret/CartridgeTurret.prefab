@@ -2166,7 +2166,7 @@ MonoBehaviour:
   syncInterval: 0.1
   DisplayInfo:
     Name: Gun Turret
-    Description: 
+    Description: :)
     Icon: {fileID: 0}
   price: 2020
   targetSystem: {fileID: 0}

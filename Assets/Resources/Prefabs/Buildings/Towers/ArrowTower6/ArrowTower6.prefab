@@ -223,7 +223,7 @@ MonoBehaviour:
   syncInterval: 0.1
   DisplayInfo:
     Name: Sentry Tower Elite
-    Description: 
+    Description: Projectile Tower that shoots 5 arrows at nearby targets
     Icon: {fileID: 0}
   price: 6720
   targetSystem: {fileID: 4329130148465618186}

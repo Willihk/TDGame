@@ -1880,7 +1880,7 @@ MonoBehaviour:
   syncInterval: 0.1
   DisplayInfo:
     Name: Archer Tower II
-    Description: 
+    Description: Projectile Tower that shoots arrows at nearby targets
     Icon: {fileID: 0}
   price: 170
   targetSystem: {fileID: -3446043468737759124}

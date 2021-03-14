@@ -1110,8 +1110,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   DisplayInfo:
-    Name: 
-    Description: 
+    Name: Multishot Tower
+    Description: Shots mutilple projectiles at random directions
     Icon: {fileID: 0}
   price: 40
   targetSystem: {fileID: 2573253351991066667}
@@ -2883,7 +2883,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 492472274125642062}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4
 --- !u!1 &7418936050892476378

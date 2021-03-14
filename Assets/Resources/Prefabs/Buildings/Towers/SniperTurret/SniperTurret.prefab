@@ -2744,7 +2744,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 6319208600402704006}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4
 --- !u!1 &3299566192202341188
@@ -5168,8 +5170,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   DisplayInfo:
-    Name: 
-    Description: 
+    Name: Sniper Turret
+    Description: Really high range
     Icon: {fileID: 0}
   price: 12020
   targetSystem: {fileID: 4456657489372227326}

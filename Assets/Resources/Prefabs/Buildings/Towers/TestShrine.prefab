@@ -561,7 +561,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 3398134091947181277}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4
 --- !u!1 &6929034726703325910
@@ -820,6 +822,6 @@ MonoBehaviour:
   syncInterval: 0.1
   DisplayInfo:
     Name: Shrine
-    Description: 
+    Description: Does nothing
     Icon: {fileID: 0}
-  price: 0
+  price: 30

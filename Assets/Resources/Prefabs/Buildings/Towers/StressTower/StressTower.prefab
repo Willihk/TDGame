@@ -2087,9 +2087,9 @@ MonoBehaviour:
   syncInterval: 0.1
   DisplayInfo:
     Name: Stress Tower
-    Description: 
+    Description: Extreme amount of projectiles
     Icon: {fileID: 0}
-  price: 1
+  price: 0
   targetSystem: {fileID: 8109707603251694821}
   projectilePrefab: {fileID: 891649866036199970, guid: 0252f1e91c1902f4db9391921de6988f, type: 3}
   hitDamage: {fileID: 8508375249980641316}

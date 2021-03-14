@@ -576,8 +576,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   DisplayInfo:
-    Name: Test Tesla Tower
-    Description: 
+    Name: Tesla Tower (Test)
+    Description: Deals Damage to up to 8 nearby targets
     Icon: {fileID: 0}
   price: 10
   targetSystem: {fileID: 897508154960977226}
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Range
-    BaseValue: 9
+    BaseValue: 6
     Cap: 0
 --- !u!114 &6017248444167473283
 MonoBehaviour:
@@ -886,7 +886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Hit Damage
-    BaseValue: 2
+    BaseValue: 4
     Cap: 0
 --- !u!114 &8765432006048303002
 MonoBehaviour:
@@ -902,7 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: Hit rate
-    BaseValue: 0.1
+    BaseValue: 0.2
     Cap: 0
 --- !u!1 &8174940183197933885
 GameObject:
@@ -1180,6 +1180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 8033085242713524000}
   area:
-    position: {x: 0, y: 0}
+    position:
+      x: 0
+      y: 0
     width: 4
     height: 4

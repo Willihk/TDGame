@@ -10218,7 +10218,7 @@ MonoBehaviour:
   syncInterval: 0.1
   DisplayInfo:
     Name: Archer Tower
-    Description: 
+    Description: Projectile Tower that shoots arrows at nearby targets
     Icon: {fileID: 0}
   price: 70
   targetSystem: {fileID: 8109707603251694821}
