@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace TDGame.UI.BuildingList
 {
-    public class BuildingListEntry : MonoBehaviour
+    public class BuildingListEntry : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField]
         private TextMeshProUGUI nameText;
@@ -30,7 +30,7 @@ namespace TDGame.UI.BuildingList
         {
             this.prefabName = prefabName;
             nameText.text = name;
-            costText.text = cost.ToString();
+            costText.text = cost == 0 ? "FREE" : cost.ToString();
         }
 
         public void OnClick()
@@ -40,6 +40,16 @@ namespace TDGame.UI.BuildingList
                 localCursorState.State = CursorState.Placing;
                 OnClickBuyBuilding.Raise(prefabName);
             }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            TowerTooltipController.Instance.DisplayUI(prefabName, this.GetComponent<RectTransform>());
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            TowerTooltipController.Instance.HideUI();
         }
     }
 }
