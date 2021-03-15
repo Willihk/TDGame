@@ -5,7 +5,7 @@ using TDGame.Systems.Targeting.Implementations;
 using TDGame.Systems.Tower.Base;
 using UnityEngine;
 
-namespace TDGame
+namespace TDGame.Systems.Tower.Implementations
 {
     public class MultishotProjectileTower : BaseNetworkedTower
     {

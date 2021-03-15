@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using TDGame.Building;
 using TDGame.Systems.Stats;
 using TDGame.Systems.Tower.Base;
-using TDGame.UI.TowerTooltip;
 using UnityEngine;
 
-namespace TDGame
+namespace TDGame.Systems.TowerTooltip
 {
     public class TowerTooltipController : MonoBehaviour
     {
@@ -42,7 +39,7 @@ namespace TDGame
             }
 
 
-            if (tooltip.TryGetComponent(out TowerTooltip towerTooltip))
+            if (tooltip.TryGetComponent(out UI.TowerTooltip.TowerTooltip towerTooltip))
             {
                 StringBuilder sb = new StringBuilder();
 
