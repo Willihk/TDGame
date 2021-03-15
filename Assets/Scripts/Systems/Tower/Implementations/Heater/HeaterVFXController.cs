@@ -20,8 +20,14 @@ namespace TDGame.Systems.Tower.Implementations.Heater
 
         private void Start()
         {
+            foreach (var statsControllerStat in statsController.stats)
+            {
+                Debug.Log(statsControllerStat.stat.Name);
+            }
             rangeStat = statsController.GetStatByName(rangeStatName);
+            Setup();
         }
+        
 
         public void Setup()
         {

@@ -48,8 +48,8 @@ MonoBehaviour:
   m_UISuperCollapsed: 0
   m_UIInfos: {fileID: 114340500867371532}
   m_ParameterInfo:
-  - name: Radius
-    path: Radius
+  - name: Range
+    path: Range
     tooltip: 
     sheetType: m_Float
     realType: Single
@@ -2525,7 +2525,7 @@ MonoBehaviour:
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661614842}
-  m_ExposedName: Radius
+  m_ExposedName: Range
   m_Exposed: 1
   m_Order: 0
   m_Category: 

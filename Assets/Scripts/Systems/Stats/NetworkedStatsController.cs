@@ -22,10 +22,13 @@ namespace TDGame.Systems.Stats
             stats.AddRange(statHolder.GetComponents<StatWrapper>());
         }
 
-        public StatWrapper GetStatByName(string name)
+        public StatWrapper GetStatByName(string statName)
         {
-            if (stats.Any(x => x.stat.Name == name))
-                return stats.First(x => x.stat.Name == name);
+            foreach (var x in stats)
+            {
+                if (x.stat.Name.ToLower() == statName.ToLower()) 
+                    return x;
+            }
 
             return null;
         }
