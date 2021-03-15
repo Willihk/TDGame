@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: -3073734489905349819}
   - component: {fileID: -2148662607638874877}
   - component: {fileID: 7110066075397982566}
+  - component: {fileID: 8640103034263584049}
   m_Layer: 0
   m_Name: Enemy2
   m_TagString: Untagged
@@ -275,6 +276,19 @@ MonoBehaviour:
       - m_Target: {fileID: -3073734489905349819}
         m_TargetAssemblyTypeName: TDGame.Systems.Enemy.Death.DeathController, TDGame
         m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8640103034263584049}
+        m_TargetAssemblyTypeName: TDGame.Systems.Enemy.Death.DeathSoundController,
+          TDGame
+        m_MethodName: PlaySound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -415,12 +429,25 @@ MonoBehaviour:
     CollidesWithLayer: 0
     Center:
       x: 0
-      y: 1.625
+      y: 1.5
       z: 0
     Radius: 0.6
   collisionEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8640103034263584049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004674288471461673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587db54302a74fd9b27914626ab418b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathClip: {fileID: 8300000, guid: eecb56ea2a94eed46a29549c2e2b04d6, type: 3}
 --- !u!1 &5032946613613922154
 GameObject:
   m_ObjectHideFlags: 0
