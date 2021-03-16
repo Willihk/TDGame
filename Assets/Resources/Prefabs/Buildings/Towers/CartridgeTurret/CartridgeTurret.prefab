@@ -2147,7 +2147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  acquisitionSystem: {fileID: 0}
+  acquisitionSystem: {fileID: 1696934127244539746}
   target: {fileID: 0}
   clientTargetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7675873944847812612
@@ -2169,7 +2169,7 @@ MonoBehaviour:
     Description: :)
     Icon: {fileID: 0}
   price: 2020
-  targetSystem: {fileID: 0}
+  targetSystem: {fileID: 2629834187428793858}
   projectilePrefab: {fileID: 1155687850410582466, guid: 57eb5a246f8a7a049b7ac1353c82cddc, type: 3}
   hitDamage: {fileID: 5701065135712498088}
   fireRate: {fileID: 353770049720720913}
@@ -2187,7 +2187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5445b2a3bc954060a2671f074d36bd78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSystem: {fileID: 0}
+  targetSystem: {fileID: 2629834187428793858}
   turnRate: 30
   partToRotate: {fileID: 2708777171169366222}
 --- !u!114 &8248151318778403600

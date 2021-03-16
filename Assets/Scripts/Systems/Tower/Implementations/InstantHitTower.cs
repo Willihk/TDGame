@@ -29,7 +29,7 @@ namespace TDGame.Systems.Tower.Implementations
         {
             if (isServer)
             {
-                if (nextHit < Time.time)
+                if (targetSystem.target != null && nextHit < Time.time)
                 {
                     Hit();
                 }
