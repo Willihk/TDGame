@@ -69,7 +69,7 @@ namespace TDGame.Systems.Collision.System
 
             while (collisions.TryDequeue(out CollisionResult collision))
             {
-                if (Colliders.Count > collision.ColliderAIndex || Colliders.Count > collision.ColliderBIndex)
+                if (Colliders.Count > collision.ColliderAIndex && Colliders.Count > collision.ColliderBIndex)
                 {
                     Colliders[collision.ColliderAIndex].OnCollision(Colliders[collision.ColliderBIndex]);
                     Colliders[collision.ColliderBIndex].OnCollision(Colliders[collision.ColliderBIndex]);

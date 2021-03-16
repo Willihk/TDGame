@@ -85,13 +85,23 @@ namespace TDGame.Systems.Sound.Pool
 
         private void Update()
         {
-            for (int index = 0; index < activePool.Count; index++)
+            for (int i = poolSize; i < pool.Count; i++)
             {
-                var source = activePool[index];
+                Destroy(pool[i]);
+                pool.RemoveAt(i);
+                if (i % 5 == 0)
+                {
+                    break; // Slows down the pool cleanup
+                }
+            }
+            
+            for (int i = 0; i < activePool.Count; i++)
+            {
+                var source = activePool[i];
                 if (!source.isPlaying)
                 {
                     ReturnToPool(source);
-                    break;
+                    i--;
                 }
             }
         }
