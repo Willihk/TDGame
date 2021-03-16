@@ -59,30 +59,15 @@ namespace TDGame.Systems.Collision.System
 
             while (collisions.TryDequeue(out CollisionResult collision))
             {
-                Colliders[collision.colliderAIndex].OnCollision(Colliders[collision.colliderBIndex]);
-                Colliders[collision.colliderBIndex].OnCollision(Colliders[collision.colliderBIndex]);
+                if (Colliders.Count > collision.ColliderAIndex || Colliders.Count > collision.ColliderBIndex)
+                {
+                    Colliders[collision.ColliderAIndex].OnCollision(Colliders[collision.ColliderBIndex]);
+                    Colliders[collision.ColliderBIndex].OnCollision(Colliders[collision.ColliderBIndex]);
+                }
             }
 
             collisions.Dispose();
             colliderDatas.Dispose();
-        }
-
-        public static bool CollidesWith(DistanceColliderData colliderA, DistanceColliderData colliderB)
-        {
-            if (!CanCollideWith(colliderA, colliderB))
-            {
-                return false;
-            }
-
-            float distance = math.distance(colliderA.Center, colliderB.Center);
-            distance = math.abs(distance);
-
-            return distance <= colliderA.Radius + colliderB.Radius;
-        }
-
-        public static bool CanCollideWith(DistanceColliderData colliderA, DistanceColliderData colliderB)
-        {
-            return colliderA.CollidesWithLayer == colliderB.Layer;
         }
     }
 }

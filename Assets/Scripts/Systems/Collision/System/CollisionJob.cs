@@ -1,4 +1,5 @@
 ﻿using TDGame.Systems.Collision.Collider;
+using TDGame.Systems.Collision.Processes;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -7,8 +8,8 @@ namespace TDGame.Systems.Collision.System
 {
     public struct CollisionResult
     {
-        public int colliderAIndex;
-        public int colliderBIndex;
+        public int ColliderAIndex;
+        public int ColliderBIndex;
     }
 
     [BurstCompatible]
@@ -24,14 +25,13 @@ namespace TDGame.Systems.Collision.System
         {
             for (int otherIndex = 0; otherIndex < ColliderDatas.Length; otherIndex++)
             {
-                if (otherIndex == index || ColliderDatas[index].CollidesWithLayer != ColliderDatas[otherIndex].Layer)
+                if (otherIndex == index)
                     continue;
 
-                float distance = math.distance(ColliderDatas[index].Center, ColliderDatas[otherIndex].Center);
-                distance = math.abs(distance);
-
-                if (distance <= ColliderDatas[index].Radius + ColliderDatas[otherIndex].Radius)
-                    Results.Enqueue(new CollisionResult {colliderAIndex = index, colliderBIndex = otherIndex});
+                if (CollisionProcess.CollidesWith(ColliderDatas[index], ColliderDatas[otherIndex]))
+                {
+                    Results.Enqueue(new CollisionResult {ColliderAIndex = index, ColliderBIndex = otherIndex});
+                }
             }
         }
     }
