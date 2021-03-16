@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TDGame.Systems.Collision.Collider;
-using TDGame.Systems.Collision.Layer;
 using Unity.Collections;
 using Unity.Jobs;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace TDGame.Systems.Collision.System
@@ -16,7 +13,7 @@ namespace TDGame.Systems.Collision.System
 
         public List<DistanceCollider> Colliders;
 
-        private NativeArray<DistanceColliderData> colliderDatas;
+        private NativeList<DistanceColliderData> colliderDatas;
         private NativeQueue<CollisionResult> collisions;
 
         private JobHandle handle;
@@ -25,6 +22,14 @@ namespace TDGame.Systems.Collision.System
         {
             Instance = this;
             Colliders ??= new List<DistanceCollider>();
+            colliderDatas = new NativeList<DistanceColliderData>(Allocator.Persistent);
+            collisions= new NativeQueue<CollisionResult>(Allocator.Persistent);
+        }
+
+        private void OnDestroy()
+        {
+            collisions.Dispose();
+            colliderDatas.Dispose();
         }
 
         public void RegisterCollider(DistanceCollider collider)
@@ -39,12 +44,17 @@ namespace TDGame.Systems.Collision.System
 
         private void Update()
         {
-            colliderDatas =
-                new NativeArray<DistanceColliderData>(Colliders.Select(x => x.colliderData).ToArray(),
-                    Allocator.TempJob);
-            collisions = new NativeQueue<CollisionResult>(Allocator.TempJob);
+            if (colliderDatas.Length != Colliders.Count)
+            {
+                colliderDatas.Resize(Colliders.Count, NativeArrayOptions.UninitializedMemory);
+            }
+            
+            for (int i = 0; i < Colliders.Count; i++)
+            {
+                colliderDatas[i] = Colliders[i].colliderData;
+            }
 
-            CollisionJob job = new CollisionJob()
+            CollisionJob job = new CollisionJob
             {
                 ColliderDatas = colliderDatas,
                 Results = collisions.AsParallelWriter()
@@ -66,8 +76,6 @@ namespace TDGame.Systems.Collision.System
                 }
             }
 
-            collisions.Dispose();
-            colliderDatas.Dispose();
         }
     }
 }
