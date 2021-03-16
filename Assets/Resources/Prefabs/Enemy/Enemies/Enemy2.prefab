@@ -447,7 +447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587db54302a74fd9b27914626ab418b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathClip: {fileID: 8300000, guid: eecb56ea2a94eed46a29549c2e2b04d6, type: 3}
+  deathClip: {fileID: 8300000, guid: ac5e5d3262def8d4199871a701d5cc22, type: 3}
 --- !u!1 &5032946613613922154
 GameObject:
   m_ObjectHideFlags: 0

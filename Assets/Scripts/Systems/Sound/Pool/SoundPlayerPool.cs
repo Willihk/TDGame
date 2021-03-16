@@ -85,11 +85,13 @@ namespace TDGame.Systems.Sound.Pool
 
         private void Update()
         {
-            foreach (var source in activePool)
+            for (int index = 0; index < activePool.Count; index++)
             {
+                var source = activePool[index];
                 if (!source.isPlaying)
                 {
                     ReturnToPool(source);
+                    break;
                 }
             }
         }
