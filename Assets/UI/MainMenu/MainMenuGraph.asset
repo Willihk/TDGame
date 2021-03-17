@@ -148,93 +148,6 @@ MonoBehaviour:
   - Category: Main Menu
     InstantAction: 0
     Name: Main
---- !u!114 &-5024346979777486605
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0457c944106549aa894c5f7e7b4b3253, type: 3}
-  m_Name: BackButtonNode
-  m_EditorClassIdentifier: 
-  ErrorNodeNameIsEmpty: 0
-  ErrorDuplicateNameFoundInGraph: 0
-  m_inputSockets:
-  - m_connectionMode: 1
-    m_connections:
-    - m_inputConnectionPoint: {x: -2, y: 4}
-      m_outputConnectionPoint: {x: 202, y: 4}
-      m_id: 44fe7266-e2bd-4f36-ab56-a589ec86b200
-      m_inputNodeId: 873c36d5-fa69-434c-8074-e6b4cd4ebd91
-      m_inputSocketId: cccd631e-6542-4309-bf11-a4e547775f57
-      m_outputNodeId: f4d64f95-d1bd-40f5-b4a7-aae36d03d24c
-      m_outputSocketId: d49b9b2f-4fcb-400d-9620-81efc349e423
-    m_connectionPoints:
-    - {x: -2, y: 4}
-    - {x: 202, y: 4}
-    m_direction: 0
-    m_canBeDeleted: 0
-    m_canBeReordered: 0
-    m_curveModifier: 0
-    m_height: 24
-    m_width: 216
-    m_x: 0
-    m_y: 38
-    m_id: cccd631e-6542-4309-bf11-a4e547775f57
-    m_nodeId: 873c36d5-fa69-434c-8074-e6b4cd4ebd91
-    m_socketName: InputSocket_0
-    m_value: '{}'
-    m_valueTypeQualifiedName: Doozy.Engine.Nody.Connections.PassthroughConnection,
-      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_outputSockets:
-  - m_connectionMode: 0
-    m_connections:
-    - m_inputConnectionPoint: {x: 202, y: 4}
-      m_outputConnectionPoint: {x: -2, y: 4}
-      m_id: c65f9f0a-1c90-4a16-a6fb-c1c8e4a23dfb
-      m_inputNodeId: 0b1808e2-a861-47ab-9d58-6c923dffd60e
-      m_inputSocketId: 7e5d229d-318a-48af-9f1a-6652b9942843
-      m_outputNodeId: 873c36d5-fa69-434c-8074-e6b4cd4ebd91
-      m_outputSocketId: 04b397b3-c4a0-41c4-a350-cab43309560a
-    m_connectionPoints:
-    - {x: -2, y: 4}
-    - {x: 202, y: 4}
-    m_direction: 1
-    m_canBeDeleted: 0
-    m_canBeReordered: 0
-    m_curveModifier: 0
-    m_height: 24
-    m_width: 216
-    m_x: 0
-    m_y: 62
-    m_id: 04b397b3-c4a0-41c4-a350-cab43309560a
-    m_nodeId: 873c36d5-fa69-434c-8074-e6b4cd4ebd91
-    m_socketName: OutputSocket_0
-    m_value: '{}'
-    m_valueTypeQualifiedName: Doozy.Engine.Nody.Connections.PassthroughConnection,
-      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_nodeType: 4
-  m_allowDuplicateNodeName: 0
-  m_allowEmptyNodeName: 0
-  m_canBeDeleted: 1
-  m_debugMode: 0
-  m_useFixedUpdate: 0
-  m_useLateUpdate: 0
-  m_useUpdate: 0
-  m_height: 156
-  m_width: 216
-  m_x: 684
-  m_y: 36
-  m_minimumInputSocketsCount: 1
-  m_minimumOutputSocketsCount: 1
-  m_graphId: c045a8ed-f9ef-4d2f-8a35-bd01c306c2d8
-  m_id: 873c36d5-fa69-434c-8074-e6b4cd4ebd91
-  m_name: Back Button
-  m_notes: 
-  BackButtonAction: 1
 --- !u!114 &-2589808532018322483
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -317,7 +230,7 @@ MonoBehaviour:
   m_version: 1
   m_description: 
   m_id: c045a8ed-f9ef-4d2f-8a35-bd01c306c2d8
-  m_lastModified: 132604743614245787
+  m_lastModified: 132604842560706302
 --- !u!114 &1919867763366760815
 MonoBehaviour:
   m_ObjectHideFlags: 1

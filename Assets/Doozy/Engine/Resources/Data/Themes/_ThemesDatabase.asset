@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ThemesNames:
   - General
+  - Menu
   Themes:
   - {fileID: 11400000, guid: 25700fc508fc1774e8fd2cd749599b1e, type: 2}
+  - {fileID: 11400000, guid: 911bcca136e054d418b59373d1ea9a2f, type: 2}
