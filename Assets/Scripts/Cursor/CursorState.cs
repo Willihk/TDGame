@@ -4,5 +4,6 @@
     {
         None = 0,
         Placing = 1,
+        Menu
     }
 }
