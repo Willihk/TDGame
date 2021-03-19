@@ -19,8 +19,10 @@ MonoBehaviour:
   - General
   - Main Menu
   - InGame
+  - GameLobby
   Categories:
   - {fileID: 11400000, guid: b01e98f4801f7124ba39e1dac4debf90, type: 2}
   - {fileID: 11400000, guid: 612f47fa63746294b8e747410855a8d7, type: 2}
   - {fileID: 11400000, guid: 46e1e5eb6bf42d84293bc21e5f0fcc8f, type: 2}
   - {fileID: 11400000, guid: 27aba628ca9b24b4c864ef577660de0d, type: 2}
+  - {fileID: 11400000, guid: 87924a453aa1e884a8e2bd27d45c57e4, type: 2}
