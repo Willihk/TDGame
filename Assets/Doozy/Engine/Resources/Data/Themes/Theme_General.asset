@@ -9,44 +9,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a151aae416b497c9eaea8aa5ac1c555, type: 3}
+  m_Script: {fileID: 0}
   m_Name: Theme_General
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Doozy.Engine:Doozy.Engine.Themes:ThemeData
   m_themeName: General
-  SerializedGuid: 9833d8ac6c8e7f48bf15091b4b41fef7
+  SerializedGuid: 36c092c73fcc314c99c79e56e348dbdd
   m_activeVariant:
     m_variantName: Default
-    SerializedGuid: bd2c33cef4b46f4aa881c4d6ad5543fe
+    SerializedGuid: 9a060d406df87b4bbed2d9ff0f31798d
     Colors:
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: 533bcfb75a14834f8c3fac4ba73982ba
+      SerializedGuid: f1bacf7ca126db4ba5cb426b79595881
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: 65e671b16468d947bdbf1425188ab882
+      SerializedGuid: 8c5dee079c98da49ac9dbc745287536b
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: bf0a59a9be98db4e90b4589da5d4049b
+      SerializedGuid: 3b15813abd9f5e4cbfd0d85a6b322571
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: 35f0530a1e76844b836d043cfc2dc064
-    - m_color: {r: 0.14509805, g: 0.14509805, b: 0.14509805, a: 1}
-      SerializedGuid: c944542cf28ac0478005afc1e477fd81
+      SerializedGuid: 2f45501cafe9ec4ea29e3a45f706990e
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: c393464863ec5c4cbc42b657f747cde1
+      SerializedGuid: edab368e1f37874c83952e49b1a80a75
+    - m_color: {r: 1, g: 1, b: 1, a: 1}
+      SerializedGuid: acb70c7e9f57bf4a821d506a59f51bdd
     Sprites: []
     Textures: []
     Fonts: []
     FontAssets: []
   ColorLabels:
   - m_label: Primary
-    SerializedGuid: 533bcfb75a14834f8c3fac4ba73982ba
+    SerializedGuid: f1bacf7ca126db4ba5cb426b79595881
   - m_label: Secondary
-    SerializedGuid: 65e671b16468d947bdbf1425188ab882
+    SerializedGuid: 8c5dee079c98da49ac9dbc745287536b
   - m_label: Accent 1
-    SerializedGuid: bf0a59a9be98db4e90b4589da5d4049b
+    SerializedGuid: 3b15813abd9f5e4cbfd0d85a6b322571
   - m_label: Accent 2
-    SerializedGuid: 35f0530a1e76844b836d043cfc2dc064
+    SerializedGuid: 2f45501cafe9ec4ea29e3a45f706990e
   - m_label: Text
-    SerializedGuid: c944542cf28ac0478005afc1e477fd81
+    SerializedGuid: edab368e1f37874c83952e49b1a80a75
   - m_label: Disabled
-    SerializedGuid: c393464863ec5c4cbc42b657f747cde1
+    SerializedGuid: acb70c7e9f57bf4a821d506a59f51bdd
   SpriteLabels: []
   TextureLabels: []
   FontLabels: []
@@ -55,20 +55,20 @@ MonoBehaviour:
   - Default
   Variants:
   - m_variantName: Default
-    SerializedGuid: bd2c33cef4b46f4aa881c4d6ad5543fe
+    SerializedGuid: 9a060d406df87b4bbed2d9ff0f31798d
     Colors:
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: 533bcfb75a14834f8c3fac4ba73982ba
+      SerializedGuid: f1bacf7ca126db4ba5cb426b79595881
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: 65e671b16468d947bdbf1425188ab882
+      SerializedGuid: 8c5dee079c98da49ac9dbc745287536b
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: bf0a59a9be98db4e90b4589da5d4049b
+      SerializedGuid: 3b15813abd9f5e4cbfd0d85a6b322571
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: 35f0530a1e76844b836d043cfc2dc064
-    - m_color: {r: 0.14509805, g: 0.14509805, b: 0.14509805, a: 1}
-      SerializedGuid: c944542cf28ac0478005afc1e477fd81
+      SerializedGuid: 2f45501cafe9ec4ea29e3a45f706990e
     - m_color: {r: 1, g: 1, b: 1, a: 1}
-      SerializedGuid: c393464863ec5c4cbc42b657f747cde1
+      SerializedGuid: edab368e1f37874c83952e49b1a80a75
+    - m_color: {r: 1, g: 1, b: 1, a: 1}
+      SerializedGuid: acb70c7e9f57bf4a821d506a59f51bdd
     Sprites: []
     Textures: []
     Fonts: []
