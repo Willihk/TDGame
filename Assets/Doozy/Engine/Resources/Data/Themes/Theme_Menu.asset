@@ -30,6 +30,8 @@ MonoBehaviour:
       SerializedGuid: c6f34e095ca1b548ace60ed5859abec4
     - m_color: {r: 0.44313726, g: 0.5019608, b: 0.5764706, a: 1}
       SerializedGuid: 784a497cdbbf4845b0ed30caa199b468
+    - m_color: {r: 0.14509805, g: 0.14509805, b: 0.14509805, a: 0.9019608}
+      SerializedGuid: 24a4e817e1211e41ac8df5db426e6a31
     Sprites: []
     Textures: []
     Fonts: []
@@ -47,6 +49,8 @@ MonoBehaviour:
     SerializedGuid: c6f34e095ca1b548ace60ed5859abec4
   - m_label: Disabled
     SerializedGuid: 784a497cdbbf4845b0ed30caa199b468
+  - m_label: Transparent Overlay
+    SerializedGuid: 24a4e817e1211e41ac8df5db426e6a31
   SpriteLabels: []
   TextureLabels: []
   FontLabels: []
@@ -70,6 +74,8 @@ MonoBehaviour:
       SerializedGuid: c6f34e095ca1b548ace60ed5859abec4
     - m_color: {r: 0.44313726, g: 0.5019608, b: 0.5764706, a: 1}
       SerializedGuid: 784a497cdbbf4845b0ed30caa199b468
+    - m_color: {r: 0.14509805, g: 0.14509805, b: 0.14509805, a: 0.9019608}
+      SerializedGuid: 24a4e817e1211e41ac8df5db426e6a31
     Sprites: []
     Textures: []
     Fonts: []
@@ -89,6 +95,8 @@ MonoBehaviour:
       SerializedGuid: c6f34e095ca1b548ace60ed5859abec4
     - m_color: {r: 0.8627451, g: 0.8666667, b: 0.88235295, a: 1}
       SerializedGuid: 784a497cdbbf4845b0ed30caa199b468
+    - m_color: {r: 0.14509805, g: 0.14509805, b: 0.14509805, a: 0.9019608}
+      SerializedGuid: 24a4e817e1211e41ac8df5db426e6a31
     Sprites: []
     Textures: []
     Fonts: []
