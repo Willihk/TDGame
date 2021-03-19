@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75869f8508234affbf0adeb06fd60d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPoint: {fileID: 0}
+  originPoint: {fileID: 7574977595835602180}
   area:
     position:
       x: 0
