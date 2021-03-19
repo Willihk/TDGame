@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Hit Damage
+    Name: HitDamage
     BaseValue: 2
     Cap: 0
 --- !u!114 &3772257651788792390
