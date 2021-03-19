@@ -2079,7 +2079,6 @@ GameObject:
   - component: {fileID: 7675873944847812612}
   - component: {fileID: 7257349031260196109}
   - component: {fileID: 8248151318778403600}
-  - component: {fileID: 6245942385787019026}
   m_Layer: 0
   m_Name: CartridgeTurret
   m_TagString: Untagged
@@ -2168,7 +2167,7 @@ MonoBehaviour:
     Name: Gun Turret
     Description: :)
     Icon: {fileID: 0}
-  price: 2020
+  price: 4020
   targetSystem: {fileID: 2629834187428793858}
   projectilePrefab: {fileID: 1155687850410582466, guid: 57eb5a246f8a7a049b7ac1353c82cddc, type: 3}
   hitDamage: {fileID: 5701065135712498088}
@@ -2206,21 +2205,6 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 458556473805791029}
   stats: []
---- !u!114 &6245942385787019026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658031204799762321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdf851b12a214319829c1b54a0274247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  upgradePrefab: {fileID: 8648047547514169796, guid: a5414c51b6de1a44f9f0c7f4929ad596, type: 3}
 --- !u!1 &2231636399492923043
 GameObject:
   m_ObjectHideFlags: 0
