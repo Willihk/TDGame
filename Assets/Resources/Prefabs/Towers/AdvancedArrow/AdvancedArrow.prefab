@@ -4706,7 +4706,6 @@ GameObject:
   - component: {fileID: 723856880462987642}
   - component: {fileID: 4739688523908452198}
   - component: {fileID: 1423508294555272401}
-  - component: {fileID: 2527870370523665555}
   m_Layer: 0
   m_Name: AdvancedArrow
   m_TagString: Untagged
@@ -4832,18 +4831,3 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 4859185016056639503}
   stats: []
---- !u!114 &2527870370523665555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8315962904759952340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdf851b12a214319829c1b54a0274247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  upgradePrefab: {fileID: 4279384031723286423, guid: b4d1aaff9c5cb5341a7e0af858271207, type: 3}
