@@ -100,7 +100,7 @@ namespace TDGame.Building.Placement
             }
             if (isClient)
             {
-                if (!GridController.Instance || !gameObject)
+                if (!GridController.Instance || !gameObject || !areaController)
                     return;
 
                 isValidGridPosition = GridController.Instance.CanPlaceTower(gameObject, areaController.area);

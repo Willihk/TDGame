@@ -28,6 +28,12 @@ namespace TDGame.Systems.Health.Unit
             OnDeath ??= new UnityEvent();
         }
 
+        [ClientRpc]
+        void Rpc_DeathEvent()
+        {
+            OnDeath?.Invoke();
+        }
+
         [Server]
         public void Damage(float amount)
         {
@@ -36,6 +42,7 @@ namespace TDGame.Systems.Health.Unit
 
             if (health <= 0)
             {
+                Rpc_DeathEvent();
                 // TODO: DIE
                 OnDeath.Invoke();
             }
