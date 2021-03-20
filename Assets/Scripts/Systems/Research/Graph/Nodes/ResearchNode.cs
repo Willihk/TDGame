@@ -5,13 +5,15 @@ namespace TDGame.Systems.Research.Graph.Nodes
 {
     public class ResearchNode : Node
     {
+        public GameObject prefab;
+        
+        
         [Input(ShowBackingValue.Never)]
         public Node Parent;
 
         [Output]
         public Node Children;
 
-        public GameObject prefab;
         
         public override object GetValue(NodePort port)
         {
