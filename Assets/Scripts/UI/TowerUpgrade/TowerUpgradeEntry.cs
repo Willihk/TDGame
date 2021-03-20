@@ -18,23 +18,24 @@ namespace TDGame.UI.TowerUpgrade
         [SerializeField]
         private Image image;
 
-        private UpgradableTower component;
-
-        public void Initialize(UpgradableTower component, string name, int cost)
+        private GameObject currentTower;
+        private GameObject upgradeTower;
+        public void Initialize(GameObject currentTower, GameObject upgradeTower, int cost)
         {
-            this.component = component;
-            nameText.text = name;
+            this.currentTower = currentTower;
+            this.upgradeTower = upgradeTower;
+            nameText.text = upgradeTower.name;
             costText.text = cost == 0 ? "FREE" : cost.ToString();
         }
 
         public void OnClick()
         {
-            component.UpgradeTower();
+            TowerUpgradeController.Instance.CmdUpgradeTower(currentTower, upgradeTower.name);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            TowerTooltipController.Instance.DisplayUI(component.upgradePrefab, this.GetComponent<RectTransform>());
+            TowerTooltipController.Instance.DisplayUI(upgradeTower, this.GetComponent<RectTransform>());
         }
 
         public void OnPointerExit(PointerEventData eventData)

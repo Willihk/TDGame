@@ -2049,8 +2049,6 @@ GameObject:
   - component: {fileID: 6581280707357702412}
   - component: {fileID: 4325550289231843637}
   - component: {fileID: 7028463934600148481}
-  - component: {fileID: -2311532231973367382}
-  - component: {fileID: -1568086232980423581}
   m_Layer: 0
   m_Name: GunTurret
   m_TagString: Untagged
@@ -2176,36 +2174,6 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 8682321092502671593}
   stats: []
---- !u!114 &-2311532231973367382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4279384031723286423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdf851b12a214319829c1b54a0274247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  upgradePrefab: {fileID: 1658031204799762321, guid: b835d3d406197844ebf2f60aade88eac, type: 3}
---- !u!114 &-1568086232980423581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4279384031723286423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdf851b12a214319829c1b54a0274247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  upgradePrefab: {fileID: 8648047547514169796, guid: a5414c51b6de1a44f9f0c7f4929ad596, type: 3}
 --- !u!1 &4955091498980944841
 GameObject:
   m_ObjectHideFlags: 0

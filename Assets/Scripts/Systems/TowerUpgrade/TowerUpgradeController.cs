@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Mirror;
 using TDGame.Building;
 using TDGame.Building.Selection;
@@ -7,6 +9,8 @@ using TDGame.Systems.Economy;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
 using TDGame.Systems.Tower.Base;
+using TDGame.Systems.TowerUpgrade.Graph;
+using TDGame.Systems.TowerUpgrade.Graph.Nodes;
 using UnityEngine;
 
 namespace TDGame.Systems.TowerUpgrade
@@ -14,6 +18,10 @@ namespace TDGame.Systems.TowerUpgrade
     public class TowerUpgradeController : NetworkBehaviour
     {
         public static TowerUpgradeController Instance;
+
+
+        [SerializeField]
+        private TowerUpgradeGraph upgradeGraph;
 
         [SerializeField]
         private InGamePlayerManager playerManager;
@@ -26,21 +34,63 @@ namespace TDGame.Systems.TowerUpgrade
             Instance = this;
         }
 
-        [Server]
-        public void TryUpgradeTower(UpgradableTower tower)
+        public List<GameObject> GetUpgradesForTower(GameObject tower)
         {
-            int newTowerPrice = tower.upgradePrefab.GetComponent<BaseNetworkedTower>().price;
+            TowerNode towerNode = upgradeGraph.GetTower(tower);
+
+            if (!towerNode)
+            {
+                return new List<GameObject>();
+            }
+
+            var upgrades = new List<GameObject>();
+            
+            foreach (var connection in towerNode.GetOutputPort("Next").GetConnections())
+            {
+                if (connection.node is TowerNode upgradeNode)
+                {
+                    upgrades.Add(upgradeNode.TowerPrefab);
+                }
+            }
+
+            return upgrades;
+        }
+
+        [Command(ignoreAuthority = true)]
+        public void CmdUpgradeTower(GameObject tower, string upgradeName, NetworkConnectionToClient sender = null)
+        {
+            
+            var towerOwner = tower.GetComponent<NetworkIdentity>().connectionToClient;
+            if (sender != towerOwner) // Makes sure only the tower owner can upgrade
+            {
+                return;
+            }
+
+            
+            TowerNode towerNode = upgradeGraph.GetTower(upgradeName);
+            if (!towerNode)
+                return;
+            
+            TryUpgradeTower(tower, towerNode.TowerPrefab);
+        }
+
+        [Server]
+        public void TryUpgradeTower(GameObject tower, GameObject upgradePrefab)
+        {
+            var connectionToClient = tower.GetComponent<NetworkIdentity>().connectionToClient;
+            
+            int newTowerPrice = upgradePrefab.GetComponent<BaseNetworkedTower>().price;
             int oldTowerPrice = tower.gameObject.GetComponent<BaseNetworkedTower>().price;
 
-            var playerEconomy = PlayerEconomyManager.Instance.GetEconomy(tower.connectionToClient);
+            var playerEconomy = PlayerEconomyManager.Instance.GetEconomy(connectionToClient);
 
             if (!playerEconomy.CanAfford(newTowerPrice - oldTowerPrice))
                 return;
 
             PlayerEconomyManager.Instance.ReducesCurrencyForPlayer(
-                playerManager.GetIdByConnection(tower.connectionToClient), newTowerPrice - oldTowerPrice);
+                playerManager.GetIdByConnection(connectionToClient), newTowerPrice - oldTowerPrice);
 
-            ReplaceTower(tower.upgradePrefab.name, tower.gameObject, tower.connectionToClient);
+            ReplaceTower(upgradePrefab.name, tower.gameObject, connectionToClient);
         }
 
         [Server]

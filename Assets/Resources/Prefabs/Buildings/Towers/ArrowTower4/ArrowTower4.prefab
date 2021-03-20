@@ -4768,7 +4768,6 @@ GameObject:
   - component: {fileID: 8034833039272026135}
   - component: {fileID: 1135514929900609676}
   - component: {fileID: 1293433751570452237}
-  - component: {fileID: 2201760191022246521}
   m_Layer: 0
   m_Name: ArrowTower4
   m_TagString: Untagged
@@ -4898,18 +4897,3 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 5484803818358416881}
   stats: []
---- !u!114 &2201760191022246521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9072094779147229107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdf851b12a214319829c1b54a0274247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  upgradePrefab: {fileID: 5579781369619400433, guid: cf92ed067e0898b4cb99ac770e0f7e1c, type: 3}

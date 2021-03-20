@@ -3091,7 +3091,6 @@ GameObject:
   - component: {fileID: 7064808711234797025}
   - component: {fileID: 1709598610946134307}
   - component: {fileID: 8960915671714824528}
-  - component: {fileID: 977510682171865935}
   m_Layer: 0
   m_Name: ArrowTower5
   m_TagString: Untagged
@@ -3223,21 +3222,6 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 2270479685615976484}
   stats: []
---- !u!114 &977510682171865935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5579781369619400433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdf851b12a214319829c1b54a0274247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  upgradePrefab: {fileID: 3387361225297032404, guid: 820e3386f8cadf24a947f8151dc1cc08, type: 3}
 --- !u!1 &5739989316494581325
 GameObject:
   m_ObjectHideFlags: 0
