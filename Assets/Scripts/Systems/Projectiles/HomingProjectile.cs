@@ -1,27 +1,29 @@
-﻿using TDGame.Systems.Collision.Collider;
+using System.Collections;
+using System.Collections.Generic;
+using TDGame.Systems.Collision.Collider;
 using TDGame.Systems.Enemy.DamageReceiver.Base;
 using UnityEngine;
 
-namespace TDGame.Systems.Projectiles
+namespace TDGame
 {
-    public class TurretProjectile : MonoBehaviour
+    public class HomingProjectile : MonoBehaviour
     {
-
         private Vector3 target;
         private float hitDamage;
         private float speed;
+        private float turnRate;
+
+        private void Start()
+        {
+            transform.LookAt(target);
+            Destroy(gameObject, 1.5f);
+        }
 
         public void Setup(Vector3 target, float hitDamage, float speed)
         {
             this.target = target;
             this.hitDamage = hitDamage;
             this.speed = speed;
-        }
-
-        private void Start()
-        {
-            transform.LookAt(target);
-            Destroy(gameObject, 1);
         }
 
         public void OnCollision(DistanceCollider other)
@@ -35,6 +37,7 @@ namespace TDGame.Systems.Projectiles
 
         private void Update()
         {
+            transform.LookAt(target);
             transform.Translate(Vector3.forward * (speed * Time.deltaTime));
         }
     }
