@@ -3,6 +3,7 @@ using XNode;
 
 namespace TDGame.Systems.TowerUpgrade.Graph.Nodes
 {
+    [CreateNodeMenu("Tower/Upgrade")]
     public class UpgradeNode : Node
     {
         public GameObject TowerPrefab;
