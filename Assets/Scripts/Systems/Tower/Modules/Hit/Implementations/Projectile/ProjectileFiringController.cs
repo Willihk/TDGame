@@ -40,20 +40,15 @@ namespace TDGame.Systems.Tower.Modules.Hit.Implementations.Projectile
         {
             if (!isServer)
                 return;
-            var target = targetSystem.target;
-            if (!target)
-                return;
+            var target = targetSystem.clientTargetPosition;
 
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-            projectile.GetComponent<FixedTargetAcquisition>().SetTarget(target);
             var bulletComponent = projectile.GetComponent<TurretProjectile>();
-            bulletComponent.Setup(target.transform.position,
+            bulletComponent.Setup(target,
                 statsController.GetStatByName(hitDamageStatName).stat.Value,
                 statsController.GetStatByName(projectileSpeedStatName).stat.Value);
 
-            NetworkServer.Spawn(projectile);
-
-            Rpc_ShootDummyProjectile(target.transform.position);
+            Rpc_ShootDummyProjectile(target);
         }
 
         [ClientRpc]
