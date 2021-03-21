@@ -76,20 +76,20 @@ namespace TDGame.Systems.TowerUpgrade
         [Server]
         public void TryUpgradeTower(GameObject tower, GameObject upgradePrefab)
         {
-            var connectionToClient = tower.GetComponent<NetworkIdentity>().connectionToClient;
+            var towerOwner = tower.GetComponent<NetworkIdentity>().connectionToClient;
             
             int newTowerPrice = upgradePrefab.GetComponent<BaseNetworkedTower>().price;
             int oldTowerPrice = tower.gameObject.GetComponent<BaseNetworkedTower>().price;
 
-            var playerEconomy = PlayerEconomyManager.Instance.GetEconomy(connectionToClient);
+            var playerEconomy = PlayerEconomyManager.Instance.GetEconomy(towerOwner);
 
             if (!playerEconomy.CanAfford(newTowerPrice - oldTowerPrice))
                 return;
 
             PlayerEconomyManager.Instance.ReducesCurrencyForPlayer(
-                playerManager.GetIdByConnection(connectionToClient), newTowerPrice - oldTowerPrice);
+                playerManager.GetIdByConnection(towerOwner), newTowerPrice - oldTowerPrice);
 
-            ReplaceTower(upgradePrefab.name, tower.gameObject, connectionToClient);
+            ReplaceTower(upgradePrefab.name, tower.gameObject, towerOwner);
         }
 
         [Server]
