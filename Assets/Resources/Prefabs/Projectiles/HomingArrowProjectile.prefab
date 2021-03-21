@@ -1911,6 +1911,9 @@ GameObject:
   - component: {fileID: 931059764506685733}
   - component: {fileID: -8017376443117232331}
   - component: {fileID: 4852011993435924497}
+  - component: {fileID: 8659801569020597677}
+  - component: {fileID: 8006834285076120131}
+  - component: {fileID: 312954211033622531}
   m_Layer: 0
   m_Name: HomingArrowProjectile
   m_TagString: Untagged
@@ -1947,6 +1950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4fc33d7c26a194fa16fbbc544528c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetSystem: {fileID: 312954211033622531}
 --- !u!114 &4852011993435924497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1984,3 +1988,49 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8659801569020597677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759564508755520295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e2c5767df34b4488dbcf1ea0c54ba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+--- !u!114 &8006834285076120131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759564508755520295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &312954211033622531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759564508755520295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665e6f244e2f4d13ac89c2b682f3bbcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  acquisitionSystem: {fileID: 8659801569020597677}
+  target: {fileID: 0}
+  clientTargetPosition: {x: 0, y: 0, z: 0}

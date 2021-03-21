@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using TDGame.Systems.Collision.Collider;
 using TDGame.Systems.Enemy.DamageReceiver.Base;
+using TDGame.Systems.Targeting.Implementations;
 using UnityEngine;
 
-namespace TDGame
+namespace TDGame.Systems.Projectiles
 {
     public class HomingProjectile : MonoBehaviour
     {
-        private Vector3 target;
+        [SerializeField]
+        private SingleTargetSystem targetSystem;
+        
+        private Vector3 initialTarget;
         private float hitDamage;
         private float speed;
-        private float turnRate;
 
         private void Start()
         {
-            transform.LookAt(target);
+            transform.LookAt(initialTarget);
             Destroy(gameObject, 1.5f);
         }
+        
 
         public void Setup(Vector3 target, float hitDamage, float speed)
         {
-            this.target = target;
+            this.initialTarget = target;
             this.hitDamage = hitDamage;
             this.speed = speed;
         }
@@ -37,7 +39,7 @@ namespace TDGame
 
         private void Update()
         {
-            transform.LookAt(target);
+            transform.LookAt(targetSystem.clientTargetPosition);
             transform.Translate(Vector3.forward * (speed * Time.deltaTime));
         }
     }

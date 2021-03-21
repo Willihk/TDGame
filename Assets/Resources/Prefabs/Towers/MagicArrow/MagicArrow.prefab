@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 2434517377681838006}
   - component: {fileID: 7865033493493372486}
   - component: {fileID: 516743929864399190}
-  - component: {fileID: 3767606154382802007}
   - component: {fileID: 974969053897090384}
   - component: {fileID: 7797211486118583166}
+  - component: {fileID: 4425374425813846201}
+  - component: {fileID: 692729141339337826}
+  - component: {fileID: 8697830581437230428}
   m_Layer: 0
   m_Name: MagicArrow
   m_TagString: Untagged
@@ -84,31 +86,6 @@ MonoBehaviour:
   acquisitionSystem: {fileID: 7865033493493372486}
   target: {fileID: 0}
   clientTargetPosition: {x: 0, y: 0, z: 0}
---- !u!114 &3767606154382802007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152012694407680854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af9cb63da60a481ebcff849b9bb1c784, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  DisplayInfo:
-    Name: Magic Arrow
-    Description: Projectile Tower that shoots homing arrows at nearby targets
-    Icon: {fileID: 0}
-  price: 400
-  targetSystem: {fileID: 516743929864399190}
-  projectilePrefab: {fileID: 7759564508755520295, guid: 7eddc08daf0201a4d97db4c3de7c45c7, type: 3}
-  hitDamage: {fileID: 7929748324070308569}
-  fireRate: {fileID: 616286728313036324}
-  projectileSpeed: {fileID: 3414105369992069881}
-  firePoint: {fileID: 1580295283274877504}
 --- !u!114 &974969053897090384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +117,76 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 1488340712178835024}
   stats: []
+--- !u!114 &4425374425813846201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152012694407680854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f40fc0052247c681e660c0f04a76f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  targetSystem: {fileID: 516743929864399190}
+  statsController: {fileID: 7797211486118583166}
+  projectilePrefab: {fileID: 7759564508755520295, guid: 7eddc08daf0201a4d97db4c3de7c45c7, type: 3}
+  firePoint: {fileID: 1580295283274877504}
+  hitDamageStatName: HitDamage
+  projectileSpeedStatName: ProjectileSpeed
+--- !u!114 &692729141339337826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152012694407680854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc4173577c74e6597aaa0d94f85f69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  DisplayInfo:
+    Name: Magic Arrow
+    Description: Projectile Tower that shoots homing arrows at nearby targets
+    Icon: {fileID: 0}
+  price: 400
+--- !u!114 &8697830581437230428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152012694407680854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c16928ab0d467b917d14cfafb730a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerHitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4425374425813846201}
+        m_TargetAssemblyTypeName: TDGame.Systems.Tower.Modules.Hit.Implementations.Projectile.HomingProjectileFiringController,
+          TDGame
+        m_MethodName: Fire
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  statsController: {fileID: 7797211486118583166}
+  hitRateStatName: HitRate
+  recurringTimer: 1
 --- !u!1 &430620970841866595
 GameObject:
   m_ObjectHideFlags: 0
@@ -3912,7 +3959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Hit Damage
+    Name: HitDamage
     BaseValue: 20
     Cap: 0
 --- !u!114 &616286728313036324
@@ -3928,7 +3975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Fire Rate
+    Name: HitRate
     BaseValue: 1
     Cap: 0
 --- !u!114 &3414105369992069881
@@ -3944,7 +3991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Projectile Speed
+    Name: ProjectileSpeed
     BaseValue: 10
     Cap: 0
 --- !u!1 &5868038240563858302

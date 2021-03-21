@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
+using Sirenix.OdinInspector;
 using TDGame.Systems.Targeting.Base;
 using Unity.Mathematics;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace TDGame.Systems.Targeting.Implementations
 {
     public class SingleTargetSystem : BaseTargetingSystem
     {
+        [ReadOnly]
         public GameObject target;
 
         [SyncVar]
