@@ -5,41 +5,41 @@ using UnityEngine.Events;
 
 namespace TDGame.Systems.Tower.Utility
 {
-    public class HitTimedEvents : MonoBehaviour
+    public class TimedEvents : MonoBehaviour
     {
         [SerializeField]
-        public UnityEvent TriggerHitEvent;
+        public UnityEvent timeReachedEvent;
         
         [SerializeField]
         private NetworkedStatsController statsController;
 
         [SerializeField]
-        private string hitRateStatName = "HitRate";
+        private string delayStatName = "HitRate";
 
         [SerializeField]
         private bool recurringTimer = true;
         
-        private StatWrapper hitRateStat;
+        private StatWrapper delayStat;
 
         private void Awake()
         {
-            TriggerHitEvent ??= new UnityEvent();
+            timeReachedEvent ??= new UnityEvent();
         }
 
         private void Start()
         {
-            hitRateStat = statsController.GetStatByName(hitRateStatName);
+            delayStat = statsController.GetStatByName(delayStatName);
             StartNewEventTimer();
         }
 
         public void StartNewEventTimer()
         {
-            Invoke(nameof(TriggerEvent), hitRateStat.stat.Value);
+            Invoke(nameof(TriggerEvent), delayStat.stat.Value);
         }
 
         public void TriggerEvent()
         {
-            TriggerHitEvent.Invoke();
+            timeReachedEvent.Invoke();
             if (recurringTimer)
             {
                 StartNewEventTimer();

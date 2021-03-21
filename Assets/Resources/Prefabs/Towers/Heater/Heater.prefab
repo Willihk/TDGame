@@ -556,6 +556,7 @@ MonoBehaviour:
   stat:
     Name: Range
     BaseValue: 3
+    useCap: 0
     Cap: 0
 --- !u!114 &2197015798585249119
 MonoBehaviour:
@@ -572,6 +573,7 @@ MonoBehaviour:
   stat:
     Name: HitDamage
     BaseValue: 2
+    useCap: 0
     Cap: 0
 --- !u!114 &3772257651788792390
 MonoBehaviour:
@@ -588,6 +590,7 @@ MonoBehaviour:
   stat:
     Name: HitRate
     BaseValue: 0.2
+    useCap: 0
     Cap: 0
 --- !u!1 &3978741257187734259
 GameObject:
@@ -1414,7 +1417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c16928ab0d467b917d14cfafb730a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerHitEvent:
+  timeReachedEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 538162024640633032}
@@ -1431,7 +1434,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   statsController: {fileID: 2047160502175367578}
-  hitRateStatName: HitRate
+  delayStatName: HitRate
   recurringTimer: 1
 --- !u!114 &6472426164054756020
 MonoBehaviour:

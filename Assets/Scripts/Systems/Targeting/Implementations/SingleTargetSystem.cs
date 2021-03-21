@@ -15,6 +15,7 @@ namespace TDGame.Systems.Targeting.Implementations
         public GameObject target;
 
         [SyncVar]
+        [ReadOnly]
         public Vector3 clientTargetPosition;
 
         public GameObject GetTarget()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using TDGame.Extensions;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ namespace TDGame.Systems.Stats
         
         public readonly IReadOnlyCollection<StatModifier> StatModifiers;
 
-        [Tooltip("Should be '0' if the cap should be ignored")]
+        public bool useCap;
+        [Tooltip("Should be '0' if the cap should be ignored"), ShowIf("@useCap")]
         public float Cap;
 
         public float Value
@@ -31,7 +33,6 @@ namespace TDGame.Systems.Stats
             }
         }
 
-        protected bool useCap;
         protected float value;
         
         protected bool isDirty = true;
@@ -112,7 +113,8 @@ namespace TDGame.Systems.Stats
 
             return (float) Math.Round(finalValue, 4);
         }
-
+        
+        [Button]
         public void RecalculateValue()
         {
             value = CalculateFinalValue();

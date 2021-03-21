@@ -12,7 +12,6 @@ namespace TDGame.Systems.Tower.Modules.Hit.Implementations.Projectile
     public class HomingProjectileFiringController : TowerFiringController
     {
         [TabGroup("Setup")]
-        [SceneObjectsOnly]
         [SerializeField]
         protected SingleTargetSystem targetSystem;
         
