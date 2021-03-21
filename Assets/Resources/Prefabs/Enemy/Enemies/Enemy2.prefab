@@ -48,6 +48,7 @@ MonoBehaviour:
   stat:
     Name: Speed
     BaseValue: 1.4
+    useCap: 0
     Cap: 0
 --- !u!114 &6654602336503853415
 MonoBehaviour:
@@ -64,6 +65,7 @@ MonoBehaviour:
   stat:
     Name: ReachedEndDamage
     BaseValue: 1
+    useCap: 0
     Cap: 0
 --- !u!114 &6663062978704283868
 MonoBehaviour:
@@ -80,6 +82,7 @@ MonoBehaviour:
   stat:
     Name: CurrencyReward
     BaseValue: 12
+    useCap: 0
     Cap: 0
 --- !u!1 &3017749877806515268
 GameObject:
@@ -285,6 +288,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ClientOnDeath:
+    m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 8640103034263584049}
         m_TargetAssemblyTypeName: TDGame.Systems.Enemy.Death.DeathSoundController,
           TDGame

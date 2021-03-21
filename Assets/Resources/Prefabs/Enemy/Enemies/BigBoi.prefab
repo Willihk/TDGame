@@ -49,6 +49,7 @@ MonoBehaviour:
   stat:
     Name: Speed
     BaseValue: 0.9
+    useCap: 0
     Cap: 0
 --- !u!114 &2713429947661740545
 MonoBehaviour:
@@ -65,6 +66,7 @@ MonoBehaviour:
   stat:
     Name: ReachedEndDamage
     BaseValue: 2
+    useCap: 0
     Cap: 0
 --- !u!114 &5963555040179534644
 MonoBehaviour:
@@ -81,6 +83,7 @@ MonoBehaviour:
   stat:
     Name: CurrencyReward
     BaseValue: 5
+    useCap: 0
     Cap: 0
 --- !u!114 &1937724290271745713
 MonoBehaviour:
@@ -97,6 +100,7 @@ MonoBehaviour:
   stat:
     Name: Armor
     BaseValue: 6
+    useCap: 0
     Cap: 0
 --- !u!1 &2409457754608125768
 GameObject:
@@ -187,6 +191,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ClientOnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []

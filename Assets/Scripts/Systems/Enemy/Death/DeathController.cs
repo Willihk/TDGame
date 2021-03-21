@@ -22,7 +22,6 @@ namespace TDGame.Systems.Enemy.Death
         
         public void OnDeath()
         {
-            
             EnemyManager.Instance.UnregisterTarget(gameObject);
             NetworkServer.Destroy(gameObject);
             PlayerEconomyManager.Instance.AddCurrencyToAllPlayers((int) currencyRewardStat.stat.Value);
