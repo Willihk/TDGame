@@ -1,3 +1,4 @@
+using Mirror;
 using TDGame.Systems.Collision.Collider;
 using TDGame.Systems.Enemy.DamageReceiver.Base;
 using TDGame.Systems.Targeting.Implementations;
@@ -5,13 +6,15 @@ using UnityEngine;
 
 namespace TDGame.Systems.Projectiles
 {
-    public class HomingProjectile : MonoBehaviour
+    public class HomingProjectile : NetworkBehaviour
     {
         [SerializeField]
         private SingleTargetSystem targetSystem;
         
         private Vector3 initialTarget;
         private float hitDamage;
+
+        [SyncVar]
         private float speed;
 
         private void Start()
