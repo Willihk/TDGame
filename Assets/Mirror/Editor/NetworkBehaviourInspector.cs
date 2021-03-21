@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Mirror
 {
     [CustomEditor(typeof(NetworkBehaviour), true)]
     [CanEditMultipleObjects]
-    public class NetworkBehaviourInspector : Editor
+    public class NetworkBehaviourInspector : OdinEditor
     {
         /// <summary>
         /// List of all visible syncVars in target class
@@ -50,8 +51,9 @@ namespace Mirror
             return syncObjects.Count > 0;
         }
 
-        void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             if (target == null) { Debug.LogWarning("NetworkBehaviourInspector had no target object"); return; }
 
             // If target's base class is changed from NetworkBehaviour to MonoBehaviour
@@ -76,7 +78,7 @@ namespace Mirror
 
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
+            base.OnInspectorGUI();
             DrawDefaultSyncLists();
             DrawDefaultSyncSettings();
         }
