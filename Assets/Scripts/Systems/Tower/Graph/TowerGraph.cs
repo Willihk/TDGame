@@ -12,16 +12,14 @@ namespace TDGame.Systems.Tower.Graph
     {
         public IEnumerable<GameObject> GetHotbarTowers()
         {
-            List<GameObject> towers = new List<GameObject>();
 
             Node hotbarNode = nodes.OfType<HotbarNode>().FirstOrDefault();
             if (!hotbarNode)
-                return towers;
+                return new List<GameObject>();
 
             var towerNodes = GetConnectedTowerNodes(hotbarNode.GetPort("Next"));
-
-
-            return towers;
+            
+            return towerNodes.Select(x => x.TowerPrefab);
         }
 
         IEnumerable<TowerNode> GetConnectedTowerNodes(NodePort port)
