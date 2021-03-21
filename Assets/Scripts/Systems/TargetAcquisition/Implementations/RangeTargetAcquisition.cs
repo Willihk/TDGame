@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using TDGame.Systems.Enemy.Manager;
 using TDGame.Systems.Stats;
 using UnityEngine;
@@ -9,6 +10,9 @@ namespace TDGame.Systems.TargetAcquisition.Implementations
     public class RangeTargetAcquisition : BaseTargetAcquisitionSystem
     {
         [SerializeField]
+        protected string rangeStatName = "Range";
+        
+        [ReadOnly]
         public StatWrapper rangeStat;
 
         public override IEnumerable<GameObject> GetAvailableTargets()

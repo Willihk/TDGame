@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429afd4b7f3f401ba832b7f8a70a46de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangeStatName: Range
   rangeStat: {fileID: 2137884164196074186}
 --- !u!114 &4329130148465618186
 MonoBehaviour:
@@ -2559,6 +2560,7 @@ MonoBehaviour:
   stat:
     Name: Range
     BaseValue: 7.5
+    useCap: 0
     Cap: 0
 --- !u!114 &6240238958037338905
 MonoBehaviour:
@@ -2575,6 +2577,7 @@ MonoBehaviour:
   stat:
     Name: Hit Damage
     BaseValue: 60
+    useCap: 0
     Cap: 0
 --- !u!114 &6980769066060887038
 MonoBehaviour:
@@ -2591,6 +2594,7 @@ MonoBehaviour:
   stat:
     Name: Fire Rate
     BaseValue: 0.5
+    useCap: 0
     Cap: 0
 --- !u!114 &4745407972212891145
 MonoBehaviour:
@@ -2607,6 +2611,7 @@ MonoBehaviour:
   stat:
     Name: Projectile Speed
     BaseValue: 14
+    useCap: 0
     Cap: 0
 --- !u!1 &8434856879588416157
 GameObject:
