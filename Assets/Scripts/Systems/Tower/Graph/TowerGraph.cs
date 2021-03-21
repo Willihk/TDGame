@@ -1,11 +1,11 @@
-﻿using TDGame.Systems.TowerUpgrade.Graph.Nodes;
+﻿using TDGame.Systems.Tower.Graph.Nodes;
 using UnityEngine;
 using XNode;
 
-namespace TDGame.Systems.TowerUpgrade.Graph
+namespace TDGame.Systems.Tower.Graph
 {
     [CreateAssetMenu(menuName = "Data/TowerUpgrade/UpgradeGraph")]
-    public class TowerUpgradeGraph : NodeGraph
+    public class TowerGraph : NodeGraph
     {
         public TowerNode GetTower(GameObject tower)
         {

@@ -2,9 +2,9 @@
 using UnityEngine;
 using XNode;
 
-namespace TDGame.Systems.TowerUpgrade.Graph.Nodes
+namespace TDGame.Systems.Tower.Graph.Nodes
 {
-    [CreateNodeMenu("Tower/Upgrade")]
+    [CreateNodeMenu("Tower/Tower")]
     public class TowerNode : Node
     {
         [AssetsOnly]

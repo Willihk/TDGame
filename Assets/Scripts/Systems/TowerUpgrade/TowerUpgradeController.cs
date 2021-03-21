@@ -9,8 +9,8 @@ using TDGame.Systems.Economy;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
 using TDGame.Systems.Tower.Base;
-using TDGame.Systems.TowerUpgrade.Graph;
-using TDGame.Systems.TowerUpgrade.Graph.Nodes;
+using TDGame.Systems.Tower.Graph;
+using TDGame.Systems.Tower.Graph.Nodes;
 using UnityEngine;
 
 namespace TDGame.Systems.TowerUpgrade
@@ -19,9 +19,8 @@ namespace TDGame.Systems.TowerUpgrade
     {
         public static TowerUpgradeController Instance;
 
-
         [SerializeField]
-        private TowerUpgradeGraph upgradeGraph;
+        private TowerGraph towerGraph;
 
         [SerializeField]
         private InGamePlayerManager playerManager;
@@ -36,7 +35,7 @@ namespace TDGame.Systems.TowerUpgrade
 
         public List<GameObject> GetUpgradesForTower(GameObject tower)
         {
-            TowerNode towerNode = upgradeGraph.GetTower(tower);
+            TowerNode towerNode = towerGraph.GetTower(tower);
 
             if (!towerNode)
             {
@@ -67,7 +66,7 @@ namespace TDGame.Systems.TowerUpgrade
             }
 
             
-            TowerNode towerNode = upgradeGraph.GetTower(upgradeName);
+            TowerNode towerNode = towerGraph.GetTower(upgradeName);
             if (!towerNode)
                 return;
             
