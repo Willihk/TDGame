@@ -1,4 +1,7 @@
-﻿using TDGame.Systems.Tower.Graph.Nodes;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using TDGame.Systems.Tower.Graph.Nodes;
 using UnityEngine;
 using XNode;
 
@@ -7,6 +10,37 @@ namespace TDGame.Systems.Tower.Graph
     [CreateAssetMenu(menuName = "Data/TowerUpgrade/UpgradeGraph")]
     public class TowerGraph : NodeGraph
     {
+        public IEnumerable<GameObject> GetHotbarTowers()
+        {
+            List<GameObject> towers = new List<GameObject>();
+
+            Node hotbarNode = nodes.OfType<HotbarNode>().FirstOrDefault();
+            if (!hotbarNode)
+                return towers;
+
+            var towerNodes = GetConnectedTowerNodes(hotbarNode.GetPort("Next"));
+
+
+            return towers;
+        }
+
+        IEnumerable<TowerNode> GetConnectedTowerNodes(NodePort port)
+        {
+            var connections = port.GetConnections();
+            var towerNodes = new TowerNode[connections.Count];
+
+            for (int i = 0; i < connections.Count; i++)
+            {
+                var connection = connections[i];
+                if (connection.node is TowerNode towerNode)
+                {
+                    towerNodes[i] = towerNode;
+                }
+            }
+
+            return towerNodes;
+        }
+        
         public TowerNode GetTower(GameObject tower)
         {
             return GetTower(tower.name);
