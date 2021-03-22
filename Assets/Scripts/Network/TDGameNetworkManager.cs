@@ -61,12 +61,12 @@ namespace TDGame.Network
 
         public override void OnRoomServerDisconnect(NetworkConnection conn)
         {
+            eventBinder.ServerOnClientDisconnect(conn);
+            
             if (connectedPlayers.ContainsKey(connectionRelations[conn]))
                 connectedPlayers.Remove(connectionRelations[conn]);
 
             connectionRelations.Remove(conn);
-
-            eventBinder.ServerOnClientDisconnect(conn);
         }
 
         public override void OnRoomServerPlayersReady()
