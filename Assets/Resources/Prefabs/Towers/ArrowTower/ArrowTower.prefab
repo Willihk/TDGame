@@ -4205,6 +4205,7 @@ MonoBehaviour:
   stat:
     Name: Range
     BaseValue: 5
+    useCap: 0
     Cap: 0
 --- !u!114 &8508375249980641316
 MonoBehaviour:
@@ -4219,8 +4220,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Hit Damage
+    Name: HitDamage
     BaseValue: 6
+    useCap: 0
     Cap: 0
 --- !u!114 &6072330268834347799
 MonoBehaviour:
@@ -4235,8 +4237,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Fire Rate
+    Name: HitRate
     BaseValue: 1.4
+    useCap: 0
     Cap: 0
 --- !u!114 &1212554958247099649
 MonoBehaviour:
@@ -4251,8 +4254,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Projectile Speed
+    Name: ProjectileSpeed
     BaseValue: 10
+    useCap: 0
     Cap: 0
 --- !u!1 &5267556913489664364
 GameObject:
@@ -10129,9 +10133,11 @@ GameObject:
   - component: {fileID: 6441323750039245909}
   - component: {fileID: -4009694935896592721}
   - component: {fileID: 8109707603251694821}
-  - component: {fileID: -8909117935749772654}
   - component: {fileID: 6420056452806081657}
   - component: {fileID: 6453214010633253106}
+  - component: {fileID: 2507572470785754653}
+  - component: {fileID: -6289317412340503259}
+  - component: {fileID: 1057086156218471050}
   m_Layer: 0
   m_Name: ArrowTower
   m_TagString: Untagged
@@ -10183,6 +10189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429afd4b7f3f401ba832b7f8a70a46de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangeStatName: Range
   rangeStat: {fileID: 5129232068405387546}
 --- !u!114 &8109707603251694821
 MonoBehaviour:
@@ -10201,31 +10208,6 @@ MonoBehaviour:
   acquisitionSystem: {fileID: -4009694935896592721}
   target: {fileID: 0}
   clientTargetPosition: {x: 0, y: 0, z: 0}
---- !u!114 &-8909117935749772654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8182504462585067964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af9cb63da60a481ebcff849b9bb1c784, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  DisplayInfo:
-    Name: Archer Tower
-    Description: Projectile Tower that shoots arrows at nearby targets
-    Icon: {fileID: 0}
-  price: 70
-  targetSystem: {fileID: 8109707603251694821}
-  projectilePrefab: {fileID: 1155687850410582466, guid: 57eb5a246f8a7a049b7ac1353c82cddc, type: 3}
-  hitDamage: {fileID: 8508375249980641316}
-  fireRate: {fileID: 6072330268834347799}
-  projectileSpeed: {fileID: 1212554958247099649}
-  firePoint: {fileID: 7580997086739152941}
 --- !u!114 &6420056452806081657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10257,6 +10239,76 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 338821278531693838}
   stats: []
+--- !u!114 &2507572470785754653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8182504462585067964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc4173577c74e6597aaa0d94f85f69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  DisplayInfo:
+    Name: Archer Tower
+    Description: Projectile Tower that shoots arrows at nearby targets
+    Icon: {fileID: 0}
+  price: 70
+--- !u!114 &-6289317412340503259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8182504462585067964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c16928ab0d467b917d14cfafb730a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeReachedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1057086156218471050}
+        m_TargetAssemblyTypeName: TDGame.Systems.Tower.Modules.Hit.Implementations.Projectile.ProjectileFiringController,
+          TDGame
+        m_MethodName: Fire
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  statsController: {fileID: 6453214010633253106}
+  delayStatName: HitRate
+  recurringTimer: 1
+--- !u!114 &1057086156218471050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8182504462585067964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e98d7a0c280ab9468df6f987a9bfabf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  targetSystem: {fileID: 8109707603251694821}
+  statsController: {fileID: 6453214010633253106}
+  projectilePrefab: {fileID: 1155687850410582466, guid: 57eb5a246f8a7a049b7ac1353c82cddc, type: 3}
+  firePoint: {fileID: 7580997086739152941}
+  hitDamageStatName: HitDamage
+  projectileSpeedStatName: ProjectileSpeed
 --- !u!1 &8604429855440902202
 GameObject:
   m_ObjectHideFlags: 0
