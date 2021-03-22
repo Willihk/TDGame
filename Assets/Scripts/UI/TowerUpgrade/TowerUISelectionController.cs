@@ -1,4 +1,5 @@
-﻿using TDGame.Systems.Tower.Base;
+﻿using Doozy.Engine;
+using TDGame.Systems.Tower.Base;
 using TDGame.Systems.TowerUpgrade;
 using Unity.Mathematics;
 using UnityEngine;
@@ -20,11 +21,11 @@ namespace TDGame.UI.TowerUpgrade
         {
             if (selectedObject == null || !selectedObject.TryGetComponent(out BaseNetworkedTower selectedTower))
             {
-                selectionUI.SetActive(false);
+                GameEventMessage.SendEvent("Close TowerUI");
                 return;
             }
 
-            selectionUI.SetActive(true);
+            GameEventMessage.SendEvent("Open TowerUI");
 
             foreach (Transform child in content)
             {
