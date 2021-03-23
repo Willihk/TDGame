@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using TDGame.Map;
+using TDGame.Systems.Grid.InGame;
+using UnityEngine;
 
 namespace TDGame.Player
 {
@@ -9,10 +11,21 @@ namespace TDGame.Player
 
         [Range(0, 1), SerializeField]
         private float zoomPercent;
+
         [SerializeField]
         private float zoomSpeed = 10;
+
         [SerializeField]
         private float zoomSensitivity = 1;
+
+        public void CenterOnMap()
+        {
+            var mapDetails = FindObjectOfType<MapDetailsController>();
+            var center = mapDetails.gridTopRightCorner.position / 2;
+
+            center.y = transform.position.y;
+            transform.position = center;
+        }
 
         void Update()
         {
@@ -31,7 +44,9 @@ namespace TDGame.Player
             else if (zoomPercent < 0)
                 zoomPercent = 0;
 
-            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, Mathf.Clamp(16 - (13 * zoomPercent), 3, 16), transform.position.z), zoomSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position,
+                new Vector3(transform.position.x, Mathf.Clamp(16 - (13 * zoomPercent), 3, 16), transform.position.z),
+                zoomSpeed * Time.deltaTime);
 
             // Zoom rotation
             Vector3 targetRotation;
