@@ -1,6 +1,6 @@
 ﻿using Doozy.Engine;
 using TDGame.Systems.Tower.Base;
-using TDGame.Systems.TowerUpgrade;
+using TDGame.Systems.Tower.Upgrade;
 using Unity.Mathematics;
 using UnityEngine;
 

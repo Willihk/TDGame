@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using TDGame.Events.Base;
+using TDGame.Pathfinding;
 using TDGame.Pathfinding.BasicAStar;
 using TDGame.Pathfinding.DotsAStar;
 using TDGame.Systems.Grid.InGame;
@@ -13,8 +14,6 @@ namespace TDGame.Map
 {
     public class NetworkedMapController : NetworkBehaviour
     {
-        public bool hasLoadedMap;
-
         [SerializeField]
         private GameObject mapPrefab;
 
@@ -36,12 +35,13 @@ namespace TDGame.Map
             var waypointController = mapPrefab.GetComponentInChildren<WaypointController>();
             int2 start =
                 new int2(GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position).x,
-                    GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position).y); 
+                    GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position).y);
             int2 end = new int2(
                 GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position).x,
                 GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position).y);
-            
-            var path = new PathFinding().FindPath(end, start, new int2(GridController.Instance.gridSize), GridController.Instance.mapGrid);
+
+            var path = new Pathfinder().FindPath(end, start, new int2(GridController.Instance.gridSize),
+                GridController.Instance.mapGrid);
             return path;
         }
     }

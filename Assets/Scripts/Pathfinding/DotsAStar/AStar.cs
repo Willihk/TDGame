@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace TDGame.Pathfinding.DotsAStar
 {
-    public class PathFinding
+    public class AStar
     {
         public const int MOVE_STRAIGHT_COST = 10;
         public const int MOVE_DIAGONAL_COST = 14;

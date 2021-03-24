@@ -4,7 +4,7 @@ using TDGame.Events.Base;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace TDGame.Building.Selection
+namespace TDGame.Systems.Selection
 {
     public class SelectionController : MonoBehaviour
     {

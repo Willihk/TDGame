@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Mirror;
-using TDGame.Building;
-using TDGame.Building.Selection;
 using TDGame.Data;
 using TDGame.Network.Player;
 using TDGame.Systems.Economy;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
+using TDGame.Systems.Selection;
 using TDGame.Systems.Tower.Base;
 using TDGame.Systems.Tower.Graph;
 using TDGame.Systems.Tower.Graph.Nodes;
 using UnityEngine;
 
-namespace TDGame.Systems.TowerUpgrade
+namespace TDGame.Systems.Tower.Upgrade
 {
     public class TowerUpgradeController : NetworkBehaviour
     {
