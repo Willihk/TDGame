@@ -21,6 +21,7 @@ MonoBehaviour:
   - Connection
   - Pause Menu
   - GameLobby
+  - Settings
   Categories:
   - {fileID: 11400000, guid: 40f9e81ff80114a47a3721228ba749ed, type: 2}
   - {fileID: 11400000, guid: f25267a21bd922b4dbc0400b563bfb9a, type: 2}
@@ -28,3 +29,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f8fe71940654c340a1e0b132ec9d4a5, type: 2}
   - {fileID: 11400000, guid: 6755ed1b25b39bc46bef386e2585fcc3, type: 2}
   - {fileID: 11400000, guid: ecd2de74f87a3ac4eaf2326362a3facb, type: 2}
+  - {fileID: 11400000, guid: 05f2981532b9c214c80388883e86fea3, type: 2}
