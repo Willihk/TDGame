@@ -4,6 +4,7 @@ using System.Linq;
 using Mirror;
 using TDGame.Building;
 using TDGame.Building.Selection;
+using TDGame.Data;
 using TDGame.Network.Player;
 using TDGame.Systems.Economy;
 using TDGame.Systems.Grid.Data;
@@ -26,7 +27,7 @@ namespace TDGame.Systems.TowerUpgrade
         private InGamePlayerManager playerManager;
 
         [SerializeField]
-        private BuildingList prefabList;
+        private GameObjectList prefabList;
 
         private void Awake()
         {
@@ -95,7 +96,7 @@ namespace TDGame.Systems.TowerUpgrade
         [Server]
         public void ReplaceTower(string prefabName, GameObject oldGameObject, NetworkConnection owner)
         {
-            var prefab = prefabList.GetBuilding(prefabName);
+            var prefab = prefabList.GetGameObject(prefabName);
 
             var spawned = Instantiate(prefab);
             spawned.transform.position = oldGameObject.transform.position;

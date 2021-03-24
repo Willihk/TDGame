@@ -1,5 +1,6 @@
 using System.Text;
 using TDGame.Building;
+using TDGame.Data;
 using TDGame.Systems.Stats;
 using TDGame.Systems.Tower.Base;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace TDGame.Systems.TowerTooltip
         private Transform content;
 
         [SerializeField]
-        private BuildingList buildingList;
+        private GameObjectList prefabList;
 
         private void Awake()
         {
@@ -27,7 +28,7 @@ namespace TDGame.Systems.TowerTooltip
 
         public void DisplayUI(string prefabName, RectTransform thisthing)
         {
-            DisplayUI(buildingList.GetBuilding(prefabName), thisthing);
+            DisplayUI(prefabList.GetGameObject(prefabName), thisthing);
         }
 
         public void DisplayUI(GameObject towerInfo, RectTransform thisthing)

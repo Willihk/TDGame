@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Mirror;
 using TDGame.Cursor;
+using TDGame.Data;
 using TDGame.Systems.Economy;
 using TDGame.Systems.Economy.Data;
 using TDGame.Systems.Grid;
@@ -37,7 +38,7 @@ namespace TDGame.Building.Placement
         private bool canAfford;
 
         [SerializeField]
-        private BuildingList buildingList;
+        private GameObjectList gameObjectList;
 
         [SerializeField]
         private LocalCursorState cursorState;
@@ -70,7 +71,7 @@ namespace TDGame.Building.Placement
         {
             referenceCamera = Camera.main;
 
-            var prefabModel = buildingList.GetBuilding(prefabName).transform.Find("Model").gameObject;
+            var prefabModel = gameObjectList.GetGameObject(prefabName).transform.Find("Model").gameObject;
 
             var model = Instantiate(prefabModel, transform);
             localMaterial = new Material(placementMaterial);
@@ -146,7 +147,7 @@ namespace TDGame.Building.Placement
         public void Setup(string prefabName)
         {
             this.prefabName = prefabName;
-            price = buildingList.GetBuilding(prefabName).TryGetComponent(out BaseNetworkedTower turret) ? turret.price : 0;
+            price = gameObjectList.GetGameObject(prefabName).TryGetComponent(out BaseNetworkedTower turret) ? turret.price : 0;
         }
 
         [Command]
@@ -163,7 +164,7 @@ namespace TDGame.Building.Placement
 
             // TODO: Check for collisions based on position given by client
 
-            var placedObject = Instantiate(buildingList.GetBuilding(prefabName));
+            var placedObject = Instantiate(gameObjectList.GetGameObject(prefabName));
 
             var worldSize = area.ConvertToWorldSize();
             placedObject.transform.position = area.GetWorldPosition() + (new Vector3(worldSize.x, 0, worldSize.y) * 0.5f);

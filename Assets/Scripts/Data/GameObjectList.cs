@@ -2,30 +2,30 @@
 using System.Linq;
 using UnityEngine;
 
-namespace TDGame.Building
+namespace TDGame.Data
 {
-    [CreateAssetMenu(fileName = "BuildingList", menuName = "Data/Building/BuildingList", order = 0)]
-    public class BuildingList : ScriptableObject
+    [CreateAssetMenu(fileName = "GameObjectList", menuName = "Data/GameObjectList/GameObjectList", order = 0)]
+    public class GameObjectList : ScriptableObject
     {
         [SerializeField]
         private List<GameObject> prefabs;
         
-        public GameObject GetBuilding(string name)
+        public GameObject GetGameObject(string name)
         {
             return prefabs.First(x => x.name == name);
         }
 
-        public GameObject GetBuilding(int index)
+        public GameObject GetGameObject(int index)
         {
             return prefabs[index];
         }
 
-        public int GetIndexOfBuildingName(string name)
+        public int GetIndexOfGameObjectName(string name)
         {
             return prefabs.Select(x => x.name).ToList().IndexOf(name);
         }
 
-        public List<GameObject> GetBuildings()
+        public List<GameObject> GetGameObjects()
         {
             return prefabs;
         }

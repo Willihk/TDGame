@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using TDGame.Command.Implementations.Wave;
+using TDGame.Data;
 using TDGame.Events.Base;
 using TDGame.Map;
-using TDGame.Pathfinding.BasicAStar;
-using TDGame.Systems.Enemy.Data;
 using TDGame.Systems.Enemy.Manager;
 using TDGame.Systems.Enemy.Wave.Data;
 using TDGame.Systems.Grid.InGame;
@@ -24,7 +23,7 @@ namespace TDGame.Systems.Enemy.Wave
         private GameEvent<int> waveChangedEvent;
 
         [SerializeField]
-        private EnemyList enemyList;
+        private GameObjectList enemyList;
 
         [SerializeField]
         private Transform enemyHolder;
@@ -102,9 +101,9 @@ namespace TDGame.Systems.Enemy.Wave
 
         Queue<WaveCommand> CreateTestWave()
         {
-            var prefab = enemyList.GetEnemy(0);
-            var boss = enemyList.GetEnemy(1);
-            var spider = enemyList.GetEnemy(2);
+            var prefab = enemyList.GetGameObject(0);
+            var boss = enemyList.GetGameObject(1);
+            var spider = enemyList.GetGameObject(2);
 
 
             int waveEnemyCount = (int) (5 * Mathf.Sqrt(Mathf.Pow(currentWave, 3)));

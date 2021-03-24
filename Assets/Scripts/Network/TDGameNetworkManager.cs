@@ -3,9 +3,9 @@ using Mirror;
 using TDGame.Network.Player;
 using System.Collections.Generic;
 using TDGame.Building;
+using TDGame.Data;
 using TDGame.Network.EventBinding;
 using TDGame.Network.Lobby;
-using TDGame.Systems.Enemy.Data;
 using UnityEngine.SceneManagement;
 
 namespace TDGame.Network
@@ -19,18 +19,18 @@ namespace TDGame.Network
             base.Awake();
             Instance = this;
 
-            spawnPrefabs.AddRange(networkedBuildingList.GetBuildings());
-            spawnPrefabs.AddRange(networkedEnemyList.GetEnemies());
+            spawnPrefabs.AddRange(networkedBuildingList.GetGameObjects());
+            spawnPrefabs.AddRange(networkedEnemyList.GetGameObjects());
         }
 
         [SerializeField]
         private ServerNetworkEventBinder eventBinder;
 
         [SerializeField]
-        private BuildingList networkedBuildingList;
+        private Data.GameObjectList networkedBuildingList;
 
         [SerializeField]
-        private EnemyList networkedEnemyList;
+        private GameObjectList networkedEnemyList;
 
         public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
 
