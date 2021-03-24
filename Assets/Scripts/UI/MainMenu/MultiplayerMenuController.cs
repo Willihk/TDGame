@@ -25,7 +25,9 @@ namespace TDGame.UI.MainMenu
 
         public void StartClient()
         {
-            manager.networkAddress = address.text;
+            string ip = address.text;
+            ip = ip.Replace("​", string.Empty);
+            manager.networkAddress = ip;
             manager.StartClient();
         }
 
