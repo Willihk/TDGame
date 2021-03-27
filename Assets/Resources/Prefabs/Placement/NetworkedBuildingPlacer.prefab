@@ -64,8 +64,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  isValidGridPosition: 0
   prefabName: 
-  buildingList: {fileID: 11400000, guid: 805a3508962bf0c40bf24af168859488, type: 2}
+  gameObjectList: {fileID: 11400000, guid: 805a3508962bf0c40bf24af168859488, type: 2}
   cursorState: {fileID: 11400000, guid: dd6c8f789eb0a5841b07001f7eaf3474, type: 2}
   placementMaterial: {fileID: 2100000, guid: 14d190695a542e145830f7c0c7397724, type: 2}
 --- !u!114 &1149424017709403907

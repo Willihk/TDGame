@@ -314,7 +314,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   statsController: {fileID: 3372319244236526508}
-  delayStatName: HitRate
+  delayStatName: FireRate
   recurringTimer: 1
 --- !u!114 &2932450235092632302
 MonoBehaviour:
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Hit Damage
+    Name: HitDamage
     BaseValue: 25
     useCap: 0
     Cap: 0
@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Fire Rate
+    Name: FireRate
     BaseValue: 2
     useCap: 0
     Cap: 0
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    Name: Projectile Speed
+    Name: ProjectileSpeed
     BaseValue: 16
     useCap: 0
     Cap: 0
