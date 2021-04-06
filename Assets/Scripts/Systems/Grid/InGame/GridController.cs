@@ -12,12 +12,18 @@ namespace TDGame.Systems.Grid.InGame
     {
         public static GridController Instance;
 
+        public Texture2D gridTexture;
+
         public int2 gridSize;
 
         public float cellSize = .5f;
 
         public Grid2D mapGrid;
         public Grid2D towerGrid;
+
+        [SerializeField]
+        private Material gridMaterial;
+
 
         public void Awake()
         {
@@ -30,6 +36,9 @@ namespace TDGame.Systems.Grid.InGame
         {
             mapGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
             towerGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
+
+            gridTexture = new Texture2D(gridSize.x, gridSize.y);
+            gridTexture.filterMode = FilterMode.Point;
         }
 
         void RegisterObstacles()
@@ -41,7 +50,7 @@ namespace TDGame.Systems.Grid.InGame
                 mapGrid.SetAreaToCell(gridObstacle.area, new GridCell() {State = GridCellState.Occupied});
             }
         }
-        
+
         void RegisterPath()
         {
             var paths = FindObjectsOfType<GridPath>();
@@ -60,6 +69,25 @@ namespace TDGame.Systems.Grid.InGame
             CreateGrid();
             RegisterObstacles();
             RegisterPath();
+        }
+
+        void UpdateTexture()
+        {
+            var pixels = gridTexture.GetPixels();
+
+            for (int i = 0; i < towerGrid.grid.Length; i++)
+            {
+                pixels[i] = new Color(0, 0, 0, 0);
+
+                if (towerGrid.grid[i].State != GridCellState.Empty)
+                {
+                    pixels[i] = Color.white;
+                }
+            }
+
+            gridTexture.SetPixels(pixels);
+            gridTexture.Apply();
+            gridMaterial.SetTexture("GridTexture", gridTexture);
         }
 
         private void Start()
@@ -130,6 +158,7 @@ namespace TDGame.Systems.Grid.InGame
 
         void DrawGrid()
         {
+            UpdateTexture();
             for (int x = 0; x < gridSize.x; x++)
             {
                 for (int y = 0; y < gridSize.y; y++)

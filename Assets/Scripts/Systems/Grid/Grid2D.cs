@@ -144,6 +144,14 @@ namespace TDGame.Systems.Grid
             return y * sizeX + x;
         }
 
+        public int2 IndexToGridPosition(int index)
+        {
+            int x = index % sizeX;
+            int y = index / sizeX;
+
+            return new int2(x, y);
+        }
+
         public void Dispose()
         {
             grid = null;
