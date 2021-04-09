@@ -83,6 +83,11 @@ namespace TDGame.Systems.Grid.InGame
                 {
                     pixels[i] = Color.white;
                 }
+
+                if (mapGrid.grid[i].State != GridCellState.Empty)
+                {
+                    pixels[i] = Color.magenta;
+                }
             }
 
             gridTexture.SetPixels(pixels);
