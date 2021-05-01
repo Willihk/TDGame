@@ -14,7 +14,7 @@
       "dependencies": {}
     },
     "com.unity.burst": {
-      "version": "1.4.7",
+      "version": "1.4.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -42,13 +42,6 @@
     "com.unity.ext.nunit": {
       "version": "1.0.6",
       "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ide.rider": {
-      "version": "3.0.5",
-      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -177,7 +170,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.4",
+      "version": "3.0.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
