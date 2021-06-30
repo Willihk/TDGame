@@ -92,11 +92,13 @@ GameObject:
   - component: {fileID: 861486456417271053}
   - component: {fileID: -1393382851552184207}
   - component: {fileID: 5746963256902223166}
-  - component: {fileID: 6185835828024826084}
   - component: {fileID: 5372753103572766896}
   - component: {fileID: 5365210152112228459}
   - component: {fileID: 3930753968494398947}
   - component: {fileID: 7702358129174657919}
+  - component: {fileID: -1062068302507949663}
+  - component: {fileID: 4872642067181833597}
+  - component: {fileID: 2469663247690093352}
   m_Layer: 0
   m_Name: FirstBoss
   m_TagString: Untagged
@@ -117,6 +119,7 @@ Transform:
   m_Children:
   - {fileID: 1939007337298640195}
   - {fileID: 86764763782968029}
+  - {fileID: 3749316940111835132}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -170,19 +173,6 @@ MonoBehaviour:
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!135 &6185835828024826084
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5393522037176692450}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5372753103572766896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +249,64 @@ MonoBehaviour:
   syncInterval: 0.1
   statHolder: {fileID: 1939007337298640195}
   stats: []
+--- !u!114 &-1062068302507949663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393522037176692450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 241e7096dadc467f96b35e500d500e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  healthSystem: {fileID: 5746963256902223166}
+--- !u!114 &4872642067181833597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393522037176692450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+--- !u!114 &2469663247690093352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393522037176692450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2107b1995944e087f0d9eba468ad49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoRegisterForCollision: 1
+  centerPoint: {fileID: 3749316940111835132}
+  colliderData:
+    Layer: 0
+    CollidesWithLayer: 0
+    Center:
+      x: 0
+      y: 1.9
+      z: 0
+    Radius: 1.5
+  collisionEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5526287661329693847
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +331,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5526287661329693847}
   m_LocalRotation: {x: -0.11320323, y: 0, z: 0, w: 0.9935719}
-  m_LocalPosition: {x: 0, y: 1.7, z: -0.1875}
+  m_LocalPosition: {x: 0, y: 2.94, z: -0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6091031126961724493}
@@ -430,8 +478,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7935779891674307206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.875, z: 0}
-  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 86764763782968029}
   m_RootOrder: 0
@@ -485,6 +533,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8228718469271755081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3749316940111835132}
+  m_Layer: 0
+  m_Name: TargetPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3749316940111835132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8228718469271755081}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 861486456417271053}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8813715053457645232
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: ReachedEndDamage
-    BaseValue: 30
+    BaseValue: 200
     Cap: 0
 --- !u!114 &4214944171481515479
 MonoBehaviour:
@@ -564,5 +642,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat:
     Name: CurrencyReward
-    BaseValue: 50
+    BaseValue: 500
     Cap: 0

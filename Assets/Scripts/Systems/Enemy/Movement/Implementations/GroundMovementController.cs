@@ -14,7 +14,6 @@ namespace TDGame.Systems.Enemy.Movement.Implementations
         [SerializeField]
         private string speedStatName = "Speed";
 
-        [SyncVar]
         private Vector3 currentWaypoint;
 
         private int currentWaypointIndex;
@@ -38,14 +37,16 @@ namespace TDGame.Systems.Enemy.Movement.Implementations
 
         private void Update()
         {
-            if (Vector3.Distance(transform.position, currentWaypoint) > .1f)
-                transform.position = Vector3.MoveTowards(transform.position, currentWaypoint,
-                    speedStat.stat.Value * Time.deltaTime);
-
-            if (!isServer || !(Vector3.Distance(transform.position, currentWaypoint) < .1f))
+            if (!isServer)
                 return;
 
-            transform.position = currentWaypoint;
+            if (Vector3.Distance(transform.position, currentWaypoint) > .1f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, currentWaypoint,
+                    speedStat.stat.Value * Time.deltaTime);
+                return;
+            }
+            
             currentWaypointIndex++;
             if (currentWaypointIndex >= waypoints.Count)
             {
@@ -54,14 +55,6 @@ namespace TDGame.Systems.Enemy.Movement.Implementations
             }
 
             currentWaypoint = waypoints[currentWaypointIndex];
-            transform.LookAt(currentWaypoint);
-            Rpc_WaypointReached(transform.position);
-        }
-
-        [ClientRpc]
-        void Rpc_WaypointReached(Vector3 position)
-        {
-            transform.position = position;
             transform.LookAt(currentWaypoint);
         }
 

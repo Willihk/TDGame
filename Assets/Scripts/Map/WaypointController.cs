@@ -6,6 +6,8 @@ namespace TDGame.Map
 {
     public class WaypointController : MonoBehaviour
     {
+        public Transform startPoint;
+        public Transform endPoint;
         [SerializeField]
         public List<Transform> waypoints;
 

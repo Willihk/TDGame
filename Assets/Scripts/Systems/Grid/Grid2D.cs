@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Linq;
-using TDGame.Systems.Grid.Cell.Base;
-using TDGame.Systems.Grid.Cell.Implementations;
+using TDGame.Systems.Grid.Cell;
 using TDGame.Systems.Grid.Data;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace TDGame.Systems.Grid
 {
     public class Grid2D : IDisposable
     {
-        public BaseCell[] grid;
+        public GridCell[] grid;
 
         public float CellSize => cellSize;
 
         private readonly float cellSize = 0.5f;
 
-        private int sizeX;
-        private int sizeY;
+        public int sizeX;
+        public int sizeY;
 
         public Grid2D(int x, int y)
         {
             sizeX = x;
             sizeY = y;
-            grid = new BaseCell[x * y];
+            grid = new GridCell[x * y];
         }
 
         public Grid2D(int x, int y, float cellSize) : this(x, y)
@@ -30,16 +30,39 @@ namespace TDGame.Systems.Grid
             this.cellSize = cellSize;
         }
 
-
-        public void SetEmpty()
+        public void ClearGrid()
         {
             for (var i = 0; i < grid.Length; i++)
             {
-                grid[i] = new EmptyCell();
+                grid[i] = new GridCell();
             }
         }
 
-        public bool SetCell(int x, int y, BaseCell newCell)
+        #region CellModifiers
+
+        public bool SetCellState(int x, int y, GridCellState newState)
+        {
+            if (!IsValidGridPosition(x, y))
+                return false;
+            grid[getIndex(x, y)].State = newState;
+            return true;
+        }
+
+        public bool SetAreaCellState(GridArea area, GridCellState newState)
+        {
+            var points = area.GetPoints();
+
+            foreach (var point in points)
+            {
+                SetCellState(point.x, point.y, newState);
+            }
+
+            return true;
+        }
+
+        #endregion
+
+        public bool SetCell(int x, int y, GridCell newCell)
         {
             if (!IsValidGridPosition(x, y))
                 return false;
@@ -49,7 +72,7 @@ namespace TDGame.Systems.Grid
             return true;
         }
 
-        public void SetAreaToCell(GridArea area, BaseCell newCell)
+        public void SetAreaToCell(GridArea area, GridCell newCell)
         {
             var points = area.GetPoints();
 
@@ -59,28 +82,19 @@ namespace TDGame.Systems.Grid
             }
         }
 
-        public bool SetCellIfEmpty(int x, int y, BaseCell newCell)
-        {
-            if (!IsCellEmpty(x, y))
-                return false;
-
-            SetCell(x, y, newCell);
-            return true;
-        }
-
         public bool IsCellEmpty(int x, int y)
         {
             if (!IsValidGridPosition(x, y))
                 return false;
 
             var cell = grid[getIndex(x, y)];
-            return cell == null || cell is EmptyCell;
+            return cell.State == GridCellState.Empty;
         }
 
-        public BaseCell GetCell(int x, int y)
+        public GridCell GetCell(int x, int y)
         {
             if (!IsValidGridPosition(x, y))
-                return null;
+                throw new ArgumentException("Invalid grid position");
 
             return grid[getIndex(x, y)];
         }
@@ -118,16 +132,24 @@ namespace TDGame.Systems.Grid
             return area.GetPoints().All(p => IsCellEmpty(p.x, p.y));
         }
 
-        public Vector2Int WorldToGridPosition(Vector3 worldPosition)
+        public int2 WorldToGridPosition(Vector3 worldPosition)
         {
             int x = Mathf.FloorToInt(worldPosition.x / cellSize);
             int y = Mathf.FloorToInt(worldPosition.z / cellSize);
-            return new Vector2Int(x, y);
+            return new int2(x, y);
         }
 
         public int getIndex(int x, int y)
         {
             return y * sizeX + x;
+        }
+
+        public int2 IndexToGridPosition(int index)
+        {
+            int x = index % sizeX;
+            int y = index / sizeX;
+
+            return new int2(x, y);
         }
 
         public void Dispose()

@@ -8,16 +8,17 @@ namespace TDGame.Systems.Health.Unit
     {
         [SerializeField]
         protected float maxHealth;
-        
+
         [SerializeField]
         protected float startHealth;
-        
+
         [SyncVar]
         private float health;
 
         public UnityEvent OnDeath;
+        public UnityEvent ClientOnDeath;
         public UnityEvent OnHealthChanged;
-        
+
         public bool IsAtMaxHealth => health >= startHealth;
         public float Health => health;
 
@@ -26,6 +27,16 @@ namespace TDGame.Systems.Health.Unit
             health = startHealth;
             OnHealthChanged ??= new UnityEvent();
             OnDeath ??= new UnityEvent();
+            ClientOnDeath ??= new UnityEvent();
+        }
+
+        [ClientRpc]
+        void Rpc_DeathEvent()
+        {
+            if (isServer)
+                return;
+
+            ClientOnDeath.Invoke();
         }
 
         [Server]
@@ -36,7 +47,12 @@ namespace TDGame.Systems.Health.Unit
 
             if (health <= 0)
             {
-                // TODO: DIE
+                Rpc_DeathEvent();
+
+                // The enemy object is already destroyed before Rpc_DeathEvent() is called, so the event is manually called.
+                if (isClient)
+                    ClientOnDeath.Invoke();
+
                 OnDeath.Invoke();
             }
         }

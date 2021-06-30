@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace TDGame.Events.Base
@@ -7,6 +8,7 @@ namespace TDGame.Events.Base
          where GE : GameEvent<T>
          where UER : UnityEvent<T>
     {
+        [AssetSelector]
         [SerializeField]
         protected GE _GameEvent;
 

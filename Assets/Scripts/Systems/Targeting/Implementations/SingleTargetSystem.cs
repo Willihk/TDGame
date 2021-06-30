@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
+using Sirenix.OdinInspector;
 using TDGame.Systems.Targeting.Base;
 using Unity.Mathematics;
 using UnityEngine;
@@ -10,9 +11,11 @@ namespace TDGame.Systems.Targeting.Implementations
 {
     public class SingleTargetSystem : BaseTargetingSystem
     {
+        [ReadOnly]
         public GameObject target;
 
         [SyncVar]
+        [ReadOnly]
         public Vector3 clientTargetPosition;
 
         public GameObject GetTarget()
@@ -49,7 +52,7 @@ namespace TDGame.Systems.Targeting.Implementations
                     return;
                 }
 
-                clientTargetPosition = target.transform.position;
+                clientTargetPosition = target.transform.Find("TargetPoint").position;
             }
             else
             {

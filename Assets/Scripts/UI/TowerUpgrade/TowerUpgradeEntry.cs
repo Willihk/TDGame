@@ -1,11 +1,13 @@
-using TDGame.Systems.TowerUpgrade;
+using TDGame.Systems.Tower.Upgrade;
+using TDGame.Systems.TowerTooltip;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace TDGame.UI.TowerUpgrade
 {
-    public class TowerUpgradeEntry : MonoBehaviour
+    public class TowerUpgradeEntry : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField]
         private TextMeshProUGUI nameText;
@@ -16,18 +18,29 @@ namespace TDGame.UI.TowerUpgrade
         [SerializeField]
         private Image image;
 
-        private UpgradableTower component;
-
-        public void Initialize(UpgradableTower component, string name, int cost)
+        private GameObject currentTower;
+        private GameObject upgradeTower;
+        public void Initialize(GameObject currentTower, GameObject upgradeTower, int cost)
         {
-            this.component = component;
-            nameText.text = name;
-            costText.text = cost.ToString();
+            this.currentTower = currentTower;
+            this.upgradeTower = upgradeTower;
+            nameText.text = upgradeTower.name;
+            costText.text = cost == 0 ? "FREE" : cost.ToString();
         }
 
         public void OnClick()
         {
-            component.UpgradeTower();
+            TowerUpgradeController.Instance.CmdUpgradeTower(currentTower, upgradeTower.name);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            TowerTooltipController.Instance.DisplayUI(upgradeTower, this.GetComponent<RectTransform>());
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            TowerTooltipController.Instance.HideUI();
         }
     }
 }

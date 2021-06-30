@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using TDGame.Systems.Grid;
-using TDGame.Systems.Grid.Cell.Implementations;
+using TDGame.Systems.Grid.Cell;
 
 namespace Tests.Systems.Grid
 {
@@ -13,7 +13,7 @@ namespace Tests.Systems.Grid
         public void TestGridSetCell(int x, int y, bool expected)
         {
             var grid = new Grid2D(21, 32);
-            Assert.That(grid.SetCell(x, y, new EmptyCell()), Is.EqualTo(expected));
+            Assert.That(grid.SetCell(x, y, new GridCell() {State = GridCellState.Occupied}), Is.EqualTo(expected));
         }
     }
 }

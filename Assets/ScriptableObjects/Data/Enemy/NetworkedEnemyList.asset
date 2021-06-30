@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acb3382002e54cf5bbc153c08f8d2d41, type: 3}
+  m_Script: {fileID: 11500000, guid: 260371de85f746c39363870ab8743f97, type: 3}
   m_Name: NetworkedEnemyList
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 1672092839135950081, guid: 4300031b55eed2e428424d9e65d880e8, type: 3}
-  - {fileID: 5393522037176692450, guid: 21377d6381ccd0d418321fb2afb9ffe1, type: 3}
+  - {fileID: 5004674288471461673, guid: a6adc17ddd57dbd4889372d351a26b1c, type: 3}
+  - {fileID: 2409457754608125768, guid: 09dd8c3db3d22d4448b186b457f36556, type: 3}
   - {fileID: 5062058927186350408, guid: 81bb8f6a8cd8a6241bc0ad0f97ed0d44, type: 3}
+  - {fileID: 5393522037176692450, guid: 21377d6381ccd0d418321fb2afb9ffe1, type: 3}
+  - {fileID: 7760373322626667519, guid: 4e73ca9ec5bab7643ada082b4532da36, type: 3}
+  - {fileID: 7790793655431239870, guid: 7a224abeb775e0b4982faf7ffc5051ea, type: 3}

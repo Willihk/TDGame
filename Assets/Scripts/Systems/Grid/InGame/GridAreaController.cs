@@ -18,6 +18,15 @@ namespace TDGame.Systems.Grid.InGame
             area.position = GridController.Instance.towerGrid.WorldToGridPosition(worldPosition);
         }
 
+        public GridArea CalculateArea()
+        {
+            var worldPosition = originPoint.position;
+
+            area.position = GridController.Instance.towerGrid.WorldToGridPosition(worldPosition);
+
+            return area;
+        }
+
         void OnDrawGizmosSelected()
         {
             var worldPosition = originPoint.position;

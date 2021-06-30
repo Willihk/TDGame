@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using TDGame.Systems.Grid;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Tests.Systems.Grid
@@ -27,7 +28,7 @@ namespace Tests.Systems.Grid
         {
             var grid = new Grid2D(10, 20, cellSize);
             var converted = grid.WorldToGridPosition(new Vector3(worldX, worldY, worldZ));
-            Assert.That(new Vector2Int(expectedX, expectedY), Is.EqualTo(converted));
+            Assert.That(new int2(expectedX, expectedY), Is.EqualTo(converted));
         }
     }
 }

@@ -27,7 +27,7 @@ namespace TDGame.Systems.Targeting.Implementations
             }
 
             syncedTargetPositions.Clear();
-            syncedTargetPositions.AddRange(targets.Select(x => x.transform.position));
+            syncedTargetPositions.AddRange(targets.Select(x => x.transform.Find("TargetPoint").position));
         }
 
         public IEnumerable<GameObject> GetTargets()

@@ -6,9 +6,5 @@ namespace TDGame.Command.Implementations.Wave
 {
     public abstract class WaveCommand : Command
     {
-        public WaveCommand()
-        {
-
-        }
     }
 }

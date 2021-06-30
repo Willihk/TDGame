@@ -1,5 +1,6 @@
 ﻿using TDGame.Cursor;
 using TDGame.Events.Base;
+using TDGame.Systems.TowerTooltip;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,10 +8,13 @@ using UnityEngine.UI;
 
 namespace TDGame.UI.BuildingList
 {
-    public class BuildingListEntry : MonoBehaviour
+    public class BuildingListEntry : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField]
         private TextMeshProUGUI nameText;
+
+        [SerializeField]
+        private TextMeshProUGUI costText;
 
         [SerializeField]
         private Image image;
@@ -23,10 +27,11 @@ namespace TDGame.UI.BuildingList
 
         private string prefabName;
 
-        public void Initialize(string prefabName, string name)
+        public void Initialize(string prefabName, string name, int cost)
         {
             this.prefabName = prefabName;
             nameText.text = name;
+            costText.text = cost == 0 ? "FREE" : cost.ToString();
         }
 
         public void OnClick()
@@ -36,6 +41,16 @@ namespace TDGame.UI.BuildingList
                 localCursorState.State = CursorState.Placing;
                 OnClickBuyBuilding.Raise(prefabName);
             }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            TowerTooltipController.Instance.DisplayUI(prefabName, this.GetComponent<RectTransform>());
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            TowerTooltipController.Instance.HideUI();
         }
     }
 }

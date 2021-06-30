@@ -1,4 +1,5 @@
 ﻿using System;
+using Mirror;
 using UnityEngine;
 
 namespace TDGame.Cursor
@@ -8,5 +9,10 @@ namespace TDGame.Cursor
     {
         [NonSerialized]
         public CursorState State;
+
+        public void ResetState()
+        {
+            State = CursorState.None;
+        }
     }
 }

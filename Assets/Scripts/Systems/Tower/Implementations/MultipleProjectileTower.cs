@@ -40,12 +40,12 @@ namespace TDGame.Systems.Tower.Implementations
             {
                 if (nextFire < Time.time)
                 {
-                    ShootProjectile();
+                    ShootProjectiles();
                 }
             }
         }
 
-        private void ShootProjectile()
+        private void ShootProjectiles()
         {
             for (int i = 0; i < targetSystem.syncedTargetPositions.Count; i++)
             {
