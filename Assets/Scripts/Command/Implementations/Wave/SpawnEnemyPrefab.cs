@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using TDGame.Systems.Enemy.Manager;
-using TDGame.Systems.Enemy.Movement.Base;
+using TDGame.Systems.Enemy.Movement.Data;
 
 
 namespace TDGame.Command.Implementations.Wave
@@ -30,7 +30,7 @@ namespace TDGame.Command.Implementations.Wave
 
             spawnedObject.transform.position = startPosition;
 
-            spawnedObject.GetComponent<BaseMovementController>().Setup(waypoints);
+            spawnedObject.GetComponent<EnemyMovement>().Setup(waypoints);
 
             NetworkServer.Spawn(spawnedObject);
 

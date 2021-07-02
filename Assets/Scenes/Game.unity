@@ -552,8 +552,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1431124424}
   m_HandleRect: {fileID: 1431124423}
   m_Direction: 2
-  m_Value: -0.01754386
-  m_Size: 0.9999953
+  m_Value: 0.03508772
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5315,7 +5315,6 @@ MonoBehaviour:
     PresetName: 
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 1051820349}
 --- !u!114 &539632566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8629,7 +8628,6 @@ MonoBehaviour:
     PresetName: 
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 1751412629}
 --- !u!114 &814543625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11379,6 +11377,7 @@ GameObject:
   - component: {fileID: 1514074422}
   - component: {fileID: 1514074427}
   - component: {fileID: 1514074426}
+  - component: {fileID: 1514074424}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -11415,16 +11414,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   predefinedWaves:
-  - {fileID: 11400000, guid: 59b30f740f782df47837ca550db9407b, type: 2}
-  - {fileID: 11400000, guid: aafc1ea05ea8a9c4c83aa9e1235717c4, type: 2}
-  - {fileID: 11400000, guid: 17ca14ae9f2fc534680180a7f55513fd, type: 2}
-  - {fileID: 11400000, guid: 3692bcceaa72a5a4c86a42871bba77be, type: 2}
-  - {fileID: 11400000, guid: e52c8aad350d2764c88a581d13d42b71, type: 2}
-  - {fileID: 11400000, guid: 6a34ce1d98b242a4d9855bd373aae9a4, type: 2}
-  - {fileID: 11400000, guid: 9b360864414cedc47a0f38572992df33, type: 2}
-  - {fileID: 11400000, guid: b078a592c4f950844bfa70f6697241cc, type: 2}
-  - {fileID: 11400000, guid: cf3073279ece9064ea4b344d18b65bf8, type: 2}
-  - {fileID: 11400000, guid: 74b90459e808768479ecb4c5ff5979ca, type: 2}
+  - {fileID: 11400000, guid: 1eb85e4cfe48525489cbee0760d148de, type: 2}
   waveChangedEvent: {fileID: 11400000, guid: 8adabc917caa66a4ea411b7a4a9f65f8, type: 2}
   enemyList: {fileID: 11400000, guid: 8f4177618bd739b4cb8e356640f4aa28, type: 2}
   enemyHolder: {fileID: 1514074415}
@@ -11571,6 +11561,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1514074424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514074414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b81e19d15f4b98bd03f00e6527af3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1514074426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14279,7 +14281,6 @@ MonoBehaviour:
     PresetName: 
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 1537353261}
 --- !u!114 &1602871980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14693,7 +14694,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0017089844}
+  m_AnchoredPosition: {x: 0, y: 0.0016174316}
   m_SizeDelta: {x: 0, y: 367.93}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1674562969

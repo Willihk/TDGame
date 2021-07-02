@@ -135,6 +135,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -331,13 +332,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5004674288471461673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 406b2f7f45bc46f8a48d4a853de77ed9, type: 3}
+  m_Script: {fileID: 11500000, guid: 222ab6c2d43c46a388a7f39ad527367f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
+  autoRegister: 1
   statsController: {fileID: 6531821588583023592}
-  speedStatName: Speed
+  speedStat: {fileID: 0}
+  waypoints: []
+  currentWaypointIndex: 0
+  currentWaypoint: {x: 0, y: 0, z: 0}
   reachedEndEvent:
     m_PersistentCalls:
       m_Calls:
@@ -354,6 +357,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  speedStatName: Speed
 --- !u!114 &6531821588583023592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,6 +509,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -586,6 +591,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
