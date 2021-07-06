@@ -26,7 +26,7 @@ namespace TDGame.Command.Implementations.Wave
 
         public override void Execute()
         {
-            var spawnedObject = Object.Instantiate(prefab, holder);
+            var spawnedObject = Object.Instantiate(prefab);
 
             spawnedObject.transform.position = startPosition;
 

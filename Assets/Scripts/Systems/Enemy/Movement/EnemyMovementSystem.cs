@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using TDGame.Systems.Enemy.Movement.Data;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.Jobs;
 
 namespace TDGame.Systems.Enemy.Movement
 {
@@ -11,39 +14,81 @@ namespace TDGame.Systems.Enemy.Movement
 
         private List<EnemyMovement> trackedEnemies = new List<EnemyMovement>();
 
+        private NativeQueue<EnemyMovementEvent> movementEvents;
+
+        private JobHandle handle;
+        private TransformAccessArray transformArray;
+
+        private int jobCount;
+
         private void Awake()
         {
             Instance = this;
+            movementEvents = new NativeQueue<EnemyMovementEvent>(Allocator.Persistent);
+
+            jobCount = Environment.ProcessorCount - 1;
+        }
+
+        private void OnDestroy()
+        {
+            movementEvents.Dispose();
         }
 
         private void Update()
         {
-            for (int i = 0; i < trackedEnemies.Count; i++)
-            {
-                MoveEnemy(i);
-            }
+            MoveEnemiesUsingJob();
         }
 
-        void MoveEnemy(int index)
+        void MoveEnemiesUsingJob()
         {
-            var enemy = trackedEnemies[index];
-            if (Vector3.Distance(enemy.transform.position, enemy.currentWaypoint) > .1f)
+            var transforms = new Transform[trackedEnemies.Count];
+
+            var movementDatas = new NativeArray<EnemyMovementData>(trackedEnemies.Count, Allocator.TempJob);
+
+            // Get all needed data for moving an enemy
+            for (int i = 0; i < trackedEnemies.Count; i++)
             {
-                enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, enemy.currentWaypoint,
-                    enemy.speedStat.stat.Value * Time.deltaTime);
-                return;
-            }
-            
-            enemy.currentWaypointIndex++;
-            if (enemy.currentWaypointIndex >= enemy.waypoints.Count)
-            {
-                // reached end
-                enemy.ReachedEnd();
-                return;
+                transforms[i] = trackedEnemies[i].transform;
+
+                movementDatas[i] = new EnemyMovementData()
+                {
+                    currentWaypoint = trackedEnemies[i].currentWaypoint,
+                    speed = trackedEnemies[i].speedStat.stat.Value
+                };
             }
 
-            enemy.currentWaypoint = enemy.waypoints[enemy.currentWaypointIndex];
-            enemy.transform.LookAt(enemy.currentWaypoint);
+            transformArray = new TransformAccessArray(transforms, jobCount);
+
+            handle = new EnemyMovementJob()
+            {
+                DeltaTime = Time.deltaTime,
+                MovementDatas = movementDatas,
+                MovementEvents = movementEvents.AsParallelWriter()
+            }.Schedule(transformArray);
+        }
+
+        private void LateUpdate()
+        {
+            handle.Complete();
+            transformArray.Dispose();
+            
+            while (movementEvents.TryDequeue(out EnemyMovementEvent movementEvent))
+            {
+                if (movementEvent.EventType != MovementEvent.ReachedWaypoint)
+                    continue;
+
+                var enemy = trackedEnemies[movementEvent.Index];
+                enemy.currentWaypointIndex++;
+                if (enemy.currentWaypointIndex >= enemy.waypoints.Count)
+                {
+                    // reached end
+                    enemy.ReachedEnd();
+                    return;
+                }
+
+                enemy.currentWaypoint = enemy.waypoints[enemy.currentWaypointIndex];
+                enemy.transform.LookAt(enemy.currentWaypoint);
+            }
         }
 
 
