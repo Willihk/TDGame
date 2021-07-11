@@ -1,13 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Mirror;
 using TDGame.Network.Player;
-using TDGame.Systems.Economy.Data;
+using TDGame.Systems.Economy.Interfaces;
 using UnityEngine;
 
 namespace TDGame.Systems.Economy
 {
-    public class PlayerEconomyManager : MonoBehaviour
+    public class PlayerEconomyManager : MonoBehaviour, IPlayerEconomyManager
     {
         public static PlayerEconomyManager Instance;
 
@@ -38,13 +37,13 @@ namespace TDGame.Systems.Economy
             economy.ReduceCurrency(amount);
         }
 
-        public void UpdateEconomies()
+        private void UpdateEconomies()
         {
             economies = playerManager.GetPlayerObjects().Select(x => x.GetComponent<NetworkedPlayerEconomy>())
                 .ToArray();
         }
 
-        public NetworkedPlayerEconomy GetEconomy(int playerId)
+        private NetworkedPlayerEconomy GetEconomy(int playerId)
         {
             return playerManager.GetPlayerById(playerId).GetComponent<NetworkedPlayerEconomy>();
         }

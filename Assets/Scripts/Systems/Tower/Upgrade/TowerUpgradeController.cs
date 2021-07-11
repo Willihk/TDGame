@@ -41,7 +41,7 @@ namespace TDGame.Systems.Tower.Upgrade
             }
 
             var upgrades = new List<GameObject>();
-            
+
             foreach (var connection in towerNode.GetOutputPort("Next").GetConnections())
             {
                 if (connection.node is TowerNode upgradeNode)
@@ -56,18 +56,17 @@ namespace TDGame.Systems.Tower.Upgrade
         [Command(ignoreAuthority = true)]
         public void CmdUpgradeTower(GameObject tower, string upgradeName, NetworkConnectionToClient sender = null)
         {
-            
             var towerOwner = tower.GetComponent<NetworkIdentity>().connectionToClient;
             if (sender != towerOwner) // Makes sure only the tower owner can upgrade
             {
                 return;
             }
 
-            
+
             TowerNode towerNode = towerGraph.GetTower(upgradeName);
             if (!towerNode)
                 return;
-            
+
             TryUpgradeTower(tower, towerNode.TowerPrefab);
         }
 
@@ -75,16 +74,17 @@ namespace TDGame.Systems.Tower.Upgrade
         public void TryUpgradeTower(GameObject tower, GameObject upgradePrefab)
         {
             var towerOwner = tower.GetComponent<NetworkIdentity>().connectionToClient;
-            
+
             int newTowerPrice = upgradePrefab.GetComponent<BaseNetworkedTower>().price;
             int oldTowerPrice = tower.gameObject.GetComponent<BaseNetworkedTower>().price;
 
-            var playerEconomy = PlayerEconomyManager.Instance.GetEconomy(towerOwner);
+            var economyManager = PlayerEconomyManager.Instance;
+            var playerEconomy = economyManager.GetEconomy(towerOwner);
 
             if (!playerEconomy.CanAfford(newTowerPrice - oldTowerPrice))
                 return;
 
-            PlayerEconomyManager.Instance.ReducesCurrencyForPlayer(
+            economyManager.ReducesCurrencyForPlayer(
                 playerManager.GetIdByConnection(towerOwner), newTowerPrice - oldTowerPrice);
 
             ReplaceTower(upgradePrefab.name, tower.gameObject, towerOwner);

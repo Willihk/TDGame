@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -176,7 +176,6 @@ MonoBehaviour:
   ThemeIdSerializedGuid: c76480f136034042a0a060c83303fe1f
   VariantIdSerializedGuid: 
   PropertyIdSerializedGuid: c6f34e095ca1b548ace60ed5859abec4
-  TextMeshPro: {fileID: 65598039}
   OverrideAlpha: 0
   Alpha: 0
 --- !u!114 &65598039
@@ -2622,7 +2621,6 @@ MonoBehaviour:
     PresetName: 
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 1922183415}
 --- !u!114 &68564791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2911,7 +2909,6 @@ MonoBehaviour:
   ThemeIdSerializedGuid: c76480f136034042a0a060c83303fe1f
   VariantIdSerializedGuid: 
   PropertyIdSerializedGuid: c6f34e095ca1b548ace60ed5859abec4
-  TextMeshPro: {fileID: 181878016}
   OverrideAlpha: 0
   Alpha: 0
 --- !u!1 &290644543
@@ -5248,7 +5245,6 @@ MonoBehaviour:
     PresetName: 
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 1530596223}
 --- !u!114 &290644546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6225,7 +6221,6 @@ MonoBehaviour:
   ThemeIdSerializedGuid: c76480f136034042a0a060c83303fe1f
   VariantIdSerializedGuid: 
   PropertyIdSerializedGuid: c6f34e095ca1b548ace60ed5859abec4
-  TextMeshPro: {fileID: 551716965}
   OverrideAlpha: 0
   Alpha: 0
 --- !u!1 &588485260
@@ -6395,6 +6390,7 @@ GameObject:
   - component: {fileID: 596583983}
   - component: {fileID: 596583982}
   - component: {fileID: 596583981}
+  - component: {fileID: 596583985}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6499,6 +6495,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &596583985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596583980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae1c0578cae472ab9a19934e44a1273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
 --- !u!1 &651726799
 GameObject:
   m_ObjectHideFlags: 0
@@ -8832,7 +8844,6 @@ MonoBehaviour:
     PresetName: Default
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 181878016}
 --- !u!114 &651726802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11607,7 +11618,6 @@ MonoBehaviour:
     PresetName: 
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 551716965}
 --- !u!114 &680647855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12529,7 +12539,6 @@ MonoBehaviour:
   ThemeIdSerializedGuid: c76480f136034042a0a060c83303fe1f
   VariantIdSerializedGuid: 
   PropertyIdSerializedGuid: c6f34e095ca1b548ace60ed5859abec4
-  TextMeshPro: {fileID: 1256090624}
   OverrideAlpha: 0
   Alpha: 0
 --- !u!1 &1290376396
@@ -14896,7 +14905,6 @@ MonoBehaviour:
     PresetName: Default
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 65598039}
 --- !u!114 &1290376401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17522,7 +17530,6 @@ MonoBehaviour:
     PresetName: 
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 1605264282}
 --- !u!114 &1397918121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17773,7 +17780,6 @@ MonoBehaviour:
   ThemeIdSerializedGuid: c76480f136034042a0a060c83303fe1f
   VariantIdSerializedGuid: 
   PropertyIdSerializedGuid: c6f34e095ca1b548ace60ed5859abec4
-  TextMeshPro: {fileID: 1485026282}
   OverrideAlpha: 0
   Alpha: 0
 --- !u!1 &1512734966
@@ -20122,7 +20128,6 @@ MonoBehaviour:
     PresetName: 
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 1485026282}
 --- !u!114 &1512734969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20373,7 +20378,6 @@ MonoBehaviour:
   ThemeIdSerializedGuid: c76480f136034042a0a060c83303fe1f
   VariantIdSerializedGuid: 
   PropertyIdSerializedGuid: c6f34e095ca1b548ace60ed5859abec4
-  TextMeshPro: {fileID: 1530596223}
   OverrideAlpha: 0
   Alpha: 0
 --- !u!1 &1605264280
@@ -20528,7 +20532,6 @@ MonoBehaviour:
   ThemeIdSerializedGuid: c76480f136034042a0a060c83303fe1f
   VariantIdSerializedGuid: 
   PropertyIdSerializedGuid: c6f34e095ca1b548ace60ed5859abec4
-  TextMeshPro: {fileID: 1605264282}
   OverrideAlpha: 0
   Alpha: 0
 --- !u!1 &1648568932
@@ -22865,7 +22868,6 @@ MonoBehaviour:
     PresetName: Default
   TargetLabel: 2
   TextLabel: {fileID: 0}
-  TextMeshProLabel: {fileID: 1256090624}
 --- !u!114 &1648568935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24183,7 +24185,6 @@ MonoBehaviour:
   ThemeIdSerializedGuid: c76480f136034042a0a060c83303fe1f
   VariantIdSerializedGuid: 
   PropertyIdSerializedGuid: c6f34e095ca1b548ace60ed5859abec4
-  TextMeshPro: {fileID: 1922183415}
   OverrideAlpha: 0
   Alpha: 0
 --- !u!1 &1992914368
