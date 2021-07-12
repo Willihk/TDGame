@@ -1,4 +1,5 @@
-using Mirror;
+using TDGame.Network;
+using TDGame.Network.Manager;
 using TMPro;
 using UnityEngine;
 
@@ -6,11 +7,11 @@ namespace TDGame.UI.MainMenu
 {
     public class MultiplayerMenuController : MonoBehaviour
     {
-        NetworkManager manager;
+        CustomNetworkManager manager;
 
         private void Start()
         {
-            manager = NetworkManager.singleton;
+            manager = GameNetworkManager.Instance;
         }
 
         [SerializeField]

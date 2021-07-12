@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: MenuScenes
+  m_EditorClassIdentifier: 
+  m_GroupName: MenuScenes
+  m_Data:
+    m_SerializedData: []
+  m_GUID: cc5cc2b467c58d542adcab16da5e5865
+  m_SerializeEntries:
+  - m_GUID: b63bdd3dabc942f459c5f032ae24ed52
+    m_Address: Assets/Scenes/Menus/MainMenu.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 102900000, guid: b63bdd3dabc942f459c5f032ae24ed52, type: 3}
+    m_TargetAsset: {fileID: 102900000, guid: b63bdd3dabc942f459c5f032ae24ed52, type: 3}
+  - m_GUID: 4a923a40b0cff1e4d9b779200a99eb74
+    m_Address: Assets/Scenes/Menus/RoomMenu.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 102900000, guid: 4a923a40b0cff1e4d9b779200a99eb74, type: 3}
+    m_TargetAsset: {fileID: 102900000, guid: 4a923a40b0cff1e4d9b779200a99eb74, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a2aa5e41b1a341e438e39c0b8a128ff2, type: 2}
+    - {fileID: 11400000, guid: a6b9567b3ce15d441b01928b30fdd88b, type: 2}

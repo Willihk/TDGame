@@ -8,16 +8,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Initialization.unity
     guid: c488ddde46054c443973c094b6b16668
-  - enabled: 1
-    path: Assets/Scenes/Menus/MainMenu.unity
-    guid: b63bdd3dabc942f459c5f032ae24ed52
-  - enabled: 1
-    path: Assets/Scenes/Menus/RoomMenu.unity
-    guid: 4a923a40b0cff1e4d9b779200a99eb74
-  - enabled: 1
-    path: Assets/Scenes/Gameplay.unity
-    guid: 127901727ace7a44d8d31f7d9eed3f7a
-  - enabled: 1
-    path: Assets/Scenes/Maps/DefaultMap.unity
-    guid: 6cc96cb1db8ca8c42b40b9b8e1a086ec
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 72c22da26599b1e41bd24d071bb55e1f, type: 2}
