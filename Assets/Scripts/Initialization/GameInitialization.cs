@@ -10,7 +10,7 @@ namespace TDGame.Initialization
 
         private void Start()
         {
-            mainScene.LoadSceneAsync();
+            var ting = mainScene.LoadSceneAsync();
         }
     }
 }
