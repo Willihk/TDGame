@@ -5537,9 +5537,8 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls:
           - m_Target: {fileID: 1385398329}
-            m_TargetAssemblyTypeName: TDGame.UI.MainMenu.MultiplayerMenuController,
-              TDGame
-            m_MethodName: StartClient
+            m_TargetAssemblyTypeName: TDGame.UI.MainMenu.MainMenuController, TDGame
+            m_MethodName: ConnectToServer
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -8444,7 +8443,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1385398327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15eaf3615d540e4e9a2714ed5872943, type: 3}
+  m_Script: {fileID: 11500000, guid: ef5245910b54d494bb578d6b8a878f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 1590770231}
@@ -14987,8 +14986,7 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls:
           - m_Target: {fileID: 1385398329}
-            m_TargetAssemblyTypeName: TDGame.UI.MainMenu.MultiplayerMenuController,
-              TDGame
+            m_TargetAssemblyTypeName: TDGame.UI.MainMenu.MainMenuController, TDGame
             m_MethodName: StartServer
             m_Mode: 1
             m_Arguments:
@@ -20585,8 +20583,7 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls:
           - m_Target: {fileID: 1385398329}
-            m_TargetAssemblyTypeName: TDGame.UI.MainMenu.MultiplayerMenuController,
-              TDGame
+            m_TargetAssemblyTypeName: TDGame.UI.MainMenu.MainMenuController, TDGame
             m_MethodName: StartHost
             m_Mode: 1
             m_Arguments:
