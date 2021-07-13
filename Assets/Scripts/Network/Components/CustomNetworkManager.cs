@@ -14,6 +14,7 @@ namespace TDGame.Network.Components
         
         [SerializeField]
         private NetworkServer server;
+        
 
         private void Awake()
         {

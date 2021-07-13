@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 53215441}
   - component: {fileID: 53215440}
   - component: {fileID: 53215445}
+  - component: {fileID: 53215450}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -161,9 +162,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Levels:
-  - Name: NetworkIdentity
-    level: 2
   - Name: NetworkSceneManager
+    level: 2
+  - Name: CharacterSpawner
+    level: 2
+  - Name: NetworkIdentity
     level: 2
   - Name: NetworkClient
     level: 2
@@ -171,17 +174,15 @@ MonoBehaviour:
     level: 2
   - Name: ServerObjectManager
     level: 2
-  - Name: OnlineOfflineScene
-    level: 2
-  - Name: CharacterSpawner
-    level: 2
   - Name: ClientObjectManager
+    level: 2
+  - Name: NetworkServer
+    level: 2
+  - Name: OnlineOfflineScene
     level: 2
   - Name: RemoteCallHelper
     level: 2
   - Name: NetworkBehaviour
-    level: 2
-  - Name: NetworkServer
     level: 2
   - Name: WelcomeWindow
     level: 2
@@ -324,19 +325,69 @@ MonoBehaviour:
   _started:
     _event:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 11400000, guid: 2d7a930463046234fa66c5f376be1753, type: 2}
+          m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent, TDGame
+          m_MethodName: Raise
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   _connected:
     _event:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 11400000, guid: f77d0e5d8b0cca74b8d318b14e4a7928, type: 2}
+          m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent`1[[Mirage.INetworkPlayer,
+            Mirage
+          m_MethodName: Raise
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   _authenticated:
     _event:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 11400000, guid: 26ba6bf1644f4254aa984ffcc54d1fa3, type: 2}
+          m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent`1[[Mirage.INetworkPlayer,
+            Mirage
+          m_MethodName: Raise
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   _disconnected:
     _event:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 11400000, guid: d325c10bf090da441b43da42610ef99c, type: 2}
+          m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent, TDGame
+          m_MethodName: Raise
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &53215448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,20 +408,83 @@ MonoBehaviour:
   _started:
     _event:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 11400000, guid: 2d7a930463046234fa66c5f376be1753, type: 2}
+          m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent, TDGame
+          m_MethodName: Raise
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   _connected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f77d0e5d8b0cca74b8d318b14e4a7928, type: 2}
+        m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent`1[[Mirage.INetworkPlayer,
+          Mirage
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _authenticated:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 26ba6bf1644f4254aa984ffcc54d1fa3, type: 2}
+        m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent`1[[Mirage.INetworkPlayer,
+          Mirage
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _disconnected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent`1[[Mirage.INetworkPlayer,
+          Mirage
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _stopped:
     _event:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 11400000, guid: d46f1fc9513649d4ab274aa3c41fd77b, type: 2}
+          m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent, TDGame
+          m_MethodName: Raise
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   _onStartHost:
     _event:
       m_PersistentCalls:
@@ -393,6 +507,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &53215450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53215439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 329b51015e4f49fc95c2ddcb2afe6252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  client: {fileID: 53215447}
+  server: {fileID: 53215448}
 --- !u!1 &219245693
 GameObject:
   m_ObjectHideFlags: 0
