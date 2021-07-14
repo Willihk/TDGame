@@ -881,8 +881,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2124394706}
-  - component: {fileID: 2124394705}
   - component: {fileID: 2124394707}
+  - component: {fileID: 2124394708}
+  - component: {fileID: 2124394705}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -897,26 +898,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2124394704}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd67defd419c4f7f95af76185cd217f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 88b27e96d8a5449f97fc809cd464a330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Client: {fileID: 53215447}
-  Server: {fileID: 53215448}
-  DontDestroy: 1
-  _clientChangeScene:
+  _GameEvent: {fileID: 11400000, guid: f77d0e5d8b0cca74b8d318b14e4a7928, type: 2}
+  _UnityEventResponse:
     m_PersistentCalls:
-      m_Calls: []
-  _clientSceneChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  _serverChangeScene:
-    m_PersistentCalls:
-      m_Calls: []
-  _serverSceneChanged:
-    m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2124394707}
+        m_TargetAssemblyTypeName: TDGame.Network.Components.CustomSceneManager, TDGame
+        m_MethodName: Server_OnClientConnected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &2124394706
 Transform:
   m_ObjectHideFlags: 0
@@ -948,3 +950,31 @@ MonoBehaviour:
     m_AssetGUID: b63bdd3dabc942f459c5f032ae24ed52
     m_SubObjectName: 
     m_SubObjectType: 
+--- !u!114 &2124394708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124394704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88b27e96d8a5449f97fc809cd464a330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 392593a0b41306143a37e86a99f308b7, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2124394707}
+        m_TargetAssemblyTypeName: TDGame.Network.Components.CustomSceneManager, TDGame
+        m_MethodName: Client_OnConnected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

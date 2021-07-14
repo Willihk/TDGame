@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using Cysharp.Threading.Tasks;
+using Mirage;
 using Sirenix.OdinInspector;
+using TDGame.Network.Messages.Scene;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -21,7 +23,7 @@ namespace TDGame.Network.Components
         private AssetReference menuScene;
 
         [ReadOnly]
-        [ShowInInspector]
+        [Sirenix.OdinInspector.ShowInInspector]
         private Dictionary<string, AssetReference> loadedScenes = new Dictionary<string, AssetReference>();
 
         public Dictionary<string, AssetReference> LoadedScenes => loadedScenes;
@@ -80,7 +82,7 @@ namespace TDGame.Network.Components
                 currentScene.UnLoadScene().Completed += handle =>
                 {
                     loadedScenes.Remove(currentScene.AssetGUID);
-                    
+
                     newScene.LoadSceneAsync(LoadSceneMode.Additive);
                     loadedScenes.Add(newSceneID, newScene);
                 };
@@ -101,9 +103,8 @@ namespace TDGame.Network.Components
             await scene.UnLoadScene();
             loadedScenes.Remove(scene.AssetGUID);
         }
-        
-        
-        
+
+
         public async UniTaskVoid ReturnMainMenu()
         {
             var scenes = loadedScenes.Values.ToArray();
@@ -115,5 +116,53 @@ namespace TDGame.Network.Components
 
             await LoadAddressableScene(menuScene);
         }
+
+        #region Scene syncing
+
+        public void Server_OnClientConnected(INetworkPlayer player)
+        {
+            player.RegisterHandler<RequestLoadedScenes>(Handle_RequestLoadedScenes);
+        }
+
+        public void Client_OnConnected(INetworkPlayer server)
+        {
+            server.RegisterHandler<LoadedScenes>(Handle_LoadedScenes);
+            server.Send(new RequestLoadedScenes());
+        }
+
+        public void Handle_RequestLoadedScenes(INetworkPlayer sender, RequestLoadedScenes message)
+        {
+            sender.Send(new LoadedScenes() { LoadedSceneIDs = loadedScenes.Keys.ToList() });
+        }
+
+        public void Handle_LoadedScenes(INetworkPlayer sender, LoadedScenes message)
+        {
+            LoadScenesFromMessage(message).Forget();
+        }
+
+        private async UniTask LoadScenesFromMessage(LoadedScenes message)
+        {
+            List<UniTask> handles = new List<UniTask>();
+
+            var toLoad = message.LoadedSceneIDs.Where(x => !loadedScenes.ContainsKey(x)).ToList();
+            var toUnLoad = loadedScenes.Where(x => !message.LoadedSceneIDs.Contains(x.Key)).Select(x => x.Value)
+                .ToList();
+
+            toLoad.ForEach(x =>
+            {
+                // Load scene
+                AssetReference scene = new AssetReference(x);
+                if (!scene.RuntimeKeyIsValid())
+                    Debug.LogError("Invalid scene AssetReference");
+
+                handles.Add(LoadAddressableScene(scene));
+            });
+
+            toUnLoad.ForEach(x => handles.Add(UnLoadAddressableScene(x)));
+
+            await UniTask.WhenAll(handles);
+        }
+
+        #endregion
     }
 }
