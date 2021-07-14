@@ -1,4 +1,6 @@
-﻿using TDGame.Network.Components;
+﻿using System.Linq;
+using Cysharp.Threading.Tasks;
+using TDGame.Network.Components;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
@@ -9,15 +11,21 @@ namespace TDGame.Managers
     {
         [SerializeField]
         private CustomSceneManager customSceneManager;
-        
+
         [SerializeField]
         private AssetReference mainMenuScene;
+
         [SerializeField]
         private AssetReference roomScene;
-        
+
         public void LoadRoomScene()
         {
             customSceneManager.SwitchScenes(mainMenuScene.AssetGUID, roomScene.AssetGUID);
+        }
+
+        public void ReturnToMainMenu()
+        {
+            customSceneManager.ReturnMainMenu().Forget();
         }
     }
 }

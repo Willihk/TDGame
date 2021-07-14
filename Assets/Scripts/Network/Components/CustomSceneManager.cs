@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Policy;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
@@ -22,6 +23,8 @@ namespace TDGame.Network.Components
         [ReadOnly]
         [ShowInInspector]
         private Dictionary<string, AssetReference> loadedScenes = new Dictionary<string, AssetReference>();
+
+        public Dictionary<string, AssetReference> LoadedScenes => loadedScenes;
 
         private void Awake()
         {
@@ -56,14 +59,29 @@ namespace TDGame.Network.Components
             return false;
         }
 
+        public bool UnLoadAllLoadedScenes()
+        {
+            var scenes = loadedScenes.Values.ToArray();
+
+            foreach (var scene in scenes)
+            {
+                UnLoadAddressableScene(scene).Forget();
+            }
+
+            return true;
+        }
+
         public bool SwitchScenes(string currentSceneID, string newSceneID)
         {
             var newScene = new AssetReference(newSceneID);
-            if (loadedScenes.TryGetValue(currentSceneID, out AssetReference currentScene) && newScene.RuntimeKeyIsValid())
+            if (loadedScenes.TryGetValue(currentSceneID, out AssetReference currentScene) &&
+                newScene.RuntimeKeyIsValid())
             {
                 currentScene.UnLoadScene().Completed += handle =>
                 {
-                    newScene.LoadSceneAsync(LoadSceneMode.Additive); 
+                    loadedScenes.Remove(currentScene.AssetGUID);
+                    
+                    newScene.LoadSceneAsync(LoadSceneMode.Additive);
                     loadedScenes.Add(newSceneID, newScene);
                 };
                 return true;
@@ -82,6 +100,20 @@ namespace TDGame.Network.Components
         {
             await scene.UnLoadScene();
             loadedScenes.Remove(scene.AssetGUID);
+        }
+        
+        
+        
+        public async UniTaskVoid ReturnMainMenu()
+        {
+            var scenes = loadedScenes.Values.ToArray();
+
+            foreach (var scene in scenes)
+            {
+                await UnLoadAddressableScene(scene);
+            }
+
+            await LoadAddressableScene(menuScene);
         }
     }
 }

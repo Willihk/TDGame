@@ -456,11 +456,10 @@ MonoBehaviour:
   _disconnected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent`1[[Mirage.INetworkPlayer,
-          Mirage
+      - m_Target: {fileID: 11400000, guid: d325c10bf090da441b43da42610ef99c, type: 2}
+        m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent, TDGame
         m_MethodName: Raise
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -473,7 +472,7 @@ MonoBehaviour:
     _event:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11400000, guid: d46f1fc9513649d4ab274aa3c41fd77b, type: 2}
+        - m_Target: {fileID: 11400000, guid: 73d4a23fa9d8ccf4797dfa1c52d1deb6, type: 2}
           m_TargetAssemblyTypeName: TDGame.Events.Base.GameEvent, TDGame
           m_MethodName: Raise
           m_Mode: 1
@@ -532,6 +531,7 @@ GameObject:
   - component: {fileID: 107596168}
   - component: {fileID: 107596169}
   - component: {fileID: 107596170}
+  - component: {fileID: 107596171}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -593,6 +593,34 @@ MonoBehaviour:
       - m_Target: {fileID: 107596169}
         m_TargetAssemblyTypeName: TDGame.Managers.CustomMenuManager, TDGame
         m_MethodName: LoadRoomScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &107596171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107596167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160f5899ffa28264e9082ac9673d1f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 73d4a23fa9d8ccf4797dfa1c52d1deb6, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 107596169}
+        m_TargetAssemblyTypeName: TDGame.Managers.CustomMenuManager, TDGame
+        m_MethodName: ReturnToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
