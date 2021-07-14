@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace TDGame.Events.Base
@@ -10,6 +11,7 @@ namespace TDGame.Events.Base
 
         public bool Enabled = true;
 
+        [Button]
         public void Raise()
         {
             if (Enabled)
@@ -24,6 +26,7 @@ namespace TDGame.Events.Base
 
         public bool Enabled = true;
 
+        [Button]
         public void Raise(T item)
         {
             if (Enabled)

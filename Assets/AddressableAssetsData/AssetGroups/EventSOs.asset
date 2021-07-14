@@ -35,12 +35,6 @@ MonoBehaviour:
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
-  - m_GUID: d325c10bf090da441b43da42610ef99c
-    m_Address: Assets/ScriptableObjects/EventChannels/Network/Server/Disconnected.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
   - m_GUID: 2d7a930463046234fa66c5f376be1753
     m_Address: Assets/ScriptableObjects/EventChannels/Network/Server/Started.asset
     m_ReadOnly: 0
@@ -49,6 +43,12 @@ MonoBehaviour:
     m_TargetAsset: {fileID: 0}
   - m_GUID: 73d4a23fa9d8ccf4797dfa1c52d1deb6
     m_Address: Assets/ScriptableObjects/EventChannels/Network/Server/Stopped.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d325c10bf090da441b43da42610ef99c
+    m_Address: Assets/ScriptableObjects/EventChannels/Network/Server/Disconnected.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}

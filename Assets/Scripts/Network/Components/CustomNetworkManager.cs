@@ -35,5 +35,10 @@ namespace TDGame.Network.Components
         {
             server.StartServer();
         }
+
+        public void OnPlayerConnected(INetworkPlayer player)
+        {
+            
+        }
     }
 }
