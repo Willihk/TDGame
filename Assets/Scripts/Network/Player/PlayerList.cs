@@ -11,14 +11,15 @@ namespace TDGame.Network.Player
 
         private void Awake()
         {
-            Players ??= new List<int>();
+            Players = new List<int>();
         }
 
         public void AddPlayer(int id)
         {
-            Players.Add(id);
+            if (!Players.Contains(id))
+                Players.Add(id);
         }
-        
+
         public void RemovePlayer(int id)
         {
             Players.Remove(id);

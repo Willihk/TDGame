@@ -41,17 +41,12 @@ namespace TDGame.Network.Components
 
         public void OnHostStarted()
         {
-            // If in Host mode, the local client/player needs to manually be registered
-            if (server.LocalClientActive)
-            {
-                Server_OnClientConnected(server.LocalPlayer);
-                RegisterPlayer(server.LocalPlayer);
-            }
+           
         }
 
         public void OnHostStopped()
         {
-            Server_OnClientDisconnected(server.LocalPlayer);
+            
         }
 
 
@@ -149,10 +144,16 @@ namespace TDGame.Network.Components
             player.RegisterHandler<PlayerRegistered>(Handle_PlayerRegistered);
             player.RegisterHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
 
-            player.Send(new PlayerData()
+            async UniTaskVoid SendRegistrationMessage()
             {
-                Name = "player"
-            });
+                await UniTask.Delay(100);
+                player.Send(new PlayerData()
+                {
+                    Name = "player"
+                });
+            } 
+           
+            SendRegistrationMessage().Forget();
         }
 
         public void Client_Disconnected(INetworkPlayer player)
