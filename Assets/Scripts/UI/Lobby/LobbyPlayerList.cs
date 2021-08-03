@@ -1,77 +1,67 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Mirror;
-using TDGame.Network;
-using TDGame.Network.Lobby;
-using TDGame.Network.Player;
-using TDGame.UI.PlayerList;
+﻿using System;
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace TDGame.UI.Lobby
 {
-    public class LobbyPlayerList : NetworkBehaviour
+    public class LobbyPlayerList : MonoBehaviour
     {
         [SerializeField]
-        private GameObject entryPrefab;
-        
+        private Network.Player.PlayerList playerList;
+
+
         [SerializeField]
-        Transform content;
+        private AssetReferenceGameObject entryPrefab;
 
-        public SyncList<LobbyPlayerData> players = new SyncList<LobbyPlayerData>();
+        [SerializeField]
+        private Transform content;
 
-        List<GameObject> cachedPlayerEntries = new List<GameObject>();
 
-        public override void OnStartClient()
+        // Handles needs to be cached, they will be used to destroy the entries.
+        private List<AsyncOperationHandle<GameObject>> handles = new List<AsyncOperationHandle<GameObject>>();
+
+        private void Start()
         {
-            players.Callback += (op, index, item, newItem) =>
-            {
-                if (op == SyncList<LobbyPlayerData>.Operation.OP_CLEAR)
-                    return;
-                
-                Debug.Log("update lobby players");
-                UpdatePlayers();
-            };
-            UpdatePlayers();
+            RefreshPlayerList();
         }
 
-        public override void OnStartServer()
+        [Button]
+        public void RefreshPlayerList()
         {
-            GetPlayers();
+            ClearList();
+
+            GenerateEntries().Forget();
         }
 
-        public void UpdatePlayers()
-        {
-            cachedPlayerEntries.ForEach(x => Destroy(x));
-            cachedPlayerEntries.Clear();
 
-            foreach (var networkRoomPlayer in TDGameNetworkManager.Instance.roomSlots)
+        private async UniTaskVoid GenerateEntries()
+        {
+            foreach (var id in playerList.Players)
             {
-                var player = (NetworkedLobbyPlayer) networkRoomPlayer;
-                AddPlayerEntry(player);
+                var handle = Addressables.InstantiateAsync(entryPrefab);
+                handles.Add(handle);
+
+                var entry = await handle;
+                entry.GetComponent<LobbyPlayerListEntry>().Initialize("Player" + id, true);
+                entry.SetActive(true);
+                entry.transform.SetParent(content);
+
+                entry.transform.localScale = Vector3.one;
             }
         }
 
-        void AddPlayerEntry(NetworkedLobbyPlayer player)
+        private void ClearList()
         {
-            var entryObject = Instantiate(entryPrefab, content);
-            entryObject.GetComponent<LobbyPlayerListEntry>().Initialize(player.playerData.Name, player.readyToBegin);
-
-            cachedPlayerEntries.Add(entryObject);
-        }
-
-        [Server]
-        public void GetPlayers()
-        {
-            players.Clear();
-            foreach (var player in TDGameNetworkManager.Instance.connectedPlayers.Values)
+            foreach (var handle in handles)
             {
-                players.Add(new LobbyPlayerData {Name = player.Name});
+                Addressables.ReleaseInstance(handle);
             }
+            
+            handles.Clear();
         }
-    }
-
-    public struct LobbyPlayerData
-    {
-        public string Name;
     }
 }

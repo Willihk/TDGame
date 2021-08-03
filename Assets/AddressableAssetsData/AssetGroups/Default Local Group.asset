@@ -59,6 +59,18 @@ MonoBehaviour:
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: 4a923a40b0cff1e4d9b779200a99eb74
+    m_Address: Assets/Scenes/Menus/LobbyMenu.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 036d5f5a51160c147a786ace212ae255
+    m_Address: Assets/Prefabs/Lobby/PlayerListEntry.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:

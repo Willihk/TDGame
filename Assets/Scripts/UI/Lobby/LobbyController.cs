@@ -3,6 +3,7 @@ using Mirror;
 using TDGame.Network;
 using TDGame.Network.Lobby;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TDGame.UI.Lobby
 {
@@ -13,8 +14,9 @@ namespace TDGame.UI.Lobby
         [SerializeField]
         private GameObject mainPanel;
 
+        [FormerlySerializedAs("lobbyPlayerList")]
         [SerializeField]
-        private LobbyPlayerList lobbyPlayerList;
+        private Old_LobbyPlayerList oldLobbyPlayerList;
 
         private void Start()
         {
