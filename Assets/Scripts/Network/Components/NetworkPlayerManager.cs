@@ -1,20 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Mirage;
 using Sirenix.OdinInspector;
+using TDGame.Network.Messages.Player;
 using TDGame.Network.Player;
 using UnityEngine;
-using NetworkPlayer = Mirage.NetworkPlayer;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace TDGame.Network.Components
 {
     public class NetworkPlayerManager : MonoBehaviour
     {
+        // Called on both server & client 
+        public UnityEvent<int> onPlayerRegistered;
+
+        // Called on both server & client 
+        public UnityEvent<int> onPlayerUnregistered;
+
+        private void Awake()
+        {
+            onPlayerRegistered ??= new UnityEvent<int>();
+            onPlayerUnregistered ??= new UnityEvent<int>();
+        }
+
         [SerializeField]
         private NetworkServer server;
-        private NetworkClient client;
 
         // Key is INetworkPlayer, value is id assigned to the player
-        // This is only handled on the server
+        // This is only on the server
         [Sirenix.OdinInspector.ShowInInspector]
         private Dictionary<INetworkPlayer, int> registeredPlayers = new Dictionary<INetworkPlayer, int>();
 
@@ -23,9 +39,21 @@ namespace TDGame.Network.Components
         private HashSet<INetworkPlayer> connections = new HashSet<INetworkPlayer>();
 
 
-        #region Server Specific
+        public void OnHostStarted()
+        {
+            // If in Host mode, the local client/player needs to manually be registered
+            if (server.LocalClientActive)
+            {
+                Server_OnClientConnected(server.LocalPlayer);
+                RegisterPlayer(server.LocalPlayer);
+            }
+        }
 
-        #region Setup Server
+        public void OnHostStopped()
+        {
+            Server_OnClientDisconnected(server.LocalPlayer);
+        }
+
 
         public void OnServerStarted()
         {
@@ -39,7 +67,21 @@ namespace TDGame.Network.Components
             connections.Clear();
         }
 
-        #endregion
+        // Called when a player has been registered by the server.
+        // Called on all connected clients.
+        private void Handle_PlayerRegistered(INetworkPlayer sender, PlayerRegistered message)
+        {
+            onPlayerRegistered.Invoke(message.Id);
+            Debug.Log("Player registered: " + message.Id);
+        }
+
+        // Called when a player has been unregistered/disconnected by the server.
+        // Called on all connected clients.
+        private void Handle_PlayerUnregistered(INetworkPlayer sender, PlayerUnregistered message)
+        {
+            onPlayerUnregistered.Invoke(message.Id);
+            Debug.Log("Player unregistered: " + message.Id);
+        }
 
 
         private bool RegisterPlayer(INetworkPlayer player)
@@ -51,6 +93,13 @@ namespace TDGame.Network.Components
 
             registeredPlayers.Add(player, id);
 
+            // This is sent to all other clients
+            server.SendToAll(new PlayerRegistered { Id = id });
+
+            // Needed since the server.SendToAll does not activate on the server/host
+            Handle_PlayerRegistered(server.LocalPlayer, new PlayerRegistered { Id = id });
+
+
             return true;
         }
 
@@ -59,6 +108,16 @@ namespace TDGame.Network.Components
             if (server.Active)
             {
                 player.UnregisterHandler<PlayerData>();
+
+                if (registeredPlayers.TryGetValue(player, out int id))
+                {
+                    // This is sent to all other clients
+                    server.SendToAll(new PlayerUnregistered { Id = id });
+
+                    // Needed since the server.SendToAll does not activate on the server/host
+                    Handle_PlayerRegistered(server.LocalPlayer, new PlayerRegistered { Id = id });
+                }
+
                 registeredPlayers.Remove(player);
                 connections.Remove(player);
             }
@@ -82,16 +141,23 @@ namespace TDGame.Network.Components
             RegisterPlayer(player);
         }
 
-        #endregion
 
         #region Client Specific
 
         public void Client_OnConnected(INetworkPlayer player)
         {
+            player.RegisterHandler<PlayerRegistered>(Handle_PlayerRegistered);
+            player.RegisterHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
+
             player.Send(new PlayerData()
             {
                 Name = "player"
             });
+        }
+
+        public void Client_Disconnected(INetworkPlayer player)
+        {
+            player.UnregisterHandler<PlayerRegistered>();
         }
 
         #endregion

@@ -9,6 +9,7 @@ using Sirenix.OdinInspector;
 using TDGame.Network.Messages.Scene;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace TDGame.Network.Components
@@ -24,9 +25,9 @@ namespace TDGame.Network.Components
 
         [ReadOnly]
         [Sirenix.OdinInspector.ShowInInspector]
-        private Dictionary<string, AssetReference> loadedScenes = new Dictionary<string, AssetReference>();
+        private Dictionary<string, SceneInstance> loadedScenes = new Dictionary<string, SceneInstance>();
 
-        public Dictionary<string, AssetReference> LoadedScenes => loadedScenes;
+        public Dictionary<string, SceneInstance> LoadedScenes => loadedScenes;
 
         private void Awake()
         {
@@ -52,9 +53,9 @@ namespace TDGame.Network.Components
 
         public bool UnLoadScene(string sceneID)
         {
-            if (loadedScenes.TryGetValue(sceneID, out AssetReference scene))
+            if (loadedScenes.ContainsKey(sceneID))
             {
-                UnLoadAddressableScene(scene).Forget();
+                UnLoadAddressableScene(sceneID).Forget();
                 return true;
             }
 
@@ -63,7 +64,7 @@ namespace TDGame.Network.Components
 
         public bool UnLoadAllLoadedScenes()
         {
-            var scenes = loadedScenes.Values.ToArray();
+            var scenes = loadedScenes.Keys.ToArray();
 
             foreach (var scene in scenes)
             {
@@ -73,42 +74,34 @@ namespace TDGame.Network.Components
             return true;
         }
 
-        public bool SwitchScenes(string currentSceneID, string newSceneID)
+        public async UniTask SwitchScenes(string currentSceneID, string newSceneID)
         {
             var newScene = new AssetReference(newSceneID);
-            if (loadedScenes.TryGetValue(currentSceneID, out AssetReference currentScene) &&
+            if (loadedScenes.TryGetValue(currentSceneID, out SceneInstance currentScene) &&
                 newScene.RuntimeKeyIsValid())
             {
-                currentScene.UnLoadScene().Completed += handle =>
-                {
-                    loadedScenes.Remove(currentScene.AssetGUID);
+                await UnLoadAddressableScene(currentSceneID);
 
-                    newScene.LoadSceneAsync(LoadSceneMode.Additive);
-                    loadedScenes.Add(newSceneID, newScene);
-                };
-                return true;
+                await LoadAddressableScene(newScene);
             }
-
-            return false;
         }
 
         private async UniTask LoadAddressableScene(AssetReference scene)
         {
-            await scene.LoadSceneAsync(LoadSceneMode.Additive);
-            loadedScenes.Add(scene.AssetGUID, scene);
+            var sceneInstance = await Addressables.LoadSceneAsync(scene, LoadSceneMode.Additive);
+            loadedScenes.Add(scene.AssetGUID, sceneInstance);
         }
 
-        private async UniTask UnLoadAddressableScene(AssetReference scene)
+        private async UniTask UnLoadAddressableScene(string sceneID)
         {
-            await scene.UnLoadScene();
-            loadedScenes.Remove(scene.AssetGUID);
+            Addressables.UnloadSceneAsync(loadedScenes[sceneID]);
+            loadedScenes.Remove(sceneID);
         }
 
 
         public async UniTaskVoid ReturnMainMenu()
         {
-            var scenes = loadedScenes.Values.ToArray();
-
+            var scenes = loadedScenes.Keys.ToArray();
             foreach (var scene in scenes)
             {
                 await UnLoadAddressableScene(scene);
@@ -132,7 +125,10 @@ namespace TDGame.Network.Components
 
         public void Handle_RequestLoadedScenes(INetworkPlayer sender, RequestLoadedScenes message)
         {
-            sender.Send(new LoadedScenes() { LoadedSceneIDs = loadedScenes.Keys.ToList() });
+            sender.Send(new LoadedScenes()
+            {
+                LoadedSceneIDs = loadedScenes.Keys.ToList()
+            });
         }
 
         public void Handle_LoadedScenes(INetworkPlayer sender, LoadedScenes message)
@@ -143,9 +139,9 @@ namespace TDGame.Network.Components
         private async UniTask LoadScenesFromMessage(LoadedScenes message)
         {
             List<UniTask> handles = new List<UniTask>();
-
             var toLoad = message.LoadedSceneIDs.Where(x => !loadedScenes.ContainsKey(x)).ToList();
-            var toUnLoad = loadedScenes.Where(x => !message.LoadedSceneIDs.Contains(x.Key)).Select(x => x.Value)
+
+            var toUnLoad = loadedScenes.Where(x => !message.LoadedSceneIDs.Contains(x.Key)).Select(x => x.Key)
                 .ToList();
 
             toLoad.ForEach(x =>
@@ -157,9 +153,7 @@ namespace TDGame.Network.Components
 
                 handles.Add(LoadAddressableScene(scene));
             });
-
             toUnLoad.ForEach(x => handles.Add(UnLoadAddressableScene(x)));
-
             await UniTask.WhenAll(handles);
         }
 
