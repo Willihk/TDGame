@@ -40,8 +40,9 @@ namespace TDGame.UI.Lobby
 
         private async UniTaskVoid GenerateEntries()
         {
-            foreach (var id in playerList.Players)
+            for (var i = 0; i < playerList.players.Count; i++)
             {
+                var id = playerList.players[i];
                 var handle = Addressables.InstantiateAsync(entryPrefab);
                 handles.Add(handle);
 

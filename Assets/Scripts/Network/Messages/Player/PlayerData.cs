@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TDGame.Network.Player
+namespace TDGame.Network.Messages.Player
 {
     [Serializable]
     public struct PlayerData

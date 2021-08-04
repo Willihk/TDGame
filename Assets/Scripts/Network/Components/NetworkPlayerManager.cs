@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Mirage;
 using Sirenix.OdinInspector;
@@ -7,7 +7,6 @@ using TDGame.Network.Messages.Player;
 using TDGame.Network.Player;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace TDGame.Network.Components
@@ -16,10 +15,16 @@ namespace TDGame.Network.Components
     {
         // Called on both server & client 
         public UnityEvent<int> onPlayerRegistered;
+        
+        // Called on both server & client 
+        public UnityEvent onPlayersSynced;
 
         // Called on both server & client 
         public UnityEvent<int> onPlayerUnregistered;
 
+        [SerializeField]
+        private PlayerList playerList;
+        
         private void Awake()
         {
             onPlayerRegistered ??= new UnityEvent<int>();
@@ -125,6 +130,12 @@ namespace TDGame.Network.Components
             {
                 player.RegisterHandler<PlayerData>(HandleClientRegistrationMessage);
                 connections.Add(player);
+                
+                UniTask.Create(async () =>
+                {
+                    await UniTask.Delay(100);
+                    player.Send(new SetPlayerList {Players = registeredPlayers.Values.ToList()});
+                });
             }
         }
 
@@ -143,6 +154,8 @@ namespace TDGame.Network.Components
         {
             player.RegisterHandler<PlayerRegistered>(Handle_PlayerRegistered);
             player.RegisterHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
+            
+            player.RegisterHandler<SetPlayerList>(Handle_SetPlayerList);
 
             async UniTaskVoid SendRegistrationMessage()
             {
@@ -154,6 +167,12 @@ namespace TDGame.Network.Components
             } 
            
             SendRegistrationMessage().Forget();
+        }
+
+        private void Handle_SetPlayerList(INetworkPlayer sender, SetPlayerList message)
+        {
+            playerList.players = message.Players;
+            onPlayersSynced.Invoke();
         }
 
         public void Client_Disconnected(INetworkPlayer player)

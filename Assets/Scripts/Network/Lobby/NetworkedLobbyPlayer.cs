@@ -2,6 +2,7 @@
 using UnityEngine;
 using Mirror;
 using TDGame.Events.Base;
+using TDGame.Network.Messages.Player;
 using TDGame.Network.Player;
 
 namespace TDGame.Network.Lobby

@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using TDGame.Events.Types;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TDGame.Network.Player
 {
     [CreateAssetMenu(fileName = "PlayerList", menuName = "Data/PlayerList", order = 0)]
     public class PlayerList : ScriptableObject
     {
-        public List<int> Players;
+        public List<int> players;
 
-        private void Awake()
+        private void Clear()
         {
-            Players = new List<int>();
+            players = new List<int>();
         }
 
         public void AddPlayer(int id)
         {
-            if (!Players.Contains(id))
-                Players.Add(id);
+            if (!players.Contains(id))
+                players.Add(id);
         }
 
         public void RemovePlayer(int id)
         {
-            Players.Remove(id);
+            players.Remove(id);
         }
     }
 }
