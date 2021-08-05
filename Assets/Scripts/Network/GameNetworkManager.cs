@@ -3,7 +3,7 @@ using TDGame.Network.Manager;
 
 namespace TDGame.Network
 {
-    public class GameNetworkManager : CustomNetworkManager
+    public class GameNetworkManager : Mirror_CustomNetworkManager
     {
         public static GameNetworkManager Instance;
 

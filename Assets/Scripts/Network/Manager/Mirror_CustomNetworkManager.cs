@@ -12,7 +12,7 @@ namespace TDGame.Network.Manager
     [DisallowMultipleComponent]
     [AddComponentMenu("Network/NetworkManager")]
     [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkManager.html")]
-    public class CustomNetworkManager : MonoBehaviour
+    public class Mirror_CustomNetworkManager : MonoBehaviour
     {
         /// <summary>
         /// Enumeration of methods of where to spawn player objects in multiplayer games.
@@ -199,7 +199,7 @@ namespace TDGame.Network.Manager
         /// <summary>
         /// NetworkManager singleton
         /// </summary>
-        public static CustomNetworkManager Singleton { get; private set; }
+        public static Mirror_CustomNetworkManager Singleton { get; private set; }
 
         /// <summary>
         /// Number of active player objects across all connections on the server.

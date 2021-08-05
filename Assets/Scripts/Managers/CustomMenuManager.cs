@@ -18,14 +18,27 @@ namespace TDGame.Managers
         [SerializeField]
         private AssetReference roomScene;
 
+        private void Start()
+        {
+            customSceneManager.LoadScene(mainMenuScene.AssetGUID).Forget();
+        }
+        
         public void LoadRoomScene()
         {
-            customSceneManager.SwitchScenes(mainMenuScene.AssetGUID, roomScene.AssetGUID);
+            UniTask.Create(async () =>
+            {
+                await customSceneManager.UnLoadAllLoadedScenes();
+                await customSceneManager.LoadScene(roomScene.AssetGUID);
+            });
         }
 
         public void ReturnToMainMenu()
         {
-            customSceneManager.ReturnMainMenu().Forget();
+            UniTask.Create(async () =>
+            {
+                await customSceneManager.UnLoadAllLoadedScenes();
+                await customSceneManager.LoadScene(mainMenuScene.AssetGUID);
+            });
         }
     }
 }

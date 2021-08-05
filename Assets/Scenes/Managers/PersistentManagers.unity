@@ -162,19 +162,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Levels:
-  - Name: NetworkIdentity
-    level: 2
-  - Name: ServerObjectManager
+  - Name: ClientObjectManager
     level: 2
   - Name: NetworkServer
     level: 2
   - Name: NetworkTime
     level: 2
+  - Name: ServerObjectManager
+    level: 2
   - Name: NetworkSceneManager
     level: 2
   - Name: NetworkClient
     level: 2
-  - Name: ClientObjectManager
+  - Name: NetworkIdentity
     level: 2
   - Name: OnlineOfflineScene
     level: 2
@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329b51015e4f49fc95c2ddcb2afe6252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mirageManager: {fileID: 53215446}
   client: {fileID: 53215447}
   server: {fileID: 53215448}
 --- !u!1 &107596167
