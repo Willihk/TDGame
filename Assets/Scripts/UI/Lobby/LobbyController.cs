@@ -1,4 +1,5 @@
 ﻿using System;
+using TDGame.Events.Base;
 using TDGame.Network;
 using TDGame.Network.Components;
 using UnityEngine;
@@ -9,6 +10,9 @@ namespace TDGame.UI.Lobby
     {
         private CustomNetworkManager manager;
 
+        [SerializeField]
+        private GameEvent startGameEvent;
+
         private void Start()
         {
             manager = CustomNetworkManager.Instance;
@@ -17,9 +21,9 @@ namespace TDGame.UI.Lobby
         public void OnClickStart()
         {
             // Check host/server
-            if (manager)
+            if (manager.mirageManager.Server.Active)
             {
-                
+                startGameEvent.Raise();
             }
         }
         
