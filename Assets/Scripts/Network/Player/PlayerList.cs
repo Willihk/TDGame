@@ -11,7 +11,7 @@ namespace TDGame.Network.Player
     {
         public List<int> players;
 
-        private void Clear()
+        public void Clear()
         {
             players = new List<int>();
         }

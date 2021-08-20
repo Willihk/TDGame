@@ -57,6 +57,7 @@ namespace TDGame.Network.Components
 
         public void OnServerStarted()
         {
+            playerList.Clear();
             registeredPlayers = new Dictionary<INetworkPlayer, int>();
             connections = new HashSet<INetworkPlayer>();
         }
@@ -152,6 +153,7 @@ namespace TDGame.Network.Components
 
         public void Client_OnConnected(INetworkPlayer player)
         {
+
             player.RegisterHandler<PlayerRegistered>(Handle_PlayerRegistered);
             player.RegisterHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
             
@@ -177,6 +179,8 @@ namespace TDGame.Network.Components
 
         public void Client_Disconnected(INetworkPlayer player)
         {
+            playerList.Clear();
+
             player.UnregisterHandler<PlayerRegistered>();
         }
 
