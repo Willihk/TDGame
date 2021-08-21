@@ -597,10 +597,12 @@ MonoBehaviour:
     m_AssetGUID: b63bdd3dabc942f459c5f032ae24ed52
     m_SubObjectName: 
     m_SubObjectType: 
+    m_EditorAssetChanged: 0
   roomScene:
     m_AssetGUID: 4a923a40b0cff1e4d9b779200a99eb74
     m_SubObjectName: 
     m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!114 &107596170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,8 +732,6 @@ GameObject:
   - component: {fileID: 916885007}
   - component: {fileID: 916885013}
   - component: {fileID: 916885012}
-  - component: {fileID: 916885015}
-  - component: {fileID: 916885014}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -1005,64 +1005,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &916885014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 916885006}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160f5899ffa28264e9082ac9673d1f16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _GameEvent: {fileID: 11400000, guid: 557262485e076ee4ca396a85b549c8ad, type: 2}
-  _UnityEventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 916885010}
-        m_TargetAssemblyTypeName: TDGame.Network.Components.NetworkPlayerManager,
-          TDGame
-        m_MethodName: OnHostStopped
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &916885015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 916885006}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160f5899ffa28264e9082ac9673d1f16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _GameEvent: {fileID: 11400000, guid: 35686b74b44839248a30d68776989b7c, type: 2}
-  _UnityEventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 916885010}
-        m_TargetAssemblyTypeName: TDGame.Network.Components.NetworkPlayerManager,
-          TDGame
-        m_MethodName: OnHostStarted
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &2124394704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,10 +1079,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DontDestroyOnLoad: 0
-  menuScene:
-    m_AssetGUID: b63bdd3dabc942f459c5f032ae24ed52
-    m_SubObjectName: 
-    m_SubObjectType: 
 --- !u!114 &2124394708
 MonoBehaviour:
   m_ObjectHideFlags: 0

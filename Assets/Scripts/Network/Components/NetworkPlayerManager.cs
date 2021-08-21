@@ -15,7 +15,7 @@ namespace TDGame.Network.Components
     {
         // Called on both server & client 
         public UnityEvent<int> onPlayerRegistered;
-        
+
         // Called on both server & client 
         public UnityEvent onPlayersSynced;
 
@@ -24,7 +24,7 @@ namespace TDGame.Network.Components
 
         [SerializeField]
         private PlayerList playerList;
-        
+
         private void Awake()
         {
             onPlayerRegistered ??= new UnityEvent<int>();
@@ -42,18 +42,6 @@ namespace TDGame.Network.Components
         [Sirenix.OdinInspector.ShowInInspector]
         [ReadOnly]
         private HashSet<INetworkPlayer> connections = new HashSet<INetworkPlayer>();
-
-
-        public void OnHostStarted()
-        {
-           
-        }
-
-        public void OnHostStopped()
-        {
-            
-        }
-
 
         public void OnServerStarted()
         {
@@ -131,11 +119,11 @@ namespace TDGame.Network.Components
             {
                 player.RegisterHandler<PlayerData>(HandleClientRegistrationMessage);
                 connections.Add(player);
-                
+
                 UniTask.Create(async () =>
                 {
                     await UniTask.Delay(100);
-                    player.Send(new SetPlayerList {Players = registeredPlayers.Values.ToList()});
+                    player.Send(new SetPlayerList { Players = registeredPlayers.Values.ToList() });
                 });
             }
         }
@@ -156,7 +144,7 @@ namespace TDGame.Network.Components
 
             player.RegisterHandler<PlayerRegistered>(Handle_PlayerRegistered);
             player.RegisterHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
-            
+
             player.RegisterHandler<SetPlayerList>(Handle_SetPlayerList);
 
             async UniTaskVoid SendRegistrationMessage()
@@ -166,8 +154,8 @@ namespace TDGame.Network.Components
                 {
                     Name = "player"
                 });
-            } 
-           
+            }
+
             SendRegistrationMessage().Forget();
         }
 

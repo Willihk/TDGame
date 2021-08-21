@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: d061498c76243554db4db649e830413a
     m_Address: Assets/ScriptableObjects/Data/Map/Maps/TestMap.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - MapDetails
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:
