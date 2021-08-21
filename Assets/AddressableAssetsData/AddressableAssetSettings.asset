@@ -19,21 +19,29 @@ MonoBehaviour:
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
+  m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 0
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
+  m_NonRecursiveBuilding: 1
   m_maxConcurrentWebRequests: 500
   m_ContiguousBundles: 1
+  m_ShaderBundleNaming: 0
+  m_ShaderBundleCustomNaming: 
+  m_MonoScriptBundleNaming: 0
+  m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
     m_Id: e1d369413d9f73147955cab3f06aafaa
   m_RemoteCatalogLoadPath:
     m_Id: df201dc54db694a48aaa42cfd0cdc9dd
+  m_ContentStateBuildPath: 
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: c69d0beee334321439681bed5530e6f4, type: 2}
   - {fileID: 11400000, guid: 0df22e3a275d13741a07b4c076efb0e2, type: 2}
   - {fileID: 11400000, guid: bc809d409f37e9b4b8ea97dcfd00c114, type: 2}
   - {fileID: 11400000, guid: c431414a30a23ef449a11d10e66fd33d, type: 2}
+  - {fileID: 11400000, guid: 045316bb22b6d3a4b9e3d20ee198787b, type: 2}
   - {fileID: 11400000, guid: 04b9acbb384688c44bc20269d05b5c83, type: 2}
   - {fileID: 11400000, guid: b1be57ab4a850494fbf96cfc5e437cca, type: 2}
   - {fileID: 11400000, guid: dc609b34ada365e41b0940fa10d8350b, type: 2}

@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: MapScenes
+  m_Name: MapDetails
   m_EditorClassIdentifier: 
-  m_GroupName: MapScenes
+  m_GroupName: MapDetails
   m_Data:
     m_SerializedData: []
-  m_GUID: 6c1301a850561ea45b556d8fd4681726
+  m_GUID: 44b36e7991613d54f889fd434b51462a
   m_SerializeEntries:
-  - m_GUID: 6cc96cb1db8ca8c42b40b9b8e1a086ec
-    m_Address: Assets/Scenes/Maps/TestMap.unity
+  - m_GUID: d061498c76243554db4db649e830413a
+    m_Address: Assets/ScriptableObjects/Data/Map/Maps/TestMap.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 189c2b6dc0cc32640b006ff6f0f01614, type: 2}
-    - {fileID: 11400000, guid: 22d5f0081e5567a41ba0517eb273e2c6, type: 2}
+    - {fileID: 11400000, guid: 227d39dc27b75d04e94a4c4104b8c69d, type: 2}
+    - {fileID: 11400000, guid: f34f6188f01702a4c948457d0727aac1, type: 2}
