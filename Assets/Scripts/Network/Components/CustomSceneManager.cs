@@ -14,20 +14,11 @@ namespace TDGame.Network.Components
     // TODO: Convert to non MonoBehaviour
     public class CustomSceneManager : MonoBehaviour
     {
-        [SerializeField]
-        private bool DontDestroyOnLoad = true;
-
         [ReadOnly]
         [Sirenix.OdinInspector.ShowInInspector]
         private Dictionary<string, SceneInstance> loadedScenes = new Dictionary<string, SceneInstance>();
 
         public Dictionary<string, SceneInstance> LoadedScenes => loadedScenes;
-
-        private void Awake()
-        {
-            if (DontDestroyOnLoad)
-                DontDestroyOnLoad(this);
-        }
 
         public async UniTask<bool> LoadScene(string sceneID)
         {

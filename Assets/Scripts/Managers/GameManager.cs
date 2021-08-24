@@ -5,7 +5,7 @@ namespace TDGame.Managers
     public class GameManager : MonoBehaviour
     {
 
-        public void PlayGame()
+        public void LobbyStartGame()
         {
             // Unload lobby scene
             // Load gameplay scene
