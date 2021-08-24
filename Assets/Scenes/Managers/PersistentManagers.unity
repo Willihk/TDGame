@@ -162,17 +162,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Levels:
+  - Name: ServerObjectManager
+    level: 2
+  - Name: NetworkSceneManager
+    level: 2
   - Name: ClientObjectManager
     level: 2
   - Name: NetworkServer
     level: 2
   - Name: NetworkTime
     level: 2
-  - Name: ServerObjectManager
-    level: 2
-  - Name: NetworkSceneManager
-    level: 2
   - Name: NetworkClient
+    level: 2
+  - Name: WelcomeWindow
     level: 2
   - Name: NetworkIdentity
     level: 2
@@ -183,8 +185,6 @@ MonoBehaviour:
   - Name: RemoteCallHelper
     level: 2
   - Name: NetworkBehaviour
-    level: 2
-  - Name: WelcomeWindow
     level: 2
   - Name: NetworkScenePostProcess
     level: 2

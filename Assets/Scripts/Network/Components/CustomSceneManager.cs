@@ -3,6 +3,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using Mirage;
 using Sirenix.OdinInspector;
+using TDGame.Network.Components.Interfaces;
 using TDGame.Network.Messages.Scene;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -12,7 +13,7 @@ using UnityEngine.SceneManagement;
 namespace TDGame.Network.Components
 {
     // TODO: Convert to non MonoBehaviour
-    public class CustomSceneManager : MonoBehaviour
+    public class CustomSceneManager : MonoBehaviour, ICustomSceneManager
     {
         [ReadOnly]
         [Sirenix.OdinInspector.ShowInInspector]
@@ -30,7 +31,7 @@ namespace TDGame.Network.Components
             return scene.RuntimeKeyIsValid();
         }
 
-        public async UniTask UnLoadScene(string sceneID)
+        public async UniTask UnloadScene(string sceneID)
         {
             if (loadedScenes.ContainsKey(sceneID))
             {
@@ -77,6 +78,9 @@ namespace TDGame.Network.Components
         public void Client_OnConnected(INetworkPlayer server)
         {
             server.RegisterHandler<LoadedScenes>(Handle_LoadedScenes);
+            server.RegisterHandler<LoadScene>(Handle_LoadScene);
+            server.RegisterHandler<UnloadScene>(Handle_UnloadScene);
+
             server.Send(new RequestLoadedScenes());
         }
 
@@ -112,6 +116,26 @@ namespace TDGame.Network.Components
             });
             toUnLoad.ForEach(x => handles.Add(UnLoadAddressableScene(x)));
             await UniTask.WhenAll(handles);
+        }
+
+        public UniTask<bool> LoadSceneSynced(string sceneID)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public UniTask<bool> UnloadSceneSynced(string sceneID)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        void Handle_LoadScene(INetworkPlayer sender, LoadScene message)
+        {
+            LoadScene(message.SceneID).Forget();
+        }
+
+        void Handle_UnloadScene(INetworkPlayer sender, UnloadScene message)
+        {
+            UnloadScene(message.SceneID).Forget();
         }
 
         #endregion

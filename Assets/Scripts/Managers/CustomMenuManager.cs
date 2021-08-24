@@ -1,16 +1,14 @@
-﻿using System.Linq;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using TDGame.Network.Components;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Serialization;
 
 namespace TDGame.Managers
 {
     public class CustomMenuManager : MonoBehaviour
     {
         [SerializeField]
-        private CustomSceneManager customSceneManager;
+        public CustomSceneManager customSceneManager;
 
         [SerializeField]
         private AssetReference mainMenuScene;
