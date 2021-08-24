@@ -29,7 +29,7 @@ namespace TDGame.UI.Lobby
         
         public void OnClickReady()
         {
-            
+            startGameEvent.Raise();
         }
         
         public void OnClickLeave()

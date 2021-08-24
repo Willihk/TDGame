@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TDGame.Map.Data;
 using UnityEngine;
 
 namespace TDGame.Settings
 {
+    [CreateAssetMenu(fileName = "LobbySettings", menuName = "Data/Settings/LobbySettings", order = 0)]
     public class LobbySettings : ScriptableObject
     {
+        public MapDetails selectedMap;
     }
 }

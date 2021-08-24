@@ -6370,6 +6370,7 @@ MonoBehaviour:
     m_AssetGUID: 036d5f5a51160c147a786ace212ae255
     m_SubObjectName: 
     m_SubObjectType: 
+    m_EditorAssetChanged: 0
   content: {fileID: 1212269797}
 --- !u!114 &891730668
 MonoBehaviour:
@@ -10496,6 +10497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 863bec4d450a464e9db208bfbaa3f547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startGameEvent: {fileID: 11400000, guid: 53f6700a3d42d9446b2227890569d916, type: 2}
 --- !u!4 &1695353916
 Transform:
   m_ObjectHideFlags: 0
@@ -13078,8 +13080,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 516362331}
   m_HandleRect: {fileID: 516362329}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.9999997
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
