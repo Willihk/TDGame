@@ -21,6 +21,8 @@ namespace TDGame.Network.Components
 
         public Dictionary<string, SceneInstance> LoadedScenes => loadedScenes;
 
+        private NetworkServer networkServer;
+
         public async UniTask<bool> LoadScene(string sceneID)
         {
             var scene = new AssetReference(sceneID);
@@ -120,12 +122,16 @@ namespace TDGame.Network.Components
 
         public UniTask<bool> LoadSceneSynced(string sceneID)
         {
-            throw new System.NotImplementedException();
+            networkServer.SendToAll(new LoadScene { SceneID = sceneID });
+
+            return UniTask.FromResult(true);
         }
 
         public UniTask<bool> UnloadSceneSynced(string sceneID)
         {
-            throw new System.NotImplementedException();
+            networkServer.SendToAll(new UnloadScene { SceneID = sceneID });
+
+            return UniTask.FromResult(true);
         }
 
         void Handle_LoadScene(INetworkPlayer sender, LoadScene message)
