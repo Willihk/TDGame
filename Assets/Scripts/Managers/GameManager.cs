@@ -7,6 +7,7 @@ namespace TDGame.Managers
 
         public void LobbyStartGame()
         {
+            Debug.Log("lobby start game");
             // Unload lobby scene
             // Load gameplay scene
             // Load map scene
