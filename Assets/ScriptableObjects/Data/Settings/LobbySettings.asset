@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0182af919f156d847b14b5bac914c853, type: 3}
   m_Name: LobbySettings
   m_EditorClassIdentifier: 
-  selectedMap: {fileID: 0}
+  selectedMap: {fileID: 11400000, guid: d061498c76243554db4db649e830413a, type: 2}

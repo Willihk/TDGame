@@ -21,6 +21,7 @@ namespace TDGame.Network.Components
 
         public Dictionary<string, SceneInstance> LoadedScenes => loadedScenes;
 
+        [SerializeField]
         private NetworkServer networkServer;
 
         public async UniTask<bool> LoadScene(string sceneID)
