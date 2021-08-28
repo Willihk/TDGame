@@ -39,5 +39,12 @@ namespace TDGame.Network.Components.Interfaces
         /// <param name="sceneID">AssetID of the scene</param>
         /// <returns></returns>
         public UniTask<bool> UnloadSceneSynced(string sceneID);
+
+        /// <summary>
+        ///  Unloads all scenes on all clients and on the server.
+        /// </summary>
+        /// <returns></returns>
+        public UniTask UnLoadAllLoadedScenesSynced();
+
     }
 }

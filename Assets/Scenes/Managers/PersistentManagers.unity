@@ -732,6 +732,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneManager: {fileID: 2124394707}
+  gameplayScene:
+    m_AssetGUID: 127901727ace7a44d8d31f7d9eed3f7a
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   lobbySettings: {fileID: 11400000, guid: 300fadc30049b6a4391c0325951be476, type: 2}
 --- !u!114 &615863114
 MonoBehaviour:

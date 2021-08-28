@@ -1,6 +1,7 @@
 ﻿using TDGame.Network.Components;
 using TDGame.Settings;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace TDGame.Managers
 {
@@ -10,13 +11,21 @@ namespace TDGame.Managers
         private CustomSceneManager sceneManager;
 
         [SerializeField]
+        AssetReference gameplayScene;
+
+        [SerializeField]
         LobbySettings lobbySettings;
 
-        public void LobbyStartGame()
+        public async void LobbyStartGame()
         {
             Debug.Log("lobby start game");
 
-            sceneManager.LoadSceneSynced(lobbySettings.selectedMap.MapReference.AssetGUID);
+            await sceneManager.UnLoadAllLoadedScenesSynced();
+
+            await sceneManager.LoadSceneSynced(gameplayScene.AssetGUID);
+
+            await sceneManager.LoadSceneSynced(lobbySettings.selectedMap.MapReference.AssetGUID);
+
             // Unload lobby scene
             // Load gameplay scene
             // Load map scene

@@ -53,6 +53,8 @@ namespace TDGame.Network.Components
             }
         }
 
+
+
         private async UniTask LoadAddressableScene(AssetReference scene)
         {
             if (loadedScenes.ContainsKey(scene.AssetGUID))
@@ -138,11 +140,22 @@ namespace TDGame.Network.Components
         {
             if (!networkServer.LocalClientActive)
             {
-                await LoadScene(sceneID);
+                await UnloadScene(sceneID);
             }
             networkServer.SendToAll(new UnloadScene { SceneID = sceneID });
 
             return true;
+        }
+
+        public async UniTask UnLoadAllLoadedScenesSynced()
+        {
+            // TODO: Create message to unload all scenes.
+            var scenes = loadedScenes.Keys.ToArray();
+
+            foreach (var scene in scenes)
+            {
+                await UnloadSceneSynced(scene);
+            }
         }
 
         void Handle_LoadScene(INetworkPlayer sender, LoadScene message)
