@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Mirage;
 using Sirenix.OdinInspector;
@@ -121,18 +122,27 @@ namespace TDGame.Network.Components
             await UniTask.WhenAll(handles);
         }
 
-        public UniTask<bool> LoadSceneSynced(string sceneID)
+        public async UniTask<bool> LoadSceneSynced(string sceneID)
         {
+            if (!networkServer.LocalClientActive)
+            {
+                await LoadScene(sceneID);
+            }
+
             networkServer.SendToAll(new LoadScene { SceneID = sceneID });
 
-            return UniTask.FromResult(true);
+            return true;
         }
 
-        public UniTask<bool> UnloadSceneSynced(string sceneID)
+        public async UniTask<bool> UnloadSceneSynced(string sceneID)
         {
+            if (!networkServer.LocalClientActive)
+            {
+                await LoadScene(sceneID);
+            }
             networkServer.SendToAll(new UnloadScene { SceneID = sceneID });
 
-            return UniTask.FromResult(true);
+            return true;
         }
 
         void Handle_LoadScene(INetworkPlayer sender, LoadScene message)
