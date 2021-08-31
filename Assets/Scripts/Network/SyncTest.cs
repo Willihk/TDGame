@@ -12,10 +12,7 @@ namespace TDGame.Assets.Scripts.Network
 
         private void Awake()
         {
-            if (Server.Active)
-            {
-                player = "random: " + Random.Range(0, int.MaxValue);
-            }
+            player = "random: " + Random.Range(0, int.MaxValue);
         }
     }
 }
