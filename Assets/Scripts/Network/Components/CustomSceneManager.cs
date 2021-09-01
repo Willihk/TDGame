@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Mirage;
+using MLAPI;
+using MLAPI.Messaging;
+using MLAPI.Serialization.Pooled;
 using Sirenix.OdinInspector;
 using TDGame.Network.Components.Interfaces;
 using TDGame.Network.Messages.Scene;
@@ -22,8 +25,16 @@ namespace TDGame.Network.Components
 
         public Dictionary<string, SceneInstance> LoadedScenes => loadedScenes;
 
-        [SerializeField]
-        private NetworkServer networkServer;
+        //[SerializeField]
+        //private networkmanager networkServer;
+
+        private NetworkManager networkManager;
+
+        void awake()
+        {
+            CustomMessagingManager.RegisterNamedMessageHandler(nameof(SyncLoadedScenes), Handle_SyncLoadedScenes);
+
+        }
 
         public async UniTask<bool> LoadScene(string sceneID)
         {
@@ -83,27 +94,32 @@ namespace TDGame.Network.Components
 
         public void Client_OnConnected(INetworkPlayer server)
         {
-            server.RegisterHandler<LoadedScenes>(Handle_LoadedScenes);
+            server.RegisterHandler<SyncLoadedScenes>(Handle_SyncLoadedScenes);
             server.RegisterHandler<LoadScene>(Handle_LoadScene);
             server.RegisterHandler<UnloadScene>(Handle_UnloadScene);
 
             server.Send(new RequestLoadedScenes());
         }
 
-        private void Handle_RequestLoadedScenes(INetworkPlayer sender, RequestLoadedScenes message)
+        private void Handle_RequestLoadedScenes(ulong sender, RequestLoadedScenes message)
         {
-            sender.Send(new LoadedScenes()
+            CustomMessagingManager.SendNamedMessage(nameof(SyncLoadedScenes), sender, )
+            sender.Send(new SyncLoadedScenes()
             {
                 LoadedSceneIDs = loadedScenes.Keys.ToList()
             });
         }
 
-        private void Handle_LoadedScenes(INetworkPlayer sender, LoadedScenes message)
+        private void Handle_SyncLoadedScenes(ulong sender, Stream stream)
         {
-            LoadScenesFromMessage(message).Forget();
+            using (PooledNetworkReader reader = PooledNetworkReader.Get(stream))
+            {
+                var message = (SyncLoadedScenes)reader.ReadObjectPacked(typeof(SyncLoadedScenes));
+                LoadScenesFromMessage(message).Forget();
+            }
         }
 
-        private async UniTask LoadScenesFromMessage(LoadedScenes message)
+        private async UniTask LoadScenesFromMessage(SyncLoadedScenes message)
         {
             var handles = new List<UniTask>();
             var toLoad = message.LoadedSceneIDs.Where(x => !loadedScenes.ContainsKey(x)).ToList();

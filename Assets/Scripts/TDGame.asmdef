@@ -2,7 +2,6 @@
     "name": "TDGame",
     "rootNamespace": "TDGame",
     "references": [
-        "GUID:30817c1a0e6d646d99c048fc403f5979",
         "GUID:d8b63aba1907145bea998dd612889d6b",
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:e0cd26848372d4e5c891c569017e11f1",
@@ -16,7 +15,9 @@
         "GUID:72872094b21c16e48b631b2224833d49",
         "GUID:149faa7a126ed4645a03879ae2b000ff",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:593a5b492d29ac6448b1ebf7f035ef33"
+        "GUID:593a5b492d29ac6448b1ebf7f035ef33",
+        "GUID:1491147abca9d7d4bb7105af628b223e",
+        "GUID:9f4f5bf029cebb64f983b7bdc29f62a1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
