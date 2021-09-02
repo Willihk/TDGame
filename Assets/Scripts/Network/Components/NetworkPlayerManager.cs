@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Mirage;
+using MessagePack;
+using MLAPI;
 using Sirenix.OdinInspector;
 using TDGame.Network.Messages.Player;
 using TDGame.Network.Player;
@@ -32,22 +34,33 @@ namespace TDGame.Network.Components
         }
 
         [SerializeField]
-        private NetworkServer server;
+        private NetworkManager networkManager;
 
         // Key is INetworkPlayer, value is id assigned to the player
         // This is only on the server
         [Sirenix.OdinInspector.ShowInInspector]
-        private Dictionary<INetworkPlayer, int> registeredPlayers = new Dictionary<INetworkPlayer, int>();
+        private Dictionary<ulong, int> registeredPlayers = new Dictionary<ulong, int>();
 
         [Sirenix.OdinInspector.ShowInInspector]
         [ReadOnly]
-        private HashSet<INetworkPlayer> connections = new HashSet<INetworkPlayer>();
+        private HashSet<ulong> connections = new HashSet<ulong>();
+
+
+        void awake()
+        {
+            TDGameMessagingManager.RegisterNamedMessageHandler<RegisterPlayerData>(Handle_ClientRegistrationMessage);
+
+            TDGameMessagingManager.RegisterNamedMessageHandler<PlayerRegistered>(Handle_PlayerRegistered);
+            TDGameMessagingManager.RegisterNamedMessageHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
+            TDGameMessagingManager.RegisterNamedMessageHandler<SetPlayerList>(Handle_SetPlayerList);
+
+        }
 
         public void OnServerStarted()
         {
             playerList.Clear();
-            registeredPlayers = new Dictionary<INetworkPlayer, int>();
-            connections = new HashSet<INetworkPlayer>();
+            registeredPlayers = new Dictionary<ulong, int>();
+            connections = new HashSet<ulong>();
         }
 
         public void OnServerStopped()
@@ -56,24 +69,27 @@ namespace TDGame.Network.Components
             connections.Clear();
         }
 
+
         // Called when a player has been registered by the server.
         // Called on all connected clients.
-        private void Handle_PlayerRegistered(INetworkPlayer sender, PlayerRegistered message)
+        private void Handle_PlayerRegistered(ulong player, Stream stream)
         {
+            var message = MessagePackSerializer.Deserialize<PlayerRegistered>(stream);
             onPlayerRegistered.Invoke(message.Id);
             Debug.Log("Player registered: " + message.Id);
         }
 
         // Called when a player has been unregistered/disconnected by the server.
         // Called on all connected clients.
-        private void Handle_PlayerUnregistered(INetworkPlayer sender, PlayerUnregistered message)
+        private void Handle_PlayerUnregistered(ulong player, Stream stream)
         {
+            var message = MessagePackSerializer.Deserialize<PlayerUnregistered>(stream);
             onPlayerUnregistered.Invoke(message.Id);
             Debug.Log("Player unregistered: " + message.Id);
         }
 
 
-        private bool RegisterPlayer(INetworkPlayer player)
+        private bool RegisterPlayer(ulong player)
         {
             if (registeredPlayers.ContainsKey(player))
                 return false;
@@ -83,28 +99,29 @@ namespace TDGame.Network.Components
             registeredPlayers.Add(player, id);
 
             // This is sent to all other clients
-            server.SendToAll(new PlayerRegistered { Id = id });
+            TDGameMessagingManager.SendNamedMessageToAll(new PlayerRegistered { Id = id });
 
             // Needed since the server.SendToAll does not activate on the server/host
-            Handle_PlayerRegistered(server.LocalPlayer, new PlayerRegistered { Id = id });
+            MemoryStream data = new MemoryStream(MessagePackSerializer.Serialize(new PlayerRegistered { Id = id }));
+            Handle_PlayerRegistered(networkManager.LocalClientId, data);
 
 
             return true;
         }
 
-        public void Server_OnClientDisconnected(INetworkPlayer player)
+        public void Server_OnClientDisconnected(ulong player)
         {
-            if (server.Active)
+            if (networkManager.IsServer)
             {
-                player.UnregisterHandler<PlayerData>();
 
                 if (registeredPlayers.TryGetValue(player, out int id))
                 {
                     // This is sent to all other clients
-                    server.SendToAll(new PlayerUnregistered { Id = id });
+                    TDGameMessagingManager.SendNamedMessageToAll(new PlayerUnregistered { Id = id });
 
                     // Needed since the server.SendToAll does not activate on the server/host
-                    Handle_PlayerRegistered(server.LocalPlayer, new PlayerRegistered { Id = id });
+                    MemoryStream data = new MemoryStream(MessagePackSerializer.Serialize(new PlayerRegistered { Id = id }));
+                    Handle_PlayerRegistered(networkManager.LocalClientId, data);
                 }
 
                 registeredPlayers.Remove(player);
@@ -112,25 +129,24 @@ namespace TDGame.Network.Components
             }
         }
 
-        public void Server_OnClientConnected(INetworkPlayer player)
+        public void Server_OnClientConnected(ulong player)
         {
             // Only run on server
-            if (server.Active)
+            if (networkManager.IsServer)
             {
-                player.RegisterHandler<PlayerData>(HandleClientRegistrationMessage);
                 connections.Add(player);
 
                 UniTask.Create(async () =>
                 {
                     await UniTask.Delay(100);
-                    player.Send(new SetPlayerList { Players = registeredPlayers.Values.ToList() });
+                    TDGameMessagingManager.SendNamedMessage(player, new SetPlayerList { Players = registeredPlayers.Values.ToList() });
                 });
             }
         }
 
-        public void HandleClientRegistrationMessage(INetworkPlayer player, PlayerData data)
+        public void Handle_ClientRegistrationMessage(ulong player, Stream stream)
         {
-            if (!server.Active)
+            if (!networkManager.IsServer)
                 return;
 
             RegisterPlayer(player);
@@ -139,37 +155,27 @@ namespace TDGame.Network.Components
 
         #region Client Specific
 
-        public void Client_OnConnected(INetworkPlayer player)
+        public void Client_OnConnected(ulong player)
         {
-
-            player.RegisterHandler<PlayerRegistered>(Handle_PlayerRegistered);
-            player.RegisterHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
-
-            player.RegisterHandler<SetPlayerList>(Handle_SetPlayerList);
-
             async UniTaskVoid SendRegistrationMessage()
             {
                 await UniTask.Delay(100);
-                player.Send(new PlayerData()
-                {
-                    Name = "player"
-                });
+                TDGameMessagingManager.SendNamedMessage(player, new RegisterPlayerData() { Name = "player" });
             }
 
             SendRegistrationMessage().Forget();
         }
 
-        private void Handle_SetPlayerList(INetworkPlayer sender, SetPlayerList message)
+        private void Handle_SetPlayerList(ulong sender, Stream stream)
         {
+            var message = MessagePackSerializer.Deserialize<SetPlayerList>(stream);
             playerList.players = message.Players;
             onPlayersSynced.Invoke();
         }
 
-        public void Client_Disconnected(INetworkPlayer player)
+        public void Client_Disconnected()
         {
             playerList.Clear();
-
-            player.UnregisterHandler<PlayerRegistered>();
         }
 
         #endregion

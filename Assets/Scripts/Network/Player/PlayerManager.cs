@@ -10,7 +10,7 @@ namespace TDGame.Network.Player
     {
         public static PlayerManager Instance;
 
-        public readonly SyncList<PlayerData> PlayerDatas = new SyncList<PlayerData>();
+        public readonly SyncList<RegisterPlayerData> PlayerDatas = new SyncList<RegisterPlayerData>();
         
         [SerializeField] private GameEvent clientPlayersChangedEvent;
 
@@ -42,7 +42,7 @@ namespace TDGame.Network.Player
             base.OnStartClient();
             PlayerDatas.Callback += (op, index, item, newItem) =>
             {
-                if (op == SyncList<PlayerData>.Operation.OP_CLEAR)
+                if (op == SyncList<RegisterPlayerData>.Operation.OP_CLEAR)
                     return;
                 
                 Debug.Log("Player data changed");

@@ -15,7 +15,7 @@ namespace TDGame.Network.Lobby
         public int id;
 
         [SyncVar]
-        public PlayerData playerData;
+        public RegisterPlayerData playerData;
         
         [SerializeField]
         private GameEvent lobbyPlayersChangedEvent;
@@ -45,7 +45,7 @@ namespace TDGame.Network.Lobby
             lobbyPlayersChangedEvent.Raise();
         }
 
-        public void Setup(PlayerData playerData)
+        public void Setup(RegisterPlayerData playerData)
         {
             id = playerData.Id;
             this.playerData = playerData;

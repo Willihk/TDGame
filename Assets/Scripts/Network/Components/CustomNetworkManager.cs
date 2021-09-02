@@ -12,16 +12,15 @@ namespace TDGame.Network.Components
         public static CustomNetworkManager Instance { get; private set; }
 
         [SerializeField]
-        NetworkManager networkManager;
+        public NetworkManager networkManager;
 
 
-        UnityEvent<ulong> Client_OnClientConnected;
-        UnityEvent<ulong> Client_OnClientDisconnected;
+        public UnityEvent<ulong> Client_OnClientConnected;
+        public UnityEvent<ulong> Client_OnClientDisconnected;
 
-
-        UnityEvent onServerStarted;
-        UnityEvent<ulong> Server_OnClientConnected;
-        UnityEvent<ulong> Server_OnClientDisconnected;
+        public UnityEvent onServerStarted;
+        public UnityEvent<ulong> Server_OnClientConnected;
+        public UnityEvent<ulong> Server_OnClientDisconnected;
 
 
         private void Awake()
@@ -40,19 +39,17 @@ namespace TDGame.Network.Components
         private void OnClientDisconnectCallback(ulong id)
         {
             if (networkManager.IsServer)
-            {
                 Server_OnClientDisconnected.Invoke(id);
-            }
-            Client_OnClientDisconnected.Invoke(id);
+            if (networkManager.IsClient)
+                Client_OnClientDisconnected.Invoke(id);
         }
 
         private void OnClientConnectedCallback(ulong id)
         {
             if (networkManager.IsServer)
-            {
                 Server_OnClientConnected.Invoke(id);
-            }
-            Client_OnClientConnected.Invoke(id);
+            if (networkManager.IsClient)
+                Client_OnClientConnected.Invoke(id);
         }
 
         private void OnServerStarted()

@@ -17,10 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: cfa72f59cdcd9094191ad0a870b4bc3c
   m_SerializeEntries:
-  - m_GUID: 392593a0b41306143a37e86a99f308b7
-    m_Address: Assets/ScriptableObjects/EventChannels/Network/Client/Authenticated.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 6bc1933d8d9e6174aa4774e8991e3b0c
     m_Address: Assets/ScriptableObjects/EventChannels/Network/Client/Connected.asset
     m_ReadOnly: 0
@@ -31,14 +27,6 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: efbb15a470f2c5243bbfdfee96c1e58e
     m_Address: Assets/ScriptableObjects/EventChannels/Network/Client/Started.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 35686b74b44839248a30d68776989b7c
-    m_Address: Assets/ScriptableObjects/EventChannels/Network/Host/Started.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 557262485e076ee4ca396a85b549c8ad
-    m_Address: Assets/ScriptableObjects/EventChannels/Network/Host/Stopped.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: c685fb54618fff6489cee0cf99dc52b6
@@ -71,6 +59,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 300fadc30049b6a4391c0325951be476
     m_Address: Assets/ScriptableObjects/Data/Settings/LobbySettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4e02048f561ef5b42be7d72685d227b8
+    m_Address: Assets/UI/MainMenu/MainMenuGraph.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

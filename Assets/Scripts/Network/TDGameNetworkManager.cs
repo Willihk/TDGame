@@ -33,13 +33,13 @@ namespace TDGame.Network
         [SerializeField]
         private GameObjectList networkedEnemyList;
 
-        public Dictionary<int, PlayerData> connectedPlayers = new Dictionary<int, PlayerData>();
+        public Dictionary<int, RegisterPlayerData> connectedPlayers = new Dictionary<int, RegisterPlayerData>();
 
         public Dictionary<NetworkConnection, int> connectionRelations = new Dictionary<NetworkConnection, int>();
 
         public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
         {
-            var playerData = new PlayerData
+            var playerData = new RegisterPlayerData
                 {Name = "Name " + connectionRelations[conn], Id = connectionRelations[conn]};
 
             GameObject roomObject = Instantiate(roomPlayerPrefab.gameObject);

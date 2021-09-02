@@ -1,4 +1,6 @@
-﻿namespace TDGame.Network.Messages.Scene
+﻿using MessagePack;
+
+namespace TDGame.Network.Messages.Scene
 {
     /// <summary>
     /// Sent from client to the server.
@@ -6,5 +8,6 @@
     ///
     /// Server should send a separate "LoadedScenes" message
     /// </summary>
+    [MessagePackObject]
     public struct RequestLoadedScenes { }
 }

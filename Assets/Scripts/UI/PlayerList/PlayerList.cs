@@ -26,7 +26,7 @@ namespace TDGame.UI.PlayerList
             cachedPlayerEntries.ForEach(x => Destroy(x));
             cachedPlayerEntries.Clear();
 
-            foreach (PlayerData player in PlayerManager.Instance.PlayerDatas)
+            foreach (RegisterPlayerData player in PlayerManager.Instance.PlayerDatas)
             {
                 AddPlayerEntry(player.Name);
             }

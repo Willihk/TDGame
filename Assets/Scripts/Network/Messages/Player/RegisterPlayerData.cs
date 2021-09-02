@@ -1,14 +1,15 @@
 ﻿using MessagePack;
 using System;
-using System.Collections.Generic;
 
 namespace TDGame.Network.Messages.Player
 {
     [Serializable]
     [MessagePackObject]
-    public struct SetPlayerList
+    public struct RegisterPlayerData
     {
         [Key(0)]
-        public List<int> Players;
+        public string Name;
+        [Key(1)]
+        public int Id;
     }
 }

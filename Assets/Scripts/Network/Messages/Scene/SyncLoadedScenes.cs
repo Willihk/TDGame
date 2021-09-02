@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MessagePack;
+using System.Collections.Generic;
 
 namespace TDGame.Network.Messages.Scene
 {
@@ -7,8 +8,10 @@ namespace TDGame.Network.Messages.Scene
     /// Contains information on which scenes are loaded on the server.
     /// The client will then make sure the given scenes are loaded.
     /// </summary>
+    [MessagePackObject]
     public struct SyncLoadedScenes
     {
+        [Key(0)]
         public List<string> LoadedSceneIDs;
     }
 }

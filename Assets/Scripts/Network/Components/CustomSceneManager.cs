@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using MessagePack;
 using MLAPI;
 using MLAPI.Messaging;
-using MLAPI.Serialization.Pooled;
 using Sirenix.OdinInspector;
 using TDGame.Network.Components.Interfaces;
 using TDGame.Network.Messages.Scene;
@@ -27,13 +26,15 @@ namespace TDGame.Network.Components
 
         //[SerializeField]
         //private networkmanager networkServer;
-
+        [SerializeField]
         private NetworkManager networkManager;
 
         void awake()
         {
-            CustomMessagingManager.RegisterNamedMessageHandler(nameof(SyncLoadedScenes), Handle_SyncLoadedScenes);
-
+            TDGameMessagingManager.RegisterNamedMessageHandler<SyncLoadedScenes>(Handle_SyncLoadedScenes);
+            TDGameMessagingManager.RegisterNamedMessageHandler<LoadScene>(Handle_LoadScene);
+            TDGameMessagingManager.RegisterNamedMessageHandler<UnloadScene>(Handle_UnloadScene);
+            TDGameMessagingManager.RegisterNamedMessageHandler<RequestLoadedScenes>(Handle_RequestLoadedScenes);
         }
 
         public async UniTask<bool> LoadScene(string sceneID)
@@ -87,36 +88,27 @@ namespace TDGame.Network.Components
 
         #region Scene syncing
 
-        public void Server_OnClientConnected(INetworkPlayer player)
+        public void Client_OnConnected(ulong id)
         {
-            player.RegisterHandler<RequestLoadedScenes>(Handle_RequestLoadedScenes);
+            TDGameMessagingManager.SendNamedMessage(id, new RequestLoadedScenes());
         }
 
-        public void Client_OnConnected(INetworkPlayer server)
+        private void Handle_RequestLoadedScenes(ulong sender, Stream stream)
         {
-            server.RegisterHandler<SyncLoadedScenes>(Handle_SyncLoadedScenes);
-            server.RegisterHandler<LoadScene>(Handle_LoadScene);
-            server.RegisterHandler<UnloadScene>(Handle_UnloadScene);
-
-            server.Send(new RequestLoadedScenes());
-        }
-
-        private void Handle_RequestLoadedScenes(ulong sender, RequestLoadedScenes message)
-        {
-            CustomMessagingManager.SendNamedMessage(nameof(SyncLoadedScenes), sender, )
-            sender.Send(new SyncLoadedScenes()
+            var respone = new SyncLoadedScenes()
             {
                 LoadedSceneIDs = loadedScenes.Keys.ToList()
-            });
+            };
+
+            MemoryStream data = new MemoryStream(MessagePackSerializer.Serialize(respone));
+            CustomMessagingManager.SendNamedMessage(nameof(SyncLoadedScenes), sender, data);
         }
 
         private void Handle_SyncLoadedScenes(ulong sender, Stream stream)
         {
-            using (PooledNetworkReader reader = PooledNetworkReader.Get(stream))
-            {
-                var message = (SyncLoadedScenes)reader.ReadObjectPacked(typeof(SyncLoadedScenes));
-                LoadScenesFromMessage(message).Forget();
-            }
+            var message = MessagePackSerializer.Deserialize<SyncLoadedScenes>(stream);
+
+            LoadScenesFromMessage(message).Forget();
         }
 
         private async UniTask LoadScenesFromMessage(SyncLoadedScenes message)
@@ -142,23 +134,33 @@ namespace TDGame.Network.Components
 
         public async UniTask<bool> LoadSceneSynced(string sceneID)
         {
-            if (!networkServer.LocalClientActive)
+            if (networkManager.IsServer && !networkManager.IsHost)
             {
+
                 await LoadScene(sceneID);
             }
 
-            networkServer.SendToAll(new LoadScene { SceneID = sceneID });
+            var message = new UnloadScene { SceneID = sceneID };
+
+
+            MemoryStream data = new MemoryStream(MessagePackSerializer.Serialize(message));
+            TDGameMessagingManager.SendNamedMessageToAll(nameof(UnloadScene), data);
 
             return true;
         }
 
         public async UniTask<bool> UnloadSceneSynced(string sceneID)
         {
-            if (!networkServer.LocalClientActive)
+            if (networkManager.IsServer && !networkManager.IsHost)
             {
                 await UnloadScene(sceneID);
             }
-            networkServer.SendToAll(new UnloadScene { SceneID = sceneID });
+
+            var message = new UnloadScene { SceneID = sceneID };
+
+            
+            MemoryStream data = new MemoryStream(MessagePackSerializer.Serialize(message));
+            TDGameMessagingManager.SendNamedMessageToAll(nameof(UnloadScene), data);
 
             return true;
         }
@@ -174,13 +176,15 @@ namespace TDGame.Network.Components
             }
         }
 
-        void Handle_LoadScene(INetworkPlayer sender, LoadScene message)
+        void Handle_LoadScene(ulong sender, Stream stream)
         {
+            var message = MessagePackSerializer.Deserialize<LoadScene>(stream);
             LoadScene(message.SceneID).Forget();
         }
 
-        void Handle_UnloadScene(INetworkPlayer sender, UnloadScene message)
+        void Handle_UnloadScene(ulong sender, Stream stream)
         {
+            var message = MessagePackSerializer.Deserialize<UnloadScene>(stream);
             UnloadScene(message.SceneID).Forget();
         }
 
