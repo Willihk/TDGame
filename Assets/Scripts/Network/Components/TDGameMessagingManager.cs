@@ -18,13 +18,13 @@ namespace TDGame.Network.Components
 
         public static void RegisterNamedMessageHandler<T>(HandleNamedMessageDelegate callback)
         {
-            CustomMessagingManager.RegisterNamedMessageHandler(nameof(T), callback);
+            CustomMessagingManager.RegisterNamedMessageHandler(typeof(T).Name, callback);
         }
 
         public static void SendNamedMessage<T>(ulong clientId, T message, NetworkChannel networkChannel = NetworkChannel.Internal)
         {
             MemoryStream data = new MemoryStream(MessagePackSerializer.Serialize(message));
-            CustomMessagingManager.SendNamedMessage(nameof(T), clientId, data, networkChannel);
+            CustomMessagingManager.SendNamedMessage(typeof(T).Name, clientId, data, networkChannel);
         }
 
         public static void SendNamedMessage(string name, ulong clientId, Stream stream, NetworkChannel networkChannel = NetworkChannel.Internal)
@@ -34,7 +34,7 @@ namespace TDGame.Network.Components
         public static void SendNamedMessageToAll<T>(T message, NetworkChannel networkChannel = NetworkChannel.Internal)
         {
             MemoryStream data = new MemoryStream(MessagePackSerializer.Serialize(message));
-            SendNamedMessageToAll(nameof(T), data, networkChannel);
+            SendNamedMessageToAll(typeof(T).Name, data, networkChannel);
         }
         public static void SendNamedMessageToAll(string name, Stream stream, NetworkChannel networkChannel = NetworkChannel.Internal)
         {

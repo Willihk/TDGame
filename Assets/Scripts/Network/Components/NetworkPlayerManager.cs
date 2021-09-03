@@ -46,14 +46,13 @@ namespace TDGame.Network.Components
         private HashSet<ulong> connections = new HashSet<ulong>();
 
 
-        void awake()
+        void Start()
         {
             TDGameMessagingManager.RegisterNamedMessageHandler<RegisterPlayerData>(Handle_ClientRegistrationMessage);
 
             TDGameMessagingManager.RegisterNamedMessageHandler<PlayerRegistered>(Handle_PlayerRegistered);
             TDGameMessagingManager.RegisterNamedMessageHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
             TDGameMessagingManager.RegisterNamedMessageHandler<SetPlayerList>(Handle_SetPlayerList);
-
         }
 
         public void OnServerStarted()
@@ -129,7 +128,7 @@ namespace TDGame.Network.Components
             }
         }
 
-        public void Server_OnClientConnected(ulong player)
+        public void Server_OnClientConnected(ulong player) 
         {
             // Only run on server
             if (networkManager.IsServer)
@@ -160,7 +159,7 @@ namespace TDGame.Network.Components
             async UniTaskVoid SendRegistrationMessage()
             {
                 await UniTask.Delay(100);
-                TDGameMessagingManager.SendNamedMessage(player, new RegisterPlayerData() { Name = "player" });
+                TDGameMessagingManager.SendNamedMessage(0, new RegisterPlayerData() { Name = "player" });
             }
 
             SendRegistrationMessage().Forget();

@@ -29,8 +29,10 @@ namespace TDGame.Network.Components
         [SerializeField]
         private NetworkManager networkManager;
 
-        void awake()
+        void Start()
         {
+            if (networkManager == null)
+                return;
             TDGameMessagingManager.RegisterNamedMessageHandler<SyncLoadedScenes>(Handle_SyncLoadedScenes);
             TDGameMessagingManager.RegisterNamedMessageHandler<LoadScene>(Handle_LoadScene);
             TDGameMessagingManager.RegisterNamedMessageHandler<UnloadScene>(Handle_UnloadScene);

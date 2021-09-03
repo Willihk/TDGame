@@ -40,16 +40,16 @@ namespace TDGame.Network.Components
         {
             if (networkManager.IsServer)
                 Server_OnClientDisconnected.Invoke(id);
-            if (networkManager.IsClient)
-                Client_OnClientDisconnected.Invoke(id);
+            if (networkManager.IsClient && !networkManager.IsServer)
+                Client_OnClientDisconnected.Invoke(0);
         }
 
         private void OnClientConnectedCallback(ulong id)
         {
             if (networkManager.IsServer)
                 Server_OnClientConnected.Invoke(id);
-            if (networkManager.IsClient)
-                Client_OnClientConnected.Invoke(id);
+            if (networkManager.IsClient && !networkManager.IsServer)
+                Client_OnClientConnected.Invoke(0);
         }
 
         private void OnServerStarted()
