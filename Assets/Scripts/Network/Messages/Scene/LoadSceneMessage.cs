@@ -5,10 +5,10 @@ namespace TDGame.Network.Messages.Scene
     /// <summary>
     /// Sent from server
     /// 
-    /// Reciever should unload the scene in this message.
+    /// Reciever should load the scene in this message.
     /// </summary>
     [MessagePackObject]
-    public struct UnloadScene
+    public struct LoadSceneMessage
     {
         [Key(0)]
         public string SceneID;

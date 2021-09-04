@@ -14,6 +14,7 @@ namespace TDGame.Events.Base
         [Button]
         public void Raise()
         {
+            Debug.Log("Event Triggered: " + name);
             if (Enabled)
                 EventListeners();
         }

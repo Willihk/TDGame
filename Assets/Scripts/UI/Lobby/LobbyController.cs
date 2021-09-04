@@ -1,7 +1,5 @@
-﻿using MLAPI;
-using System;
+﻿using Mirror;
 using TDGame.Events.Base;
-using TDGame.Network;
 using TDGame.Network.Components;
 using UnityEngine;
 
@@ -22,7 +20,7 @@ namespace TDGame.UI.Lobby
         public void OnClickStart()
         {
             // Check host/server
-            if (manager.networkManager.IsServer)
+            if (NetworkServer.active)
             {
                 startGameEvent.Raise();
             }

@@ -31,25 +31,6 @@ namespace TDGame.Network.Components
 
         private void Start()
         {
-            networkManager.OnClientConnectedCallback += OnClientConnectedCallback;
-            networkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
-            networkManager.OnServerStarted += OnServerStarted;
-        }
-
-        private void OnClientDisconnectCallback(ulong id)
-        {
-            if (networkManager.IsServer)
-                Server_OnClientDisconnected.Invoke(id);
-            if (networkManager.IsClient && !networkManager.IsServer)
-                Client_OnClientDisconnected.Invoke(0);
-        }
-
-        private void OnClientConnectedCallback(ulong id)
-        {
-            if (networkManager.IsServer)
-                Server_OnClientConnected.Invoke(id);
-            if (networkManager.IsClient && !networkManager.IsServer)
-                Client_OnClientConnected.Invoke(0);
         }
 
         private void OnServerStarted()

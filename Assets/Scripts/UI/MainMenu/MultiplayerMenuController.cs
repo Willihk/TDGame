@@ -7,7 +7,7 @@ namespace TDGame.UI.MainMenu
 {
     public class MultiplayerMenuController : MonoBehaviour
     {
-        Mirror_CustomNetworkManager manager;
+        GameNetworkManager manager;
 
         private void Start()
         {

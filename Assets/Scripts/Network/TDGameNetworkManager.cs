@@ -49,7 +49,6 @@ namespace TDGame.Network
 
             connectedPlayers.Add(connectionRelations[conn], playerData);
             eventBinder.ServerOnClientConnect(conn);
-
             return roomObject;
         }
 
