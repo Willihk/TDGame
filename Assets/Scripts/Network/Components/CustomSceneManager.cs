@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -19,6 +20,9 @@ namespace TDGame.Network.Components
     // TODO: Convert to non MonoBehaviour
     public class CustomSceneManager : MonoBehaviour, ICustomSceneManager
     {
+
+        public static CustomSceneManager Instance;
+        
         [ReadOnly]
         [Sirenix.OdinInspector.ShowInInspector]
         private Dictionary<string, SceneInstance> loadedScenes = new Dictionary<string, SceneInstance>();
@@ -26,6 +30,11 @@ namespace TDGame.Network.Components
         public Dictionary<string, SceneInstance> LoadedScenes => loadedScenes;
 
         BaseMessagingManager messagingManager;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         void Start()
         {

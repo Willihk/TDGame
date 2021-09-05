@@ -27,6 +27,8 @@ namespace TDGame.Network
             Instance = this;
         }
 
+        
+
         public override void OnStartServer()
         {
             onServerStarted.Invoke();

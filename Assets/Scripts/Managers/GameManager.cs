@@ -24,7 +24,6 @@ namespace TDGame.Managers
 
             await sceneManager.LoadSceneSynced(gameplayScene.AssetGUID);
 
-            await sceneManager.LoadSceneSynced(lobbySettings.selectedMap.MapReference.AssetGUID);
 
             // Unload lobby scene
             // Load gameplay scene

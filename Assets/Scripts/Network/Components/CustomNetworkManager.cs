@@ -1,6 +1,6 @@
-﻿using MLAPI;
-using MLAPI.Transports.UNET;
+﻿
 using System;
+using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,35 +14,9 @@ namespace TDGame.Network.Components
         [SerializeField]
         public NetworkManager networkManager;
 
-
-        public UnityEvent<ulong> Client_OnClientConnected;
-        public UnityEvent<ulong> Client_OnClientDisconnected;
-
-        public UnityEvent onServerStarted;
-        public UnityEvent<ulong> Server_OnClientConnected;
-        public UnityEvent<ulong> Server_OnClientDisconnected;
-
-
         private void Awake()
         {
             Instance = this;
-            onServerStarted ??= new UnityEvent();
-        }
-
-        private void Start()
-        {
-        }
-
-        private void OnServerStarted()
-        {
-            onServerStarted.Invoke();
-        }
-
-        public void ConnectToServer(string address, ushort port = 7777)
-        {
-            networkManager.GetComponent<UNetTransport>().ConnectAddress = address;
-            networkManager.GetComponent<UNetTransport>().ConnectPort = port;
-            networkManager.StartClient();
         }
 
         public void StartServer()
@@ -55,18 +29,32 @@ namespace TDGame.Network.Components
             networkManager.StartHost();
         }
 
+        public void StartClient(string ip, ushort port = 777)
+        {
+            networkManager.networkAddress = ip;
+        }
+
         /// <summary>
         /// Stops the server if running.
         /// Disconnects the local client if connected.
         /// </summary>
         public void Stop()
         {
-            if (networkManager.IsHost)
+            if (NetworkServer.active && NetworkClient.isConnected)
+            {
+                // stop host if host-only
                 networkManager.StopHost();
-            else if (networkManager.IsServer)
-                networkManager.StopServer();
-            else if (networkManager.IsClient)
+            }
+            else if (NetworkClient.isConnected)
+            {
+                // stop client if client-only
                 networkManager.StopClient();
+            }
+            else if (NetworkServer.active)
+            {
+                // stop server if server-only
+                networkManager.StopServer();
+            }
         }
     }
 }

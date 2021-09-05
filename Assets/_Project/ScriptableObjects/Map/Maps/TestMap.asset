@@ -15,8 +15,8 @@ MonoBehaviour:
   Name: Test Map
   Description: Map for testing
   size:
-    x: 100
-    y: 100
+    x: 60
+    y: 60
   MapReference:
     m_AssetGUID: 6cc96cb1db8ca8c42b40b9b8e1a086ec
     m_SubObjectName: 

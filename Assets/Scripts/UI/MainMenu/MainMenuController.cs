@@ -28,7 +28,7 @@ namespace TDGame.UI.MainMenu
             string ip = address.text;
             ip = ip.Replace("​", string.Empty);
             
-            manager.ConnectToServer(ip);
+            manager.StartClient(ip);
         }
 
         public void StartHost()
