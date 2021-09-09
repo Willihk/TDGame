@@ -1,6 +1,7 @@
 ﻿using System;
 using Mirror;
 using TDGame.Map;
+using TDGame.Settings;
 using TDGame.Systems.Grid.Cell;
 using TDGame.Systems.Grid.Data;
 using Unity.Mathematics;
@@ -24,12 +25,20 @@ namespace TDGame.Systems.Grid.InGame
         [SerializeField]
         private Material gridMaterial;
 
+        [SerializeField]
+        private LobbySettings lobbySettings;
+
 
         public void Awake()
         {
             Instance = this;
             mapGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
             towerGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
+        }
+        
+        private void Start()
+        {
+            InvokeRepeating(nameof(DrawGrid), 0, 1);
         }
 
         void CreateGrid()
@@ -63,9 +72,9 @@ namespace TDGame.Systems.Grid.InGame
 
         public void OnMapLoaded()
         {
-            var mapdetails = FindObjectOfType<MapDetailsController>();
+            Vector3 position = new Vector3(lobbySettings.selectedMap.size.x, 0, lobbySettings.selectedMap.size.y);
 
-            gridSize = mapGrid.WorldToGridPosition(mapdetails.gridTopRightCorner.transform.position);
+            gridSize = mapGrid.WorldToGridPosition(position);
             CreateGrid();
             RegisterObstacles();
             RegisterPath();
@@ -95,11 +104,7 @@ namespace TDGame.Systems.Grid.InGame
             gridMaterial.SetTexture("GridTexture", gridTexture);
         }
 
-        private void Start()
-        {
-            InvokeRepeating(nameof(DrawGrid), 0, 1);
-        }
-
+       
         public bool CanPlaceTower(GameObject tower, GridArea area)
         {
             var gridPos = mapGrid.WorldToGridPosition(tower.transform.position);

@@ -62,7 +62,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4e02048f561ef5b42be7d72685d227b8
-    m_Address: Assets/UI/MainMenu/MainMenuGraph.asset
+    m_Address: MainMenuGraph.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 53f6700a3d42d9446b2227890569d916
@@ -75,6 +75,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: ce64b4fb6431134498cbc0260970ab49
     m_Address: Assets/Scenes/Managers/PersistentManagers.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ef0d66e8bd2f8e64095aa73196e6b3dd
+    m_Address: Assets/ScriptableObjects/Events/Map/MapLoaded.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
