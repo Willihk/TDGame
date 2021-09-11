@@ -1,8 +1,8 @@
 ﻿using Mirror;
-using TDGame.Systems.Economy.Data;
+using TDGame.Systems.Economy.Old.Data;
 using UnityEngine;
 
-namespace TDGame.Systems.Economy
+namespace TDGame.Systems.Economy.Old
 {
     public class NetworkedPlayerEconomy : NetworkBehaviour
     {

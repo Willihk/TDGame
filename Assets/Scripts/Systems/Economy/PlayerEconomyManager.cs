@@ -1,56 +1,32 @@
-﻿using System.Linq;
-using Mirror;
+﻿using System;
+using System.Collections.Generic;
 using TDGame.Network.Player;
-using TDGame.Systems.Economy.Interfaces;
 using UnityEngine;
 
 namespace TDGame.Systems.Economy
 {
-    public class PlayerEconomyManager : MonoBehaviour, IPlayerEconomyManager
+    public class PlayerEconomyManager : MonoBehaviour
     {
-        public static PlayerEconomyManager Instance;
-
         [SerializeField]
-        private InGamePlayerManager playerManager;
+        private PlayerList playerList;
 
-        private NetworkedPlayerEconomy[] economies;
-        
-        private void Awake()
-        {
-            Instance = this;
-        }
+        private List<NetworkedEconomy> economies = new List<NetworkedEconomy>();
 
-        [Server]
-        public void AddCurrencyToAllPlayers(int amount)
+        private void Start()
         {
-            UpdateEconomies();
-            foreach (var economy in economies)
+            foreach (var player in playerList.players)
             {
-                economy.AddCurrency(amount);
+                CreateEconomy(player);
             }
         }
 
-        [Server]
-        public void ReducesCurrencyForPlayer(int playerId, int amount)
+        void CreateEconomy(int playerId)
         {
-            var economy = playerManager.GetPlayerById(playerId).GetComponent<NetworkedPlayerEconomy>();
-            economy.ReduceCurrency(amount);
-        }
+            var gameObject = new GameObject("Economy - " + playerId);
+            gameObject.transform.SetParent(transform);
 
-        private void UpdateEconomies()
-        {
-            economies = playerManager.GetPlayerObjects().Select(x => x.GetComponent<NetworkedPlayerEconomy>())
-                .ToArray();
-        }
-
-        private NetworkedPlayerEconomy GetEconomy(int playerId)
-        {
-            return playerManager.GetPlayerById(playerId).GetComponent<NetworkedPlayerEconomy>();
-        }
-
-        public NetworkedPlayerEconomy GetEconomy(NetworkConnection connection)
-        {
-            return GetEconomy(playerManager.GetIdByConnection(connection));
+            var economy = gameObject.AddComponent<NetworkedEconomy>();
+            economies.Add(economy);
         }
     }
 }

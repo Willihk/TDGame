@@ -2,7 +2,7 @@
 using Mirror;
 using TDGame.Data;
 using TDGame.Network.Player;
-using TDGame.Systems.Economy;
+using TDGame.Systems.Economy.Old;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
 using TDGame.Systems.Selection;

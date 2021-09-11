@@ -36,7 +36,7 @@ namespace TDGame.Network.Components
         }
 
 
-        // Key is INetworkPlayer, value is id assigned to the player
+        // Key is networkID, value is id assigned to the player
         // This is only on the server
         [Sirenix.OdinInspector.ShowInInspector]
         private Dictionary<ulong, int> registeredPlayers = new Dictionary<ulong, int>();

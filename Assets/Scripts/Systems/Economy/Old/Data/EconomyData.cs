@@ -2,7 +2,7 @@
 using TDGame.Events.Base;
 using UnityEngine;
 
-namespace TDGame.Systems.Economy.Data
+namespace TDGame.Systems.Economy.Old.Data
 {
     [CreateAssetMenu(fileName = "EconomyData", menuName = "Data/Economy/EconomyData", order = 0)]
     public class EconomyData : ScriptableObject

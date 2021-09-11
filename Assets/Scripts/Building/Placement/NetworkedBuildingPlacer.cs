@@ -1,7 +1,7 @@
 using Mirror;
 using TDGame.Cursor;
 using TDGame.Data;
-using TDGame.Systems.Economy;
+using TDGame.Systems.Economy.Old;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
 using TDGame.Systems.Tower.Base;
