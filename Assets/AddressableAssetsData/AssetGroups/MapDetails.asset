@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 44b36e7991613d54f889fd434b51462a
   m_SerializeEntries:
   - m_GUID: d061498c76243554db4db649e830413a
-    m_Address: Assets/ScriptableObjects/Data/Map/Maps/TestMap.asset
+    m_Address: TestMapDetails.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - MapDetails
