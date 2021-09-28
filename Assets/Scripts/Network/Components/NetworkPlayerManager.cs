@@ -17,6 +17,8 @@ namespace TDGame.Network.Components
 {
     public class NetworkPlayerManager : MonoBehaviour
     {
+        public static NetworkPlayerManager Instance;
+        
         // Called on both server & client 
         public UnityEvent<int> onPlayerRegistered;
 
@@ -31,6 +33,7 @@ namespace TDGame.Network.Components
 
         private void Awake()
         {
+            Instance = this;
             onPlayerRegistered ??= new UnityEvent<int>();
             onPlayerUnregistered ??= new UnityEvent<int>();
         }
