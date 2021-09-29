@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerList: {fileID: 11400000, guid: c685fb54618fff6489cee0cf99dc52b6, type: 2}
+  playerManager: {fileID: 0}
 --- !u!1 &43740866
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +177,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 43740867}
-  - component: {fileID: 43740870}
   - component: {fileID: 43740869}
   - component: {fileID: 43740868}
   m_Layer: 0
@@ -233,18 +233,6 @@ MonoBehaviour:
   towerGraph: {fileID: 11400000, guid: 5bb159a578909e54fbd594795671ab94, type: 2}
   playerManager: {fileID: 0}
   prefabList: {fileID: 11400000, guid: 805a3508962bf0c40bf24af168859488, type: 2}
---- !u!114 &43740870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43740866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &491962431
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +243,6 @@ GameObject:
   m_Component:
   - component: {fileID: 491962441}
   - component: {fileID: 491962436}
-  - component: {fileID: 491962435}
   - component: {fileID: 491962434}
   - component: {fileID: 491962433}
   - component: {fileID: 491962432}
@@ -308,20 +295,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Colliders: []
---- !u!114 &491962435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491962431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5185d5ede03c41f9bd5d5cca217e06fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerManager: {fileID: 0}
-  economies: []
 --- !u!114 &491962436
 MonoBehaviour:
   m_ObjectHideFlags: 0

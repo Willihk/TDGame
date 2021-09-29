@@ -33,7 +33,9 @@ namespace TDGame.Network.Components.Messaging.Mirror
 
         public override void SendNamedMessage<T>(NetworkConnection target, T message)
         {
+            SendNamedMessage(typeof(T).Name, target, message);
         }
+        
         public override void SendNamedMessage<T>(string name, NetworkConnection target, T message)
         {
             var data = MessagePackSerializer.Serialize(message);

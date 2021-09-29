@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using MessagePack;
 using Mirror;
+using Sirenix.OdinInspector;
 using TDGame.Network.Components;
 using TDGame.Network.Components.Messaging;
 using TDGame.Network.Player;
@@ -24,23 +26,36 @@ namespace TDGame.Systems.Economy
 
         private BaseMessagingManager messagingManager;
 
+
         private void Awake()
         {
             messagingManager = BaseMessagingManager.Instance;
             messagingManager.RegisterNamedMessageHandler<SetEconomyMessage>(Handle_SetEconomy);
+            messagingManager.RegisterNamedMessageHandler<SetEconomiesMessage>(Handle_SetEconomies);
+
+            messagingManager.RegisterNamedMessageHandler<RequestEconomiesMessage>(Handle_RequestEconomies);
         }
 
         private void Start()
         {
             playerManager = NetworkPlayerManager.Instance;
 
-            foreach (var player in playerList.players)
+            if (NetworkServer.active)
             {
-                CreateEconomy(player);
+                foreach (var player in playerList.players)
+                {
+                    CreateEconomy(player);
+                }
+            }
+
+
+            if (NetworkClient.active)
+            {
+                messagingManager.SendNamedMessageToServer(new RequestEconomiesMessage());
             }
         }
 
-        void CreateEconomy(int playerId)
+        Economy CreateEconomy(int playerId)
         {
             var gameObject = new GameObject("Economy - " + playerId);
             gameObject.transform.SetParent(transform);
@@ -48,6 +63,7 @@ namespace TDGame.Systems.Economy
             var economy = gameObject.AddComponent<Economy>();
             economy.ownerId = playerId;
             economies.Add(playerId, economy);
+            return economy;
         }
 
         public Economy GetEconomy(int playerId)
@@ -63,12 +79,7 @@ namespace TDGame.Systems.Economy
             }
         }
 
-        public void ReducesCurrencyForPlayer(int playerId, int amount)
-        {
-            var economy = GetEconomy(playerId);
-            economy.ReduceCurrency(amount);
-        }
-
+        [Button]
         public void AddCurrencyToEconomy(int playerId, int amount)
         {
             AddCurrencyToEconomy(economies[playerId], amount);
@@ -76,12 +87,16 @@ namespace TDGame.Systems.Economy
 
         public void AddCurrencyToEconomy(Economy economy, int amount)
         {
+            if (!NetworkServer.active) // Only run on the server
+                return;
+
             // TODO: Sync 
             economy.currency += amount;
             messagingManager.SendNamedMessageToAll(new SetEconomyMessage
                 { PlayerId = economy.ownerId, Currency = economy.currency });
         }
 
+        [Button]
         public void ReduceCurrencyToEconomy(int playerId, int amount)
         {
             ReduceCurrencyToEconomy(economies[playerId], amount);
@@ -89,11 +104,41 @@ namespace TDGame.Systems.Economy
 
         public void ReduceCurrencyToEconomy(Economy economy, int amount)
         {
+            if (!NetworkServer.active) // Only run on the server
+                return;
+
             // TODO: Sync 
             economy.currency -= amount;
 
             messagingManager.SendNamedMessageToAll(new SetEconomyMessage
                 { PlayerId = economy.ownerId, Currency = economy.currency });
+        }
+
+        void Handle_RequestEconomies(NetworkConnection sender, Stream stream)
+        {
+            var messages = economies.Values.Select(x => new SetEconomyMessage
+                { Currency = x.currency, PlayerId = x.ownerId }).ToArray();
+
+            messagingManager.SendNamedMessage(sender, new SetEconomiesMessage { EconomyMessages = messages });
+        }
+
+        void Handle_SetEconomies(NetworkConnection sender, Stream stream)
+        {
+            var message = MessagePackSerializer.Deserialize<SetEconomiesMessage>(stream);
+
+            for (int i = 0; i < economies.Count; i++)
+            {
+                Destroy(economies.Values.ToArray()[i].gameObject);
+            }
+
+            economies.Clear();
+
+
+            foreach (var item in message.EconomyMessages)
+            {
+                var economy = CreateEconomy(item.PlayerId);
+                economy.currency = item.Currency;
+            }
         }
 
         void Handle_SetEconomy(NetworkConnection sender, Stream stream)
