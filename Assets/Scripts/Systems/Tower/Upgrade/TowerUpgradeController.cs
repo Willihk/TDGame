@@ -46,7 +46,7 @@ namespace TDGame.Systems.Tower.Upgrade
             {
                 if (connection.node is TowerNode upgradeNode)
                 {
-                    upgrades.Add(upgradeNode.TowerPrefab);
+                    // upgrades.Add(upgradeNode.TowerDetails);
                 }
             }
 
@@ -67,7 +67,7 @@ namespace TDGame.Systems.Tower.Upgrade
             if (!towerNode)
                 return;
 
-            TryUpgradeTower(tower, towerNode.TowerPrefab);
+            // TryUpgradeTower(tower, towerNode.TowerDetails);
         }
 
         [Server]
