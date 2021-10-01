@@ -8,6 +8,7 @@ using Sirenix.OdinInspector;
 using TDGame.Network.Components.Messaging;
 using TDGame.Network.Messages.Player;
 using TDGame.Network.Player;
+using TDGame.Player;
 using UnityEngine;
 using UnityEngine.Events;
 using NetworkConnection = TDGame.Network.Components.Messaging.NetworkConnection;
@@ -18,7 +19,7 @@ namespace TDGame.Network.Components
     public class NetworkPlayerManager : MonoBehaviour
     {
         public static NetworkPlayerManager Instance;
-        
+
         // Called on both server & client 
         public UnityEvent<int> onPlayerRegistered;
 
@@ -30,6 +31,9 @@ namespace TDGame.Network.Components
 
         [SerializeField]
         private PlayerList playerList;
+
+        [SerializeField]
+        private LocalPlayer localPlayer;
 
         private void Awake()
         {
@@ -56,10 +60,13 @@ namespace TDGame.Network.Components
 
             messagingManager.RegisterNamedMessageHandler<RegisterPlayerData>(Handle_ClientRegistrationMessage);
 
+            messagingManager.RegisterNamedMessageHandler<SetLocalPlayer>(Handle_SetLocalPlayer);
             messagingManager.RegisterNamedMessageHandler<PlayerRegistered>(Handle_PlayerRegistered);
             messagingManager.RegisterNamedMessageHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
             messagingManager.RegisterNamedMessageHandler<SetPlayerList>(Handle_SetPlayerList);
         }
+
+       
 
         public void OnServerStarted()
         {
@@ -94,10 +101,10 @@ namespace TDGame.Network.Components
         }
 
 
-        private bool RegisterPlayer(ulong player)
+        private int RegisterPlayer(ulong player)
         {
             if (registeredPlayers.ContainsKey(player))
-                return false;
+                return -1;
 
             int id = Random.Range(1, 2_000_000);
 
@@ -106,17 +113,16 @@ namespace TDGame.Network.Components
             // This is sent to all other clients
             messagingManager.SendNamedMessageToAll(new PlayerRegistered { Id = id });
 
-            // Needed since the server.SendToAll does not activate on the server/host
+            // // Needed since the server.SendToAll does not activate on the server/host
             //MemoryStream data = new MemoryStream(MessagePackSerializer.Serialize(new PlayerRegistered { Id = id }));
             //Handle_PlayerRegistered((networkManager.LocalClientId), data);
 
 
-            return true;
+            return id;
         }
 
         public void Server_OnClientDisconnected(ulong player)
         {
-
             if (registeredPlayers.TryGetValue(player, out int id))
             {
                 // This is sent to all other clients
@@ -139,7 +145,8 @@ namespace TDGame.Network.Components
             UniTask.Create(async () =>
             {
                 await UniTask.Delay(100);
-                messagingManager.SendNamedMessage(new NetworkConnection() { id = player }, new SetPlayerList { Players = registeredPlayers.Values.ToList() });
+                messagingManager.SendNamedMessage(new NetworkConnection() { id = player },
+                    new SetPlayerList { Players = registeredPlayers.Values.ToList() });
             });
         }
 
@@ -148,7 +155,9 @@ namespace TDGame.Network.Components
             if (!NetworkServer.active)
                 return;
 
-            RegisterPlayer(sender.id);
+            int id = RegisterPlayer(sender.id);
+
+            messagingManager.SendNamedMessage(sender, new SetLocalPlayer { Id = id });
         }
 
 
@@ -163,6 +172,12 @@ namespace TDGame.Network.Components
             }
 
             SendRegistrationMessage().Forget();
+        }
+        
+        private void Handle_SetLocalPlayer(NetworkConnection sender, Stream payload)
+        {
+            var message = MessagePackSerializer.Deserialize<SetLocalPlayer>(payload);
+            localPlayer.SetupLocalPlayer(message.Id);
         }
 
         private void Handle_SetPlayerList(NetworkConnection sender, Stream stream)

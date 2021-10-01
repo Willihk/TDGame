@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 namespace TDGame.Network.Player
 {
-    [CreateAssetMenu(fileName = "PlayerList", menuName = "Data/PlayerList", order = 0)]
+    [CreateAssetMenu(fileName = "PlayerList", menuName = "Data/Player/PlayerList", order = 0)]
     public class PlayerList : ScriptableObject
     {
         public List<int> players;
