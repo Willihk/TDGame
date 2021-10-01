@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace TDGame.UI.BuildingList
+namespace TDGame.UI.InGame.BuildingList
 {
     public class BuildingListEntry : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
@@ -45,12 +45,12 @@ namespace TDGame.UI.BuildingList
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            TowerTooltipController.Instance.DisplayUI(prefabName, this.GetComponent<RectTransform>());
+            // TowerTooltipController.Instance.DisplayUI(prefabName, this.GetComponent<RectTransform>());
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            TowerTooltipController.Instance.HideUI();
+            // TowerTooltipController.Instance.HideUI();
         }
     }
 }

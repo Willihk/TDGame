@@ -3346,9 +3346,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 408958028}
+  - component: {fileID: 408958030}
   - component: {fileID: 408958029}
   m_Layer: 5
-  m_Name: Content
+  m_Name: Tower List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3397,6 +3398,25 @@ MonoBehaviour:
   m_Spacing: {x: 10.5, y: 10.5}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &408958030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408958027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a835fec4117429f8c43fff58b082004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerGraph: {fileID: 11400000, guid: 5bb159a578909e54fbd594795671ab94, type: 2}
+  entryPrefab:
+    m_AssetGUID: 52e68919cda3ee344b3e916be59f16bb
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  content: {fileID: 408958028}
 --- !u!1 &422297141
 GameObject:
   m_ObjectHideFlags: 0
@@ -3414,7 +3434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &422297142
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3665,7 +3685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &469527075
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5424,7 +5444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &694152196
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5496,7 +5516,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 712600086}
-  - component: {fileID: 712600087}
   m_Layer: 5
   m_Name: Hotbar
   m_TagString: Untagged
@@ -5527,21 +5546,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1078.5, y: 148.5}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &712600087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712600085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a835fec4117429f8c43fff58b082004, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerGraph: {fileID: 11400000, guid: 5bb159a578909e54fbd594795671ab94, type: 2}
-  entryPrefab: {fileID: 6892021358570676871, guid: 52e68919cda3ee344b3e916be59f16bb, type: 3}
-  content: {fileID: 408958028}
 --- !u!1 &724783474
 GameObject:
   m_ObjectHideFlags: 0
@@ -8423,7 +8427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1140859140
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12290,7 +12294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1551850797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13085,7 +13089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2055620594
 RectTransform:
   m_ObjectHideFlags: 0

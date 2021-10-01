@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e764fef0eddf479e90ad13ee8db357fb, type: 3}
   m_Name: TeslaTower
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
-  Price: 0
+  Name: Tesla Tower
+  Description: Just a random tesla tower
+  Price: 30
   TowerReference:
-    m_AssetGUID: 
+    m_AssetGUID: 9162d72a40c40364ba3a3aa4de90513f
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
