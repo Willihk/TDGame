@@ -27,17 +27,10 @@ namespace TDGame.UI.InGame.BuildingList
         {
             var buildings = towerGraph.GetHotbarTowers().ToArray();
 
-            // for (int i = 0; i < buildings.Length; i++)
-            // {
-            //     var entryObject = Instantiate(entryPrefab, content);
-            //     if (buildings[i].TryGetComponent(out BaseNetworkedTower component))
-            //         entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name, component.DisplayInfo.Name, component.price);
-            //     else
-            //         entryObject.GetComponent<BuildingListEntry>().Initialize(buildings[i].name, buildings[i].name, 0);
-            // }
+            GenerateEntries(buildings).Forget();
         }
         
-        private async UniTaskVoid GenerateEntries(IReadOnlyCollection<TowerDetails> entries)
+        private async UniTaskVoid GenerateEntries(IEnumerable<TowerDetails> entries)
         {
             foreach (var item in entries)
             {
@@ -45,22 +38,14 @@ namespace TDGame.UI.InGame.BuildingList
                 handles.Add(handle);
 
                 var entryObject = await handle;
+                entryObject.SetActive(true);
+                entryObject.transform.SetParent(content);
                 
+                entryObject.transform.localScale = Vector3.one;
+
+                var listEntry = entryObject.GetComponent<BuildingListEntry>();
+                listEntry.Initialize(item);
             }
-            
-            // for (var i = 0; i < entries.Count; i++)
-            // {
-            //     var id = entries.ElementAt(i);
-            //     var handle = Addressables.InstantiateAsync(entryPrefab);
-            //     handles.Add(handle);
-            //
-            //     var entry = await handle;
-            //     entry.GetComponent<LobbyPlayerListEntry>().Initialize("Player" + id, true);
-            //     entry.SetActive(true);
-            //     entry.transform.SetParent(content);
-            //
-            //     entry.transform.localScale = Vector3.one;
-            // }
         }
     }
 }

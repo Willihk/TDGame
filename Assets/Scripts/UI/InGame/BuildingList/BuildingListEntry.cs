@@ -1,5 +1,6 @@
 ﻿using TDGame.Cursor;
 using TDGame.Events.Base;
+using TDGame.Systems.Tower.Data;
 using TDGame.Systems.TowerTooltip;
 using TMPro;
 using UnityEngine;
@@ -27,11 +28,11 @@ namespace TDGame.UI.InGame.BuildingList
 
         private string prefabName;
 
-        public void Initialize(string prefabName, string name, int cost)
+        public void Initialize(TowerDetails towerDetails)
         {
-            this.prefabName = prefabName;
-            nameText.text = name;
-            costText.text = cost == 0 ? "FREE" : cost.ToString();
+            prefabName = towerDetails.TowerReference.AssetGUID;
+            nameText.text = towerDetails.Name;
+            costText.text = towerDetails.Price == 0 ? "FREE" : towerDetails.Price.ToString();
         }
 
         public void OnClick()
