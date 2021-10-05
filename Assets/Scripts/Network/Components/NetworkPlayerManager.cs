@@ -82,6 +82,11 @@ namespace TDGame.Network.Components
         }
 
 
+        public int GetPlayerId(NetworkConnection connection)
+        {
+            return registeredPlayers[connection.id];
+        }
+        
         // Called when a player has been registered by the server.
         // Called on all connected clients.
         private void Handle_PlayerRegistered(NetworkConnection sender, Stream stream)
