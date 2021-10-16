@@ -20,9 +20,12 @@ namespace TDGame.Systems.Building
 
         private NetworkPlayerManager playerManager;
 
+        
         private void Start()
         {
             playerManager = NetworkPlayerManager.Instance;
+            
+            
         }
 
 
@@ -33,17 +36,21 @@ namespace TDGame.Systems.Building
             handles.Add(playerId, handle);
             var prefab = await handle;
             var model = prefab.transform.Find("Model").gameObject;
-
-
         }
 
-        void Handle_StartPlacement(NetworkConnection sender, Stream stream)
+        void Handle_StartPlacementRequest(NetworkConnection sender, Stream stream)
         {
-            var message = MessagePackSerializer.Deserialize<StartPlacementMessage>(stream);
+            var message = MessagePackSerializer.Deserialize<StartPlacementRequest>(stream);
+
+            int id = playerManager.GetPlayerId(sender);
+            if (underPlacement.ContainsKey(id))
+            {
+                
+            }
             
         }
         
-        void Handle_CancelPlacement(NetworkConnection sender, Stream stream)
+        void Handle_CancelPlacementRequest(NetworkConnection sender, Stream stream)
         {
             var id = playerManager.GetPlayerId(sender);
 
