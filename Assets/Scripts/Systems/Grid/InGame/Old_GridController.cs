@@ -9,9 +9,9 @@ using UnityEngine;
 
 namespace TDGame.Systems.Grid.InGame
 {
-    public class GridController : NetworkBehaviour
+    public class Old_GridController : NetworkBehaviour
     {
-        public static GridController Instance;
+        public static Old_GridController Instance;
 
         public Texture2D gridTexture;
 

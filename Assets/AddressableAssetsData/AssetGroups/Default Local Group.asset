@@ -97,6 +97,10 @@ MonoBehaviour:
     m_Address: Assets/_Project/ScriptableObjects/Data/Player/LocalPlayer.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: ea40b2d6b3862c245a898630ddac030c
+    m_Address: Assets/_Project/ScriptableObjects/EventChannels/InGame/Building/BeginPlacement.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:

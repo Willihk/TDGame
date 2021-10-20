@@ -25,23 +25,23 @@ namespace TDGame.Map
         private void Start()
         {
             mapObject = Instantiate(mapPrefab);
-            GridController.Instance.OnMapLoaded();
+            Old_GridController.Instance.OnMapLoaded();
             mapLoadedEvent.Raise();
         }
 
         public List<int2> GetWaypoints()
         {
-            var grid = GridController.Instance.mapGrid;
+            var grid = Old_GridController.Instance.mapGrid;
             var waypointController = mapPrefab.GetComponentInChildren<WaypointController>();
             int2 start =
-                new int2(GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position).x,
-                    GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position).y);
+                new int2(Old_GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position).x,
+                    Old_GridController.Instance.mapGrid.WorldToGridPosition(waypointController.startPoint.position).y);
             int2 end = new int2(
-                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position).x,
-                GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position).y);
+                Old_GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position).x,
+                Old_GridController.Instance.mapGrid.WorldToGridPosition(waypointController.endPoint.position).y);
 
-            var path = new Pathfinder().FindPath(end, start, new int2(GridController.Instance.gridSize),
-                GridController.Instance.mapGrid);
+            var path = new Pathfinder().FindPath(end, start, new int2(Old_GridController.Instance.gridSize),
+                Old_GridController.Instance.mapGrid);
             return path;
         }
     }

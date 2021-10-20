@@ -97,10 +97,10 @@ namespace TDGame.Building.Placement
             }
             if (isClient)
             {
-                if (!GridController.Instance || !gameObject || !areaController)
+                if (!Old_GridController.Instance || !gameObject || !areaController)
                     return;
 
-                isValidGridPosition = GridController.Instance.CanPlaceTower(gameObject, areaController.area);
+                isValidGridPosition = Old_GridController.Instance.CanPlaceTower(gameObject, areaController.area);
 
                 if (localMaterial)
                     localMaterial.SetInt(IsValid, isValidGridPosition ? 1 : 0);
@@ -118,7 +118,7 @@ namespace TDGame.Building.Placement
             Ray ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("TowerPlacementArea")))
             {
-                float gridOffset = 1f / GridController.Instance.cellSize;
+                float gridOffset = 1f / Old_GridController.Instance.cellSize;
                 var hitPoint = math.round(((float3)hit.point) * gridOffset) / gridOffset;
 
                 transform.position = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
@@ -155,7 +155,7 @@ namespace TDGame.Building.Placement
         [Command]
         void Cmd_ConfirmPlacement(GridArea area)
         {
-            if (!GridController.Instance.CanPlaceTower(gameObject, area) || !playerEconomy.CanAfford(price))
+            if (!Old_GridController.Instance.CanPlaceTower(gameObject, area) || !playerEconomy.CanAfford(price))
                 return;
 
             // TODO: Check for collisions based on position given by client
@@ -168,7 +168,7 @@ namespace TDGame.Building.Placement
             playerEconomy.Purchase(price);
 
             NetworkServer.Spawn(placedObject, netIdentity.connectionToClient);
-            GridController.Instance.PlaceTowerOnGrid(placedObject, area);
+            Old_GridController.Instance.PlaceTowerOnGrid(placedObject, area);
 
             NetworkServer.Destroy(gameObject);
         }

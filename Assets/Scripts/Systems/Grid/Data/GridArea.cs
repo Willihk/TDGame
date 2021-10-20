@@ -1,14 +1,21 @@
 ﻿using System;
+using MessagePack;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace TDGame.Systems.Grid.Data
 {
     [Serializable]
+    [MessagePackObject]
     public struct GridArea
     {
+        [Key(0)]
         public int2 position;
+
+        [Key(1)]
         public int width;
+
+        [Key(2)]
         public int height;
 
         public int2[] GetPoints()

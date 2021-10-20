@@ -102,14 +102,14 @@ namespace TDGame.Systems.Tower.Upgrade
             // TODO: Rework to allow for easier access to grid area
             var area = oldGameObject.transform.Find("Model").gameObject.GetComponent<GridAreaController>().area;
 
-            GridController.Instance.EmptyGridArea(GridType.Tower, area);
+            Old_GridController.Instance.EmptyGridArea(GridType.Tower, area);
             NetworkServer.Spawn(spawned, owner);
 
             TargetUpdateSelection(owner, spawned);
 
             if (spawned.transform.Find("Model").gameObject.TryGetComponent(out GridAreaController areaController))
             {
-                GridController.Instance.PlaceTowerOnGrid(spawned, areaController.CalculateArea());
+                Old_GridController.Instance.PlaceTowerOnGrid(spawned, areaController.CalculateArea());
             }
 
             NetworkServer.Destroy(oldGameObject);
