@@ -18,7 +18,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace TDGame.Systems.Building
 {
-    public class BuildingPlacementManager : MonoBehaviour
+    public class PlacementManager : MonoBehaviour
     {
         [SerializeField]
         private LocalCursorState cursorState;
@@ -40,6 +40,8 @@ namespace TDGame.Systems.Building
 
         private NetworkPlayerManager playerManager;
 
+        private GridManager gridManager;
+
         private BaseMessagingManager messagingManager;
 
         private Camera referenceCamera;
@@ -49,6 +51,8 @@ namespace TDGame.Systems.Building
             referenceCamera = Camera.main;
 
             playerManager = NetworkPlayerManager.Instance;
+            
+            gridManager = GridManager.Instance;
 
 
             messagingManager = BaseMessagingManager.Instance;
@@ -135,6 +139,8 @@ namespace TDGame.Systems.Building
         void Handle_ConfirmPlacementRequest(NetworkConnection sender, Stream stream)
         {
             Debug.Log("confirmed placement for player: " + sender.id);
+            
+            
 
             Handle_CancelPlacementRequest(sender, null);
         }
