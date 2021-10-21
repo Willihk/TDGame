@@ -3,18 +3,30 @@ using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
 using MessagePack;
+using TDGame.Cursor;
 using TDGame.Network.Components;
 using TDGame.Network.Components.Messaging;
+using TDGame.Player;
 using TDGame.Systems.Building.Messages.Client;
 using TDGame.Systems.Building.Messages.Server;
+using TDGame.Systems.Grid.InGame;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace TDGame.Systems.Building
 {
-    public class BuildingManager : MonoBehaviour
+    public class BuildingPlacementManager : MonoBehaviour
     {
+        [SerializeField]
+        private LocalCursorState cursorState;
+
+        [SerializeField]
+        private LocalPlayer localPlayer;
+
+
         // Key is playerId, value is placement object
         private Dictionary<int, GameObject> underPlacement = new Dictionary<int, GameObject>();
 
@@ -30,8 +42,12 @@ namespace TDGame.Systems.Building
 
         private BaseMessagingManager messagingManager;
 
+        private Camera referenceCamera;
+
         private void Start()
         {
+            referenceCamera = Camera.main;
+
             playerManager = NetworkPlayerManager.Instance;
 
 
@@ -40,10 +56,46 @@ namespace TDGame.Systems.Building
             // Server
             messagingManager.RegisterNamedMessageHandler<StartPlacementRequest>(Handle_StartPlacementRequest);
             messagingManager.RegisterNamedMessageHandler<CancelPlacementRequest>(Handle_CancelPlacementRequest);
+            messagingManager.RegisterNamedMessageHandler<ConfirmPlacementRequest>(Handle_ConfirmPlacementRequest);
 
             // Client
             messagingManager.RegisterNamedMessageHandler<NewPlacementMessage>(Handle_NewPlacementMessage);
             messagingManager.RegisterNamedMessageHandler<RemovePlacementMessage>(Handle_RemovePlacementMessage);
+        }
+
+        private void Update()
+        {
+            if (referenceCamera == null)
+            {
+                referenceCamera = Camera.main;
+                return;
+            }
+
+            if (cursorState.State != CursorState.Placing || !underPlacement.ContainsKey(localPlayer.playerId))
+                return;
+
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                cursorState.State = CursorState.None;
+                CancelPlacement();
+            }
+
+            var ray = referenceCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("TowerPlacementArea")))
+            {
+                float gridOffset = 1f / GridManager.Instance.cellSize;
+                var hitPoint = math.round((float3)hit.point * gridOffset) / gridOffset;
+
+                underPlacement[localPlayer.playerId].transform.position =
+                    new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
+            }
+
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                cursorState.State = CursorState.None;
+                ConfirmPlacement(underPlacement[localPlayer.playerId].transform.position);
+            }
         }
 
 
@@ -55,7 +107,8 @@ namespace TDGame.Systems.Building
             var prefab = await handle;
             var model = prefab.transform.Find("Model").gameObject;
 
-            Instantiate(model);
+            var spawned = Instantiate(model);
+            underPlacement.Add(playerId, spawned);
         }
 
         #region Server
@@ -69,14 +122,21 @@ namespace TDGame.Systems.Building
             if (serverPlacementTracker.ContainsKey(id))
             {
                 // Cancel placement
-                messagingManager.SendNamedMessageToAll(new RemovePlacementMessage() {PlayerId = id});
+                messagingManager.SendNamedMessageToAll(new RemovePlacementMessage() { PlayerId = id });
                 serverPlacementTracker.Remove(id);
             }
 
             serverPlacementTracker.Add(id, assetReference);
 
             messagingManager.SendNamedMessageToAll(new NewPlacementMessage
-                {AssetGuid = message.AssetGuid, PlayerId = id});
+                { AssetGuid = message.AssetGuid, PlayerId = id });
+        }
+
+        void Handle_ConfirmPlacementRequest(NetworkConnection sender, Stream stream)
+        {
+            Debug.Log("confirmed placement for player: " + sender.id);
+
+            Handle_CancelPlacementRequest(sender, null);
         }
 
         void Handle_CancelPlacementRequest(NetworkConnection sender, Stream stream)
@@ -85,7 +145,7 @@ namespace TDGame.Systems.Building
 
             serverPlacementTracker.Remove(id);
 
-            messagingManager.SendNamedMessageToAll(new RemovePlacementMessage {PlayerId = id});
+            messagingManager.SendNamedMessageToAll(new RemovePlacementMessage { PlayerId = id });
         }
 
         #endregion
@@ -95,12 +155,17 @@ namespace TDGame.Systems.Building
         // When local player clicks on hotbar icon to begin placing a building.
         public void OnBeginPlacing(string guid)
         {
-            messagingManager.SendNamedMessageToServer(new StartPlacementRequest() {AssetGuid = guid});
+            messagingManager.SendNamedMessageToServer(new StartPlacementRequest() { AssetGuid = guid });
         }
 
-        public void CancelPlacement()
+        private void CancelPlacement()
         {
             messagingManager.SendNamedMessageToServer(new CancelPlacementRequest());
+        }
+
+        private void ConfirmPlacement(Vector3 position)
+        {
+            messagingManager.SendNamedMessageToServer(new ConfirmPlacementRequest() { Position = position });
         }
 
         void Handle_NewPlacementMessage(NetworkConnection sender, Stream stream)
@@ -114,8 +179,11 @@ namespace TDGame.Systems.Building
             var message = MessagePackSerializer.Deserialize<RemovePlacementMessage>(stream);
             if (handles.TryGetValue(message.PlayerId, out AsyncOperationHandle<GameObject> handle))
             {
-                Addressables.ReleaseInstance(handle);
+                Destroy(underPlacement[message.PlayerId]);
+                
+                Addressables.Release(handle);
                 handles.Remove(message.PlayerId);
+                underPlacement.Remove(message.PlayerId);
             }
         }
 
