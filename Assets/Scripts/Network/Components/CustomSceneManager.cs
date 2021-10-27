@@ -102,12 +102,12 @@ namespace TDGame.Network.Components
 
         private void Handle_RequestLoadedScenes(NetworkConnection sender, Stream stream)
         {
-            var respone = new SyncLoadedScenes()
+            var response = new SyncLoadedScenes()
             {
                 LoadedSceneIDs = loadedScenes.Keys.ToList()
             };
 
-            messagingManager.SendNamedMessage(nameof(SyncLoadedScenes), sender, respone);
+            messagingManager.SendNamedMessage(sender, response);
         }
 
         private void Handle_SyncLoadedScenes(NetworkConnection sender, Stream stream)

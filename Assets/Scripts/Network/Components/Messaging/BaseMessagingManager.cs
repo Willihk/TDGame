@@ -10,7 +10,7 @@ namespace TDGame.Network.Components.Messaging
 {
     public abstract class BaseMessagingManager : MonoBehaviour
     {
-        public static BaseMessagingManager Instance { get; set; }
+        public static BaseMessagingManager Instance { get; protected set; }
 
         public delegate void NamedMessageDelegate(NetworkConnection sender, Stream payload);
 
