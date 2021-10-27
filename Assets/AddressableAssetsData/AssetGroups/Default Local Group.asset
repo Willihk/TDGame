@@ -37,10 +37,6 @@ MonoBehaviour:
     m_Address: Assets/Scenes/Menus/LobbyMenu.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 036d5f5a51160c147a786ace212ae255
-    m_Address: Assets/Prefabs/Lobby/PlayerListEntry.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 2cd23f37f8fa47949925e2544af9b502
     m_Address: Assets/ScriptableObjects/EventChannels/Player/PlayerRegistered.asset
     m_ReadOnly: 0
