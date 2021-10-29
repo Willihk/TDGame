@@ -26,6 +26,9 @@ namespace TDGame.Systems.Building
         [SerializeField]
         private LocalPlayer localPlayer;
 
+        [SerializeField]
+        private BuildingManager buildingManager;
+
 
         // Key is playerId, value is placement object
         private Dictionary<int, GameObject> underPlacement = new Dictionary<int, GameObject>();
@@ -139,8 +142,12 @@ namespace TDGame.Systems.Building
         void Handle_ConfirmPlacementRequest(NetworkConnection sender, Stream stream)
         {
             Debug.Log("confirmed placement for player: " + sender.id);
-            
-            
+            var message = MessagePackSerializer.Deserialize<ConfirmPlacementRequest>(stream);
+
+            var assetToBuild = serverPlacementTracker[playerManager.GetPlayerId(sender)];
+
+
+            buildingManager.Server_BuildBuilding(assetToBuild, message.Position);
 
             Handle_CancelPlacementRequest(sender, null);
         }

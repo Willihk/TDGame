@@ -12,14 +12,14 @@ namespace TDGame.Systems.Building
 {
     public class BuildingManager : MonoBehaviour
     {
-        
-        
+
+
         private BaseMessagingManager messagingManager;
-        
+
         private void Start()
         {
             messagingManager = BaseMessagingManager.Instance;
-            
+
             messagingManager.RegisterNamedMessageHandler<NewBuildingMessage>(Handle_NewBuildingMessage);
         }
 
@@ -37,8 +37,18 @@ namespace TDGame.Systems.Building
             var message = MessagePackSerializer.Deserialize<NewBuildingMessage>(stream);
 
             var assetReference = new AssetReference(message.AssetGuid);
-            
+
             BuildTower(assetReference, message.Position).Forget();
         }
+
+        #region Server
+
+        public void Server_BuildBuilding(AssetReference assetReference, Vector3 position)
+        {
+
+            messagingManager.SendNamedMessageToAll(new NewBuildingMessage { AssetGuid = assetReference.AssetGUID, Position = position });
+        }
+
+        #endregion
     }
 }

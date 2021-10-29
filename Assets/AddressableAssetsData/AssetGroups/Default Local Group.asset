@@ -101,6 +101,10 @@ MonoBehaviour:
     m_Address: Assets/_Project/ScriptableObjects/Data/Cursor/LocalCursorState.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 28895280de11f4e44b61e110f549b960
+    m_Address: Assets/_Project/Prefabs/UI/PlayerList/PlayerListEntry.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:

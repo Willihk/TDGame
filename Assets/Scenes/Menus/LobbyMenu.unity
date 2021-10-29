@@ -6367,7 +6367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerList: {fileID: 11400000, guid: c685fb54618fff6489cee0cf99dc52b6, type: 2}
   entryPrefab:
-    m_AssetGUID: 036d5f5a51160c147a786ace212ae255
+    m_AssetGUID: 28895280de11f4e44b61e110f549b960
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
@@ -13081,7 +13081,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 516362329}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 0.9999997
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
