@@ -177,7 +177,7 @@ namespace TDGame.Systems.Building
             var playerId = playerManager.GetPlayerId(sender);
             var targetObject = underPlacement[playerId];
 
-            if (targetObject.transform.position == message.Position)
+            if (targetObject.transform.position == message.Position && playerId != localPlayer.playerId)
                 return;
             
             targetObject.transform.position = message.Position;
