@@ -64,10 +64,13 @@ namespace TDGame.Systems.Building
             messagingManager.RegisterNamedMessageHandler<StartPlacementRequest>(Handle_StartPlacementRequest);
             messagingManager.RegisterNamedMessageHandler<CancelPlacementRequest>(Handle_CancelPlacementRequest);
             messagingManager.RegisterNamedMessageHandler<ConfirmPlacementRequest>(Handle_ConfirmPlacementRequest);
+            messagingManager.RegisterNamedMessageHandler<UpdatePositionRequest>(Handle_UpdatePositionRequest);
+            
 
             // Client
             messagingManager.RegisterNamedMessageHandler<NewPlacementMessage>(Handle_NewPlacementMessage);
             messagingManager.RegisterNamedMessageHandler<RemovePlacementMessage>(Handle_RemovePlacementMessage);
+            messagingManager.RegisterNamedMessageHandler<SetPositionMessage>(Handle_SetPositionMessage);
         }
 
         private void Update()
@@ -94,8 +97,14 @@ namespace TDGame.Systems.Building
                 float gridOffset = 1f / GridManager.Instance.cellSize;
                 var hitPoint = math.round((float3)hit.point * gridOffset) / gridOffset;
 
+                var newPos = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
                 underPlacement[localPlayer.playerId].transform.position =
-                    new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
+                    newPos;
+
+                if (underPlacement[localPlayer.playerId].transform.position != newPos)
+                {
+                    messagingManager.SendNamedMessageToServer(new UpdatePositionRequest(){Position = newPos});
+                }
             }
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -161,6 +170,20 @@ namespace TDGame.Systems.Building
             messagingManager.SendNamedMessageToAll(new RemovePlacementMessage { PlayerId = id });
         }
 
+        void Handle_UpdatePositionRequest(NetworkConnection sender, Stream stream)
+        {
+            var message = MessagePackSerializer.Deserialize<UpdatePositionRequest>(stream);
+
+            var playerId = playerManager.GetPlayerId(sender);
+            var targetObject = underPlacement[playerId];
+
+            if (targetObject.transform.position == message.Position)
+                return;
+            
+            targetObject.transform.position = message.Position;
+            messagingManager.SendNamedMessageToAll(new SetPositionMessage { Id = playerId, Position = message.Position});
+        }
+
         #endregion
 
         #region Client
@@ -197,6 +220,17 @@ namespace TDGame.Systems.Building
                 Addressables.Release(handle);
                 handles.Remove(message.PlayerId);
                 underPlacement.Remove(message.PlayerId);
+            }
+        }
+
+        void Handle_SetPositionMessage(NetworkConnection sender, Stream stream)
+        {
+            var message = MessagePackSerializer.Deserialize<SetPositionMessage>(stream);
+
+
+            if (underPlacement.TryGetValue(message.Id, out GameObject target))
+            {
+                target.transform.position = message.Position;
             }
         }
 
