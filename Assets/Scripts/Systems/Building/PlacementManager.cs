@@ -98,11 +98,11 @@ namespace TDGame.Systems.Building
                 var hitPoint = math.round((float3)hit.point * gridOffset) / gridOffset;
 
                 var newPos = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
-                underPlacement[localPlayer.playerId].transform.position =
-                    newPos;
-
+                
                 if (underPlacement[localPlayer.playerId].transform.position != newPos)
                 {
+                    underPlacement[localPlayer.playerId].transform.position =
+                        newPos;
                     messagingManager.SendNamedMessageToServer(new UpdatePositionRequest(){Position = newPos});
                 }
             }
