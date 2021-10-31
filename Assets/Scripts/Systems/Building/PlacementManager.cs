@@ -155,7 +155,6 @@ namespace TDGame.Systems.Building
 
             var assetToBuild = serverPlacementTracker[playerManager.GetPlayerId(sender)];
 
-
             buildingManager.Server_BuildBuilding(assetToBuild, message.Position);
 
             Handle_CancelPlacementRequest(sender, null);

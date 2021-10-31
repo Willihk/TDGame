@@ -5,6 +5,9 @@ using Cysharp.Threading.Tasks;
 using MessagePack;
 using TDGame.Network.Components.Messaging;
 using TDGame.Systems.Building.Messages.Server;
+using TDGame.Systems.Grid.Data;
+using TDGame.Systems.Grid.InGame;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -46,6 +49,7 @@ namespace TDGame.Systems.Building
         public void Server_BuildBuilding(AssetReference assetReference, Vector3 position)
         {
 
+            GridManager.Instance.PlaceTowerOnGrid(null, new GridArea(){position = new int2((int) position.x, (int) position.z),height = 2, width = 1});
             messagingManager.SendNamedMessageToAll(new NewBuildingMessage { AssetGuid = assetReference.AssetGUID, Position = position });
         }
 
