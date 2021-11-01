@@ -15,8 +15,6 @@ namespace TDGame.Systems.Building
 {
     public class BuildingManager : MonoBehaviour
     {
-
-
         private BaseMessagingManager messagingManager;
 
         private void Start()
@@ -48,9 +46,9 @@ namespace TDGame.Systems.Building
 
         public void Server_BuildBuilding(AssetReference assetReference, Vector3 position)
         {
-
-            GridManager.Instance.PlaceTowerOnGrid(null, new GridArea(){position = new int2((int) position.x, (int) position.z),height = 2, width = 1});
-            messagingManager.SendNamedMessageToAll(new NewBuildingMessage { AssetGuid = assetReference.AssetGUID, Position = position });
+            GridManager.Instance.PlaceTowerOnGrid(null, position, new GridArea() { height = 4, width = 4 });
+            messagingManager.SendNamedMessageToAll(new NewBuildingMessage
+                { AssetGuid = assetReference.AssetGUID, Position = position });
         }
 
         #endregion
