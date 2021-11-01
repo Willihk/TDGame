@@ -115,9 +115,11 @@ namespace TDGame.Systems.Grid.InGame
         }
 
        
-        public bool CanPlaceTower(GameObject tower, GridArea area)
+        public bool CanPlaceTower(Vector3 position, GridArea area)
         {
-            var gridPos = mapGrid.WorldToGridPosition(tower.transform.position);
+            var gridPos = mapGrid.WorldToGridPosition(position);
+            area.position = gridPos;
+            
             return mapGrid.IsAreaEmpty(area) && towerGrid.IsAreaEmpty(area);
         }
 

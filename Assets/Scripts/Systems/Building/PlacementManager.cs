@@ -9,6 +9,7 @@ using TDGame.Network.Components.Messaging;
 using TDGame.Player;
 using TDGame.Systems.Building.Messages.Client;
 using TDGame.Systems.Building.Messages.Server;
+using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
 using Unity.Mathematics;
 using UnityEngine;
@@ -109,7 +110,7 @@ namespace TDGame.Systems.Building
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
-                cursorState.State = CursorState.None;
+                // Cursor state is set to none when the server removes the object under placement
                 ConfirmPlacement(underPlacement[localPlayer.playerId].transform.position);
             }
         }
@@ -154,6 +155,11 @@ namespace TDGame.Systems.Building
             var message = MessagePackSerializer.Deserialize<ConfirmPlacementRequest>(stream);
 
             var assetToBuild = serverPlacementTracker[playerManager.GetPlayerId(sender)];
+            if (!gridManager.CanPlaceTower(message.Position, new GridArea() { height = 4, width = 4 }))
+            {
+                Debug.LogWarning("Not valid placement!");
+                return;
+            }
 
             buildingManager.Server_BuildBuilding(assetToBuild, message.Position);
 
@@ -211,7 +217,15 @@ namespace TDGame.Systems.Building
 
         void Handle_RemovePlacementMessage(NetworkConnection sender, Stream stream)
         {
+            
             var message = MessagePackSerializer.Deserialize<RemovePlacementMessage>(stream);
+
+            if (message.PlayerId == localPlayer.playerId && cursorState.State == CursorState.Placing)
+            {
+                // Could cause undefined behaviour if theres network delay
+                cursorState.State = CursorState.None;
+            }
+            
             if (handles.TryGetValue(message.PlayerId, out AsyncOperationHandle<GameObject> handle))
             {
                 Destroy(underPlacement[message.PlayerId]);
