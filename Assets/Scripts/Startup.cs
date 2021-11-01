@@ -1,5 +1,6 @@
 ﻿using MessagePack;
 using MessagePack.Resolvers;
+using TDGame.Utility.MessagePack.Mathematics;
 using UnityEngine;
 
 namespace TDGame
@@ -14,6 +15,7 @@ namespace TDGame
             if (!serializerRegistered)
             {
                 StaticCompositeResolver.Instance.Register(
+                    MathematicsResolver.Instance,
                     MessagePack.Resolvers.StandardResolver.Instance
                 );
 
