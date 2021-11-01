@@ -124,13 +124,15 @@ namespace TDGame.Systems.Grid.InGame
 
         #region Server
 
-        public void PlaceTowerOnGrid(GameObject tower, GridArea area)
+        public void PlaceTowerOnGrid(GameObject tower, Vector3 position, GridArea area)
         {
             if (!NetworkServer.active)
             {
                 Debug.LogError("Called PlaceTowerOnGrid from a client");
                 return;
             }
+
+            area.position = mapGrid.WorldToGridPosition(position);
             
             var cell = new GridCell() {State = GridCellState.Occupied};
             towerGrid.SetAreaToCell(area, cell);
