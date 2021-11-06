@@ -119,14 +119,19 @@ namespace TDGame.Systems.Grid.InGame
         {
             var gridPos = mapGrid.WorldToGridPosition(position);
             area.position = gridPos;
-            
+
+            return CanPlaceTower(area);
+        }
+        
+        public bool CanPlaceTower(in GridArea area)
+        {
             return mapGrid.IsAreaEmpty(area) && towerGrid.IsAreaEmpty(area);
         }
 
 
         #region Server
 
-        public void PlaceTowerOnGrid(GameObject tower, Vector3 position, GridArea area)
+        public void PlaceTowerOnGrid(GameObject tower, GridArea area)
         {
             if (!NetworkServer.active)
             {
@@ -134,8 +139,6 @@ namespace TDGame.Systems.Grid.InGame
                 return;
             }
 
-            area.position = mapGrid.WorldToGridPosition(position);
-            
             var cell = new GridCell() {State = GridCellState.Occupied};
             towerGrid.SetAreaToCell(area, cell);
             

@@ -99,6 +99,10 @@ namespace TDGame.Systems.Grid
             return grid[getIndex(x, y)];
         }
 
+        public Vector3 GridToWorldPosition(int2 position)
+        {
+            return GridToWorldPosition(position.x, position.y);
+        }
         public Vector3 GridToWorldPosition(int x, int y)
         {
             return new Vector3(x, 0, y) * cellSize;
