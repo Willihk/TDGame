@@ -44,11 +44,17 @@ namespace TDGame.Systems.Building
 
         #region Server
 
-        public void Server_BuildBuilding(AssetReference assetReference, Vector3 position)
+        public void Server_BuildBuilding(AssetReference assetReference, GridArea area)
         {
-            GridManager.Instance.PlaceTowerOnGrid(null, position, new GridArea() { height = 4, width = 4 });
+            var gridManager = GridManager.Instance;
+            gridManager.PlaceTowerOnGrid(null, area);
+
             messagingManager.SendNamedMessageToAll(new NewBuildingMessage
-                { AssetGuid = assetReference.AssetGUID, Position = position });
+            {
+                AssetGuid = assetReference.AssetGUID,
+                Position = gridManager.towerGrid.GridToWorldPosition(area.position +
+                                                                     new int2(area.width, area.height) / 2)
+            });
         }
 
         #endregion

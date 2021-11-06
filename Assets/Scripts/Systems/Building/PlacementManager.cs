@@ -30,6 +30,8 @@ namespace TDGame.Systems.Building
         [SerializeField]
         private BuildingManager buildingManager;
 
+        [SerializeField]
+        private Material placementMaterial;
 
         // Key is playerId, value is placement object
         private Dictionary<int, GameObject> underPlacement = new Dictionary<int, GameObject>();
@@ -43,19 +45,19 @@ namespace TDGame.Systems.Building
         private Dictionary<int, AssetReference> serverPlacementTracker = new Dictionary<int, AssetReference>();
 
         private NetworkPlayerManager playerManager;
-
         private GridManager gridManager;
-
         private BaseMessagingManager messagingManager;
 
         private Camera referenceCamera;
+
+        private static readonly int IsValidID = Shader.PropertyToID("IsValid");
 
         private void Start()
         {
             referenceCamera = Camera.main;
 
             playerManager = NetworkPlayerManager.Instance;
-            
+
             gridManager = GridManager.Instance;
 
 
@@ -66,7 +68,7 @@ namespace TDGame.Systems.Building
             messagingManager.RegisterNamedMessageHandler<CancelPlacementRequest>(Handle_CancelPlacementRequest);
             messagingManager.RegisterNamedMessageHandler<ConfirmPlacementRequest>(Handle_ConfirmPlacementRequest);
             messagingManager.RegisterNamedMessageHandler<UpdatePositionRequest>(Handle_UpdatePositionRequest);
-            
+
 
             // Client
             messagingManager.RegisterNamedMessageHandler<NewPlacementMessage>(Handle_NewPlacementMessage);
@@ -76,6 +78,21 @@ namespace TDGame.Systems.Building
 
         private void Update()
         {
+            // Check grid state
+
+            foreach (var item in underPlacement.Values)
+            {
+                var valid = gridManager.CanPlaceTower(item.GetComponent<GridAreaController>().CalculateArea());
+
+                foreach (var childRenderer in item.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.SetInt(IsValidID, valid ? 1 : 0);
+                }
+            }
+
+
+            // Local stuff
+
             if (referenceCamera == null)
             {
                 referenceCamera = Camera.main;
@@ -99,12 +116,12 @@ namespace TDGame.Systems.Building
                 var hitPoint = math.round((float3)hit.point * gridOffset) / gridOffset;
 
                 var newPos = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
-                
+
                 if (underPlacement[localPlayer.playerId].transform.position != newPos)
                 {
                     underPlacement[localPlayer.playerId].transform.position =
                         newPos;
-                    messagingManager.SendNamedMessageToServer(new UpdatePositionRequest(){Position = newPos});
+                    messagingManager.SendNamedMessageToServer(new UpdatePositionRequest() { Position = newPos });
                 }
             }
 
@@ -115,6 +132,19 @@ namespace TDGame.Systems.Building
             }
         }
 
+        private void ReplaceModelMaterialsRecursive(Transform transform, Material material)
+        {
+            if (transform.TryGetComponent(out Renderer renderer))
+            {
+                renderer.materials = new Material[] { material };
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            }
+
+            foreach (Transform child in transform)
+            {
+                ReplaceModelMaterialsRecursive(child, material);
+            }
+        }
 
         private async UniTaskVoid NewPlacement(int playerId, AssetReference reference)
         {
@@ -126,6 +156,7 @@ namespace TDGame.Systems.Building
 
             var spawned = Instantiate(model);
             underPlacement.Add(playerId, spawned);
+            ReplaceModelMaterialsRecursive(spawned.transform, new Material(placementMaterial));
         }
 
         #region Server
@@ -149,21 +180,36 @@ namespace TDGame.Systems.Building
                 { AssetGuid = message.AssetGuid, PlayerId = id });
         }
 
-        void Handle_ConfirmPlacementRequest(NetworkConnection sender, Stream stream)
+        async void Handle_ConfirmPlacementRequest(NetworkConnection sender, Stream stream)
         {
+            async UniTask<GridArea> GetArea(AssetReference assetReference, Vector3 position, GridManager grid)
+            {
+                var handle = Addressables.LoadAssetAsync<GameObject>(assetReference);
+                var area = (await handle).transform.Find("Model").GetComponent<GridAreaController>().area;
+                Addressables.Release(handle);
+
+                var offset = new int2(area.width, area.height) / 2;
+                area.position = grid.towerGrid.WorldToGridPosition(position) - offset;
+
+                return area;
+            }
+
             Debug.Log("confirmed placement for player: " + sender.id);
             var message = MessagePackSerializer.Deserialize<ConfirmPlacementRequest>(stream);
 
-            var assetToBuild = serverPlacementTracker[playerManager.GetPlayerId(sender)];
-            if (!gridManager.CanPlaceTower(message.Position, new GridArea() { height = 4, width = 4 }))
+            var playerId = playerManager.GetPlayerId(sender);
+
+            var assetToBuild = serverPlacementTracker[playerId];
+
+            var area = await GetArea(assetToBuild, message.Position, gridManager);
+            if (!gridManager.CanPlaceTower(area))
             {
                 Debug.LogWarning("Not valid placement!");
                 return;
             }
 
-            buildingManager.Server_BuildBuilding(assetToBuild, message.Position);
-
             Handle_CancelPlacementRequest(sender, null);
+            buildingManager.Server_BuildBuilding(assetToBuild, area);
         }
 
         void Handle_CancelPlacementRequest(NetworkConnection sender, Stream stream)
@@ -184,9 +230,10 @@ namespace TDGame.Systems.Building
 
             if (targetObject.transform.position == message.Position && playerId != localPlayer.playerId)
                 return;
-            
+
             targetObject.transform.position = message.Position;
-            messagingManager.SendNamedMessageToAll(new SetPositionMessage { Id = playerId, Position = message.Position});
+            messagingManager.SendNamedMessageToAll(
+                new SetPositionMessage { Id = playerId, Position = message.Position });
         }
 
         #endregion
@@ -217,7 +264,6 @@ namespace TDGame.Systems.Building
 
         void Handle_RemovePlacementMessage(NetworkConnection sender, Stream stream)
         {
-            
             var message = MessagePackSerializer.Deserialize<RemovePlacementMessage>(stream);
 
             if (message.PlayerId == localPlayer.playerId && cursorState.State == CursorState.Placing)
@@ -225,11 +271,11 @@ namespace TDGame.Systems.Building
                 // Could cause undefined behaviour if theres network delay
                 cursorState.State = CursorState.None;
             }
-            
+
             if (handles.TryGetValue(message.PlayerId, out AsyncOperationHandle<GameObject> handle))
             {
                 Destroy(underPlacement[message.PlayerId]);
-                
+
                 Addressables.Release(handle);
                 handles.Remove(message.PlayerId);
                 underPlacement.Remove(message.PlayerId);
