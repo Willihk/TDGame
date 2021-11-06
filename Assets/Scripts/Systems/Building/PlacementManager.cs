@@ -226,12 +226,17 @@ namespace TDGame.Systems.Building
             var message = MessagePackSerializer.Deserialize<UpdatePositionRequest>(stream);
 
             var playerId = playerManager.GetPlayerId(sender);
+            
+            if (!underPlacement.ContainsKey(playerId))
+                return;
+
             var targetObject = underPlacement[playerId];
 
             if (targetObject.transform.position == message.Position && playerId != localPlayer.playerId)
                 return;
 
             targetObject.transform.position = message.Position;
+
             messagingManager.SendNamedMessageToAll(
                 new SetPositionMessage { Id = playerId, Position = message.Position });
         }
