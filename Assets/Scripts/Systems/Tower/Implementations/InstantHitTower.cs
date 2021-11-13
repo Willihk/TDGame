@@ -1,5 +1,5 @@
 using Mirror;
-using TDGame.Systems.Enemy.DamageReceiver.Base;
+using TDGame.Systems.Old_Enemy.DamageReceiver.Base;
 using TDGame.Systems.Stats;
 using TDGame.Systems.Targeting.Implementations;
 using TDGame.Systems.Tower.Base;

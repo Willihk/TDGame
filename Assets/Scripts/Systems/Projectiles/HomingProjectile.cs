@@ -1,6 +1,6 @@
 using Mirror;
 using TDGame.Systems.Collision.Collider;
-using TDGame.Systems.Enemy.DamageReceiver.Base;
+using TDGame.Systems.Old_Enemy.DamageReceiver.Base;
 using TDGame.Systems.Targeting.Implementations;
 using UnityEngine;
 
