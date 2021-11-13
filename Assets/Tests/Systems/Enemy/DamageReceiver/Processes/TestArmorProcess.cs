@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using TDGame.Systems.Enemy.DamageReceiver.Processes;
+using TDGame.Systems.Old_Enemy.DamageReceiver.Processes;
 using TDGame.Systems.Stats;
 
 namespace Tests.Systems.Enemy.DamageReceiver.Processes

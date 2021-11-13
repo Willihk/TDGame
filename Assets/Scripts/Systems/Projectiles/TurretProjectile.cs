@@ -1,5 +1,5 @@
 ﻿using TDGame.Systems.Collision.Collider;
-using TDGame.Systems.Enemy.DamageReceiver.Base;
+using TDGame.Systems.Old_Enemy.DamageReceiver.Base;
 using UnityEngine;
 
 namespace TDGame.Systems.Projectiles

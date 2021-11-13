@@ -1,4 +1,4 @@
-﻿using TDGame.Systems.Enemy.Wave;
+﻿using TDGame.Systems.Old_Enemy.Wave;
 
 namespace TDGame.Command.Implementations.Wave
 {

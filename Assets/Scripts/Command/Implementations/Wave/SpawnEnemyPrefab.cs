@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using TDGame.Systems.Enemy.Manager;
-using TDGame.Systems.Enemy.Movement.Data;
+using TDGame.Systems.Old_Enemy.Manager;
+using TDGame.Systems.Old_Enemy.Movement.Data;
 
 
 namespace TDGame.Command.Implementations.Wave
