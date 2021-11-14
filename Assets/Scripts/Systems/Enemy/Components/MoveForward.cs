@@ -6,5 +6,6 @@ namespace TDGame.Systems.Enemy.Components
     public struct MoveForward : IComponentData
     {
         public float Speed;
+        public int waypointIndex;
     }
 }

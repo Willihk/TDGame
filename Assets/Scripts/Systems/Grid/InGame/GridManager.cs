@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using MessagePack;
 using Mirror;
+using TDGame.Events.Base;
 using TDGame.Network.Components.Messaging;
 using TDGame.Settings;
 using TDGame.Systems.Grid.Cell;
@@ -15,7 +17,7 @@ namespace TDGame.Systems.Grid.InGame
 {
     public class GridManager : MonoBehaviour
     {
-         public static GridManager Instance;
+        public static GridManager Instance;
 
         public Texture2D gridTexture;
 
@@ -33,6 +35,9 @@ namespace TDGame.Systems.Grid.InGame
         private LobbySettings lobbySettings;
 
         private BaseMessagingManager messagingManager;
+
+        [SerializeField]
+        private GameEvent gridInitializedEvent;
 
         public void Awake()
         {
@@ -80,14 +85,18 @@ namespace TDGame.Systems.Grid.InGame
             }
         }
 
-        public void OnMapLoaded()
+        public async void OnMapLoaded()
         {
+            await UniTask.Delay(2000);
+
             Vector3 position = new Vector3(lobbySettings.selectedMap.size.x, 0, lobbySettings.selectedMap.size.y);
 
             gridSize = mapGrid.WorldToGridPosition(position);
             CreateGrid();
             RegisterObstacles();
             RegisterPath();
+
+            gridInitializedEvent.Raise();
         }
 
         void UpdateTexture()

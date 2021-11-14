@@ -12187,6 +12187,8 @@ GameObject:
   - component: {fileID: 1719270562}
   - component: {fileID: 1719270564}
   - component: {fileID: 1719270563}
+  - component: {fileID: 1719270566}
+  - component: {fileID: 1719270565}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -12255,6 +12257,48 @@ MonoBehaviour:
   cellSize: 0.5
   gridMaterial: {fileID: 2100000, guid: 4ca01b1ff6da47b41aea51ac0b33defc, type: 2}
   lobbySettings: {fileID: 11400000, guid: 300fadc30049b6a4391c0325951be476, type: 2}
+  gridInitializedEvent: {fileID: 11400000, guid: b63ed3a462d258d48a15618a1430415d, type: 2}
+--- !u!114 &1719270565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719270561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160f5899ffa28264e9082ac9673d1f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: b63ed3a462d258d48a15618a1430415d, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1719270566}
+        m_TargetAssemblyTypeName: TDGame.Assets.Scripts.Systems.Enemy.EnemyPathManager,
+          TDGame
+        m_MethodName: OnGridInitialized
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1719270566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719270561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f21f41f2a22e84ca96ed43a7746713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1856199318
 GameObject:
   m_ObjectHideFlags: 0
