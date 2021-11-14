@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 
 namespace TDGame.Systems.Tower.Implementations
 {
+    [Obsolete]
     public class AoETower : BaseNetworkedTower
     {
         public MultiTargetSystem targetSystem;

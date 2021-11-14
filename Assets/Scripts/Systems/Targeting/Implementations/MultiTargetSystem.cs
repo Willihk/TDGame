@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace TDGame.Systems.Targeting.Implementations
 {
+    [Obsolete]
     public class MultiTargetSystem : BaseTargetingSystem
     {
         public int maxTargets = 4;

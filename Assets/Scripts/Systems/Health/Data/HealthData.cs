@@ -5,6 +5,7 @@ using UnityEngine;
 namespace TDGame.Systems.Health.Data
 {
     [CreateAssetMenu(fileName = "HealthData", menuName = "Data/Health/HealthData", order = 0)]
+    [Obsolete]
     public class HealthData : ScriptableObject
     {
         [SerializeField]

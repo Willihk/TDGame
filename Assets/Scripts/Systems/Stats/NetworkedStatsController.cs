@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace TDGame.Systems.Stats
 {
+    [Obsolete]
     public class NetworkedStatsController : NetworkBehaviour
     {
         [SerializeField]

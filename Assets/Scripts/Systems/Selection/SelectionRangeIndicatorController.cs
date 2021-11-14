@@ -1,8 +1,10 @@
+using System;
 using TDGame.Systems.TargetAcquisition.Implementations;
 using UnityEngine;
 
 namespace TDGame.Systems.Selection
 {
+    [Obsolete]
     public class SelectionRangeIndicatorController : MonoBehaviour
     {
         [SerializeField]

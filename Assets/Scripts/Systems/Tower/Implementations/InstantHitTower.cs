@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using TDGame.Systems.Old_Enemy.DamageReceiver.Base;
 using TDGame.Systems.Stats;
@@ -8,6 +9,7 @@ using UnityEngine.Events;
 
 namespace TDGame.Systems.Tower.Implementations
 {
+    [Obsolete]
     public class InstantHitTower : BaseNetworkedTower
     {
         [SerializeField]

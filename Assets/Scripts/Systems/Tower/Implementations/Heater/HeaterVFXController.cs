@@ -5,6 +5,7 @@ using UnityEngine.VFX;
 
 namespace TDGame.Systems.Tower.Implementations.Heater
 {
+    [Obsolete]
     public class HeaterVFXController : MonoBehaviour
     {
         [SerializeField]

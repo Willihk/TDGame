@@ -1,9 +1,11 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
 using TDGame.Systems.Health.Data;
 using UnityEngine;
 
 namespace TDGame.Systems.Health.Global
 {
+    [Obsolete]
     public class GlobalHealthSystem : NetworkBehaviour
     {
         public static GlobalHealthSystem Instance;

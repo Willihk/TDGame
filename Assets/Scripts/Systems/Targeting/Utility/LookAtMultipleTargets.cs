@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TDGame.Systems.Targeting.Implementations;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 namespace TDGame.Systems.Targeting.Utility
 {
+    [Obsolete]
     public class LookAtMultipleTargets : MonoBehaviour
     {
         [SerializeField]

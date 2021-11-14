@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TDGame.Systems.Targeting.Implementations;
 using UnityEngine;
 using UnityEngine.VFX;
 
 namespace TDGame.Systems.Tower.Implementations.Tesla
 {
+    [Obsolete]
     public class TeslaHitVisualController : MonoBehaviour
     {
         [SerializeField]

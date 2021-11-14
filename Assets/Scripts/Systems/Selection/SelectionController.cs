@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using TDGame.Cursor;
 using TDGame.Events.Base;
@@ -6,6 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace TDGame.Systems.Selection
 {
+    [Obsolete]
     public class SelectionController : MonoBehaviour
     {
         public static SelectionController Instance;

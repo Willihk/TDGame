@@ -1,12 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TDGame.Network;
 using TDGame.Network.Messages.Player;
 using TDGame.Network.Player;
+using Unity.Entities;
 using UnityEngine;
 
 namespace TDGame.UI.PlayerList
 {
+    [Obsolete]
     public class PlayerList : MonoBehaviour
     {
         [SerializeField]
@@ -20,7 +23,8 @@ namespace TDGame.UI.PlayerList
         {
             if (!PlayerManager.Instance)
                 return;
-
+            
+            
             Debug.Log("updating player list " + PlayerManager.Instance.PlayerDatas.Count);
 
             cachedPlayerEntries.ForEach(x => Destroy(x));

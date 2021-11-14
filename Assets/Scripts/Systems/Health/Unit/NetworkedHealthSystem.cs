@@ -1,9 +1,11 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace TDGame.Systems.Health.Unit
 {
+    [Obsolete]
     public class NetworkedHealthSystem : NetworkBehaviour
     {
         [SerializeField]

@@ -1,4 +1,5 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
 using TDGame.Systems.Projectiles;
 using TDGame.Systems.Stats;
 using TDGame.Systems.Targeting.Implementations;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace TDGame.Systems.Tower.Implementations
 {
+    [Obsolete]
     public class ProjectileTower : BaseNetworkedTower
     {
         [SerializeField]

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using TDGame.Systems.Old_Enemy.Manager;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace TDGame.Systems.TargetAcquisition.Implementations
 {
+    [Obsolete]
     public class RangeTargetAcquisition : BaseTargetAcquisitionSystem
     {
         [SerializeField]

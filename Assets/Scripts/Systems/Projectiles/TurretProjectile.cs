@@ -1,9 +1,11 @@
-﻿using TDGame.Systems.Collision.Collider;
+﻿using System;
+using TDGame.Systems.Collision.Collider;
 using TDGame.Systems.Old_Enemy.DamageReceiver.Base;
 using UnityEngine;
 
 namespace TDGame.Systems.Projectiles
 {
+    [Obsolete]
     public class TurretProjectile : MonoBehaviour
     {
 

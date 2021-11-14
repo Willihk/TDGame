@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace TDGame.Systems.Targeting.Implementations
 {
+    [Obsolete]
     public class SingleTargetSystem : BaseTargetingSystem
     {
         [ReadOnly]

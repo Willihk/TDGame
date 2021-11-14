@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace TDGame.Systems.TargetAcquisition.Implementations
 {
+    [Obsolete]
     public class FixedTargetAcquisition : BaseTargetAcquisitionSystem
     {
         [ReadOnly]

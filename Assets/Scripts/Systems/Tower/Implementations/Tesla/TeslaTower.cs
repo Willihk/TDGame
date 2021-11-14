@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using TDGame.Systems.Old_Enemy.DamageReceiver.Base;
@@ -10,6 +11,7 @@ using UnityEngine.Events;
 
 namespace TDGame.Systems.Tower.Implementations.Tesla
 {
+    [Obsolete]
     public class TeslaTower : BaseNetworkedTower
     {
         public MultiTargetSystem targetSystem;

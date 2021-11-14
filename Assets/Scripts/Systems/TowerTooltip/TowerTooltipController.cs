@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using TDGame.Building;
 using TDGame.Data;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace TDGame.Systems.TowerTooltip
 {
+    [Obsolete]
     public class TowerTooltipController : MonoBehaviour
     {
         public static TowerTooltipController Instance;
