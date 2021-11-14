@@ -1,7 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using TDGame.Map;
 using TDGame.Pathfinding;
 using TDGame.Systems.Enemy.Systems;
@@ -10,7 +9,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace TDGame.Assets.Scripts.Systems.Enemy
+namespace TDGame.Systems.Enemy
 {
     public class EnemyPathManager : MonoBehaviour
     {
@@ -27,12 +26,7 @@ namespace TDGame.Assets.Scripts.Systems.Enemy
             List<int2> path = new Pathfinder().FindPath(start, end, gm.gridSize, gm.mapGrid);
 
 
-
-
-
-
-
-            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EnemyMovementSystem>().waypoints = path.Select((x) => (float3)gm.mapGrid.GridToWorldPosition(x)).ToArray();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EnemyMovementSystem>().path = path.Select((x) => (float3)gm.mapGrid.GridToWorldPosition(x)).ToArray();
         }
     }
 }
