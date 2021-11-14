@@ -4,7 +4,6 @@ using System.Linq;
 using Mirror;
 using TDGame.Events.Base;
 using TDGame.Pathfinding;
-using TDGame.Pathfinding.BasicAStar;
 using TDGame.Pathfinding.DotsAStar;
 using TDGame.Systems.Grid.InGame;
 using Unity.Mathematics;
