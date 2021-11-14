@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace TDGame.Network.Player
 {
+    [Obsolete]
     public class PlayerNetworkController : NetworkBehaviour
     {
         [SyncVar]

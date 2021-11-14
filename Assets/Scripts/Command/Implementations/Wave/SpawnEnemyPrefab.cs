@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using TDGame.Systems.Old_Enemy.Manager;
 using TDGame.Systems.Old_Enemy.Movement.Data;
+using Object = UnityEngine.Object;
 
 
 namespace TDGame.Command.Implementations.Wave
 {
+    [Obsolete]
     public class SpawnEnemyPrefab : WaveCommand
     {
         private GameObject prefab;

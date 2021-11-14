@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace TDGame.Map
 {
+    [Obsolete]
     public class NetworkedMapController : NetworkBehaviour
     {
         [SerializeField]

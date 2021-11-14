@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Mirror;
 using TDGame.Network.Player;
@@ -8,9 +9,11 @@ using TDGame.Network.EventBinding;
 using TDGame.Network.Lobby;
 using TDGame.Network.Messages.Player;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 namespace TDGame.Network
 {
+    [Obsolete]
     public class TDGameNetworkManager : NetworkRoomManager
     {
         public static TDGameNetworkManager Instance;

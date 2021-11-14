@@ -1,9 +1,11 @@
+using System;
 using Mirror;
 using TDGame.Events.Types.Network;
 using UnityEngine;
 
 namespace TDGame.Network.EventBinding
 {
+    [Obsolete]
     public class ServerNetworkEventBinder : MonoBehaviour
     {
         [Header("Server Event Bindings")] [SerializeField]

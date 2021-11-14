@@ -12,6 +12,7 @@ namespace TDGame.Network.Manager
     [DisallowMultipleComponent]
     [AddComponentMenu("Network/NetworkManager")]
     [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkManager.html")]
+    [Obsolete]
     public class Mirror_CustomNetworkManager : MonoBehaviour
     {
         /// <summary>

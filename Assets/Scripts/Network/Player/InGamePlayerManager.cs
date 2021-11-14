@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace TDGame.Network.Player
 {
+    [Obsolete]
     public class InGamePlayerManager : NetworkBehaviour
     {
         [SerializeField]

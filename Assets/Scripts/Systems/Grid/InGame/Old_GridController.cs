@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace TDGame.Systems.Grid.InGame
 {
+    [Obsolete]
     public class Old_GridController : NetworkBehaviour
     {
         public static Old_GridController Instance;

@@ -1,7 +1,9 @@
-﻿using TDGame.Systems.Old_Enemy.Wave;
+﻿using System;
+using TDGame.Systems.Old_Enemy.Wave;
 
 namespace TDGame.Command.Implementations.Wave
 {
+    [Obsolete]
     public class DelayCommand : WaveCommand
     {
         private EnemyWaveController waveController;

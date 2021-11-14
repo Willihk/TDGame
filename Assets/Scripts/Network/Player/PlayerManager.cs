@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Mirror;
 using TDGame.Events.Base;
 using TDGame.Network.Messages.Player;
@@ -6,6 +7,7 @@ using UnityEngine;
 
 namespace TDGame.Network.Player
 {
+    [Obsolete]
     public class PlayerManager : NetworkBehaviour
     {
         public static PlayerManager Instance;

@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using TDGame.Cursor;
 using TDGame.Data;
@@ -16,6 +17,7 @@ using UnityEngine.EventSystems;
 
 namespace TDGame.Building.Placement
 {
+    [Obsolete]
     public class NetworkedBuildingPlacer : NetworkBehaviour
     {
         [SerializeField]

@@ -7,6 +7,7 @@ using TDGame.Network.Player;
 
 namespace TDGame.Network.Lobby
 {
+    [Obsolete]
     public class NetworkedLobbyPlayer : NetworkRoomPlayer
     {
         public static NetworkedLobbyPlayer LocalPlayer;
