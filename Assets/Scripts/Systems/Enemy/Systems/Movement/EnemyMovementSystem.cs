@@ -1,26 +1,28 @@
-﻿using System.Collections.Generic;
-using TDGame.Systems.Enemy.Components;
+﻿using TDGame.Systems.Enemy.Components.Movement;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+
 // ReSharper disable AccessToDisposedClosure
 
-namespace TDGame.Systems.Enemy.Systems
+namespace TDGame.Systems.Enemy.Systems.Movement
 {
     public class EnemyMovementSystem : SystemBase
     {
         public float3[] path;
 
+        
         protected override void OnUpdate()
         {
             var waypoints = new NativeArray<float3>(path, Allocator.TempJob);
             var deltaTime = Time.DeltaTime;
             
-            Entities.ForEach((ref Translation translation, ref MoveForward moveForward) =>
+            Entities.WithNone<ReachedEndTag>().ForEach((ref Entity entity,ref Translation translation, ref EnemyMoveTowards moveForward) =>
             {
                 if (moveForward.waypointIndex >= waypoints.Length)
                 {
+                    EntityManager.AddComponent<ReachedEndTag>(entity);
                     return;
                 }
                 
@@ -36,8 +38,9 @@ namespace TDGame.Systems.Enemy.Systems
                     moveForward.waypointIndex++;
                 }
 
-            }).Run();
+            }).WithStructuralChanges().Run();
 
+            
             waypoints.Dispose();
         }
     }

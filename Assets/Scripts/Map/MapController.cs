@@ -15,6 +15,7 @@ namespace TDGame.Map
         private LobbySettings settings;
 
         private ICustomSceneManager sceneManager;
+        
         private async void Start()
         {
             sceneManager = CustomSceneManager.Instance;

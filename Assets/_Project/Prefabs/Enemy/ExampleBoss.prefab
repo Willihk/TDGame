@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7827243538383653529}
   - component: {fileID: -4273043170934713496}
   m_Layer: 0
-  m_Name: ExampleEnemy
+  m_Name: ExampleBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

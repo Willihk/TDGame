@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using TDGame.Map;
 using TDGame.Pathfinding;
 using TDGame.Systems.Enemy.Systems;
+using TDGame.Systems.Enemy.Systems.Movement;
 using TDGame.Systems.Grid.InGame;
 using Unity.Entities;
 using Unity.Mathematics;

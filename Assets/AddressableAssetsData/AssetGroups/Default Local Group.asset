@@ -121,6 +121,16 @@ MonoBehaviour:
     m_Address: Assets/_Project/ScriptableObjects/EventChannels/InGame/Grid/GridInitialized.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: fbb4dbd7e92bbd24586552e58e86bf5c
+    m_Address: ExampleEnemy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
+  - m_GUID: 6317ddda7011338419c3d4e4d67f3d35
+    m_Address: ExampleBoss.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:
