@@ -24,6 +24,9 @@ namespace TDGame.Systems.Enemy.Systems.Movement
 
         protected override void OnUpdate()
         {
+            if (path == null)
+                return;
+            
             var waypoints = new NativeArray<float3>(path, Allocator.TempJob);
             var commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
