@@ -12,21 +12,22 @@ namespace TDGame.Systems.Enemy.Systems.Movement
     {
         public float3[] path;
 
-        EntityQuery moveQuery;
+        EntityQuery query;
+
         protected override void OnCreate()
         {
-           moveQuery  = GetEntityQuery(new EntityQueryDesc
-           {
-               All = new ComponentType[] { typeof(EnemyMoveTowards) },
-           });
-          
+            query = GetEntityQuery(new EntityQueryDesc
+            {
+                All = new ComponentType[] { typeof(EnemyMoveTowards) },
+                None = new ComponentType[] { typeof(ReachedEndTag) }
+            });
         }
 
         protected override void OnUpdate()
         {
             if (path == null)
                 return;
-            
+
             var waypoints = new NativeArray<float3>(path, Allocator.TempJob);
             var commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
@@ -40,7 +41,7 @@ namespace TDGame.Systems.Enemy.Systems.Movement
                 TranslationHandle = GetComponentTypeHandle<Translation>()
             };
 
-            job.ScheduleParallel(moveQuery, Dependency).Complete();
+            job.ScheduleParallel(query, Dependency).Complete();
 
             commandBuffer.Playback(EntityManager);
             commandBuffer.Dispose();
