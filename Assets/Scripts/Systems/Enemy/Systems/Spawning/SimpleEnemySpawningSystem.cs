@@ -1,4 +1,5 @@
-﻿using TDGame.Systems.Enemy.Components.Spawning;
+﻿using TDGame.Systems.Enemy.Components;
+using TDGame.Systems.Enemy.Components.Spawning;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -60,6 +61,8 @@ namespace TDGame.Systems.Enemy.Systems.Spawning
                 var newEnemy = CommandBuffer.Instantiate(chunkIndex, spawnEnemies[i].prefab);
                 CommandBuffer.RemoveComponent<Prefab>(chunkIndex, newEnemy);
                 CommandBuffer.RemoveComponent<Disabled>(chunkIndex, newEnemy);
+
+                CommandBuffer.AddComponent<EnemyTag>(chunkIndex, newEnemy);
 
                 CommandBuffer.DestroyEntity(chunkIndex, entities[i]);
             }

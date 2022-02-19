@@ -7,6 +7,7 @@ using TDGame.Network.Components.Messaging;
 using TDGame.Systems.Building.Messages.Server;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
+using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -31,6 +32,7 @@ namespace TDGame.Systems.Building
             var spawned = await handle;
 
             spawned.transform.position = position;
+            spawned.AddComponent<ConvertToEntity>();
         }
 
         private void Handle_NewBuildingMessage(NetworkConnection sender, Stream stream)
