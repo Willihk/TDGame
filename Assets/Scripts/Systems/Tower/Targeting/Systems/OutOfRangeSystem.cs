@@ -8,10 +8,10 @@ using Unity.Transforms;
 
 namespace TDGame.Systems.Tower.Targeting.Systems
 {
-    public class ClosestTargetingSystem : SystemBase
+    public class OutOfRangeSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem commandBufferSystem;
-
+        
         private EntityQuery enemyQuery;
         private EntityQuery towerQuery;
 
@@ -32,42 +32,32 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             });
             
         }
-
+        
         protected override void OnUpdate()
         {
-            var enemies = enemyQuery.ToEntityArrayAsync(Allocator.TempJob, out var enemyHandle);
+            var translations = GetComponentDataFromEntity<Translation>(true);
 
-            var tra = GetComponentDataFromEntity<Translation>(true);
-            
-            var job = new TargetJob
+            var job = new OutOfRangeJob
             {
-                CommandBuffer = commandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                EnemyTranslations = tra,
-                EnemyEntities = enemies,
+                targetBufferHandle = GetBufferTypeHandle<TargetBufferElement>(),
+                EnemyTranslations = translations,
                 TranslationHandle = GetComponentTypeHandle<Translation>(),
                 RangeHandle = GetComponentTypeHandle<TargetRange>(),
-                targetBufferHandle = GetBufferTypeHandle<TargetBufferElement>(),
                 EntityHandle = GetEntityTypeHandle()
             };
-            var handle = job.ScheduleParallel(towerQuery, 8, enemyHandle);
+            
+            var handle = job.Schedule(towerQuery);
             commandBufferSystem.AddJobHandleForProducer(handle);
             Dependency = JobHandle.CombineDependencies(Dependency, handle);
         }
 
-
         [BurstCompatible]
-        private struct TargetJob : IJobEntityBatch
+        private struct OutOfRangeJob : IJobEntityBatch
         {
-            public EntityCommandBuffer.ParallelWriter CommandBuffer;
-
             public BufferTypeHandle<TargetBufferElement> targetBufferHandle;
 
             [ReadOnly]
             public ComponentDataFromEntity<Translation> EnemyTranslations;
-
-            [ReadOnly]
-            [DeallocateOnJobCompletion]
-            public NativeArray<Entity> EnemyEntities;
 
             [ReadOnly]
             public ComponentTypeHandle<Translation> TranslationHandle;
@@ -85,41 +75,24 @@ namespace TDGame.Systems.Tower.Targeting.Systems
                 var entities = batchInChunk.GetNativeArray(EntityHandle);
 
                 var buffers = batchInChunk.GetBufferAccessor(targetBufferHandle);
-
+                
                 for (int i = 0; i < batchInChunk.Count; i++)
                 {
-                    float closestRange = float.MaxValue;
-                    var closest = Entity.Null;
-
-                    for (int j = 0; j < EnemyEntities.Length; j++)
+                    var buffer = buffers[i];
+                    for (int j = 0; j < buffer.Length; j++)
                     {
-                        float distance = math.distance(translations[i].Value, EnemyTranslations[EnemyEntities[j]].Value);
-
-                        if (ranges[i].Range < distance || distance > closestRange)
-                            continue;
-
-                        closestRange = distance;
-                        closest = EnemyEntities[j];
+                        if (EnemyTranslations.HasComponent(buffer[j]))
+                        {
+                            float distance = math.distance(translations[i].Value, EnemyTranslations[buffer[j]].Value);
+                            
+                            if (distance > ranges[i].Range)
+                                buffer.RemoveAt(j);
+                        }
+                        else
+                        {
+                            buffer.RemoveAt(j);
+                        }
                     }
-                    
-                    if (closest == Entity.Null)
-                        continue;
-
-                    if (buffers[i].Length == 0)
-                    {
-                        buffers[i].Add(closest);
-                    }
-                    else
-                    {
-                        var buffer = buffers[i];
-                        buffer[0] = closest;
-                    }
-                    // else
-                    // {
-                    //     var buffer = CommandBuffer.AddBuffer<TargetBufferElement>(batchIndex, entities[i]);
-                    //
-                    //     buffer.Add(closest);
-                    // }
                 }
             }
         }
