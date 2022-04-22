@@ -8,7 +8,7 @@ using Unity.Transforms;
 
 namespace TDGame.Systems.Tower.Targeting.Systems
 {
-    public class OutOfRangeSystem : SystemBase
+    public partial class OutOfRangeSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem commandBufferSystem;
         

@@ -7,7 +7,7 @@ using Unity.Jobs;
 
 namespace TDGame.Systems.Enemy.Systems.Spawning
 {
-    public class SimpleEnemySpawningSystem : SystemBase
+    public partial class SimpleEnemySpawningSystem : SystemBase
     {
         BeginSimulationEntityCommandBufferSystem entityCommandBufferSystem;
 

@@ -5,7 +5,7 @@ using Unity.Transforms;
 
 namespace TDGame.Systems.Enemy.Systems.Movement
 {
-    public class EnemyReachedEndSystem : SystemBase
+    public partial class EnemyReachedEndSystem : SystemBase
     {
         EntityQuery query;
 

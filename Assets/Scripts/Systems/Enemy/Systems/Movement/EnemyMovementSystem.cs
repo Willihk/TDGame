@@ -8,7 +8,7 @@ using Unity.Transforms;
 
 namespace TDGame.Systems.Enemy.Systems.Movement
 {
-    public class EnemyMovementSystem : SystemBase
+    public partial class EnemyMovementSystem : SystemBase
     {
         public float3[] path;
 
