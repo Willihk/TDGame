@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
-using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,14 +7,10 @@ namespace Mirror
 {
     [CustomEditor(typeof(NetworkBehaviour), true)]
     [CanEditMultipleObjects]
-    public class NetworkBehaviourInspector : OdinEditor
+    public class NetworkBehaviourInspector : Editor
     {
-        /// <summary>
-        /// List of all visible syncVars in target class
-        /// </summary>
-        protected List<string> syncVarNames = new List<string>();
         bool syncsAnything;
-        SyncListDrawer syncListDrawer;
+        SyncObjectCollectionsDrawer syncObjectCollectionsDrawer;
 
         // does this type sync anything? otherwise we don't need to show syncInterval
         bool SyncsAnything(Type scriptClass)
@@ -44,16 +37,12 @@ namespace Mirror
             // is always there even if we don't use SyncObjects. so we need to
             // search for SyncObjects manually.
             // Any SyncObject should be added to syncObjects when unity creates an
-            // object so we can cheeck length of list so see if sync objects exists
-            FieldInfo syncObjectsField = scriptClass.GetField("syncObjects", BindingFlags.NonPublic | BindingFlags.Instance);
-            List<SyncObject> syncObjects = (List<SyncObject>)syncObjectsField.GetValue(serializedObject.targetObject);
-
-            return syncObjects.Count > 0;
+            // object so we can check length of list so see if sync objects exists
+            return ((NetworkBehaviour)serializedObject.targetObject).HasSyncObjects();
         }
 
-        protected override void OnEnable()
+        void OnEnable()
         {
-            base.OnEnable();
             if (target == null) { Debug.LogWarning("NetworkBehaviourInspector had no target object"); return; }
 
             // If target's base class is changed from NetworkBehaviour to MonoBehaviour
@@ -62,41 +51,28 @@ namespace Mirror
 
             Type scriptClass = target.GetType();
 
-            syncVarNames = new List<string>();
-            foreach (FieldInfo field in InspectorHelper.GetAllFields(scriptClass, typeof(NetworkBehaviour)))
-            {
-                if (field.IsSyncVar() && field.IsVisibleField())
-                {
-                    syncVarNames.Add(field.Name);
-                }
-            }
-
-            syncListDrawer = new SyncListDrawer(serializedObject.targetObject);
+            syncObjectCollectionsDrawer = new SyncObjectCollectionsDrawer(serializedObject.targetObject);
 
             syncsAnything = SyncsAnything(scriptClass);
         }
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
-            DrawDefaultSyncLists();
+            DrawDefaultInspector();
+            DrawSyncObjectCollections();
             DrawDefaultSyncSettings();
         }
 
-        /// <summary>
-        /// Draws Sync Objects that are IEnumerable
-        /// </summary>
-        protected void DrawDefaultSyncLists()
+        // Draws Sync Objects that are IEnumerable
+        protected void DrawSyncObjectCollections()
         {
-            // Need this check incase OnEnable returns early
-            if (syncListDrawer == null) { return; }
+            // Need this check in case OnEnable returns early
+            if (syncObjectCollectionsDrawer == null) return;
 
-            syncListDrawer.Draw();
+            syncObjectCollectionsDrawer.Draw();
         }
 
-        /// <summary>
-        /// Draws SyncSettings if the NetworkBehaviour has anything to sync
-        /// </summary>
+        // Draws SyncSettings if the NetworkBehaviour has anything to sync
         protected void DrawDefaultSyncSettings()
         {
             // does it sync anything? then show extra properties
@@ -116,73 +92,4 @@ namespace Mirror
             serializedObject.ApplyModifiedProperties();
         }
     }
-    public class SyncListDrawer
-    {
-        readonly UnityEngine.Object targetObject;
-        readonly List<SyncListField> syncListFields;
-
-        public SyncListDrawer(UnityEngine.Object targetObject)
-        {
-            this.targetObject = targetObject;
-            syncListFields = new List<SyncListField>();
-            foreach (FieldInfo field in InspectorHelper.GetAllFields(targetObject.GetType(), typeof(NetworkBehaviour)))
-            {
-                if (field.IsSyncObject() && field.IsVisibleSyncObject())
-                {
-                    syncListFields.Add(new SyncListField(field));
-                }
-            }
-        }
-
-        public void Draw()
-        {
-            if (syncListFields.Count == 0) { return; }
-
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Sync Lists", EditorStyles.boldLabel);
-
-            for (int i = 0; i < syncListFields.Count; i++)
-            {
-                DrawSyncList(syncListFields[i]);
-            }
-        }
-
-        void DrawSyncList(SyncListField syncListField)
-        {
-            syncListField.visible = EditorGUILayout.Foldout(syncListField.visible, syncListField.label);
-            if (syncListField.visible)
-            {
-                using (new EditorGUI.IndentLevelScope())
-                {
-                    object fieldValue = syncListField.field.GetValue(targetObject);
-                    if (fieldValue is IEnumerable synclist)
-                    {
-                        int index = 0;
-                        foreach (object item in synclist)
-                        {
-                            string itemValue = item != null ? item.ToString() : "NULL";
-                            string itemLabel = "Element " + index;
-                            EditorGUILayout.LabelField(itemLabel, itemValue);
-
-                            index++;
-                        }
-                    }
-                }
-            }
-        }
-
-        class SyncListField
-        {
-            public bool visible;
-            public readonly FieldInfo field;
-            public readonly string label;
-
-            public SyncListField(FieldInfo field)
-            {
-                this.field = field;
-                visible = false;
-                label = field.Name + "  [" + field.FieldType.Name + "]";
-            }
-        }
-    }
-} //namespace
+}

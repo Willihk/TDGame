@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Mirror.Examples.MultipleMatch
 {
-    [RequireComponent(typeof(NetworkMatchChecker))]
+    [RequireComponent(typeof(NetworkMatch))]
     public class MatchController : NetworkBehaviour
     {
         internal readonly SyncDictionary<NetworkIdentity, MatchPlayerData> matchPlayerData = new SyncDictionary<NetworkIdentity, MatchPlayerData>();
@@ -93,7 +92,7 @@ namespace Mirror.Examples.MultipleMatch
             }
         }
 
-        [Command(ignoreAuthority = true)]
+        [Command(requiresAuthority = false)]
         public void CmdMakePlay(CellValue cellValue, NetworkConnectionToClient sender = null)
         {
             // If wrong player or cell already taken, ignore
@@ -191,7 +190,7 @@ namespace Mirror.Examples.MultipleMatch
             CmdPlayAgain();
         }
 
-        [Command(ignoreAuthority = true)]
+        [Command(requiresAuthority = false)]
         public void CmdPlayAgain(NetworkConnectionToClient sender = null)
         {
             if (!playAgain)
@@ -248,13 +247,13 @@ namespace Mirror.Examples.MultipleMatch
             CmdRequestExitGame();
         }
 
-        [Command(ignoreAuthority = true)]
+        [Command(requiresAuthority = false)]
         public void CmdRequestExitGame(NetworkConnectionToClient sender = null)
         {
             StartCoroutine(ServerEndMatch(sender, false));
         }
 
-        public void OnPlayerDisconnected(NetworkConnection conn)
+        public void OnPlayerDisconnected(NetworkConnectionToClient conn)
         {
             // Check that the disconnecting client is a player in this match
             if (player1 == conn.identity || player2 == conn.identity)
@@ -263,7 +262,7 @@ namespace Mirror.Examples.MultipleMatch
             }
         }
 
-        public IEnumerator ServerEndMatch(NetworkConnection conn, bool disconnected)
+        public IEnumerator ServerEndMatch(NetworkConnectionToClient conn, bool disconnected)
         {
             canvasController.OnPlayerDisconnected -= OnPlayerDisconnected;
 

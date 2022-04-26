@@ -40,37 +40,37 @@ namespace TDGame.Network
 
         public Dictionary<NetworkConnection, int> connectionRelations = new Dictionary<NetworkConnection, int>();
 
-        public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
-        {
-            var playerData = new RegisterPlayerData
-                {Name = "Name " + connectionRelations[conn], Id = connectionRelations[conn]};
+        //public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
+        //{
+        //    var playerData = new RegisterPlayerData
+        //        {Name = "Name " + connectionRelations[conn], Id = connectionRelations[conn]};
 
-            GameObject roomObject = Instantiate(roomPlayerPrefab.gameObject);
-            var lobbyPlayer = roomObject.GetComponent<NetworkedLobbyPlayer>();
-            lobbyPlayer.Setup(playerData);
+        //    GameObject roomObject = Instantiate(roomPlayerPrefab.gameObject);
+        //    var lobbyPlayer = roomObject.GetComponent<NetworkedLobbyPlayer>();
+        //    lobbyPlayer.Setup(playerData);
 
 
-            connectedPlayers.Add(connectionRelations[conn], playerData);
-            eventBinder.ServerOnClientConnect(conn);
-            return roomObject;
-        }
+        //    connectedPlayers.Add(connectionRelations[conn], playerData);
+        //    eventBinder.ServerOnClientConnect(conn);
+        //    return roomObject;
+        //}
 
-        public override void OnRoomServerConnect(NetworkConnection conn)
-        {
-            eventBinder.ServerOnClientConnect(conn);
-            int id = Random.Range(0, int.MaxValue);
-            connectionRelations.Add(conn, id);
-        }
+        //public override void OnRoomServerConnect(NetworkConnection conn)
+        //{
+        //    eventBinder.ServerOnClientConnect(conn);
+        //    int id = Random.Range(0, int.MaxValue);
+        //    connectionRelations.Add(conn, id);
+        //}
 
-        public override void OnRoomServerDisconnect(NetworkConnection conn)
-        {
-            eventBinder.ServerOnClientDisconnect(conn);
+        //public override void OnRoomServerDisconnect(NetworkConnection conn)
+        //{
+        //    eventBinder.ServerOnClientDisconnect(conn);
             
-            if (connectedPlayers.ContainsKey(connectionRelations[conn]))
-                connectedPlayers.Remove(connectionRelations[conn]);
+        //    if (connectedPlayers.ContainsKey(connectionRelations[conn]))
+        //        connectedPlayers.Remove(connectionRelations[conn]);
 
-            connectionRelations.Remove(conn);
-        }
+        //    connectionRelations.Remove(conn);
+        //}
 
         public override void OnRoomServerPlayersReady()
         {

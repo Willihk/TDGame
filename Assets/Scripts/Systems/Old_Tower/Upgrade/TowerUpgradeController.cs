@@ -53,7 +53,7 @@ namespace TDGame.Systems.Tower.Upgrade
             return upgrades;
         }
 
-        [Command(ignoreAuthority = true)]
+        [Command(requiresAuthority = false)]
         public void CmdUpgradeTower(GameObject tower, string upgradeName, NetworkConnectionToClient sender = null)
         {
             var towerOwner = tower.GetComponent<NetworkIdentity>().connectionToClient;

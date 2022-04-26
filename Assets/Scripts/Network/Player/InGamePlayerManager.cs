@@ -76,7 +76,7 @@ namespace TDGame.Network.Player
             print("assigning player object");
             var playerObject = GetPlayerById(playerId);
             var identity = playerObject.GetComponent<NetworkIdentity>();
-            identity.AssignClientAuthority(connection);
+            //identity.AssignClientAuthority(connection);
         }
 
         public GameObject GetPlayerById(int id)

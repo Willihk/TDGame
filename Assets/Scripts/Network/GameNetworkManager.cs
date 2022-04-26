@@ -1,5 +1,4 @@
 ﻿using Mirror;
-using TDGame.Network.Manager;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -39,15 +38,20 @@ namespace TDGame.Network
             onServerStopped.Invoke();
         }
 
-        public override void OnServerConnect(NetworkConnection conn)
+        public override void OnServerConnect(NetworkConnectionToClient conn)
         {
-            onServerClientConnected.Invoke((ulong)conn.connectionId);
+            base.OnServerConnect(conn);
         }
 
-        public override void OnServerDisconnect(NetworkConnection conn)
-        {
-            onServerClientDisconnected.Invoke((ulong)conn.connectionId);
-        }
+        //public override void OnServerConnect(NetworkConnection conn)
+        //{
+        //    onServerClientConnected.Invoke((ulong)conn.connectionId);
+        //}
+
+        //public override void OnServerDisconnect(NetworkConnection conn)
+        //{
+        //    onServerClientDisconnected.Invoke((ulong)conn.connectionId);
+        //}
 
         public override void OnClientConnect(NetworkConnection conn)
         {

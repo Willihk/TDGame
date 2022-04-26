@@ -21,6 +21,8 @@ using UnityEngine;
 
 namespace Mirror.Experimental
 {
+    // Deprecated 2022-01-18
+    [Obsolete("Use the default NetworkTransform instead, it has proper snapshot interpolation.")]
     public abstract class NetworkTransformBase : NetworkBehaviour
     {
         // target transform to sync. can be on a child.
@@ -212,7 +214,7 @@ namespace Mirror.Experimental
         }
 
         // local authority client sends sync message to server for broadcasting
-        [Command(channel = Channels.DefaultUnreliable)]
+        [Command(channel = Channels.Unreliable)]
         void CmdClientToServerSync(Vector3 position, uint packedRotation, Vector3 scale)
         {
             // Ignore messages from client if not in client authority mode
@@ -229,7 +231,7 @@ namespace Mirror.Experimental
             RpcMove(position, packedRotation, scale);
         }
 
-        [ClientRpc(channel = Channels.DefaultUnreliable)]
+        [ClientRpc(channel = Channels.Unreliable)]
         void RpcMove(Vector3 position, uint packedRotation, Vector3 scale)
         {
             if (hasAuthority && excludeOwnerUpdate) return;
@@ -456,12 +458,12 @@ namespace Mirror.Experimental
             lastRotation = newLocalRotation;
         }
 
-        [ClientRpc(channel = Channels.DefaultUnreliable)]
+        [ClientRpc(channel = Channels.Unreliable)]
         void RpcTeleport(Vector3 newPosition, uint newPackedRotation, bool isClientAuthority)
         {
             DoTeleport(newPosition, Compression.DecompressQuaternion(newPackedRotation));
 
-            // only send finished if is owner and is ClientAuthority on server 
+            // only send finished if is owner and is ClientAuthority on server
             if (hasAuthority && isClientAuthority)
                 CmdTeleportFinished();
         }
@@ -470,14 +472,14 @@ namespace Mirror.Experimental
         /// This RPC will be invoked on server after client finishes overriding the position.
         /// </summary>
         /// <param name="initialAuthority"></param>
-        [Command(channel = Channels.DefaultUnreliable)]
+        [Command(channel = Channels.Unreliable)]
         void CmdTeleportFinished()
         {
             if (clientAuthorityBeforeTeleport)
             {
                 clientAuthority = true;
 
-                // reset value so doesnt effect future calls, see note in ServerTeleport
+                // reset value so doesn't effect future calls, see note in ServerTeleport
                 clientAuthorityBeforeTeleport = false;
             }
             else

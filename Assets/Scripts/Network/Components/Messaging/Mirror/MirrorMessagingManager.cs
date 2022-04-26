@@ -15,7 +15,7 @@ namespace TDGame.Network.Components.Messaging.Mirror
             Instance = this;
 
             NetworkServer.RegisterHandler<GenericMessage>(HandleGenericMessage);
-            NetworkClient.RegisterHandler<GenericMessage>(HandleGenericMessage);
+            NetworkClient.RegisterHandler<GenericMessage>((h) => HandleGenericMessage(null, h));
         }
 
         [SerializeField]
