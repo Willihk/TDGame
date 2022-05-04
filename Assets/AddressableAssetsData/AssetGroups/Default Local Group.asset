@@ -127,6 +127,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Enemy
+  - m_GUID: 323b81079db54154ea5523765d74615d
+    m_Address: Assets/ScriptableObjects/EventChannels/Network/Client/Connected.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c39a920d5eec38945baf2fb302f90931
+    m_Address: Assets/_Project/ScriptableObjects/EventChannels/Network/Server/Disconnected.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0c8c1f3f56af3754f81d0475ffc0a639
+    m_Address: Assets/_Project/ScriptableObjects/EventChannels/Network/Server/Connected.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:

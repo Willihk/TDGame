@@ -20,7 +20,7 @@ namespace TDGame.UI.Lobby
         public void OnClickStart()
         {
             // Check host/server
-            if (NetworkServer.active)
+            if (CustomNetworkManager.Instance.serverWrapper.isListening)
             {
                 startGameEvent.Raise();
             }

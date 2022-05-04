@@ -12,7 +12,10 @@ namespace TDGame.Network.Components
         public static CustomNetworkManager Instance { get; private set; }
 
         [SerializeField]
-        public NetworkManager networkManager;
+        public TransportServerWrapper serverWrapper;
+        
+        [SerializeField]
+        public TransportClientWrapper clientWrapper;
 
         private void Awake()
         {
@@ -21,17 +24,19 @@ namespace TDGame.Network.Components
 
         public void StartServer()
         {
-            networkManager.StartServer();
+            serverWrapper.StartServer();
         }
 
         public void StartHost()
         {
-            networkManager.StartHost();
+            serverWrapper.StartServer();
+            clientWrapper.ConnectToLocalhost();
         }
 
         public void StartClient(string ip, ushort port = 777)
         {
-            networkManager.networkAddress = ip;
+            
+            //networkManager.networkAddress = ip;
         }
 
         /// <summary>
@@ -40,20 +45,21 @@ namespace TDGame.Network.Components
         /// </summary>
         public void Stop()
         {
-            if (NetworkServer.active && NetworkClient.isConnected)
+            if (serverWrapper.isListening && clientWrapper.isConnected)
             {
                 // stop host if host-only
-                networkManager.StopHost();
+                clientWrapper.Disconnect();
+                serverWrapper.StopServer();
             }
-            else if (NetworkClient.isConnected)
+            else if (clientWrapper.isConnected)
             {
                 // stop client if client-only
-                networkManager.StopClient();
+                clientWrapper.Disconnect();
             }
-            else if (NetworkServer.active)
+            else if (serverWrapper.isListening)
             {
                 // stop server if server-only
-                networkManager.StopServer();
+                serverWrapper.StopServer();
             }
         }
     }

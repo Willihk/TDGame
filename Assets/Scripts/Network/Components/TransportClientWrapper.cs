@@ -1,7 +1,9 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using Unity.Collections;
 using Unity.Networking.Transport;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDGame.Network.Components
 {
@@ -9,16 +11,24 @@ namespace TDGame.Network.Components
     {
         private NetworkDriver driver;
         private NetworkConnection connection;
+        NetworkPipeline pipeline;
 
         public ushort port = 7777;
 
-        [ReadOnly]
+        public UnityEvent clientConnected;
+        public UnityEvent clientDisconnected;
+        public UnityEvent clientStopped;
+
+        [Sirenix.OdinInspector.ReadOnly]
         public bool isConnected;
+
+        public Action<byte[]> onReceivedData;
+        
 
         private void Start()
         {
             driver = NetworkDriver.Create();
-           
+            pipeline = driver.CreatePipeline(typeof(ReliableSequencedPipelineStage));
         }
 
         [Button]
@@ -33,12 +43,25 @@ namespace TDGame.Network.Components
         public void Disconnect()
         {
             connection.Disconnect(driver);
+            OnDestroy();
         }
 
         private void OnDestroy()
         {
             driver.Dispose();
             isConnected = false;
+            clientStopped.Invoke();
+        }
+
+        public void SendToServer(Span<byte> payload)
+        {
+            var data = new NativeArray<byte>(payload.ToArray(), Allocator.Temp);
+            Debug.Log("Client sending data with length: " + data.Length);
+            Debug.Log("Client data sent to server: " + String.Join("," ,data));
+
+            driver.BeginSend(pipeline, connection, out var writer);
+            writer.WriteBytes(data);
+            driver.EndSend(writer);
         }
 
         private void Update()
@@ -59,13 +82,23 @@ namespace TDGame.Network.Components
                 {
                     case NetworkEvent.Type.Connect:
                         isConnected = true;
+                        clientConnected.Invoke();
                         break;
                     case NetworkEvent.Type.Disconnect:
                         isConnected = false;
                         connection = default;
+                        clientDisconnected.Invoke();
                         break;
                     case NetworkEvent.Type.Data:
+                        Debug.Log("client received data with length: " + reader.Length);
+                        var nativeArray = new NativeArray<byte>(reader.Length,Allocator.Temp);
+                        reader.ReadBytes(nativeArray);
+                        byte[] data = nativeArray.ToArray();
+                        Debug.Log("client data received: " + String.Join("," ,data));
+                        nativeArray.Dispose();
+                        onReceivedData?.Invoke(data);
                         break;
+                    
                     default:
                         // Should never reach
                         break;

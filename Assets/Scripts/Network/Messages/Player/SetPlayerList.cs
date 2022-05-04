@@ -9,6 +9,6 @@ namespace TDGame.Network.Messages.Player
     public struct SetPlayerList
     {
         [Key(0)]
-        public List<int> Players;
+        public int[] Players;
     }
 }

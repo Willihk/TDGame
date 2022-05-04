@@ -8,6 +8,6 @@ namespace TDGame.Network.Components.Messaging
 {
     public class NetworkConnection
     {
-        public ulong id;
+        public int id;
     }
 }

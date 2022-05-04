@@ -95,7 +95,7 @@ namespace TDGame.Network.Components
 
         #region Scene syncing
 
-        public void Client_OnConnected(ulong id)
+        public void Client_OnConnected()
         {
             messagingManager.SendNamedMessageToServer(new RequestLoadedScenes());
         }

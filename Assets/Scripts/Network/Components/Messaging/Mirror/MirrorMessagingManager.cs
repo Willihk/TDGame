@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace TDGame.Network.Components.Messaging.Mirror
 {
-    public class MirrorMessagingManager : BaseMessagingManager
+    public class CustomMessagingManager : BaseMessagingManager
     {
         private void Awake()
         {
@@ -61,7 +61,7 @@ namespace TDGame.Network.Components.Messaging.Mirror
             if (registeredCallbacks.TryGetValue(genericMessage.Name, out NamedMessageDelegate callback))
             {
                 var stream = new MemoryStream(genericMessage.Message);
-                callback.Invoke(new NetworkConnection() { id = (ulong)sender.connectionId }, stream);
+                callback.Invoke(new NetworkConnection() { id = sender.connectionId }, stream);
             }
         }
 
