@@ -35,8 +35,7 @@ namespace TDGame.Network.Components
 
         public void StartClient(string ip, ushort port = 777)
         {
-            
-            //networkManager.networkAddress = ip;
+            clientWrapper.Connect(ip);
         }
 
         /// <summary>

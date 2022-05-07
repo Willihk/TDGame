@@ -39,6 +39,15 @@ namespace TDGame.Network.Components
 
             connection = driver.Connect(endpoint);
         } 
+        
+        [Button]
+        public void Connect(string ip)
+        {
+            var endpoint = NetworkEndPoint.Parse(ip, port);
+
+            connection = driver.Connect(endpoint);
+        } 
+        
         [Button]
         public void Disconnect()
         {
