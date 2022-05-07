@@ -1,5 +1,6 @@
 ﻿using TDGame.Systems.Enemy.Components;
 using TDGame.Systems.Tower.Targeting.Components;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -49,13 +50,13 @@ namespace TDGame.Systems.Tower.Targeting.Systems
                 targetBufferHandle = GetBufferTypeHandle<TargetBufferElement>(),
                 EntityHandle = GetEntityTypeHandle()
             };
-            var handle = job.ScheduleParallel(towerQuery, 8, enemyHandle);
+            var handle = job.ScheduleParallel(towerQuery, enemyHandle);
             commandBufferSystem.AddJobHandleForProducer(handle);
             Dependency = JobHandle.CombineDependencies(Dependency, handle);
         }
 
 
-        [BurstCompatible]
+        [BurstCompile]
         private struct TargetJob : IJobEntityBatch
         {
             public EntityCommandBuffer.ParallelWriter CommandBuffer;

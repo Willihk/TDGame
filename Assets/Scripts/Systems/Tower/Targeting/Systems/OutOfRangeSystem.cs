@@ -1,5 +1,6 @@
 ﻿using TDGame.Systems.Enemy.Components;
 using TDGame.Systems.Tower.Targeting.Components;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -51,7 +52,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             Dependency = JobHandle.CombineDependencies(Dependency, handle);
         }
 
-        [BurstCompatible]
+        [BurstCompile]
         private struct OutOfRangeJob : IJobEntityBatch
         {
             public BufferTypeHandle<TargetBufferElement> targetBufferHandle;

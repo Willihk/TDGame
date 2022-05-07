@@ -139,6 +139,14 @@ MonoBehaviour:
     m_Address: Assets/_Project/ScriptableObjects/EventChannels/Network/Server/Connected.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 17aefed55eeee7a489ad6057372a4416
+    m_Address: Assets/_Project/Prefabs/Towers/TestTurret/TestTurret.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d2a0bdefea223c649980feafc56f8384
+    m_Address: Assets/_Project/ScriptableObjects/Data/Tower/TestTurret.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:

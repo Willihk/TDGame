@@ -1,4 +1,5 @@
 ﻿using TDGame.Systems.Enemy.Components.Movement;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
@@ -7,10 +8,14 @@ namespace TDGame.Systems.Enemy.Systems.Movement
 {
     public partial class EnemyReachedEndSystem : SystemBase
     {
+        private EndSimulationEntityCommandBufferSystem commandBufferSystem;
+        
         EntityQuery query;
 
         protected override void OnCreate()
         {
+            commandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
             query = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[] { typeof(ReachedEndTag) },
@@ -19,22 +24,18 @@ namespace TDGame.Systems.Enemy.Systems.Movement
 
         protected override void OnUpdate()
         {
-            var commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
-
             var job = new RemoveEnemyJob()
             {
-                CommandBuffer = commandBuffer.AsParallelWriter(),
+                CommandBuffer = commandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 EntityType = GetEntityTypeHandle(),
             };
 
-            job.ScheduleParallel(query, 1, Dependency).Complete();
-
-            commandBuffer.Playback(EntityManager);
-            commandBuffer.Dispose();
+           Dependency = job.ScheduleParallel(query, Dependency);
+           commandBufferSystem.AddJobHandleForProducer(Dependency);
         }
     }
     
-    [BurstCompatible]
+    [BurstCompile]
     struct RemoveEnemyJob : IJobEntityBatch
     {
         public EntityCommandBuffer.ParallelWriter CommandBuffer;

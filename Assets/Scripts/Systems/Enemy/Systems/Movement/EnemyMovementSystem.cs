@@ -1,4 +1,5 @@
 ﻿using TDGame.Systems.Enemy.Components.Movement;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -14,8 +15,11 @@ namespace TDGame.Systems.Enemy.Systems.Movement
 
         EntityQuery query;
 
+        private EndSimulationEntityCommandBufferSystem commandBufferSystem;
+
         protected override void OnCreate()
         {
+            commandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             query = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[] { typeof(EnemyMoveTowards) },
@@ -29,11 +33,10 @@ namespace TDGame.Systems.Enemy.Systems.Movement
                 return;
 
             var waypoints = new NativeArray<float3>(path, Allocator.TempJob);
-            var commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
             var job = new EnemyMovementJob()
             {
-                CommandBuffer = commandBuffer.AsParallelWriter(),
+                CommandBuffer = commandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 DeltaTime = Time.DeltaTime,
                 Waypoints = waypoints,
                 EntityType = GetEntityTypeHandle(),
@@ -41,15 +44,12 @@ namespace TDGame.Systems.Enemy.Systems.Movement
                 TranslationHandle = GetComponentTypeHandle<Translation>()
             };
 
-            job.ScheduleParallel(query, Dependency).Complete();
-
-            commandBuffer.Playback(EntityManager);
-            commandBuffer.Dispose();
-            waypoints.Dispose();
+            Dependency = job.ScheduleParallel(query, Dependency);
+            commandBufferSystem.AddJobHandleForProducer(Dependency);
         }
     }
 
-    [BurstCompatible]
+    [BurstCompile]
     struct EnemyMovementJob : IJobChunk
     {
         public EntityCommandBuffer.ParallelWriter CommandBuffer;
@@ -58,6 +58,7 @@ namespace TDGame.Systems.Enemy.Systems.Movement
         public float DeltaTime;
 
         [ReadOnly]
+        [DeallocateOnJobCompletion]
         public NativeArray<float3> Waypoints;
 
         [ReadOnly]
