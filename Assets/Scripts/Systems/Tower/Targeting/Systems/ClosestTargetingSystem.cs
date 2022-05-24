@@ -20,10 +20,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
         {
             commandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
-            enemyQuery = GetEntityQuery(new EntityQueryDesc
-            {
-                All = new ComponentType[] { typeof(EnemyTag), typeof(Translation) }
-            });
+            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<Translation>());
             towerQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
@@ -31,7 +28,6 @@ namespace TDGame.Systems.Tower.Targeting.Systems
                     typeof(TowerTag), typeof(RequestEnemyTargetTag), typeof(TargetRange), typeof(TargetBufferElement)
                 }
             });
-            
         }
 
         protected override void OnUpdate()
@@ -39,7 +35,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             var enemies = enemyQuery.ToEntityArrayAsync(Allocator.TempJob, out var enemyHandle);
 
             var tra = GetComponentDataFromEntity<Translation>(true);
-            
+
             var job = new TargetJob
             {
                 CommandBuffer = commandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
@@ -94,7 +90,8 @@ namespace TDGame.Systems.Tower.Targeting.Systems
 
                     for (int j = 0; j < EnemyEntities.Length; j++)
                     {
-                        float distance = math.distance(translations[i].Value, EnemyTranslations[EnemyEntities[j]].Value);
+                        float distance = math.distance(translations[i].Value,
+                            EnemyTranslations[EnemyEntities[j]].Value);
 
                         if (ranges[i].Range < distance || distance > closestRange)
                             continue;
@@ -102,7 +99,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
                         closestRange = distance;
                         closest = EnemyEntities[j];
                     }
-                    
+
                     if (closest == Entity.Null)
                         continue;
 
