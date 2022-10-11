@@ -4,13 +4,15 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace TDGame.Systems.Enemy.Systems.Spawning
 {
     public partial class SimpleEnemySpawningSystem : SystemBase
     {
         BeginSimulationEntityCommandBufferSystem entityCommandBufferSystem;
-
+        
         EntityQuery spawnEnemyQuery;
 
         protected override void OnCreate()
