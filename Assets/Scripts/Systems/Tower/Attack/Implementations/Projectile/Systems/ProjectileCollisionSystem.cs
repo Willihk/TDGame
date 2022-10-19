@@ -4,6 +4,7 @@ using TDGame.Systems.Tower.Attack.Implementations.Projectile.Components;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
@@ -18,8 +19,8 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 
         protected override void OnCreate()
         {
-            bufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<Translation>(),
+            bufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
+            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<LocalToParentTransform>(),
                 ComponentType.ReadWrite<EnemyHealthData>());
             collisions = new NativeQueue<Collision>(Allocator.Persistent);
         }
@@ -31,17 +32,21 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 
         protected override void OnUpdate()
         {
-            var enemyEntities = enemyQuery.ToEntityArrayAsync(Allocator.TempJob, out var enemyEntityHandle);
-            var translations = GetComponentDataFromEntity<Translation>(true);
+            var enemyEntities = enemyQuery.ToEntityListAsync(Allocator.TempJob, out var enemyEntityHandle);
+            var translations = GetComponentLookup<LocalToWorldTransform>(true);
 
             var ecb = bufferSystem.CreateCommandBuffer();
+            var handle = JobHandle.CombineDependencies(Dependency, enemyEntityHandle);
+            
             new CollisionJob
             {
                 AllTranslations = translations,
-                EnemyEntities = enemyEntities,
+                EnemyEntities = enemyEntities.AsDeferredJobArray(),
                 Collisions = collisions.AsParallelWriter()
-            }.ScheduleParallel(enemyEntityHandle).Complete();
+            }.ScheduleParallel(handle).Complete();
 
+            enemyEntities.Dispose();
+            
             // need to be local variables to compile
             var queue = collisions;
             var manager = EntityManager;
@@ -71,16 +76,15 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
         partial struct CollisionJob : IJobEntity
         {
             [ReadOnly]
-            [DeallocateOnJobCompletion]
             public NativeArray<Entity> EnemyEntities;
 
             [ReadOnly]
-            public ComponentDataFromEntity<Translation> AllTranslations;
+            public ComponentLookup<LocalToWorldTransform> AllTranslations;
 
             [WriteOnly]
             public NativeQueue<Collision>.ParallelWriter Collisions;
 
-            void Execute(Entity entity, in ProjectileDamage damage, in Translation translation,
+            void Execute(Entity entity, in ProjectileDamage damage, in LocalToWorldTransform translation,
                 in ProjectileRadiusCollider radiusCollider)
             {
                 var closestEntity = Entity.Null;
@@ -88,7 +92,7 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 
                 for (int i = 0; i < EnemyEntities.Length; i++)
                 {
-                    float distance = math.distance(AllTranslations[EnemyEntities[i]].Value, translation.Value);
+                    float distance = math.distance(AllTranslations[EnemyEntities[i]].Value.Position, translation.Value.Position);
 
                     if (distance < closestDistance && distance < radiusCollider.Value)
                     {

@@ -1,10 +1,6 @@
 ﻿using MessagePack;
-using Mirror;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using TDGame.Network.Components.Messaging.Mirror;
 using UnityEngine;
 
 namespace TDGame.Network.Components.Messaging.CustomTransport

@@ -6,7 +6,7 @@ using UnityEngine.Jobs;
 
 namespace TDGame.Systems.Old_Enemy.Movement
 {
-    [BurstCompatible]
+    [GenerateTestsForBurstCompatibility]
     public struct EnemyMovementJob : IJobParallelForTransform
     {
         public float DeltaTime;

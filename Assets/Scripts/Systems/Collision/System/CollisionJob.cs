@@ -12,7 +12,7 @@ namespace TDGame.Systems.Collision.System
         public int ColliderBIndex;
     }
 
-    [BurstCompatible]
+    [GenerateTestsForBurstCompatibility]
     public struct CollisionJob : IJobParallelFor
     {
         [ReadOnly]

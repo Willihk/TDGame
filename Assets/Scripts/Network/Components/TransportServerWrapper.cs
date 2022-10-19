@@ -1,6 +1,7 @@
 ﻿using System;
 using Sirenix.OdinInspector;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Networking.Transport;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,8 +11,9 @@ namespace TDGame.Network.Components
     public enum MessageType
     {
         Undefined = 0,
-        Management = 1,
-        GameLogic = 10,
+        Managed = 1,
+        Unmanaged = 2,
+        Entities = 4,
     }
 
     public class TransportServerWrapper : MonoBehaviour
@@ -43,7 +45,7 @@ namespace TDGame.Network.Components
         [Button]
         public void StartServer()
         {
-            var endpoint = NetworkEndPoint.AnyIpv4;
+            var endpoint = NetworkEndpoint.AnyIpv4;
             endpoint.Port = port;
 
             if (driver.Bind(endpoint) != 0)
@@ -65,7 +67,10 @@ namespace TDGame.Network.Components
         private void OnDestroy()
         {
             driver.Dispose();
-            connections.Dispose();
+            if (connections.IsCreated)
+            {
+                connections.Dispose();
+            }
             isListening = false;
             serverStopped.Invoke();
         }

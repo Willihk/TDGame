@@ -2,7 +2,6 @@
 
 namespace TDGame.Systems.Tower.Targeting.Components
 {
-    [GenerateAuthoringComponent]
     [InternalBufferCapacity(1)]
     public struct TargetBufferElement : IBufferElementData
     {

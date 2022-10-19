@@ -18,11 +18,11 @@ namespace TDGame.Systems.Tower.Targeting.Systems
 
         protected override void OnCreate()
         {
-            commandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
 
             enemyQuery = GetEntityQuery(new EntityQueryDesc
             {
-                All = new ComponentType[] { typeof(EnemyTag), typeof(Translation) }
+                All = new ComponentType[] { typeof(EnemyTag), typeof(LocalToWorldTransform) }
             });
             towerQuery = GetEntityQuery(new EntityQueryDesc
             {
@@ -36,13 +36,13 @@ namespace TDGame.Systems.Tower.Targeting.Systems
         
         protected override void OnUpdate()
         {
-            var translations = GetComponentDataFromEntity<Translation>(true);
+            var translations = GetComponentLookup<LocalToWorldTransform>(true);
 
             var job = new OutOfRangeJob
             {
                 targetBufferHandle = GetBufferTypeHandle<TargetBufferElement>(),
                 EnemyTranslations = translations,
-                TranslationHandle = GetComponentTypeHandle<Translation>(),
+                TranslationHandle = GetComponentTypeHandle<LocalToWorldTransform>(),
                 RangeHandle = GetComponentTypeHandle<TargetRange>(),
                 EntityHandle = GetEntityTypeHandle()
             };
@@ -58,10 +58,10 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             public BufferTypeHandle<TargetBufferElement> targetBufferHandle;
 
             [ReadOnly]
-            public ComponentDataFromEntity<Translation> EnemyTranslations;
+            public ComponentLookup<LocalToWorldTransform> EnemyTranslations;
 
             [ReadOnly]
-            public ComponentTypeHandle<Translation> TranslationHandle;
+            public ComponentTypeHandle<LocalToWorldTransform> TranslationHandle;
 
             [ReadOnly]
             public ComponentTypeHandle<TargetRange> RangeHandle;
@@ -84,7 +84,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
                     {
                         if (EnemyTranslations.HasComponent(buffer[j]))
                         {
-                            float distance = math.distance(translations[i].Value, EnemyTranslations[buffer[j]].Value);
+                            float distance = math.distance(translations[i].Value.Position, EnemyTranslations[buffer[j]].Value.Position);
                             
                             if (distance > ranges[i].Range)
                                 buffer.RemoveAt(j);

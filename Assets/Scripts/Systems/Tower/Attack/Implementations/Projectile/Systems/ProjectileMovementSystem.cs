@@ -9,12 +9,12 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
     {
         protected override void OnUpdate()
         {
-            float deltaTime = Time.DeltaTime;
-            Entities.ForEach((ref Translation translation, in ProjectileMovementSpeed speed, in ProjectileMovementTarget target) =>
+            float deltaTime = SystemAPI.Time.DeltaTime;
+            Entities.ForEach((ref LocalToWorldTransform transform, in ProjectileMovementSpeed speed, in ProjectileMovementTarget target) =>
             {
-                var direction = math.normalize(target.Value - translation.Value);
+                var direction = math.normalize(target.Value - transform.Value.Position);
                 direction.y = 0;
-                translation.Value += direction * speed.Value * deltaTime;
+                transform.Value.Position += direction * speed.Value * deltaTime;
             }).ScheduleParallel();
         }
     }

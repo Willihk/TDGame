@@ -9,7 +9,7 @@ namespace TDGame.Systems.Tower.Attack.Windup.Systems
     {
         protected override void OnUpdate()
         {
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = SystemAPI.Time.DeltaTime;
             Entities.ForEach((ref BasicWindup windup) =>
             {
                 if (windup.Remainingtime > 0)

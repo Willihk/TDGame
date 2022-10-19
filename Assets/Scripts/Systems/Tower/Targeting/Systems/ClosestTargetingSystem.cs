@@ -9,6 +9,7 @@ using Unity.Transforms;
 
 namespace TDGame.Systems.Tower.Targeting.Systems
 {
+    [RequireMatchingQueriesForUpdate]
     public partial class ClosestTargetingSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem commandBufferSystem;
@@ -18,9 +19,9 @@ namespace TDGame.Systems.Tower.Targeting.Systems
 
         protected override void OnCreate()
         {
-            commandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
 
-            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<Translation>());
+            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<LocalToWorldTransform>());
             towerQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
@@ -32,21 +33,21 @@ namespace TDGame.Systems.Tower.Targeting.Systems
 
         protected override void OnUpdate()
         {
-            var enemies = enemyQuery.ToEntityArrayAsync(Allocator.TempJob, out var enemyHandle);
+            var enemies = enemyQuery.ToEntityArray(Allocator.TempJob);
 
-            var tra = GetComponentDataFromEntity<Translation>(true);
+            var transforms = GetComponentLookup<LocalToWorldTransform>(true);
 
             var job = new TargetJob
             {
                 CommandBuffer = commandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                EnemyTranslations = tra,
+                EnemyTranslations = transforms,
                 EnemyEntities = enemies,
-                TranslationHandle = GetComponentTypeHandle<Translation>(),
+                TranslationHandle = GetComponentTypeHandle<LocalToWorldTransform>(),
                 RangeHandle = GetComponentTypeHandle<TargetRange>(),
                 targetBufferHandle = GetBufferTypeHandle<TargetBufferElement>(),
                 EntityHandle = GetEntityTypeHandle()
             };
-            var handle = job.ScheduleParallel(towerQuery, enemyHandle);
+            var handle = job.ScheduleParallel(towerQuery, Dependency);
             commandBufferSystem.AddJobHandleForProducer(handle);
             Dependency = JobHandle.CombineDependencies(Dependency, handle);
         }
@@ -60,14 +61,14 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             public BufferTypeHandle<TargetBufferElement> targetBufferHandle;
 
             [ReadOnly]
-            public ComponentDataFromEntity<Translation> EnemyTranslations;
+            public ComponentLookup<LocalToWorldTransform> EnemyTranslations;
 
             [ReadOnly]
             [DeallocateOnJobCompletion]
             public NativeArray<Entity> EnemyEntities;
 
             [ReadOnly]
-            public ComponentTypeHandle<Translation> TranslationHandle;
+            public ComponentTypeHandle<LocalToWorldTransform> TranslationHandle;
 
             [ReadOnly]
             public ComponentTypeHandle<TargetRange> RangeHandle;
@@ -90,8 +91,8 @@ namespace TDGame.Systems.Tower.Targeting.Systems
 
                     for (int j = 0; j < EnemyEntities.Length; j++)
                     {
-                        float distance = math.distance(translations[i].Value,
-                            EnemyTranslations[EnemyEntities[j]].Value);
+                        float distance = math.distance(translations[i].Value.Position,
+                            EnemyTranslations[EnemyEntities[j]].Value.Position);
 
                         if (ranges[i].Range < distance || distance > closestRange)
                             continue;

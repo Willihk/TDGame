@@ -9,6 +9,9 @@ namespace TDGame.Systems.Enemy.Systems.Health.Systems
     {
         protected override void OnUpdate()
         {
+            if (HealthBarUIPool.Instance == null)
+                return;
+            
             // Add sliders
             Entities.WithAll<EnemyTag>().ForEach((Entity entity, EnemyHealthUIData uiData, in EnemyHealthData healthData) =>
             {
@@ -20,9 +23,13 @@ namespace TDGame.Systems.Enemy.Systems.Health.Systems
 
             
             // Update state
-            Entities.ForEach((Entity entity, EnemyHealthUIData uiData, in EnemyHealthData healthData, in Translation translation) =>
+            Entities.ForEach((Entity entity, EnemyHealthUIData uiData, in EnemyHealthData healthData, in LocalToWorldTransform translation) =>
             {
-                uiData.Slider.transform.position = translation.Value + uiData.Offset;
+                if (uiData.Slider == null)
+                {
+                    return;
+                }
+                uiData.Slider.transform.position = translation.Value.Position + uiData.Offset;
                 uiData.Slider.value = (float)healthData.Health / healthData.MaxHealth;
             }).WithoutBurst().Run();
             

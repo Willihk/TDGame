@@ -13,8 +13,8 @@ namespace TDGame.Systems.Grid.InGame
         {
             var worldPosition = originPoint.position;
 
-            if (Old_GridController.Instance)
-                area.position = Old_GridController.Instance.towerGrid.WorldToGridPosition(worldPosition);
+            if (GridManager.Instance)
+                area.position = GridManager.Instance.towerGrid.WorldToGridPosition(worldPosition);
         }
         
         void OnDrawGizmos()

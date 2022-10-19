@@ -9,13 +9,13 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 
         protected override void OnCreate()
         {
-            bufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            bufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
         }
 
         protected override void OnUpdate()
         {
             var ecb = bufferSystem.CreateCommandBuffer().AsParallelWriter();
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = SystemAPI.Time.DeltaTime;
             
             Entities.ForEach((Entity entity, int entityInQueryIndex, ref ProjectileLifetime lifetime) =>
             {

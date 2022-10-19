@@ -34,7 +34,7 @@ namespace TDGame.Network.Components
         [Button]
         public void ConnectToLocalhost()
         {
-            var endpoint = NetworkEndPoint.LoopbackIpv4; // localhost
+            var endpoint = NetworkEndpoint.LoopbackIpv4; // localhost
             endpoint.Port = port;
 
             connection = driver.Connect(endpoint);
@@ -43,7 +43,7 @@ namespace TDGame.Network.Components
         [Button]
         public void Connect(string ip)
         {
-            var endpoint = NetworkEndPoint.Parse(ip, port);
+            var endpoint = NetworkEndpoint.Parse(ip, port);
 
             connection = driver.Connect(endpoint);
         } 

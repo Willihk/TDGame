@@ -10,6 +10,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
+
 namespace TDGame.Systems.Enemy
 {
     public class EnemyPathManager : MonoBehaviour
@@ -27,7 +28,7 @@ namespace TDGame.Systems.Enemy
             List<int2> path = new Pathfinder().FindPath(start, end, gm.gridSize, gm.mapGrid);
 
 
-            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EnemyMovementSystem>().path = path.Select((x) => (float3)gm.mapGrid.GridToWorldPosition(x)).ToArray();
+            World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EnemyMovementSystem>().path = path.Select((x) => (float3)gm.mapGrid.GridToWorldPosition(x)).ToArray();
         }
     }
 }

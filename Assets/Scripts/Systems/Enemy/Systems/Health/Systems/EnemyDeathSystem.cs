@@ -9,7 +9,7 @@ namespace TDGame.Systems.Enemy.Systems.Health.Systems
 
         protected override void OnCreate()
         {
-            commandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
         }
 
         protected override void OnUpdate()

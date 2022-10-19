@@ -11,7 +11,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
 
         protected override void OnCreate()
         {
-            commandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
         }
 
         protected override void OnUpdate()

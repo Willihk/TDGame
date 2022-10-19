@@ -84,7 +84,7 @@ namespace TDGame.Systems.Enemy.Systems
             if (prefab == Entity.Null)
                 return;
             
-            var data = new SpawnEnemy { prefab = prefab };
+            var data = new SpawnEnemy { prefab =  default}; //TODO: Legacy code
             
             var entity = entityManager.CreateEntity();
             entityManager.AddComponent<SpawnEnemy>(entity);
