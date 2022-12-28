@@ -1,4 +1,5 @@
-﻿using TDGame.PrefabManagement;
+﻿using TDGame.Network.Components.DOTS;
+using TDGame.PrefabManagement;
 using TDGame.Systems.Enemy.Components.Spawning;
 using Unity.Burst;
 using Unity.Collections;
@@ -34,6 +35,7 @@ namespace TDGame.Systems.Enemy
             nextSpawn = SystemAPI.Time.ElapsedTime + delay;
             
             var entity = state.EntityManager.CreateEntity();
+            state.EntityManager.AddComponent<NetworkSend>(entity);
             state.EntityManager.AddComponent<SpawnEnemy>(entity);
             
             var singletonEntity = SystemAPI.GetSingletonEntity<PrefabManagerTag>();

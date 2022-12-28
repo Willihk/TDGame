@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using MessagePack;
-using Mirror;
 using Sirenix.OdinInspector;
 using TDGame.Network.Components.Interfaces;
 using TDGame.Network.Components.Messaging;
@@ -140,7 +138,7 @@ namespace TDGame.Network.Components
 
         public async UniTask<bool> LoadSceneSynced(string sceneID)
         {
-            if (NetworkServer.active && !NetworkClient.active)
+            if (CustomNetworkManager.Instance.serverWrapper.isListening && !CustomNetworkManager.Instance.clientWrapper.isConnected)
             {
 
                 await LoadScene(sceneID);
@@ -155,7 +153,7 @@ namespace TDGame.Network.Components
 
         public async UniTask<bool> UnloadSceneSynced(string sceneID)
         {
-            if (NetworkServer.active && !NetworkClient.active)
+            if (CustomNetworkManager.Instance.serverWrapper.isListening && !CustomNetworkManager.Instance.clientWrapper.isConnected)
             {
                 await UnloadScene(sceneID);
             }

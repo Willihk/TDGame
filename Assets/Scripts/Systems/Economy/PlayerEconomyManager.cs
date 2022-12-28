@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MessagePack;
-using Mirror;
 using Sirenix.OdinInspector;
 using TDGame.Network.Components;
 using TDGame.Network.Components.Messaging;
@@ -40,7 +38,7 @@ namespace TDGame.Systems.Economy
         {
             playerManager = NetworkPlayerManager.Instance;
 
-            if (NetworkServer.active)
+            if (CustomNetworkManager.Instance.serverWrapper.isListening)
             {
                 foreach (var player in playerList.players)
                 {
@@ -49,7 +47,7 @@ namespace TDGame.Systems.Economy
             }
 
 
-            if (NetworkClient.active)
+            if (CustomNetworkManager.Instance.clientWrapper.isConnected)
             {
                 messagingManager.SendNamedMessageToServer(new RequestEconomiesMessage());
             }
@@ -87,7 +85,7 @@ namespace TDGame.Systems.Economy
 
         public void AddCurrencyToEconomy(Economy economy, int amount)
         {
-            if (!NetworkServer.active) // Only run on the server
+            if (!CustomNetworkManager.Instance.serverWrapper.isListening) // Only run on the server
                 return;
 
             // TODO: Sync 
@@ -104,7 +102,7 @@ namespace TDGame.Systems.Economy
 
         public void ReduceCurrencyToEconomy(Economy economy, int amount)
         {
-            if (!NetworkServer.active) // Only run on the server
+            if (!CustomNetworkManager.Instance.serverWrapper.isListening) // Only run on the server
                 return;
 
             // TODO: Sync 

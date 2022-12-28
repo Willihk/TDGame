@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace TDGame.Systems.Tower.Data
 {
@@ -14,6 +13,6 @@ namespace TDGame.Systems.Tower.Data
 
 
         [Tooltip("Reference to the tower prefab")]
-        public AssetReference TowerReference;
+        public GameObject TowerReference;
     }
 }

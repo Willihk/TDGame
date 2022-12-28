@@ -1,14 +1,16 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using TDGame.Network.Components.DOTS;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
+using Unity.Entities;
 using Unity.Networking.Transport;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace TDGame.Network.Components
 {
-    public enum MessageType
+    public enum MessageType : byte
     {
         Undefined = 0,
         Managed = 1,
@@ -71,6 +73,7 @@ namespace TDGame.Network.Components
             {
                 connections.Dispose();
             }
+
             isListening = false;
             serverStopped.Invoke();
         }
@@ -80,10 +83,26 @@ namespace TDGame.Network.Components
             for (int i = 0; i < connections.Length; i++)
             {
                 var data = new NativeArray<byte>(payload.ToArray(), Allocator.Temp);
-                Debug.Log("Server sending data to all with length: " + data.Length);
-                Debug.Log("data sent to all: " + String.Join("," ,data));
+                // Debug.Log("Server sending data to all with length: " + data.Length);
+                // Debug.Log("data sent to all: " + String.Join("," ,data));
 
                 driver.BeginSend(pipeline, connections[i], out var writer);
+                writer.WriteByte((byte)MessageType.Managed);
+                writer.WriteBytes(data);
+                driver.EndSend(writer);
+            }
+        }
+
+        public void SendToAllEntities(Span<byte> payload)
+        {
+            for (int i = 0; i < connections.Length; i++)
+            {
+                var data = new NativeArray<byte>(payload.ToArray(), Allocator.Temp);
+                // Debug.Log("Server sending data to all with length: " + data.Length);
+                // Debug.Log("data sent to all: " + String.Join("," ,data));
+
+                driver.BeginSend(pipeline, connections[i], out var writer);
+                writer.WriteByte((byte)MessageType.Entities);
                 writer.WriteBytes(data);
                 driver.EndSend(writer);
             }
@@ -107,7 +126,7 @@ namespace TDGame.Network.Components
             var data = new NativeArray<byte>(payload.ToArray(), Allocator.Temp);
 
             Debug.Log("Server sending data with length: " + data.Length);
-            Debug.Log("Server data sent: " + String.Join("," ,data));
+            Debug.Log("Server data sent: " + String.Join(",", data));
 
             driver.BeginSend(pipeline, connection, out var writer);
             writer.WriteBytes(data);
@@ -156,10 +175,24 @@ namespace TDGame.Network.Components
                             Debug.Log("Server received data with length: " + reader.Length);
                             var nativeArray = new NativeArray<byte>(reader.Length, Allocator.Temp);
                             reader.ReadBytes(nativeArray);
-                            var data = nativeArray.ToArray();
-                            Debug.Log("Server data received: " + String.Join("," ,data));
-                            nativeArray.Dispose();
-                            onReceivedData?.Invoke(connections[i].InternalId, data);
+
+                            switch (nativeArray[0])
+                            {
+                                case (byte)MessageType.Managed:
+                                    var data = nativeArray.ToArray();
+
+                                    Debug.Log("Server data received: " + String.Join(",", data));
+                                    nativeArray.Dispose();
+                                    onReceivedData?.Invoke(connections[i].InternalId, data);
+                                    break; 
+                                
+                                case (byte)MessageType.Entities:
+                                    World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ReceiveNetworkComponents>().ReceiveData(nativeArray);
+                                    break;
+                                default:
+                                    break;
+                            }
+
                             break;
                     }
                 }

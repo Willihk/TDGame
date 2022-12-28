@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using MessagePack;
-using Mirror;
 using Sirenix.OdinInspector;
 using TDGame.Network.Components.Messaging;
 using TDGame.Network.Messages.Player;

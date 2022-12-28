@@ -1,6 +1,4 @@
-﻿using Mirror;
-using System.IO;
-using MessagePack;
+﻿using MessagePack;
 
 namespace TDGame.Network.Components.Messaging.CustomTransport
 {

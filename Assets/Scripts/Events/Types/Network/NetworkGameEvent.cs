@@ -1,6 +1,6 @@
 ﻿using System;
-using Mirror;
 using TDGame.Events.Base;
+using TDGame.Network.Components.Messaging;
 using UnityEngine;
 
 namespace TDGame.Events.Types.Network

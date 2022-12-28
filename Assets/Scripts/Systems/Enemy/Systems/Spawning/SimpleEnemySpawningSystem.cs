@@ -1,4 +1,5 @@
-﻿using TDGame.PrefabManagement;
+﻿using TDGame.Network.Components.DOTS;
+using TDGame.PrefabManagement;
 using TDGame.Systems.Enemy.Components;
 using TDGame.Systems.Enemy.Components.Spawning;
 using Unity.Burst;
@@ -25,7 +26,7 @@ namespace TDGame.Systems.Enemy.Systems.Spawning
             var buffer = SystemAPI.GetBuffer<PrefabElement>(prefabManagerEntity);
             
 
-            Entities.WithReadOnly(buffer).ForEach((Entity entity, int entityInQueryIndex, in SpawnEnemy spawnEnemy) =>
+            Entities.WithReadOnly(buffer).WithNone<NetworkSend>().ForEach((Entity entity, int entityInQueryIndex, in SpawnEnemy spawnEnemy) =>
             {
                 var newEnemy = commandBuffer.Instantiate(entityInQueryIndex, buffer[0].Value);
                 commandBuffer.AddComponent<EnemyTag>(entityInQueryIndex, newEnemy);

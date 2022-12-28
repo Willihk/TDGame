@@ -1,6 +1,4 @@
-﻿
-using System;
-using Mirror;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
 

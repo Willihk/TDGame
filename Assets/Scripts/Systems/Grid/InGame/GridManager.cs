@@ -2,8 +2,8 @@
 using System.IO;
 using Cysharp.Threading.Tasks;
 using MessagePack;
-using Mirror;
 using TDGame.Events.Base;
+using TDGame.Network.Components;
 using TDGame.Network.Components.Messaging;
 using TDGame.Settings;
 using TDGame.Systems.Grid.Cell;
@@ -142,7 +142,7 @@ namespace TDGame.Systems.Grid.InGame
 
         public void PlaceTowerOnGrid(GameObject tower, GridArea area)
         {
-            if (!NetworkServer.active)
+            if (!CustomNetworkManager.Instance.serverWrapper.isListening)
             {
                 Debug.LogError("Called PlaceTowerOnGrid from a client");
                 return;
@@ -157,7 +157,7 @@ namespace TDGame.Systems.Grid.InGame
 
         public void EmptyGridArea(GridType gridType, GridArea gridArea)
         {
-            if (!NetworkServer.active)
+            if (!CustomNetworkManager.Instance.serverWrapper.isListening)
             {
                 Debug.LogError("Called PlaceTowerOnGrid from a client");
                 return;

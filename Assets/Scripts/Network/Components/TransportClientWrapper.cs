@@ -1,6 +1,8 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using TDGame.Network.Components.DOTS;
 using Unity.Collections;
+using Unity.Entities;
 using Unity.Networking.Transport;
 using UnityEngine;
 using UnityEngine.Events;
@@ -101,11 +103,22 @@ namespace TDGame.Network.Components
                     case NetworkEvent.Type.Data:
                         Debug.Log("client received data with length: " + reader.Length);
                         var nativeArray = new NativeArray<byte>(reader.Length,Allocator.Temp);
-                        reader.ReadBytes(nativeArray);
-                        byte[] data = nativeArray.ToArray();
-                        Debug.Log("client data received: " + String.Join("," ,data));
-                        nativeArray.Dispose();
-                        onReceivedData?.Invoke(data);
+                        switch (nativeArray[0])
+                        {
+                            case (byte)MessageType.Managed:
+                                var data = nativeArray.ToArray();
+
+                                Debug.Log("Server data received: " + String.Join(",", data));
+                                nativeArray.Dispose();
+                                onReceivedData?.Invoke(data);
+                                break; 
+                                
+                            case (byte)MessageType.Entities:
+                                World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ReceiveNetworkComponents>().ReceiveData(nativeArray);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     
                     default:

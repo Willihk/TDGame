@@ -1,5 +1,4 @@
-﻿using Mirror;
-using TDGame.Events.Base;
+﻿using TDGame.Events.Base;
 using TDGame.Network.Components;
 using UnityEngine;
 
