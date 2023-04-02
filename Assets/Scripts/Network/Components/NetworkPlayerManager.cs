@@ -4,13 +4,13 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using MessagePack;
 using Sirenix.OdinInspector;
+using TDGame.Events;
 using TDGame.Network.Components.Messaging;
 using TDGame.Network.Messages.Player;
 using TDGame.Network.Player;
 using TDGame.Player;
 using UnityEngine;
 using UnityEngine.Events;
-using NetworkConnection = TDGame.Network.Components.Messaging.NetworkConnection;
 using Random = UnityEngine.Random;
 
 namespace TDGame.Network.Components
@@ -45,11 +45,11 @@ namespace TDGame.Network.Components
         // Key is networkID, value is id assigned to the player
         // This is only on the server
         [Sirenix.OdinInspector.ShowInInspector]
-        private Dictionary<int, int> registeredPlayers = new Dictionary<int, int>();
+        private Dictionary<TDNetworkConnection, int> registeredPlayers = new Dictionary<TDNetworkConnection, int>();
 
         [Sirenix.OdinInspector.ShowInInspector]
         [ReadOnly]
-        private HashSet<int> connections = new HashSet<int>();
+        private HashSet<TDNetworkConnection> connections = new HashSet<TDNetworkConnection>();
 
         BaseMessagingManager messagingManager;
 
@@ -63,13 +63,16 @@ namespace TDGame.Network.Components
             messagingManager.RegisterNamedMessageHandler<PlayerRegistered>(Handle_PlayerRegistered);
             messagingManager.RegisterNamedMessageHandler<PlayerUnregistered>(Handle_PlayerUnregistered);
             messagingManager.RegisterNamedMessageHandler<SetPlayerList>(Handle_SetPlayerList);
+
+            EventManager.Instance.onServerNetworkConnect.EventListeners += Server_OnClientConnected;
+            EventManager.Instance.onServerNetworkDisconnect.EventListeners += Server_OnClientDisconnected;
         }
 
         public void OnServerStarted()
         {
             playerList.Clear();
-            registeredPlayers = new Dictionary<int, int>();
-            connections = new HashSet<int>();
+            registeredPlayers = new Dictionary<TDNetworkConnection, int>();
+            connections = new HashSet<TDNetworkConnection>();
         }
 
         public void OnServerStopped()
@@ -79,14 +82,14 @@ namespace TDGame.Network.Components
         }
 
 
-        public int GetPlayerId(NetworkConnection connection)
+        public int GetPlayerId(TDNetworkConnection connection)
         {
-            return registeredPlayers[connection.id];
+            return registeredPlayers[connection];
         }
         
         // Called when a player has been registered by the server.
         // Called on all connected clients.
-        private void Handle_PlayerRegistered(NetworkConnection sender, Stream stream)
+        private void Handle_PlayerRegistered(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<PlayerRegistered>(stream);
             onPlayerRegistered.Invoke(message.Id);
@@ -95,7 +98,7 @@ namespace TDGame.Network.Components
 
         // Called when a player has been unregistered/disconnected by the server.
         // Called on all connected clients.
-        private void Handle_PlayerUnregistered(NetworkConnection sender, Stream stream)
+        private void Handle_PlayerUnregistered(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<PlayerUnregistered>(stream);
             onPlayerUnregistered.Invoke(message.Id);
@@ -103,7 +106,7 @@ namespace TDGame.Network.Components
         }
 
 
-        private int RegisterPlayer(int player)
+        private int RegisterPlayer(TDNetworkConnection player)
         {
             if (registeredPlayers.ContainsKey(player))
                 return -1;
@@ -123,7 +126,7 @@ namespace TDGame.Network.Components
             return id;
         }
 
-        public void Server_OnClientDisconnected(int player)
+        public void Server_OnClientDisconnected(TDNetworkConnection player)
         {
             if (registeredPlayers.TryGetValue(player, out int id))
             {
@@ -139,25 +142,25 @@ namespace TDGame.Network.Components
             connections.Remove(player);
         }
 
-        public void Server_OnClientConnected(int player)
+        public void Server_OnClientConnected(TDNetworkConnection connection)
         {
             // Only run on server
-            connections.Add(player);
+            connections.Add(connection);
 
             UniTask.Create(async () =>
             {
                 await UniTask.Delay(100);
-                messagingManager.SendNamedMessage(new NetworkConnection() { id = player },
+                messagingManager.SendNamedMessage(connection,
                     new SetPlayerList { Players = registeredPlayers.Values.ToArray() });
             });
         }
 
-        public void Handle_ClientRegistrationMessage(NetworkConnection sender, Stream stream)
+        public void Handle_ClientRegistrationMessage(TDNetworkConnection sender, Stream stream)
         {
             if (!CustomNetworkManager.Instance.serverWrapper.isListening)
                 return;
 
-            int id = RegisterPlayer(sender.id);
+            int id = RegisterPlayer(sender);
 
             messagingManager.SendNamedMessage(sender, new SetLocalPlayer { Id = id });
         }
@@ -176,13 +179,13 @@ namespace TDGame.Network.Components
             SendRegistrationMessage().Forget();
         }
         
-        private void Handle_SetLocalPlayer(NetworkConnection sender, Stream payload)
+        private void Handle_SetLocalPlayer(TDNetworkConnection sender, Stream payload)
         {
             var message = MessagePackSerializer.Deserialize<SetLocalPlayer>(payload);
             localPlayer.SetupLocalPlayer(message.Id);
         }
 
-        private void Handle_SetPlayerList(NetworkConnection sender, Stream stream)
+        private void Handle_SetPlayerList(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<SetPlayerList>(stream);
             playerList.players = message.Players.ToList();

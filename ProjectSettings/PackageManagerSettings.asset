@@ -18,6 +18,7 @@ MonoBehaviour:
   m_SeeAllPackageVersions: 0
   m_DismissPreviewPackagesInUse: 0
   oneTimeWarningShown: 1
+  oneTimeDeprecatedPopUpShown: 0
   m_Registries:
   - m_Id: main
     m_Name: 
@@ -40,6 +41,6 @@ MonoBehaviour:
   m_RegistryInfoDraft:
     m_Modified: 0
     m_ErrorMessage: 
-    m_UserModificationsInstanceId: -840
-    m_OriginalInstanceId: -844
-  m_LoadAssets: 0
+    m_UserModificationsInstanceId: -838
+    m_OriginalInstanceId: -842
+  m_LoadAssets: -1

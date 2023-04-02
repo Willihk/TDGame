@@ -60,14 +60,14 @@ namespace TDGame.Systems.Enemy.Systems
                 
             await handle;
                 
-            var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, assetStore);
-            var prefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(handle.Result, settings);
-            
-            openHandles.Add(id, handle);
-            openPrefabs.Add(id, prefab);
+            // var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, assetStore);
+            // var prefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(handle.Result, settings);
+            //
+            // openHandles.Add(id, handle);
+            // openPrefabs.Add(id, prefab);
         }
 
-        void Handle_SpawnEnemyMessage(NetworkConnection sender, Stream stream)
+        void Handle_SpawnEnemyMessage(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<SpawnEnemyMessage>(stream);
 

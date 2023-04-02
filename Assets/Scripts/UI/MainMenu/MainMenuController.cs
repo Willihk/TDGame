@@ -35,5 +35,10 @@ namespace TDGame.UI.MainMenu
         {
             manager.StartHost();
         }
+
+        public void Quit()
+        {
+            Application.Quit();
+        }
     }
 }

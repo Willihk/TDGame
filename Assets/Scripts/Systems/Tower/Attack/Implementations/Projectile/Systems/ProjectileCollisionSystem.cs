@@ -20,7 +20,7 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
         protected override void OnCreate()
         {
             bufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
-            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<LocalToParentTransform>(),
+            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<LocalToWorld>(),
                 ComponentType.ReadWrite<EnemyHealthData>());
             collisions = new NativeQueue<Collision>(Allocator.Persistent);
         }
@@ -33,7 +33,7 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
         protected override void OnUpdate()
         {
             var enemyEntities = enemyQuery.ToEntityListAsync(Allocator.TempJob, out var enemyEntityHandle);
-            var translations = GetComponentLookup<LocalToWorldTransform>(true);
+            var translations = GetComponentLookup<LocalToWorld>(true);
 
             var ecb = bufferSystem.CreateCommandBuffer();
             var handle = JobHandle.CombineDependencies(Dependency, enemyEntityHandle);
@@ -79,12 +79,12 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
             public NativeArray<Entity> EnemyEntities;
 
             [ReadOnly]
-            public ComponentLookup<LocalToWorldTransform> AllTranslations;
+            public ComponentLookup<LocalToWorld> AllTranslations;
 
             [WriteOnly]
             public NativeQueue<Collision>.ParallelWriter Collisions;
 
-            void Execute(Entity entity, in ProjectileDamage damage, in LocalToWorldTransform translation,
+            void Execute(Entity entity, in ProjectileDamage damage, in LocalToWorld translation,
                 in ProjectileRadiusCollider radiusCollider)
             {
                 var closestEntity = Entity.Null;
@@ -92,7 +92,7 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 
                 for (int i = 0; i < EnemyEntities.Length; i++)
                 {
-                    float distance = math.distance(AllTranslations[EnemyEntities[i]].Value.Position, translation.Value.Position);
+                    float distance = math.distance(AllTranslations[EnemyEntities[i]].Position, translation.Position);
 
                     if (distance < closestDistance && distance < radiusCollider.Value)
                     {

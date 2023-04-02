@@ -7,7 +7,7 @@ namespace TDGame.Events.Types.Network
 {
     [CreateAssetMenu(fileName = "NetworkEvent", menuName = "GameEvents/NetworkEvent")]
     [Serializable]
-    public class NetworkGameEvent : GameEvent<NetworkConnection>
+    public class NetworkGameEvent : GameEvent<TDNetworkConnection>
     {
     }
 }

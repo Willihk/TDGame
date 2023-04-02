@@ -79,11 +79,15 @@ namespace TDGame.Network.Components.DOTS
             });
 
             int entityCount = query.CalculateEntityCount();
-            NativeArray<byte> data = new NativeArray<byte>(entityCount * SpawnEnemy.TDLength() + 2*sizeof(int), Allocator.TempJob);
+
+            if (entityCount == 0)
+                return;
+            
+            NativeArray<byte> data = new NativeArray<byte>(entityCount * SpawnEnemy.TDLength() + 2*sizeof(short), Allocator.TempJob);
 
             var newData = data.Reinterpret<int>(sizeof(byte));
-            newData[0] = entityCount;
             newData[1] = SpawnEnemy.NETWORK_MESSAGE_ID;
+            newData[0] = entityCount;
             
             
             var job = new SpawnEnemySerializeJob
@@ -121,6 +125,8 @@ namespace TDGame.Network.Components.DOTS
                 // chunk.GetDynamicComponentDataArrayReinterpret<SpawnEnemy>(SpawnEnemyHandle);
 
                 var spawnEnemies = chunk.GetNativeArray(SpawnEnemyHandle);
+
+                var entities = chunk.GetNativeArray(EntityType);
                 
                 var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
 
@@ -131,6 +137,7 @@ namespace TDGame.Network.Components.DOTS
                     var slice = span.Slice(i * size, size);
 
                     SpawnEnemy.TDSerialize(spawnEnemies[i], ref slice);
+                    CommandBuffer.DestroyEntity(unfilteredChunkIndex, entities[i]);
                     // spawnEnemies[i].TDSerialize(ref slice);
                 }
             }

@@ -11,7 +11,6 @@ using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.Messages.Server;
 using Unity.Mathematics;
 using UnityEngine;
-using NetworkConnection = TDGame.Network.Components.Messaging.NetworkConnection;
 
 namespace TDGame.Systems.Grid.InGame
 {
@@ -183,7 +182,7 @@ namespace TDGame.Systems.Grid.InGame
 
         #region Client
 
-        void Handle_SetGridArea(NetworkConnection sender, Stream stream)
+        void Handle_SetGridArea(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<SetGridAreaMessage>(stream);
 

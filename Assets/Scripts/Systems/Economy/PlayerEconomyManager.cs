@@ -8,7 +8,6 @@ using TDGame.Network.Components.Messaging;
 using TDGame.Network.Player;
 using TDGame.Systems.Economy.Messages;
 using UnityEngine;
-using NetworkConnection = TDGame.Network.Components.Messaging.NetworkConnection;
 
 namespace TDGame.Systems.Economy
 {
@@ -112,7 +111,7 @@ namespace TDGame.Systems.Economy
                 { PlayerId = economy.ownerId, Currency = economy.currency });
         }
 
-        void Handle_RequestEconomies(NetworkConnection sender, Stream stream)
+        void Handle_RequestEconomies(TDNetworkConnection sender, Stream stream)
         {
             var messages = economies.Values.Select(x => new SetEconomyMessage
                 { Currency = x.currency, PlayerId = x.ownerId }).ToArray();
@@ -120,7 +119,7 @@ namespace TDGame.Systems.Economy
             messagingManager.SendNamedMessage(sender, new SetEconomiesMessage { EconomyMessages = messages });
         }
 
-        void Handle_SetEconomies(NetworkConnection sender, Stream stream)
+        void Handle_SetEconomies(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<SetEconomiesMessage>(stream);
 
@@ -139,7 +138,7 @@ namespace TDGame.Systems.Economy
             }
         }
 
-        void Handle_SetEconomy(NetworkConnection sender, Stream stream)
+        void Handle_SetEconomy(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<SetEconomyMessage>(stream);
 

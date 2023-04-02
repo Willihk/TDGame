@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using TDGame.Network.Components.Interfaces;
 using TDGame.Systems.Enemy.Components.Spawning;
 using Unity.Burst;
@@ -6,6 +7,7 @@ using Unity.Burst.Intrinsics;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using UnityEngine;
 
 namespace TDGame.Network.Components.DOTS
 {
@@ -46,12 +48,16 @@ namespace TDGame.Network.Components.DOTS
             {
                 // chunk.GetDynamicComponentDataArrayReinterpret<SpawnEnemy>(SpawnEnemyHandle);
 
-                Span<byte> span = Data.AsSpan().Slice(2);
+                short count = MemoryMarshal.Read<short>(Data.AsSpan());
+                short id = MemoryMarshal.Read<short>(Data.AsSpan().Slice(2,2));
+                var span = Data.AsSpan().Slice(4);
 
                 int i = 0;
-                while (i < Data.Length)
+                while (i < span.Length)
                 {
                     int size = SpawnEnemy.TDLength();
+                    
+                    Debug.Log($"i: {i} | length:{span.Length}");
                     var slice = span.Slice(i, size);
 
                     var component = SpawnEnemy.TDDeserialize(ref slice);

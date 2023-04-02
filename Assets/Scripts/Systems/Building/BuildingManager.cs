@@ -32,10 +32,10 @@ namespace TDGame.Systems.Building
             var spawned = await handle;
 
             spawned.transform.position = position;
-            spawned.AddComponent<ConvertToEntity>();
+            // spawned.AddComponent<ConvertToEntity>();
         }
 
-        private void Handle_NewBuildingMessage(NetworkConnection sender, Stream stream)
+        private void Handle_NewBuildingMessage(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<NewBuildingMessage>(stream);
 

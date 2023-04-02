@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace TDGame.Events.Listeners.Network
 {
-    public class NetworkEventListener : BaseGameEventListener<NetworkConnection, NetworkGameEvent, UnityEvent<NetworkConnection>>
+    public class NetworkEventListener : BaseGameEventListener<TDNetworkConnection, NetworkGameEvent, UnityEvent<TDNetworkConnection>>
     {
     }
 }

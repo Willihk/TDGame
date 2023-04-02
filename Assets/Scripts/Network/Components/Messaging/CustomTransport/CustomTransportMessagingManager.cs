@@ -18,7 +18,7 @@ namespace TDGame.Network.Components.Messaging.CustomTransport
             Instance = this;
 
             serverWrapper.onReceivedData += HandleGenericMessage;
-            clientWrapper.onReceivedData += data => HandleGenericMessage(0, data);
+            clientWrapper.onReceivedData += data => HandleGenericMessage(new TDNetworkConnection(){NetworkConnection = clientWrapper.NetworkConnection}, data);
         }
 
         Dictionary<int, NamedMessageDelegate> registeredCallbacks = new Dictionary<int, NamedMessageDelegate>();
@@ -33,17 +33,17 @@ namespace TDGame.Network.Components.Messaging.CustomTransport
             registeredCallbacks.Add(name.GetHashCode(), callback);
         }
 
-        public override void SendNamedMessage<T>(NetworkConnection target, T message)
+        public override void SendNamedMessage<T>(TDNetworkConnection target, T message)
         {
             SendNamedMessage(typeof(T).Name, target, message);
         }
         
-        public override void SendNamedMessage<T>(string name, NetworkConnection target, T message)
+        public override void SendNamedMessage<T>(string name, TDNetworkConnection target, T message)
         {
             var finalMessage = ConvertToMessage(name, message);
             var finalData = MessagePackSerializer.Serialize(finalMessage);
 
-            serverWrapper.Send(target.id, finalData);
+            serverWrapper.Send(target.NetworkConnection, finalData);
         }
 
         public override void SendNamedMessageToAll<T>(T message)
@@ -59,7 +59,7 @@ namespace TDGame.Network.Components.Messaging.CustomTransport
             serverWrapper.SendToAll(data);
         }
 
-        private void HandleGenericMessage(int sender, byte[] data)
+        private void HandleGenericMessage(TDNetworkConnection sender, byte[] data)
         {
             var genericMessage = MessagePackSerializer.Deserialize<GenericMessage>(data);
             
@@ -67,7 +67,7 @@ namespace TDGame.Network.Components.Messaging.CustomTransport
             if (registeredCallbacks.TryGetValue(genericMessage.Name.GetHashCode(), out NamedMessageDelegate callback))
             {
                 var stream = new MemoryStream(genericMessage.Message);
-                callback.Invoke(new NetworkConnection { id = sender }, stream);
+                callback.Invoke(sender, stream);
             }
         }
 

@@ -11,6 +11,8 @@ namespace TDGame.Network.Components
 {
     public class TransportClientWrapper : MonoBehaviour
     {
+        public NetworkConnection NetworkConnection => connection;
+
         private NetworkDriver driver;
         private NetworkConnection connection;
         NetworkPipeline pipeline;
@@ -66,10 +68,16 @@ namespace TDGame.Network.Components
 
         public void SendToServer(Span<byte> payload)
         {
-            var data = new NativeArray<byte>(payload.ToArray(), Allocator.Temp);
+            var data = new NativeArray<byte>(payload.Length + 1, Allocator.Temp);
+
+            data[0] = (byte)MessageType.Managed;
+            var dataSpan = data.AsSpan().Slice(1);
+            payload.CopyTo(dataSpan);
             Debug.Log("Client sending data with length: " + data.Length);
             Debug.Log("Client data sent to server: " + String.Join("," ,data));
 
+            if (!connection.IsCreated)
+                Debug.LogError("Sending data when Connection is not created!");
             driver.BeginSend(pipeline, connection, out var writer);
             writer.WriteBytes(data);
             driver.EndSend(writer);
@@ -102,11 +110,12 @@ namespace TDGame.Network.Components
                         break;
                     case NetworkEvent.Type.Data:
                         Debug.Log("client received data with length: " + reader.Length);
-                        var nativeArray = new NativeArray<byte>(reader.Length,Allocator.Temp);
+                        var nativeArray = new NativeArray<byte>(reader.Length, Allocator.Temp);
+                        reader.ReadBytes(nativeArray);
                         switch (nativeArray[0])
                         {
                             case (byte)MessageType.Managed:
-                                var data = nativeArray.ToArray();
+                                var data = nativeArray.Slice(1).ToArray();
 
                                 Debug.Log("Server data received: " + String.Join(",", data));
                                 nativeArray.Dispose();
@@ -114,7 +123,10 @@ namespace TDGame.Network.Components
                                 break; 
                                 
                             case (byte)MessageType.Entities:
-                                World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ReceiveNetworkComponents>().ReceiveData(nativeArray);
+                                var nativeData = new NativeArray<byte>(reader.Length - 1, Allocator.TempJob);
+                                nativeArray.Slice(1).CopyTo(nativeData);
+                                
+                                World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ReceiveNetworkComponents>().ReceiveData(nativeData);
                                 break;
                             default:
                                 break;

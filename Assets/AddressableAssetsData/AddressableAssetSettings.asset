@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
   m_DefaultGroup: cfa72f59cdcd9094191ad0a870b4bc3c
+  m_currentHash:
+    serializedVersion: 2
+    Hash: 725130dd191506cb8889645799edb473
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -21,6 +24,7 @@ MonoBehaviour:
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
   m_NonRecursiveBuilding: 1
+  m_CCDEnabled: 0
   m_maxConcurrentWebRequests: 500
   m_ContiguousBundles: 1
   m_StripUnityVersionFromBundleBuild: 0
@@ -28,12 +32,16 @@ MonoBehaviour:
   m_ShaderBundleNaming: 0
   m_ShaderBundleCustomNaming: 
   m_MonoScriptBundleNaming: 0
+  m_CheckForContentUpdateRestrictionsOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
     m_Id: e1d369413d9f73147955cab3f06aafaa
   m_RemoteCatalogLoadPath:
     m_Id: df201dc54db694a48aaa42cfd0cdc9dd
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
+  m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
+  m_BuildAddressablesWithPlayerBuild: 2
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: c69d0beee334321439681bed5530e6f4, type: 2}
@@ -88,21 +96,19 @@ MonoBehaviour:
     - MapDetails
     - Enemy
   m_SchemaTemplates: []
-  m_GroupTemplateObjects:
-  - {fileID: 11400000, guid: ff465b46729dedd44859e4e85deb8da5, type: 2}
+  m_GroupTemplateObjects: []
   m_InitializationObjects: []
   m_CertificateHandlerType:
     m_AssemblyName: 
     m_ClassName: 
-  m_ActivePlayerDataBuilderIndex: 3
+  m_ActivePlayerDataBuilderIndex: 0
   m_DataBuilders:
-  - {fileID: 11400000, guid: 9b2ac8b70a1638b49bef2c7d44f5651f, type: 2}
-  - {fileID: 11400000, guid: 66be211b993ad3743b3b7aa3db5e343d, type: 2}
-  - {fileID: 11400000, guid: b0485b36098144243af5138b158cde6c, type: 2}
   - {fileID: 11400000, guid: f7d99c73527e6c74d8312ece63228837, type: 2}
+  - {fileID: 11400000, guid: 66be211b993ad3743b3b7aa3db5e343d, type: 2}
   m_ActiveProfileId: ae920331899e1dd4fb218fd05d67b4bd
   m_HostingServicesManager:
     m_HostingServiceInfos: []
     m_Settings: {fileID: 11400000}
     m_NextInstanceId: 0
     m_RegisteredServiceTypeRefs: []
+    m_PingTimeoutInMilliseconds: 5000

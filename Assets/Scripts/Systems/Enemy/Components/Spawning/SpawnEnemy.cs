@@ -9,7 +9,7 @@ namespace TDGame.Systems.Enemy.Components.Spawning
         public Hash128 prefab;
 
 
-        public const int NETWORK_MESSAGE_ID = 82781;
+        public const short NETWORK_MESSAGE_ID = 32145;
 
         public static void TDSerialize(SpawnEnemy instance, ref Span<byte> data)
         {

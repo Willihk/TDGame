@@ -1,6 +1,7 @@
 ﻿using TDGame.Systems.Enemy.Components;
 using TDGame.Systems.Tower.Targeting.Components;
 using Unity.Burst;
+using Unity.Burst.Intrinsics;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -21,7 +22,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
         {
             commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
 
-            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<LocalToWorldTransform>());
+            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<LocalTransform>());
             towerQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
@@ -35,14 +36,14 @@ namespace TDGame.Systems.Tower.Targeting.Systems
         {
             var enemies = enemyQuery.ToEntityArray(Allocator.TempJob);
 
-            var transforms = GetComponentLookup<LocalToWorldTransform>(true);
+            var transforms = GetComponentLookup<LocalTransform>(true);
 
             var job = new TargetJob
             {
                 CommandBuffer = commandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 EnemyTranslations = transforms,
                 EnemyEntities = enemies,
-                TranslationHandle = GetComponentTypeHandle<LocalToWorldTransform>(),
+                TranslationHandle = GetComponentTypeHandle<LocalTransform>(),
                 RangeHandle = GetComponentTypeHandle<TargetRange>(),
                 targetBufferHandle = GetBufferTypeHandle<TargetBufferElement>(),
                 EntityHandle = GetEntityTypeHandle()
@@ -54,21 +55,21 @@ namespace TDGame.Systems.Tower.Targeting.Systems
 
 
         [BurstCompile]
-        private struct TargetJob : IJobEntityBatch
+        private struct TargetJob : IJobChunk
         {
             public EntityCommandBuffer.ParallelWriter CommandBuffer;
 
             public BufferTypeHandle<TargetBufferElement> targetBufferHandle;
 
             [ReadOnly]
-            public ComponentLookup<LocalToWorldTransform> EnemyTranslations;
+            public ComponentLookup<LocalTransform> EnemyTranslations;
 
             [ReadOnly]
             [DeallocateOnJobCompletion]
             public NativeArray<Entity> EnemyEntities;
 
             [ReadOnly]
-            public ComponentTypeHandle<LocalToWorldTransform> TranslationHandle;
+            public ComponentTypeHandle<LocalTransform> TranslationHandle;
 
             [ReadOnly]
             public ComponentTypeHandle<TargetRange> RangeHandle;
@@ -76,23 +77,27 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             [ReadOnly]
             public EntityTypeHandle EntityHandle;
 
-            public void Execute(ArchetypeChunk batchInChunk, int batchIndex)
+            public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask,
+                in v128 chunkEnabledMask)
             {
-                var translations = batchInChunk.GetNativeArray(TranslationHandle);
-                var ranges = batchInChunk.GetNativeArray(RangeHandle);
-                var entities = batchInChunk.GetNativeArray(EntityHandle);
+                var translations = chunk.GetNativeArray(ref TranslationHandle);
+                var ranges = chunk.GetNativeArray(ref RangeHandle);
+                var entities = chunk.GetNativeArray(EntityHandle);
 
-                var buffers = batchInChunk.GetBufferAccessor(targetBufferHandle);
+                var buffers = chunk.GetBufferAccessor(ref targetBufferHandle);
 
-                for (int i = 0; i < batchInChunk.Count; i++)
+
+                var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
+
+                while (enumerator.NextEntityIndex(out int i))
                 {
                     float closestRange = float.MaxValue;
                     var closest = Entity.Null;
 
                     for (int j = 0; j < EnemyEntities.Length; j++)
                     {
-                        float distance = math.distance(translations[i].Value.Position,
-                            EnemyTranslations[EnemyEntities[j]].Value.Position);
+                        float distance = math.distance(translations[i].Position,
+                            EnemyTranslations[EnemyEntities[j]].Position);
 
                         if (ranges[i].Range < distance || distance > closestRange)
                             continue;

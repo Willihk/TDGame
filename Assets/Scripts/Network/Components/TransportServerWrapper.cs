@@ -1,6 +1,7 @@
 ﻿using System;
 using Sirenix.OdinInspector;
 using TDGame.Network.Components.DOTS;
+using TDGame.Network.Components.Messaging;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
@@ -33,10 +34,10 @@ namespace TDGame.Network.Components
 
         public UnityEvent serverStarted;
         public UnityEvent serverStopped;
-        public UnityEvent<int> connectionAccepted;
-        public UnityEvent<int> connectionClosed;
+        public UnityEvent<TDNetworkConnection> connectionAccepted;
+        public UnityEvent<TDNetworkConnection> connectionClosed;
 
-        public Action<int, byte[]> onReceivedData;
+        public Action<TDNetworkConnection, byte[]> onReceivedData;
 
         private void Start()
         {
@@ -82,12 +83,16 @@ namespace TDGame.Network.Components
         {
             for (int i = 0; i < connections.Length; i++)
             {
-                var data = new NativeArray<byte>(payload.ToArray(), Allocator.Temp);
+                var data = new NativeArray<byte>(payload.Length + 1, Allocator.Temp);
+                
+                data[0] = (byte)MessageType.Managed;
+                var dataSpan = data.AsSpan().Slice(1);
+                payload.CopyTo(dataSpan);
+                
                 // Debug.Log("Server sending data to all with length: " + data.Length);
                 // Debug.Log("data sent to all: " + String.Join("," ,data));
 
                 driver.BeginSend(pipeline, connections[i], out var writer);
-                writer.WriteByte((byte)MessageType.Managed);
                 writer.WriteBytes(data);
                 driver.EndSend(writer);
             }
@@ -97,34 +102,36 @@ namespace TDGame.Network.Components
         {
             for (int i = 0; i < connections.Length; i++)
             {
-                var data = new NativeArray<byte>(payload.ToArray(), Allocator.Temp);
+                var data = new NativeArray<byte>(payload.Length + 1, Allocator.Temp);
+                
+                data[0] = (byte)MessageType.Entities;
+                var dataSpan = data.AsSpan().Slice(1);
+                payload.CopyTo(dataSpan);
+                
                 // Debug.Log("Server sending data to all with length: " + data.Length);
                 // Debug.Log("data sent to all: " + String.Join("," ,data));
+                
 
                 driver.BeginSend(pipeline, connections[i], out var writer);
-                writer.WriteByte((byte)MessageType.Entities);
                 writer.WriteBytes(data);
                 driver.EndSend(writer);
             }
         }
 
-        public void Send(int id, Span<byte> payload)
+        public void Send(NetworkConnection connection, Span<byte> payload)
         {
-            NetworkConnection connection = default;
-            for (int i = 0; i < connections.Length; i++)
-            {
-                if (connections[i].InternalId == id)
-                    connection = connections[i];
-            }
-
             if (connection == default)
             {
-                Debug.LogError("Trying to send a message to unknown id: " + id);
+                Debug.LogError("Trying to send a message to default connection");
                 return;
             }
 
-            var data = new NativeArray<byte>(payload.ToArray(), Allocator.Temp);
+            var data = new NativeArray<byte>(payload.Length + 1, Allocator.Temp);
 
+            data[0] = (byte)MessageType.Managed;
+            var dataSpan = data.AsSpan().Slice(1);
+            payload.CopyTo(dataSpan);
+            
             Debug.Log("Server sending data with length: " + data.Length);
             Debug.Log("Server data sent: " + String.Join(",", data));
 
@@ -153,7 +160,7 @@ namespace TDGame.Network.Components
             while ((conn = driver.Accept()) != default(NetworkConnection))
             {
                 connections.Add(conn);
-                connectionAccepted.Invoke(conn.InternalId);
+                connectionAccepted.Invoke(new TDNetworkConnection {NetworkConnection = conn});
                 Debug.Log("Accepted a new connection");
             }
 
@@ -167,7 +174,7 @@ namespace TDGame.Network.Components
                     {
                         case NetworkEvent.Type.Disconnect:
                             Debug.Log("Client disconnected from server");
-                            connectionClosed.Invoke(connections[i].InternalId);
+                            connectionClosed.Invoke(new TDNetworkConnection {NetworkConnection = connections[i]});
                             connections[i] = default;
                             break;
                         case NetworkEvent.Type.Data:
@@ -179,15 +186,18 @@ namespace TDGame.Network.Components
                             switch (nativeArray[0])
                             {
                                 case (byte)MessageType.Managed:
-                                    var data = nativeArray.ToArray();
+                                    var data = nativeArray.AsReadOnlySpan().Slice(1).ToArray();
 
                                     Debug.Log("Server data received: " + String.Join(",", data));
                                     nativeArray.Dispose();
-                                    onReceivedData?.Invoke(connections[i].InternalId, data);
+                                    onReceivedData?.Invoke(new TDNetworkConnection {NetworkConnection = connections[i]}, data);
                                     break; 
                                 
                                 case (byte)MessageType.Entities:
-                                    World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ReceiveNetworkComponents>().ReceiveData(nativeArray);
+                                    var nativeData = new NativeArray<byte>(reader.Length - 1, Allocator.TempJob);
+                                    nativeArray.Slice(1).CopyTo(nativeData);
+
+                                    World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ReceiveNetworkComponents>().ReceiveData(nativeData);
                                     break;
                                 default:
                                     break;

@@ -1,6 +1,7 @@
 ﻿using TDGame.Systems.Enemy.Components;
 using TDGame.Systems.Tower.Targeting.Components;
 using Unity.Burst;
+using Unity.Burst.Intrinsics;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -12,7 +13,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
     public partial class OutOfRangeSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem commandBufferSystem;
-        
+
         private EntityQuery enemyQuery;
         private EntityQuery towerQuery;
 
@@ -22,7 +23,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
 
             enemyQuery = GetEntityQuery(new EntityQueryDesc
             {
-                All = new ComponentType[] { typeof(EnemyTag), typeof(LocalToWorldTransform) }
+                All = new ComponentType[] { typeof(EnemyTag), typeof(LocalTransform) }
             });
             towerQuery = GetEntityQuery(new EntityQueryDesc
             {
@@ -31,37 +32,36 @@ namespace TDGame.Systems.Tower.Targeting.Systems
                     typeof(TowerTag), typeof(RequestEnemyTargetTag), typeof(TargetRange), typeof(TargetBufferElement)
                 }
             });
-            
         }
-        
+
         protected override void OnUpdate()
         {
-            var translations = GetComponentLookup<LocalToWorldTransform>(true);
+            var translations = GetComponentLookup<LocalTransform>(true);
 
             var job = new OutOfRangeJob
             {
                 targetBufferHandle = GetBufferTypeHandle<TargetBufferElement>(),
                 EnemyTranslations = translations,
-                TranslationHandle = GetComponentTypeHandle<LocalToWorldTransform>(),
+                TranslationHandle = GetComponentTypeHandle<LocalTransform>(),
                 RangeHandle = GetComponentTypeHandle<TargetRange>(),
                 EntityHandle = GetEntityTypeHandle()
             };
-            
-            var handle = job.Schedule(towerQuery);
+
+            var handle = job.Schedule(towerQuery, Dependency);
             commandBufferSystem.AddJobHandleForProducer(handle);
             Dependency = JobHandle.CombineDependencies(Dependency, handle);
         }
 
         [BurstCompile]
-        private struct OutOfRangeJob : IJobEntityBatch
+        private struct OutOfRangeJob : IJobChunk
         {
             public BufferTypeHandle<TargetBufferElement> targetBufferHandle;
 
             [ReadOnly]
-            public ComponentLookup<LocalToWorldTransform> EnemyTranslations;
+            public ComponentLookup<LocalTransform> EnemyTranslations;
 
             [ReadOnly]
-            public ComponentTypeHandle<LocalToWorldTransform> TranslationHandle;
+            public ComponentTypeHandle<LocalTransform> TranslationHandle;
 
             [ReadOnly]
             public ComponentTypeHandle<TargetRange> RangeHandle;
@@ -69,23 +69,27 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             [ReadOnly]
             public EntityTypeHandle EntityHandle;
 
-            public void Execute(ArchetypeChunk batchInChunk, int batchIndex)
+            public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask,
+                in v128 chunkEnabledMask)
             {
-                var translations = batchInChunk.GetNativeArray(TranslationHandle);
-                var ranges = batchInChunk.GetNativeArray(RangeHandle);
-                var entities = batchInChunk.GetNativeArray(EntityHandle);
+                var translations = chunk.GetNativeArray(ref TranslationHandle);
+                var ranges = chunk.GetNativeArray(ref RangeHandle);
+                var entities = chunk.GetNativeArray(EntityHandle);
 
-                var buffers = batchInChunk.GetBufferAccessor(targetBufferHandle);
-                
-                for (int i = 0; i < batchInChunk.Count; i++)
+                var buffers = chunk.GetBufferAccessor(ref targetBufferHandle);
+
+                var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
+
+                while (enumerator.NextEntityIndex(out int i))
                 {
                     var buffer = buffers[i];
                     for (int j = 0; j < buffer.Length; j++)
                     {
                         if (EnemyTranslations.HasComponent(buffer[j]))
                         {
-                            float distance = math.distance(translations[i].Value.Position, EnemyTranslations[buffer[j]].Value.Position);
-                            
+                            float distance = math.distance(translations[i].Position,
+                                EnemyTranslations[buffer[j]].Position);
+
                             if (distance > ranges[i].Range)
                                 buffer.RemoveAt(j);
                         }

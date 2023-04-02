@@ -42,7 +42,7 @@ namespace TDGame.Systems.Enemy.Systems.Movement
                 Waypoints = waypoints,
                 EntityType = GetEntityTypeHandle(),
                 MoveTowardsHandle = GetComponentTypeHandle<EnemyMoveTowards>(),
-                TranslationHandle = GetComponentTypeHandle<LocalToWorldTransform>()
+                TranslationHandle = GetComponentTypeHandle<LocalTransform>()
             };
 
             Dependency = job.ScheduleParallel(query, Dependency);
@@ -65,7 +65,7 @@ namespace TDGame.Systems.Enemy.Systems.Movement
         [ReadOnly]
         public EntityTypeHandle EntityType;
 
-        public ComponentTypeHandle<LocalToWorldTransform> TranslationHandle;
+        public ComponentTypeHandle<LocalTransform> TranslationHandle;
 
         public ComponentTypeHandle<EnemyMoveTowards> MoveTowardsHandle;
 
@@ -88,11 +88,11 @@ namespace TDGame.Systems.Enemy.Systems.Movement
                 var destination = Waypoints[enemyMoveTowards[i].waypointIndex];
                 var translation = translations[i];
 
-                if (math.distance(translation.Value.Position, destination) > 1)
+                if (math.distance(translation.Position, destination) > 1)
                 {
-                    var direction = math.normalize(destination - translation.Value.Position);
+                    var direction = math.normalize(destination - translation.Position);
                     direction.y = 0;
-                    translation.Value.Position += direction * enemyMoveTowards[i].Speed * DeltaTime;
+                    translation.Position += direction * enemyMoveTowards[i].Speed * DeltaTime;
                     translations[i] = translation;
                 }
                 else

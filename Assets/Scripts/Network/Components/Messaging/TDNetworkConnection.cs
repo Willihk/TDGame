@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.Networking.Transport;
 
 namespace TDGame.Network.Components.Messaging
 {
-    public class NetworkConnection
+    public struct TDNetworkConnection
     {
-        public int id;
+        public NetworkConnection NetworkConnection;
     }
 }

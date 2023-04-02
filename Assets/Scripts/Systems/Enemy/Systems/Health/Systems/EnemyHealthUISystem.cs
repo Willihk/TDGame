@@ -23,13 +23,13 @@ namespace TDGame.Systems.Enemy.Systems.Health.Systems
 
             
             // Update state
-            Entities.ForEach((Entity entity, EnemyHealthUIData uiData, in EnemyHealthData healthData, in LocalToWorldTransform translation) =>
+            Entities.ForEach((Entity entity, EnemyHealthUIData uiData, in EnemyHealthData healthData, in LocalTransform translation) =>
             {
                 if (uiData.Slider == null)
                 {
                     return;
                 }
-                uiData.Slider.transform.position = translation.Value.Position + uiData.Offset;
+                uiData.Slider.transform.position = translation.Position + uiData.Offset;
                 uiData.Slider.value = (float)healthData.Health / healthData.MaxHealth;
             }).WithoutBurst().Run();
             

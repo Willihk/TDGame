@@ -21,10 +21,10 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
         protected override void OnUpdate()
         {
             var ecb = bufferSystem.CreateCommandBuffer().AsParallelWriter();
-            var allTranslations = GetComponentLookup<LocalToWorldTransform>(true);
+            var allTranslations = GetComponentLookup<LocalTransform>(true);
 
             Entities.WithReadOnly(allTranslations).ForEach((Entity e, int entityInQueryIndex, ref BasicWindup windup,
-                in LocalToWorldTransform transform, in ProjectilePrefab prefab,
+                in LocalTransform transform, in ProjectilePrefab prefab,
                 in DynamicBuffer<TargetBufferElement> targets) =>
             {
                 if (windup.Remainingtime > 0 || targets.Length == 0)
@@ -39,16 +39,20 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
                 ecb.RemoveComponent<Prefab>(entityInQueryIndex, entity);
                 ecb.AddComponent<ProjectileMovementTarget>(entityInQueryIndex, entity);
 
-                var direction = enemyTranslation.Value.Position - transform.Value.Position;
+                var direction = enemyTranslation.Position - transform.Position;
                 
-                var projectileTransform = new LocalToWorldTransform {Value = UniformScaleTransform.Identity};
-                projectileTransform.Value.Position = transform.Value.Position;
-                projectileTransform.Value.Rotation = quaternion.LookRotation(direction, new float3(0, 1, 0));
+                
+                var projectileTransform = new LocalTransform
+                {
+                    Position = transform.Position,
+                    Rotation = quaternion.LookRotation(direction, new float3(0, 1, 0)),
+                    Scale = 1
+                };
 
                 ecb.SetComponent(entityInQueryIndex, entity, projectileTransform);
 
                 ecb.SetComponent(entityInQueryIndex, entity,
-                    new ProjectileMovementTarget { Value = enemyTranslation.Value.Position });
+                    new ProjectileMovementTarget { Value = enemyTranslation.Position });
             }).ScheduleParallel();
 
             bufferSystem.AddJobHandleForProducer(Dependency);

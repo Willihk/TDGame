@@ -161,7 +161,7 @@ namespace TDGame.Systems.Building
 
         #region Server
 
-        void Handle_StartPlacementRequest(NetworkConnection sender, Stream stream)
+        void Handle_StartPlacementRequest(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<StartPlacementRequest>(stream);
 
@@ -180,7 +180,7 @@ namespace TDGame.Systems.Building
                 { AssetGuid = message.AssetGuid, PlayerId = id });
         }
 
-        async void Handle_ConfirmPlacementRequest(NetworkConnection sender, Stream stream)
+        async void Handle_ConfirmPlacementRequest(TDNetworkConnection sender, Stream stream)
         {
             async UniTask<GridArea> GetArea(AssetReference assetReference, Vector3 position, GridManager grid)
             {
@@ -194,7 +194,7 @@ namespace TDGame.Systems.Building
                 return area;
             }
 
-            Debug.Log("confirmed placement for player: " + sender.id);
+            Debug.Log("confirmed placement for player: " + sender);
             var message = MessagePackSerializer.Deserialize<ConfirmPlacementRequest>(stream);
 
             var playerId = playerManager.GetPlayerId(sender);
@@ -212,7 +212,7 @@ namespace TDGame.Systems.Building
             buildingManager.Server_BuildBuilding(assetToBuild, area);
         }
 
-        void Handle_CancelPlacementRequest(NetworkConnection sender, Stream stream)
+        void Handle_CancelPlacementRequest(TDNetworkConnection sender, Stream stream)
         {
             var id = playerManager.GetPlayerId(sender);
 
@@ -221,7 +221,7 @@ namespace TDGame.Systems.Building
             messagingManager.SendNamedMessageToAll(new RemovePlacementMessage { PlayerId = id });
         }
 
-        void Handle_UpdatePositionRequest(NetworkConnection sender, Stream stream)
+        void Handle_UpdatePositionRequest(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<UpdatePositionRequest>(stream);
 
@@ -261,13 +261,13 @@ namespace TDGame.Systems.Building
             messagingManager.SendNamedMessageToServer(new ConfirmPlacementRequest() { Position = position });
         }
 
-        void Handle_NewPlacementMessage(NetworkConnection sender, Stream stream)
+        void Handle_NewPlacementMessage(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<NewPlacementMessage>(stream);
             NewPlacement(message.PlayerId, new AssetReference(message.AssetGuid)).Forget();
         }
 
-        void Handle_RemovePlacementMessage(NetworkConnection sender, Stream stream)
+        void Handle_RemovePlacementMessage(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<RemovePlacementMessage>(stream);
 
@@ -287,7 +287,7 @@ namespace TDGame.Systems.Building
             }
         }
 
-        void Handle_SetPositionMessage(NetworkConnection sender, Stream stream)
+        void Handle_SetPositionMessage(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<SetPositionMessage>(stream);
 

@@ -11,7 +11,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
-using NetworkConnection = TDGame.Network.Components.Messaging.NetworkConnection;
 
 namespace TDGame.Network.Components
 {
@@ -98,7 +97,7 @@ namespace TDGame.Network.Components
             messagingManager.SendNamedMessageToServer(new RequestLoadedScenes());
         }
 
-        private void Handle_RequestLoadedScenes(NetworkConnection sender, Stream stream)
+        private void Handle_RequestLoadedScenes(TDNetworkConnection sender, Stream stream)
         {
             var response = new SyncLoadedScenes()
             {
@@ -108,7 +107,7 @@ namespace TDGame.Network.Components
             messagingManager.SendNamedMessage(sender, response);
         }
 
-        private void Handle_SyncLoadedScenes(NetworkConnection sender, Stream stream)
+        private void Handle_SyncLoadedScenes(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<SyncLoadedScenes>(stream);
 
@@ -176,13 +175,13 @@ namespace TDGame.Network.Components
             }
         }
 
-        void Handle_LoadScene(NetworkConnection sender, Stream stream)
+        void Handle_LoadScene(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<LoadSceneMessage>(stream);
             LoadScene(message.SceneID).Forget();
         }
 
-        void Handle_UnloadScene(NetworkConnection sender, Stream stream)
+        void Handle_UnloadScene(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<UnloadSceneMessage>(stream);
             UnloadScene(message.SceneID).Forget();
