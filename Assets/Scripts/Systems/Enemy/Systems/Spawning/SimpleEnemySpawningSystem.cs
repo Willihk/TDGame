@@ -28,8 +28,15 @@ namespace TDGame.Systems.Enemy.Systems.Spawning
 
             Entities.WithReadOnly(buffer).WithNone<NetworkSend>().ForEach((Entity entity, int entityInQueryIndex, in SpawnEnemy spawnEnemy) =>
             {
-                var newEnemy = commandBuffer.Instantiate(entityInQueryIndex, buffer[0].Value);
-                commandBuffer.AddComponent<EnemyTag>(entityInQueryIndex, newEnemy);
+                foreach (var item in buffer)
+                {
+                    if (item.GUID != spawnEnemy.prefab)
+                        continue;
+
+                    var newEnemy = commandBuffer.Instantiate(entityInQueryIndex, item.Value);
+                    commandBuffer.AddComponent<EnemyTag>(entityInQueryIndex, newEnemy);
+                }
+
 
                 commandBuffer.DestroyEntity(entityInQueryIndex, entity);
             }).ScheduleParallel();
