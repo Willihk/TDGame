@@ -67,9 +67,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -3358,8 +3355,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 408958028}
-  - component: {fileID: 408958030}
   - component: {fileID: 408958029}
+  - component: {fileID: 408958030}
   m_Layer: 5
   m_Name: Tower List
   m_TagString: Untagged
@@ -3420,15 +3417,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 408958027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a835fec4117429f8c43fff58b082004, type: 3}
+  m_Script: {fileID: 11500000, guid: f8bef95d829d4e569ef73d4d0f5bf593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   towerGraph: {fileID: 11400000, guid: 5bb159a578909e54fbd594795671ab94, type: 2}
-  entryPrefab:
-    m_AssetGUID: 52e68919cda3ee344b3e916be59f16bb
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  entryPrefab: {fileID: 6892021358570676871, guid: 52e68919cda3ee344b3e916be59f16bb, type: 3}
   content: {fileID: 408958028}
 --- !u!1 &422297141
 GameObject:
@@ -5860,7 +5853,7 @@ RectTransform:
   m_Father: {fileID: 853548727}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.0000046491623}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -12720,8 +12713,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1028751128}
   m_HandleRect: {fileID: 1028751127}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 1.0357143
+  m_Size: 0.99999535
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

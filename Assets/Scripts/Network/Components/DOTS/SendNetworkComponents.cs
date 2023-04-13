@@ -78,14 +78,14 @@ namespace TDGame.Network.Components.DOTS
                 All = new ComponentType[]{ typeof(SpawnEnemy), typeof(NetworkSend)}
             });
 
-            int entityCount = query.CalculateEntityCount();
+            short entityCount = (short)query.CalculateEntityCount();
 
             if (entityCount == 0)
                 return;
             
             NativeArray<byte> data = new NativeArray<byte>(entityCount * SpawnEnemy.TDLength() + 2*sizeof(short), Allocator.TempJob);
 
-            var newData = data.Reinterpret<int>(sizeof(byte));
+            var newData = data.Reinterpret<short>(sizeof(byte));
             newData[1] = SpawnEnemy.NETWORK_MESSAGE_ID;
             newData[0] = entityCount;
             
@@ -130,7 +130,7 @@ namespace TDGame.Network.Components.DOTS
                 
                 var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
 
-                Span<byte> span = Output.AsSpan().Slice(2);
+                Span<byte> span = Output.AsSpan().Slice(4);
                 while (enumerator.NextEntityIndex(out int i))
                 {
                     int size = SpawnEnemy.TDLength();

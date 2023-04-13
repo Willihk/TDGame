@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TDGame.Systems.Tower.Data;
+using TDGame.Systems.Tower.Graph.Data;
 using TDGame.Systems.Tower.Graph.Nodes;
 using UnityEngine;
 using XNode;

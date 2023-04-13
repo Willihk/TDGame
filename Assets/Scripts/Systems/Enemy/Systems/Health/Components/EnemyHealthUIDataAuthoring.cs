@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace TDGame.Systems.Enemy.Systems.Health.Components
 {
-    public class EnemyHealthUIData : IComponentData
+    public class EnemyHealthUIData : IComponentData, ICleanupComponentData
     {
         public Slider Slider;
         public float3 Offset;

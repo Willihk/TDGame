@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: cfa72f59cdcd9094191ad0a870b4bc3c
   m_currentHash:
     serializedVersion: 2
-    Hash: 725130dd191506cb8889645799edb473
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -70,9 +70,9 @@ MonoBehaviour:
       - m_Id: 26d4c99886fd9ea4cb66aaf8aa44bdfc
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
       - m_Id: e1d369413d9f73147955cab3f06aafaa
-        m_Value: ServerData/[BuildTarget]
+        m_Value: 'ServerData/[BuildTarget]'
       - m_Id: df201dc54db694a48aaa42cfd0cdc9dd
-        m_Value: http://localhost/[BuildTarget]
+        m_Value: 'http://localhost/[BuildTarget]'
     m_ProfileEntryNames:
     - m_Id: 8af5d5a658312d541b50fd60bec683c5
       m_Name: BuildTarget
@@ -96,7 +96,8 @@ MonoBehaviour:
     - MapDetails
     - Enemy
   m_SchemaTemplates: []
-  m_GroupTemplateObjects: []
+  m_GroupTemplateObjects:
+  - {fileID: 11400000, guid: ff465b46729dedd44859e4e85deb8da5, type: 2}
   m_InitializationObjects: []
   m_CertificateHandlerType:
     m_AssemblyName: 

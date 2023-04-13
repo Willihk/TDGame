@@ -15,7 +15,7 @@ namespace TDGame.PrefabManagement
         public Entity Value;
         public Hash128 GUID;
 
-        public static implicit operator PrefabElement(Entity entity) => new PrefabElement() { Value = entity };
+        public static implicit operator PrefabElement(Entity entity) => new() { Value = entity };
         public static implicit operator Entity(PrefabElement element) => element.Value;
     }
     
@@ -26,18 +26,18 @@ namespace TDGame.PrefabManagement
         {
             public override void Bake(PrefabManagerAuthoring authoring)
             {
-                var buf = AddBuffer<PrefabElement>();
+                var buf = AddBuffer<PrefabElement>(GetEntity(TransformUsageFlags.Dynamic));
 
                 for (int i = 0; i < authoring.Prefabs.Length; i++)
                 {
                     var path = AssetDatabase.GetAssetPath(authoring.Prefabs[i]);
                     var guid = AssetDatabase.GUIDFromAssetPath(path);
-                    var entity = GetEntity(authoring.Prefabs[i]);
+                    var entity = GetEntity(authoring.Prefabs[i], TransformUsageFlags.Dynamic);
                     
                     buf.Add(new PrefabElement{Value = entity, GUID = guid});
                 }
 
-                AddComponent( new PrefabManagerTag());
+                AddComponent(GetEntity(TransformUsageFlags.Dynamic), new PrefabManagerTag());
             }
         }
     }

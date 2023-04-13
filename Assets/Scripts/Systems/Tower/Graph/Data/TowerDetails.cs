@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TDGame.Systems.Tower.Data
+namespace TDGame.Systems.Tower.Graph.Data
 {
     [CreateAssetMenu(fileName = "TowerDetails", menuName = "Data/Tower/TowerDetails", order = 0)]
     public class TowerDetails : ScriptableObject

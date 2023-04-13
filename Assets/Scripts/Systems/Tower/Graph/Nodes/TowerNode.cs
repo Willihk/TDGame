@@ -1,5 +1,5 @@
 ﻿using Sirenix.OdinInspector;
-using TDGame.Systems.Tower.Data;
+using TDGame.Systems.Tower.Graph.Data;
 using UnityEngine;
 using XNode;
 

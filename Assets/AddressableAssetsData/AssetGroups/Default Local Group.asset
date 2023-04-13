@@ -21,132 +21,159 @@ MonoBehaviour:
     m_Address: Assets/ScriptableObjects/EventChannels/Network/Client/Connected.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c44c8b683efb98d46a683aa361df6e17
     m_Address: Assets/ScriptableObjects/EventChannels/Network/Client/Disconnected.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: efbb15a470f2c5243bbfdfee96c1e58e
     m_Address: Assets/ScriptableObjects/EventChannels/Network/Client/Started.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c685fb54618fff6489cee0cf99dc52b6
     m_Address: PlayerList.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a923a40b0cff1e4d9b779200a99eb74
     m_Address: Assets/Scenes/Menus/LobbyMenu.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2cd23f37f8fa47949925e2544af9b502
     m_Address: Assets/ScriptableObjects/EventChannels/Player/PlayerRegistered.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 64000d29525b4234b83ed5d89afdc4fd
     m_Address: Assets/ScriptableObjects/EventChannels/Player/PlayersSynced.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ce48896c2d3e4140b0ff69ecdb59937
     m_Address: Assets/ScriptableObjects/EventChannels/Player/PlayerUnregistered.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ded3f4e5ebd4474998461f99b4e3c17
     m_Address: Assets/ScriptableObjects/EventChannels/Menus/Lobby/Leave.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 300fadc30049b6a4391c0325951be476
     m_Address: Assets/ScriptableObjects/Data/Settings/LobbySettings.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e02048f561ef5b42be7d72685d227b8
     m_Address: MainMenuGraph.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 53f6700a3d42d9446b2227890569d916
     m_Address: Assets/ScriptableObjects/EventChannels/Menus/Lobby/Start.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b63bdd3dabc942f459c5f032ae24ed52
     m_Address: Assets/Scenes/Menus/MainMenu.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ef0d66e8bd2f8e64095aa73196e6b3dd
     m_Address: Assets/ScriptableObjects/Events/Map/MapLoaded.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 112841e898645bf469c350584e9a8928
     m_Address: Assets/_Project/ScriptableObjects/Data/Tower/TeslaTower.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9162d72a40c40364ba3a3aa4de90513f
     m_Address: Assets/_Project/Prefabs/Towers/Tesla/Tesla.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52e68919cda3ee344b3e916be59f16bb
     m_Address: Assets/_Project/Prefabs/UI/BuildingList/BuildingListEntry.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 502663b8bb7ed5846b940b3cd6d9e014
     m_Address: Assets/_Project/ScriptableObjects/Data/Player/LocalPlayer.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ea40b2d6b3862c245a898630ddac030c
     m_Address: Assets/_Project/ScriptableObjects/EventChannels/InGame/Building/BeginPlacement.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dd6c8f789eb0a5841b07001f7eaf3474
     m_Address: Assets/_Project/ScriptableObjects/Data/Cursor/LocalCursorState.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 28895280de11f4e44b61e110f549b960
     m_Address: Assets/_Project/Prefabs/UI/PlayerList/PlayerListEntry.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5bb159a578909e54fbd594795671ab94
     m_Address: Assets/_Project/ScriptableObjects/Data/TowerUpgrade/TowerUpgradeGraph.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5eac83db42339d34e8e8d8e4ed92e651
     m_Address: Assets/_Project/Materials/PlacementValidation.mat
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f8aeae6f7cff59b4ca1bc933d75f5fff
     m_Address: Assets/_Project/ScriptableObjects/Data/Enemy/ExampleEnemy.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b63ed3a462d258d48a15618a1430415d
     m_Address: Assets/_Project/ScriptableObjects/EventChannels/InGame/Grid/GridInitialized.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fbb4dbd7e92bbd24586552e58e86bf5c
     m_Address: ExampleEnemy.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6317ddda7011338419c3d4e4d67f3d35
     m_Address: ExampleBoss.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 323b81079db54154ea5523765d74615d
     m_Address: Assets/ScriptableObjects/EventChannels/Network/Client/Connected.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c39a920d5eec38945baf2fb302f90931
     m_Address: Assets/_Project/ScriptableObjects/EventChannels/Network/Server/Disconnected.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c8c1f3f56af3754f81d0475ffc0a639
     m_Address: Assets/_Project/ScriptableObjects/EventChannels/Network/Server/Connected.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 17aefed55eeee7a489ad6057372a4416
-    m_Address: Assets/_Project/Prefabs/Towers/TestTurret/TestTurret.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d2a0bdefea223c649980feafc56f8384
     m_Address: Assets/_Project/ScriptableObjects/Data/Tower/TestTurret.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:

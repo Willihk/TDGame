@@ -57,7 +57,6 @@ namespace TDGame.Network.Components.DOTS
                 {
                     int size = SpawnEnemy.TDLength();
                     
-                    Debug.Log($"i: {i} | length:{span.Length}");
                     var slice = span.Slice(i, size);
 
                     var component = SpawnEnemy.TDDeserialize(ref slice);
