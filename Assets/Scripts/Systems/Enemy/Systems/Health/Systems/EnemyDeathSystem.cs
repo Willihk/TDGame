@@ -16,11 +16,11 @@ namespace TDGame.Systems.Enemy.Systems.Health.Systems
         {
             var ecb = commandBufferSystem.CreateCommandBuffer().AsParallelWriter();
 
-            Entities.ForEach((Entity entity, EnemyHealthUIData uiData,int entityInQueryIndex, in EnemyHealthData healthData) =>
+            Entities.ForEach((Entity entity ,int entityInQueryIndex, in EnemyHealthData healthData) =>
             {
                 if (healthData.Health <= 0)
                 {
-                    HealthBarUIPool.Instance.ReturnSlider(uiData.Slider);
+                    // HealthBarUIPool.Instance.ReturnSlider(uiData.Slider);
                     ecb.DestroyEntity(entityInQueryIndex, entity);
                 }
 

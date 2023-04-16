@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using MessagePack;
 using MessagePack.Formatters;
 using TDGame.Utility.MessagePack.Mathematics.Formatters;
+using Unity.Entities;
 using Unity.Mathematics;
 
 namespace TDGame.Utility.MessagePack.Mathematics
 {
     public class MathematicsResolver : IFormatterResolver
     {
-        public static readonly MathematicsResolver Instance = new MathematicsResolver();
+        public static readonly MathematicsResolver Instance = new();
 
         private MathematicsResolver()
         {
@@ -33,7 +34,7 @@ namespace TDGame.Utility.MessagePack.Mathematics
 
     public static class MathematicsResolverGetFormatterHelper
     {
-        private static readonly Dictionary<Type, object> FormatterMap = new Dictionary<Type, object>()
+        private static readonly Dictionary<Type, object> FormatterMap = new()
         {
             // standard
             { typeof(int2), new Int2Formatter() },
@@ -41,6 +42,7 @@ namespace TDGame.Utility.MessagePack.Mathematics
             { typeof(float4), new Float4Formatter() },
             { typeof(quaternion), new QuaternionFormatter() },
             { typeof(float4x4), new Float4X4Formatter() },
+            { typeof(Hash128), new Hash128Formatter() },
    
 
             // standard + array

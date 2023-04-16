@@ -16,7 +16,7 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Components
     {
         public override void Bake(ProjectilePrefabAuthoring authoring)
         {
-            AddComponent(new ProjectilePrefab { Value = GetEntity(authoring.Prefab) });
+            AddComponent(GetEntity(TransformUsageFlags.Dynamic),new ProjectilePrefab { Value = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic) });
         }
     }
 }

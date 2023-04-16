@@ -1,4 +1,5 @@
 ﻿using MessagePack;
+using Unity.Entities;
 
 namespace TDGame.Systems.Building.Messages.Client
 {
@@ -9,6 +10,6 @@ namespace TDGame.Systems.Building.Messages.Client
     public struct StartPlacementRequest
     {
         [Key(0)]
-        public string AssetGuid;
+        public Hash128 AssetGuid;
     }
 }

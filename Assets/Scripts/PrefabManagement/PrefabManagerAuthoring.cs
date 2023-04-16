@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using TDGame.Data;
+using Unity.Entities;
 using UnityEditor;
 using UnityEngine;
 using Hash128 = Unity.Entities.Hash128;
@@ -21,23 +22,26 @@ namespace TDGame.PrefabManagement
     
     public class PrefabManagerAuthoring : MonoBehaviour
     {
-        public GameObject[] Prefabs;
+        public GameObjectList Prefabs;
+        
         class Baker : Baker<PrefabManagerAuthoring>
         {
             public override void Bake(PrefabManagerAuthoring authoring)
             {
-                var buf = AddBuffer<PrefabElement>(GetEntity(TransformUsageFlags.Dynamic));
-
-                for (int i = 0; i < authoring.Prefabs.Length; i++)
+                var buf = AddBuffer<PrefabElement>(GetEntity(TransformUsageFlags.None));
+                
+                var gameObjectList = authoring.Prefabs.GetGameObjects();
+                
+                for (int i = 0; i < gameObjectList.Count; i++)
                 {
-                    var path = AssetDatabase.GetAssetPath(authoring.Prefabs[i]);
+                    string path = AssetDatabase.GetAssetPath(gameObjectList[i]);
                     var guid = AssetDatabase.GUIDFromAssetPath(path);
-                    var entity = GetEntity(authoring.Prefabs[i], TransformUsageFlags.Dynamic);
+                    var entity = GetEntity(gameObjectList[i], TransformUsageFlags.Dynamic);
                     
                     buf.Add(new PrefabElement{Value = entity, GUID = guid});
                 }
 
-                AddComponent(GetEntity(TransformUsageFlags.Dynamic), new PrefabManagerTag());
+                AddComponent(GetEntity(TransformUsageFlags.None), new PrefabManagerTag());
             }
         }
     }

@@ -56,9 +56,8 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
                 while (queue.TryDequeue(out var collision))
                 {
                    var healthData = manager.GetComponentData<EnemyHealthData>(collision.EnemyEntity);
-                   var projectileDamage = manager.GetComponentData<ProjectileDamage>(collision.ProjectileEntity);
 
-                   healthData.Health -= projectileDamage.Value;
+                   healthData.Health -= 2;
                    
                    manager.SetComponentData(collision.EnemyEntity, healthData);
                    ecb.DestroyEntity(collision.ProjectileEntity);

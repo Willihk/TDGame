@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05042186eca4454a8439e675d8cc794b, type: 3}
-  m_Name: BeginPlacement
+  m_Script: {fileID: 11500000, guid: 260371de85f746c39363870ab8743f97, type: 3}
+  m_Name: PrefabList
   m_EditorClassIdentifier: 
-  Enabled: 1
+  prefabs:
+  - {fileID: 1672092839135950081, guid: fbb4dbd7e92bbd24586552e58e86bf5c, type: 3}
+  - {fileID: 7699583475120942697, guid: 17aefed55eeee7a489ad6057372a4416, type: 3}

@@ -4,23 +4,28 @@ using System.IO;
 using Cysharp.Threading.Tasks;
 using MessagePack;
 using TDGame.Cursor;
+using TDGame.Events;
 using TDGame.Network.Components;
 using TDGame.Network.Components.Messaging;
 using TDGame.Player;
+using TDGame.PrefabManagement;
 using TDGame.Systems.Building.Messages.Client;
 using TDGame.Systems.Building.Messages.Server;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Hash128 = Unity.Entities.Hash128;
 
 namespace TDGame.Systems.Building
 {
     public class PlacementManager : MonoBehaviour
     {
+        [SerializeField]
+        private PrefabManager prefabManager;
+        
         [SerializeField]
         private LocalCursorState cursorState;
 
@@ -34,15 +39,12 @@ namespace TDGame.Systems.Building
         private Material placementMaterial;
 
         // Key is playerId, value is placement object
-        private Dictionary<int, GameObject> underPlacement = new Dictionary<int, GameObject>();
-
-        private Dictionary<int, AsyncOperationHandle<GameObject>> handles =
-            new Dictionary<int, AsyncOperationHandle<GameObject>>();
+        private Dictionary<int, GameObject> underPlacement = new();
 
         /// <summary>
-        /// Only on the server, used to keep track of which AssetReference's is currently in use.
+        /// Only on the server, used to keep track of which Hash128's is currently in use.
         /// </summary>
-        private Dictionary<int, AssetReference> serverPlacementTracker = new Dictionary<int, AssetReference>();
+        private Dictionary<int, Hash128> serverPlacementTracker = new();
 
         private NetworkPlayerManager playerManager;
         private GridManager gridManager;
@@ -57,9 +59,8 @@ namespace TDGame.Systems.Building
             referenceCamera = Camera.main;
 
             playerManager = NetworkPlayerManager.Instance;
-
+            prefabManager = PrefabManager.Instance;
             gridManager = GridManager.Instance;
-
 
             messagingManager = BaseMessagingManager.Instance;
 
@@ -74,6 +75,9 @@ namespace TDGame.Systems.Building
             messagingManager.RegisterNamedMessageHandler<NewPlacementMessage>(Handle_NewPlacementMessage);
             messagingManager.RegisterNamedMessageHandler<RemovePlacementMessage>(Handle_RemovePlacementMessage);
             messagingManager.RegisterNamedMessageHandler<SetPositionMessage>(Handle_SetPositionMessage);
+
+
+            EventManager.Instance.onBeginPlacement.EventListeners += OnBeginPlacing;
         }
 
         private void Update()
@@ -93,7 +97,7 @@ namespace TDGame.Systems.Building
 
             // Local stuff
 
-            if (referenceCamera == null)
+            if (!referenceCamera)
             {
                 referenceCamera = Camera.main;
                 return;
@@ -146,15 +150,13 @@ namespace TDGame.Systems.Building
             }
         }
 
-        private async UniTaskVoid NewPlacement(int playerId, AssetReference reference)
+        private async UniTaskVoid NewPlacement(int playerId, Hash128 guid)
         {
-            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(reference);
-
-            handles.Add(playerId, handle);
-            var prefab = await handle;
+            var prefab = prefabManager.GetPrefab(guid);
             var model = prefab.transform.Find("Model").gameObject;
-
+            
             var spawned = Instantiate(model);
+            
             underPlacement.Add(playerId, spawned);
             ReplaceModelMaterialsRecursive(spawned.transform, new Material(placementMaterial));
         }
@@ -166,7 +168,8 @@ namespace TDGame.Systems.Building
             var message = MessagePackSerializer.Deserialize<StartPlacementRequest>(stream);
 
             int id = playerManager.GetPlayerId(sender);
-            var assetReference = new AssetReference(message.AssetGuid);
+            
+            
             if (serverPlacementTracker.ContainsKey(id))
             {
                 // Cancel placement
@@ -174,19 +177,18 @@ namespace TDGame.Systems.Building
                 serverPlacementTracker.Remove(id);
             }
 
-            serverPlacementTracker.Add(id, assetReference);
+            serverPlacementTracker.Add(id, message.AssetGuid);
 
             messagingManager.SendNamedMessageToAll(new NewPlacementMessage
                 { AssetGuid = message.AssetGuid, PlayerId = id });
         }
 
-        async void Handle_ConfirmPlacementRequest(TDNetworkConnection sender, Stream stream)
+        void Handle_ConfirmPlacementRequest(TDNetworkConnection sender, Stream stream)
         {
-            async UniTask<GridArea> GetArea(AssetReference assetReference, Vector3 position, GridManager grid)
+            GridArea GetArea(Hash128 guid, Vector3 position, GridManager grid)
             {
-                var handle = Addressables.LoadAssetAsync<GameObject>(assetReference);
-                var area = (await handle).transform.Find("Model").GetComponent<GridAreaController>().area;
-                Addressables.Release(handle);
+                var prefab = prefabManager.GetPrefab(guid);
+                var area = prefab.transform.Find("Model").GetComponent<GridAreaController>().area;
 
                 var offset = new int2(area.width, area.height) / 2;
                 area.position = grid.towerGrid.WorldToGridPosition(position) - offset;
@@ -201,7 +203,7 @@ namespace TDGame.Systems.Building
 
             var assetToBuild = serverPlacementTracker[playerId];
 
-            var area = await GetArea(assetToBuild, message.Position, gridManager);
+            var area = GetArea(assetToBuild, message.Position, gridManager);
             if (!gridManager.CanPlaceTower(area))
             {
                 Debug.LogWarning("Not valid placement!");
@@ -246,7 +248,7 @@ namespace TDGame.Systems.Building
         #region Client
 
         // When local player clicks on hotbar icon to begin placing a building.
-        public void OnBeginPlacing(string guid)
+        public void OnBeginPlacing(Hash128 guid)
         {
             messagingManager.SendNamedMessageToServer(new StartPlacementRequest() { AssetGuid = guid });
         }
@@ -264,7 +266,7 @@ namespace TDGame.Systems.Building
         void Handle_NewPlacementMessage(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<NewPlacementMessage>(stream);
-            NewPlacement(message.PlayerId, new AssetReference(message.AssetGuid)).Forget();
+            NewPlacement(message.PlayerId, message.AssetGuid).Forget();
         }
 
         void Handle_RemovePlacementMessage(TDNetworkConnection sender, Stream stream)
@@ -277,12 +279,9 @@ namespace TDGame.Systems.Building
                 cursorState.State = CursorState.None;
             }
 
-            if (handles.TryGetValue(message.PlayerId, out AsyncOperationHandle<GameObject> handle))
+            if (underPlacement.TryGetValue(message.PlayerId, out var handle))
             {
-                Destroy(underPlacement[message.PlayerId]);
-
-                Addressables.Release(handle);
-                handles.Remove(message.PlayerId);
+                Destroy(handle);
                 underPlacement.Remove(message.PlayerId);
             }
         }
@@ -292,7 +291,7 @@ namespace TDGame.Systems.Building
             var message = MessagePackSerializer.Deserialize<SetPositionMessage>(stream);
 
 
-            if (underPlacement.TryGetValue(message.Id, out GameObject target))
+            if (underPlacement.TryGetValue(message.Id, out var target))
             {
                 target.transform.position = message.Position;
             }

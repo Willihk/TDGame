@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TDGame.UI.InGame
 {
-    public class HotBarTowerList : MonoBehaviour
+    public class HotbarTowerList : MonoBehaviour
     {
         [SerializeField]
         private TowerGraph towerGraph;

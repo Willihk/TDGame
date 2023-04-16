@@ -107,11 +107,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ea40b2d6b3862c245a898630ddac030c
-    m_Address: Assets/_Project/ScriptableObjects/EventChannels/InGame/Building/BeginPlacement.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dd6c8f789eb0a5841b07001f7eaf3474
     m_Address: Assets/_Project/ScriptableObjects/Data/Cursor/LocalCursorState.asset
     m_ReadOnly: 0

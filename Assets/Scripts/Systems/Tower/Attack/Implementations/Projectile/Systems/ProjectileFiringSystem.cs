@@ -37,11 +37,10 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 
                 var entity = ecb.Instantiate(entityInQueryIndex, prefab.Value);
                 ecb.RemoveComponent<Prefab>(entityInQueryIndex, entity);
-                ecb.AddComponent<ProjectileMovementTarget>(entityInQueryIndex, entity);
+                ecb.AddComponent<ProjectileMovementDirection>(entityInQueryIndex, entity);
 
                 var direction = enemyTranslation.Position - transform.Position;
-                
-                
+
                 var projectileTransform = new LocalTransform
                 {
                     Position = transform.Position,
@@ -52,7 +51,7 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
                 ecb.SetComponent(entityInQueryIndex, entity, projectileTransform);
 
                 ecb.SetComponent(entityInQueryIndex, entity,
-                    new ProjectileMovementTarget { Value = enemyTranslation.Position });
+                    new ProjectileMovementDirection { Value = direction });
             }).ScheduleParallel();
 
             bufferSystem.AddJobHandleForProducer(Dependency);

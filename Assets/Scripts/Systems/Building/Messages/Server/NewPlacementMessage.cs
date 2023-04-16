@@ -1,4 +1,5 @@
 ﻿using MessagePack;
+using Unity.Entities;
 
 namespace TDGame.Systems.Building.Messages.Server
 {
@@ -9,7 +10,7 @@ namespace TDGame.Systems.Building.Messages.Server
     public struct NewPlacementMessage
     {
         [Key(0)]
-        public string AssetGuid;
+        public Hash128 AssetGuid;
 
         [Key(1)]
         public int PlayerId;

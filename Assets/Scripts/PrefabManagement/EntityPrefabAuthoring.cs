@@ -21,7 +21,7 @@ namespace TDGame.PrefabManagement
                 string path = AssetDatabase.GetAssetPath(authoring.Prefab);
                 var guid = AssetDatabase.GUIDFromAssetPath(path);
 
-                AddComponent(new EntityPrefabData() {Value = guid});
+                AddComponent(GetEntity(TransformUsageFlags.None), new EntityPrefabData() {Value = guid});
             }
         }
     }

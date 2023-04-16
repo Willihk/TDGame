@@ -1,5 +1,6 @@
 ﻿using MessagePack;
-using UnityEngine;
+using Unity.Entities;
+using Unity.Mathematics;
 
 namespace TDGame.Systems.Building.Messages.Server
 {
@@ -10,9 +11,9 @@ namespace TDGame.Systems.Building.Messages.Server
     public struct NewBuildingMessage
     {
         [Key(0)]
-        public string AssetGuid;
+        public Hash128 AssetGuid;
         
         [Key(1)]
-        public Vector3 Position;
+        public float3 Position;
     }
 }

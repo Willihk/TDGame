@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using Cysharp.Threading.Tasks;
 using MessagePack;
 using TDGame.Network.Components.Messaging;
+using TDGame.PrefabManagement;
 using TDGame.Systems.Building.Messages.Server;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using Hash128 = Unity.Entities.Hash128;
 
 namespace TDGame.Systems.Building
 {
@@ -25,35 +25,36 @@ namespace TDGame.Systems.Building
             messagingManager.RegisterNamedMessageHandler<NewBuildingMessage>(Handle_NewBuildingMessage);
         }
 
-        private async UniTask BuildTower(AssetReference assetReference, Vector3 position)
+        private void BuildTower(Hash128 guid, float3 position)
         {
-            var handle = Addressables.InstantiateAsync(assetReference);
-
-            var spawned = await handle;
-
-            spawned.transform.position = position;
-            // spawned.AddComponent<ConvertToEntity>();
+            var prefab = PrefabManager.Instance.GetEntityPrefab(guid);
+            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            
+            var entity = entityManager.Instantiate(prefab);
+            
+            var localTransform = entityManager.GetComponentData<LocalTransform>(entity);
+            localTransform.Position = position;
+            entityManager.SetComponentData(entity, localTransform);
         }
 
         private void Handle_NewBuildingMessage(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<NewBuildingMessage>(stream);
+            
 
-            var assetReference = new AssetReference(message.AssetGuid);
-
-            BuildTower(assetReference, message.Position).Forget();
+            BuildTower(message.AssetGuid, message.Position);
         }
 
         #region Server
 
-        public void Server_BuildBuilding(AssetReference assetReference, GridArea area)
+        public void Server_BuildBuilding(Hash128 guid, GridArea area)
         {
             var gridManager = GridManager.Instance;
             gridManager.PlaceTowerOnGrid(null, area);
 
             messagingManager.SendNamedMessageToAll(new NewBuildingMessage
             {
-                AssetGuid = assetReference.AssetGUID,
+                AssetGuid = guid,
                 Position = gridManager.towerGrid.GridToWorldPosition(area.position +
                                                                      new int2(area.width, area.height) / 2)
             });

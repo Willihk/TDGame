@@ -1,9 +1,11 @@
 ﻿using TDGame.Cursor;
 using TDGame.Events.Base;
+using TDGame.PrefabManagement;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Hash128 = Unity.Entities.Hash128;
 
 namespace TDGame.UI.InGame
 {
@@ -19,7 +21,7 @@ namespace TDGame.UI.InGame
         private Image image;
 
         [SerializeField]
-        private GameEvent<string> OnClickBuyBuilding;
+        private GameEvent<Hash128> OnClickBuyBuilding;
 
         [SerializeField]
         private LocalCursorState localCursorState;
@@ -38,7 +40,7 @@ namespace TDGame.UI.InGame
             if (localCursorState.State == CursorState.None)
             {
                 localCursorState.State = CursorState.Placing;
-                // OnClickBuyBuilding.Raise(prefabName);
+                OnClickBuyBuilding.Raise(PrefabManager.Instance.GetPrefabHash(prefabName));
             }
         }
 
