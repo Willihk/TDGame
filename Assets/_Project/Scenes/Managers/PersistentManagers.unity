@@ -353,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabList: {fileID: 11400000, guid: 9a1a72c3abb4e3344bb7df0834e20071, type: 2}
+  towerGraph: {fileID: 11400000, guid: 5bb159a578909e54fbd594795671ab94, type: 2}
 --- !u!4 &232860480
 Transform:
   m_ObjectHideFlags: 0
@@ -400,6 +401,10 @@ MonoBehaviour:
   onServerNetworkConnect: {fileID: 11400000, guid: 0c8c1f3f56af3754f81d0475ffc0a639, type: 2}
   onServerNetworkDisconnect: {fileID: 11400000, guid: c39a920d5eec38945baf2fb302f90931, type: 2}
   onBeginPlacement: {fileID: 11400000, guid: 443da7062b265c84bbb6a69250405180, type: 2}
+  onEconomyChanged: {fileID: 11400000, guid: da6ba3213a7a9f949bf5cc0d57b02d95, type: 2}
+  onMapLoaded: {fileID: 11400000, guid: ef0d66e8bd2f8e64095aa73196e6b3dd, type: 2}
+  onGridInitialized: {fileID: 11400000, guid: b63ed3a462d258d48a15618a1430415d, type: 2}
+  onPathRegistered: {fileID: 11400000, guid: 5e3cd587d64a98449837d29b340b504b, type: 2}
 --- !u!4 &601363649
 Transform:
   m_ObjectHideFlags: 0

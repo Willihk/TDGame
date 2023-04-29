@@ -179,7 +179,6 @@ namespace TDGame.Network.Components
                             break;
                         case NetworkEvent.Type.Data:
                             // data
-                            Debug.Log("Server received data with length: " + reader.Length);
                             var nativeArray = new NativeArray<byte>(reader.Length, Allocator.Temp);
                             reader.ReadBytes(nativeArray);
 
@@ -188,7 +187,6 @@ namespace TDGame.Network.Components
                                 case (byte)MessageType.Managed:
                                     var data = nativeArray.AsReadOnlySpan().Slice(1).ToArray();
 
-                                    Debug.Log("Server data received: " + String.Join(",", data));
                                     nativeArray.Dispose();
                                     onReceivedData?.Invoke(new TDNetworkConnection {NetworkConnection = connections[i]}, data);
                                     break; 

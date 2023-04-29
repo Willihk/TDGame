@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using TDGame.Events;
 using TDGame.Map;
 using TDGame.Pathfinding;
 using TDGame.Systems.Enemy.Systems;
@@ -15,20 +17,36 @@ namespace TDGame.Systems.Enemy
 {
     public class EnemyPathManager : MonoBehaviour
     {
-        public async void OnGridInitialized()
+        private void Start()
         {
-            await UniTask.Delay(10000);
+            EventManager.Instance.onGridInitialized.EventListeners += OnGridInitialized;
+        }
 
-            GridManager gm = GridManager.Instance;
-            WaypointController waypoint = FindObjectOfType<WaypointController>();//:O
+        private void OnDestroy()
+        {
+            EventManager.Instance.onGridInitialized.EventListeners -= OnGridInitialized;
+        }
 
-            int2 start = gm.mapGrid.WorldToGridPosition(waypoint.startPoint.position);
-            int2 end = gm.mapGrid.WorldToGridPosition(waypoint.endPoint.position);
+        public void OnGridInitialized()
+        {
+            UniTask.Void(async () =>
+            {
+                await UniTask.Delay(1000);
 
-            List<int2> path = new Pathfinder().FindPath(start, end, gm.gridSize, gm.mapGrid);
+                GridManager gridManager = GridManager.Instance;
+                WaypointController waypoint = FindObjectOfType<WaypointController>(); //:O
+
+                int2 start = gridManager.mapGrid.WorldToGridPosition(waypoint.startPoint.position);
+                int2 end = gridManager.mapGrid.WorldToGridPosition(waypoint.endPoint.position);
+
+                List<int2> path = new Pathfinder().FindPath(start, end, gridManager.gridSize, gridManager.mapGrid);
 
 
-            World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EnemyMovementSystem>().path = path.Select((x) => (float3)gm.mapGrid.GridToWorldPosition(x)).ToArray();
+                World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EnemyMovementSystem>().path =
+                    path.Select((x) => (float3)gridManager.mapGrid.GridToWorldPosition(x)).ToArray();
+
+                EventManager.Instance.onPathRegistered.Raise();
+            });
         }
     }
 }

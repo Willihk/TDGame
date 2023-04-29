@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using MessagePack;
 using Sirenix.OdinInspector;
+using TDGame.Events;
 using TDGame.Network.Components;
 using TDGame.Network.Components.Messaging;
 using TDGame.Network.Player;
@@ -13,19 +14,25 @@ namespace TDGame.Systems.Economy
 {
     public class PlayerEconomyManager : MonoBehaviour
     {
+        public static PlayerEconomyManager Instance;
+
         [SerializeField]
         private PlayerList playerList;
 
-        private Dictionary<int, Economy> economies = new Dictionary<int, Economy>();
+        private Dictionary<int, Economy> economies = new();
 
         [SerializeField]
         private NetworkPlayerManager playerManager;
 
         private BaseMessagingManager messagingManager;
 
+        private EventManager eventManager;
+
 
         private void Awake()
         {
+            Instance = this;
+
             messagingManager = BaseMessagingManager.Instance;
             messagingManager.RegisterNamedMessageHandler<SetEconomyMessage>(Handle_SetEconomy);
             messagingManager.RegisterNamedMessageHandler<SetEconomiesMessage>(Handle_SetEconomies);
@@ -36,6 +43,7 @@ namespace TDGame.Systems.Economy
         private void Start()
         {
             playerManager = NetworkPlayerManager.Instance;
+            eventManager = EventManager.Instance;
 
             if (CustomNetworkManager.Instance.serverWrapper.isListening)
             {
@@ -70,6 +78,10 @@ namespace TDGame.Systems.Economy
 
         public void AddCurrencyToAllPlayers(int amount)
         {
+            if (!CustomNetworkManager.Instance.serverWrapper.isListening) // Only run on the server
+                return;
+            
+            
             foreach (var economy in economies.Values)
             {
                 AddCurrencyToEconomy(economy, amount);
@@ -91,6 +103,15 @@ namespace TDGame.Systems.Economy
             economy.currency += amount;
             messagingManager.SendNamedMessageToAll(new SetEconomyMessage
                 { PlayerId = economy.ownerId, Currency = economy.currency });
+        }
+
+        public void SyncEconomies()
+        {
+            foreach ((int id, var economy) in economies)
+            {
+                messagingManager.SendNamedMessageToAll(new SetEconomyMessage
+                    { PlayerId = id, Currency = economy.currency });
+            }
         }
 
         [Button]
@@ -145,6 +166,7 @@ namespace TDGame.Systems.Economy
             var economy = GetEconomy(message.PlayerId);
 
             economy.currency = message.Currency;
+            eventManager.onEconomyChanged.Raise(message.PlayerId);
         }
     }
 }

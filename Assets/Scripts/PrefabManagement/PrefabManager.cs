@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Linq;
 using TDGame.Data;
+using TDGame.Systems.Tower.Graph;
+using TDGame.Systems.Tower.Graph.Data;
+using TDGame.Systems.Tower.Graph.Nodes;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
@@ -14,6 +18,9 @@ namespace TDGame.PrefabManagement
 
         [SerializeField]
         private GameObjectList prefabList;
+        
+        [SerializeField]
+        private TowerGraph towerGraph;
 
         [Sirenix.OdinInspector.ReadOnly]
         private Entity prefabManagerSingleton;
@@ -41,6 +48,21 @@ namespace TDGame.PrefabManagement
 
 
             Debug.Log("Found PrefabManagerTag singleton entity");
+        }
+
+        public TowerDetails GetTowerDetails(Hash128 guid)
+        {
+            var prefab = GetPrefab(guid);
+
+            var details = towerGraph.nodes.OfType<TowerNode>().Select(x => x.TowerDetails);
+
+            foreach (var detail in details)
+            {
+                if (detail.TowerReference == prefab)
+                    return detail;
+            }
+
+            return null;
         }
 
         public GameObject GetPrefab(Hash128 guid)

@@ -15,8 +15,4 @@ MonoBehaviour:
   Name: TestTurret
   Description: Just a test turret
   Price: 1
-  TowerReference:
-    m_AssetGUID: 17aefed55eeee7a489ad6057372a4416
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  TowerReference: {fileID: 7699583475120942697, guid: 17aefed55eeee7a489ad6057372a4416, type: 3}

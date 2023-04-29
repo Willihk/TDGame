@@ -2,6 +2,7 @@
 using System.IO;
 using Cysharp.Threading.Tasks;
 using MessagePack;
+using TDGame.Events;
 using TDGame.Events.Base;
 using TDGame.Network.Components;
 using TDGame.Network.Components.Messaging;
@@ -35,9 +36,6 @@ namespace TDGame.Systems.Grid.InGame
 
         private BaseMessagingManager messagingManager;
 
-        [SerializeField]
-        private GameEvent gridInitializedEvent;
-
         public void Awake()
         {
             Instance = this;
@@ -52,7 +50,13 @@ namespace TDGame.Systems.Grid.InGame
             messagingManager = BaseMessagingManager.Instance;
             
             messagingManager.RegisterNamedMessageHandler<SetGridAreaMessage>(Handle_SetGridArea);
-            
+
+            EventManager.Instance.onMapLoaded.EventListeners += OnMapLoaded;
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.Instance.onMapLoaded.EventListeners -= OnMapLoaded;
         }
 
         void CreateGrid()
@@ -95,7 +99,8 @@ namespace TDGame.Systems.Grid.InGame
             RegisterObstacles();
             RegisterPath();
 
-            gridInitializedEvent.Raise();
+
+            EventManager.Instance.onGridInitialized.Raise();
         }
 
         void UpdateTexture()

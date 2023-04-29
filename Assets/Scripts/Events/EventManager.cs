@@ -1,4 +1,5 @@
 ﻿using System;
+using TDGame.Events.Base;
 using TDGame.Events.Types;
 using TDGame.Events.Types.Network;
 using UnityEngine;
@@ -15,6 +16,16 @@ namespace TDGame.Events
 
 
         public Hash128GameEvent onBeginPlacement;
+        
+        
+        /// <summary>
+        /// Value is player id
+        /// </summary>
+        public IntGameEvent onEconomyChanged;
+
+        public VoidGameEvent onMapLoaded;
+        public VoidGameEvent onGridInitialized;
+        public VoidGameEvent onPathRegistered;
 
         private void Awake()
         {

@@ -1,3 +1,4 @@
+using TDGame.Systems.Economy;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace TDGame.UI.InGame
 
         public void UpdateEconomy(int num)
         {
-            EconomyText.text = num.ToString();
+            EconomyText.text = PlayerEconomyManager.Instance.GetEconomy(num).currency.ToString();
         }
     }
 }

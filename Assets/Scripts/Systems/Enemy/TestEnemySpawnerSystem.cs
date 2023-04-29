@@ -1,4 +1,5 @@
-﻿using TDGame.Network.Components.DOTS;
+﻿using TDGame.Managers;
+using TDGame.Network.Components.DOTS;
 using TDGame.PrefabManagement;
 using TDGame.Systems.Enemy.Components.Spawning;
 using Unity.Burst;
@@ -28,6 +29,9 @@ namespace TDGame.Systems.Enemy
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+            if (!SystemAPI.TryGetSingleton(out GameData gameData) || gameData.State != GameState.Playing)
+                return;
+
             if (nextSpawn > SystemAPI.Time.ElapsedTime)
             {
                 return;

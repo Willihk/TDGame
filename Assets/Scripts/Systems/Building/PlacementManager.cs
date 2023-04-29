@@ -11,6 +11,7 @@ using TDGame.Player;
 using TDGame.PrefabManagement;
 using TDGame.Systems.Building.Messages.Client;
 using TDGame.Systems.Building.Messages.Server;
+using TDGame.Systems.Economy;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.InGame;
 using Unity.Mathematics;
@@ -46,6 +47,7 @@ namespace TDGame.Systems.Building
         /// </summary>
         private Dictionary<int, Hash128> serverPlacementTracker = new();
 
+        private PlayerEconomyManager economyManager;
         private NetworkPlayerManager playerManager;
         private GridManager gridManager;
         private BaseMessagingManager messagingManager;
@@ -61,7 +63,8 @@ namespace TDGame.Systems.Building
             playerManager = NetworkPlayerManager.Instance;
             prefabManager = PrefabManager.Instance;
             gridManager = GridManager.Instance;
-
+            economyManager = PlayerEconomyManager.Instance;
+            
             messagingManager = BaseMessagingManager.Instance;
 
             // Server
@@ -203,12 +206,30 @@ namespace TDGame.Systems.Building
 
             var assetToBuild = serverPlacementTracker[playerId];
 
+            var towerDetail = prefabManager.GetTowerDetails(assetToBuild);
+            if (towerDetail == null)
+            {
+                Handle_CancelPlacementRequest(sender, null);
+                Debug.LogWarning("Trying to place invalid tower!");
+                return;
+            }
+
+            if (!economyManager.GetEconomy(playerId).CanAfford(towerDetail.Price))
+            {
+                Handle_CancelPlacementRequest(sender, null);
+                Debug.LogWarning("Cannot afford tower!");
+                return;
+            }
+
             var area = GetArea(assetToBuild, message.Position, gridManager);
             if (!gridManager.CanPlaceTower(area))
             {
                 Debug.LogWarning("Not valid placement!");
                 return;
             }
+
+            economyManager.GetEconomy(playerId).Purchase(towerDetail.Price);
+            economyManager.SyncEconomies();
 
             Handle_CancelPlacementRequest(sender, null);
             buildingManager.Server_BuildBuilding(assetToBuild, area);

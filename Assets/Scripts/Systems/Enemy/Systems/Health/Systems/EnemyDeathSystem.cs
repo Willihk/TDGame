@@ -1,4 +1,5 @@
-﻿using TDGame.Systems.Enemy.Systems.Health.Components;
+﻿using TDGame.Systems.Economy;
+using TDGame.Systems.Enemy.Systems.Health.Components;
 using Unity.Entities;
 
 namespace TDGame.Systems.Enemy.Systems.Health.Systems
@@ -16,16 +17,16 @@ namespace TDGame.Systems.Enemy.Systems.Health.Systems
         {
             var ecb = commandBufferSystem.CreateCommandBuffer().AsParallelWriter();
 
-            Entities.ForEach((Entity entity ,int entityInQueryIndex, in EnemyHealthData healthData) =>
+            Entities.ForEach((Entity entity, int entityInQueryIndex, in EnemyHealthData healthData) =>
             {
                 if (healthData.Health <= 0)
                 {
+                    PlayerEconomyManager.Instance.AddCurrencyToAllPlayers(3);
                     // HealthBarUIPool.Instance.ReturnSlider(uiData.Slider);
                     ecb.DestroyEntity(entityInQueryIndex, entity);
                 }
-
             }).WithoutBurst().Run();
-            
+
             commandBufferSystem.AddJobHandleForProducer(Dependency);
         }
     }
