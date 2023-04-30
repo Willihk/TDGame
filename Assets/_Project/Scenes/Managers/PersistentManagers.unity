@@ -405,6 +405,7 @@ MonoBehaviour:
   onMapLoaded: {fileID: 11400000, guid: ef0d66e8bd2f8e64095aa73196e6b3dd, type: 2}
   onGridInitialized: {fileID: 11400000, guid: b63ed3a462d258d48a15618a1430415d, type: 2}
   onPathRegistered: {fileID: 11400000, guid: 5e3cd587d64a98449837d29b340b504b, type: 2}
+  onPlayerHealthChanged: {fileID: 11400000, guid: 99ec30131301fa14b92dc28361f4fff0, type: 2}
 --- !u!4 &601363649
 Transform:
   m_ObjectHideFlags: 0
@@ -465,6 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d8ffc199366dd48ba5bcfc3fb2c564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerHealth: 0
   sceneManager: {fileID: 2124394707}
   gameplayScene:
     m_AssetGUID: 127901727ace7a44d8d31f7d9eed3f7a

@@ -3433,14 +3433,14 @@ GameObject:
   m_Component:
   - component: {fileID: 422297142}
   - component: {fileID: 422297144}
-  - component: {fileID: 422297143}
+  - component: {fileID: 422297145}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &422297142
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3464,34 +3464,6 @@ RectTransform:
   m_AnchoredPosition: {x: -865.7207, y: 500.2788}
   m_SizeDelta: {x: -1778.7775, y: -1032.013}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &422297143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 422297141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0c29dffb6e84761a1ea7a1f1b3ae9ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _GameEvent: {fileID: 11400000, guid: 240c0cf766bc10b48ad9f8503d23151b, type: 2}
-  _UnityEventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 422297144}
-        m_TargetAssemblyTypeName: TDGame.HealthController, Assembly-CSharp
-        m_MethodName: UpdateHealth
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &422297144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3505,6 +3477,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthText: {fileID: 2066631529}
+--- !u!114 &422297145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422297141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c817d96e37b20224e95fa82919f43325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 99ec30131301fa14b92dc28361f4fff0, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 422297144}
+        m_TargetAssemblyTypeName: TDGame.UI.InGame.HealthController, TDGame
+        m_MethodName: UpdateHealth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &432704069
 GameObject:
   m_ObjectHideFlags: 0

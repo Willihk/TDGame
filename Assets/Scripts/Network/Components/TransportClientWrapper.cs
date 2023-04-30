@@ -73,8 +73,8 @@ namespace TDGame.Network.Components
             data[0] = (byte)MessageType.Managed;
             var dataSpan = data.AsSpan().Slice(1);
             payload.CopyTo(dataSpan);
-            Debug.Log("Client sending data with length: " + data.Length);
-            Debug.Log("Client data sent to server: " + String.Join("," ,data));
+            // Debug.Log("Client sending data with length: " + data.Length);
+            // Debug.Log("Client data sent to server: " + String.Join("," ,data));
 
             if (!connection.IsCreated)
                 Debug.LogError("Sending data when Connection is not created!");

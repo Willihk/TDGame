@@ -26,6 +26,11 @@ namespace TDGame.Events
         public VoidGameEvent onMapLoaded;
         public VoidGameEvent onGridInitialized;
         public VoidGameEvent onPathRegistered;
+        
+        /// <summary>
+        /// Value is the new health
+        /// </summary>
+        public IntGameEvent onPlayerHealthChanged;
 
         private void Awake()
         {

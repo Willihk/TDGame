@@ -6,6 +6,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace TDGame.Systems.Enemy.Systems.Spawning
@@ -21,6 +22,9 @@ namespace TDGame.Systems.Enemy.Systems.Spawning
 
         protected override void OnUpdate()
         {
+            if (!SystemAPI.TryGetSingleton(out EnemySpawnPoint spawnPoint))
+                return;
+            
             var commandBuffer = entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter();
             var prefabManagerEntity = SystemAPI.GetSingletonEntity<PrefabManagerTag>();
             var buffer = SystemAPI.GetBuffer<PrefabElement>(prefabManagerEntity);
@@ -34,6 +38,9 @@ namespace TDGame.Systems.Enemy.Systems.Spawning
                         continue;
 
                     var newEnemy = commandBuffer.Instantiate(entityInQueryIndex, item.Value);
+                    
+                    commandBuffer.SetComponent(entityInQueryIndex,newEnemy, LocalTransform.FromPosition(spawnPoint.Value));
+                    
                     commandBuffer.AddComponent<EnemyTag>(entityInQueryIndex, newEnemy);
                 }
 

@@ -67,6 +67,7 @@ namespace TDGame.Systems.Economy
 
             var economy = gameObject.AddComponent<Economy>();
             economy.ownerId = playerId;
+            AddCurrencyToEconomy(economy, 10);
             economies.Add(playerId, economy);
             return economy;
         }

@@ -1,4 +1,5 @@
-﻿using TDGame.Systems.Enemy.Components.Movement;
+﻿using TDGame.Managers;
+using TDGame.Systems.Enemy.Components.Movement;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -22,7 +23,9 @@ namespace TDGame.Systems.Enemy.Systems.Movement
             Entities.WithAll<ReachedEndTag>().ForEach((Entity entity, int entityInQueryIndex) =>
             {
                 commandBuffer.DestroyEntity(entityInQueryIndex, entity);
-            }).ScheduleParallel();
+                
+                GameManager.Instance.EnemyReachedEnd();
+            }).WithoutBurst().Run();
 
             commandBufferSystem.AddJobHandleForProducer(Dependency);
         }

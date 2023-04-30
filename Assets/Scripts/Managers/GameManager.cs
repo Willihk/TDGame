@@ -12,6 +12,10 @@ namespace TDGame.Managers
 {
     public class GameManager : MonoBehaviour
     {
+        public static GameManager Instance;
+        
+        public int PlayerHealth = 100;
+        
         [SerializeField]
         private CustomSceneManager sceneManager;
 
@@ -22,6 +26,11 @@ namespace TDGame.Managers
         LobbySettings lobbySettings;
 
         private EntityManager entityManager;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         public async void LobbyStartGame()
         {
@@ -36,14 +45,15 @@ namespace TDGame.Managers
             // Load map scene
             await sceneManager.LoadSceneSynced(lobbySettings.selectedMap.MapReference.AssetGUID);
 
-            // Call setup event for gameplay
+            // Setup for gameplay
 
+            PlayerHealth = 100;
+            EventManager.Instance.onPlayerHealthChanged.Raise(PlayerHealth);
+            
             EventManager.Instance.onPathRegistered.EventListeners += StartGame;
             await UniTask.Delay(5000);
             
             EventManager.Instance.onMapLoaded.Raise();
-            
-            
         }
 
         void StartGame()
@@ -53,6 +63,12 @@ namespace TDGame.Managers
 
             
             entityManager.CreateSingleton(new GameData {State = GameState.Playing}, "GameState");
+        }
+
+        public void EnemyReachedEnd()
+        {
+            PlayerHealth--;
+            EventManager.Instance.onPlayerHealthChanged.Raise(PlayerHealth);
         }
     }
 }

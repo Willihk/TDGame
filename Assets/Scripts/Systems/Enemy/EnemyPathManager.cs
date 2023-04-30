@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using TDGame.Events;
 using TDGame.Map;
 using TDGame.Pathfinding;
+using TDGame.Systems.Enemy.Components.Spawning;
 using TDGame.Systems.Enemy.Systems;
 using TDGame.Systems.Enemy.Systems.Movement;
 using TDGame.Systems.Grid.InGame;
@@ -36,7 +37,9 @@ namespace TDGame.Systems.Enemy
                 GridManager gridManager = GridManager.Instance;
                 WaypointController waypoint = FindObjectOfType<WaypointController>(); //:O
 
-                int2 start = gridManager.mapGrid.WorldToGridPosition(waypoint.startPoint.position);
+                var startPos = waypoint.startPoint.position;
+
+                int2 start = gridManager.mapGrid.WorldToGridPosition(startPos);
                 int2 end = gridManager.mapGrid.WorldToGridPosition(waypoint.endPoint.position);
 
                 List<int2> path = new Pathfinder().FindPath(start, end, gridManager.gridSize, gridManager.mapGrid);
@@ -45,6 +48,10 @@ namespace TDGame.Systems.Enemy
                 World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EnemyMovementSystem>().path =
                     path.Select((x) => (float3)gridManager.mapGrid.GridToWorldPosition(x)).ToArray();
 
+
+                var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+                entityManager.CreateSingleton(new EnemySpawnPoint {Value = startPos}, "EnemySpawnPoint");
                 EventManager.Instance.onPathRegistered.Raise();
             });
         }

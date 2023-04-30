@@ -10,9 +10,9 @@ namespace TDGame.UI.InGame
 
 
 
-        public void UpdateHealth(float f)
+        public void UpdateHealth(int value)
         {
-            HealthText.text = f.ToString();
+            HealthText.text = value.ToString();
         }
     }
 }
