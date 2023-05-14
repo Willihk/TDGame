@@ -17,7 +17,7 @@ namespace TDGame.PrefabManagement
         public static PrefabManager Instance;
 
         [SerializeField]
-        private GameObjectList prefabList;
+        public GameObjectList prefabList;
         
         [SerializeField]
         private TowerGraph towerGraph;

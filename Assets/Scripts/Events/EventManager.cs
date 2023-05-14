@@ -32,6 +32,18 @@ namespace TDGame.Events
         /// </summary>
         public IntGameEvent onPlayerHealthChanged;
 
+
+        /// <summary>
+        /// Value is the wave number
+        /// </summary>
+        public IntGameEvent onWaveCompleted;
+        /// <summary>
+        /// Value is the wave number
+        /// </summary>
+        public IntGameEvent onWaveStarted;
+
+        public GameEvent onClickNextWave;
+
         private void Awake()
         {
             Instance = this;

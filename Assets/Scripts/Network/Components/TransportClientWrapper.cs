@@ -32,7 +32,7 @@ namespace TDGame.Network.Components
         private void Start()
         {
             driver = NetworkDriver.Create();
-            pipeline = driver.CreatePipeline(typeof(ReliableSequencedPipelineStage));
+            pipeline = driver.CreatePipeline(typeof(FragmentationPipelineStage), typeof(ReliableSequencedPipelineStage));
         }
 
         [Button]
@@ -109,6 +109,7 @@ namespace TDGame.Network.Components
                         clientDisconnected.Invoke();
                         break;
                     case NetworkEvent.Type.Data:
+                        Debug.Log("Client received data with length: " + reader.Length);
                         var nativeArray = new NativeArray<byte>(reader.Length, Allocator.Temp);
                         reader.ReadBytes(nativeArray);
                         switch (nativeArray[0])

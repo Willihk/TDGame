@@ -42,7 +42,8 @@ namespace TDGame.Network.Components
         private void Start()
         {
             driver = NetworkDriver.Create();
-            pipeline = driver.CreatePipeline(typeof(ReliableSequencedPipelineStage));
+
+            pipeline = driver.CreatePipeline(typeof(FragmentationPipelineStage), typeof(ReliableSequencedPipelineStage));
         }
 
         [Button]
@@ -81,17 +82,17 @@ namespace TDGame.Network.Components
 
         public void SendToAll(Span<byte> payload)
         {
+            var data = new NativeArray<byte>(payload.Length + 1, Allocator.Temp);
+
+            data[0] = (byte)MessageType.Managed;
+            var dataSpan = data.AsSpan().Slice(1);
+            payload.CopyTo(dataSpan);
+
+            Debug.Log("Server sending data to all with length: " + data.Length);
+            // Debug.Log("data sent to all: " + String.Join("," ,data));
+            
             for (int i = 0; i < connections.Length; i++)
             {
-                var data = new NativeArray<byte>(payload.Length + 1, Allocator.Temp);
-                
-                data[0] = (byte)MessageType.Managed;
-                var dataSpan = data.AsSpan().Slice(1);
-                payload.CopyTo(dataSpan);
-                
-                // Debug.Log("Server sending data to all with length: " + data.Length);
-                // Debug.Log("data sent to all: " + String.Join("," ,data));
-
                 driver.BeginSend(pipeline, connections[i], out var writer);
                 writer.WriteBytes(data);
                 driver.EndSend(writer);
@@ -103,14 +104,14 @@ namespace TDGame.Network.Components
             for (int i = 0; i < connections.Length; i++)
             {
                 var data = new NativeArray<byte>(payload.Length + 1, Allocator.Temp);
-                
+
                 data[0] = (byte)MessageType.Entities;
                 var dataSpan = data.AsSpan().Slice(1);
                 payload.CopyTo(dataSpan);
-                
+
                 // Debug.Log("Server sending data to all with length: " + data.Length);
                 // Debug.Log("data sent to all: " + String.Join("," ,data));
-                
+
 
                 driver.BeginSend(pipeline, connections[i], out var writer);
                 writer.WriteBytes(data);
@@ -131,7 +132,7 @@ namespace TDGame.Network.Components
             data[0] = (byte)MessageType.Managed;
             var dataSpan = data.AsSpan().Slice(1);
             payload.CopyTo(dataSpan);
-            
+
             Debug.Log("Server sending data with length: " + data.Length);
             Debug.Log("Server data sent: " + String.Join(",", data));
 
@@ -160,7 +161,7 @@ namespace TDGame.Network.Components
             while ((conn = driver.Accept()) != default(NetworkConnection))
             {
                 connections.Add(conn);
-                connectionAccepted.Invoke(new TDNetworkConnection {NetworkConnection = conn});
+                connectionAccepted.Invoke(new TDNetworkConnection { NetworkConnection = conn });
                 Debug.Log("Accepted a new connection");
             }
 
@@ -174,7 +175,7 @@ namespace TDGame.Network.Components
                     {
                         case NetworkEvent.Type.Disconnect:
                             Debug.Log("Client disconnected from server");
-                            connectionClosed.Invoke(new TDNetworkConnection {NetworkConnection = connections[i]});
+                            connectionClosed.Invoke(new TDNetworkConnection { NetworkConnection = connections[i] });
                             connections[i] = default;
                             break;
                         case NetworkEvent.Type.Data:
@@ -188,14 +189,16 @@ namespace TDGame.Network.Components
                                     var data = nativeArray.AsReadOnlySpan().Slice(1).ToArray();
 
                                     nativeArray.Dispose();
-                                    onReceivedData?.Invoke(new TDNetworkConnection {NetworkConnection = connections[i]}, data);
-                                    break; 
-                                
+                                    onReceivedData?.Invoke(
+                                        new TDNetworkConnection { NetworkConnection = connections[i] }, data);
+                                    break;
+
                                 case (byte)MessageType.Entities:
                                     var nativeData = new NativeArray<byte>(reader.Length - 1, Allocator.TempJob);
                                     nativeArray.Slice(1).CopyTo(nativeData);
 
-                                    World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ReceiveNetworkComponents>().ReceiveData(nativeData);
+                                    World.DefaultGameObjectInjectionWorld
+                                        .GetExistingSystemManaged<ReceiveNetworkComponents>().ReceiveData(nativeData);
                                     break;
                                 default:
                                     break;

@@ -9,6 +9,7 @@ using Unity.Entities;
 namespace TDGame.Systems.Enemy
 {
     [BurstCompile]
+    [DisableAutoCreation]
     public partial struct TestEnemySpawnerSystem : ISystem
     {
         public double delay;
