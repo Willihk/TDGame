@@ -3,6 +3,7 @@ using TDGame.Events.Base;
 using TDGame.Events.Types;
 using TDGame.Events.Types.Network;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TDGame.Events
 {
@@ -43,6 +44,7 @@ namespace TDGame.Events
         public IntGameEvent onWaveStarted;
 
         public GameEvent onClickNextWave;
+        public GameEvent onClickStartGame;
 
         private void Awake()
         {

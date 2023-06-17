@@ -64,6 +64,7 @@ namespace TDGame.Network.Components
             driver.Dispose();
             isConnected = false;
             clientStopped.Invoke();
+            connection = default;
         }
 
         public void SendToServer(Span<byte> payload)

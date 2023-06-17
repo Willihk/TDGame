@@ -32,6 +32,11 @@ namespace TDGame.Managers
             Instance = this;
         }
 
+        private void Start()
+        {
+            EventManager.Instance.onClickStartGame.EventListeners += LobbyStartGame;
+        }
+
         public async void LobbyStartGame()
         {
             Debug.Log("lobby start game");

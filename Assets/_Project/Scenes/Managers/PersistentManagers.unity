@@ -409,6 +409,7 @@ MonoBehaviour:
   onWaveCompleted: {fileID: 11400000, guid: 5a29c76e1b5fc4740892612b4a0ed454, type: 2}
   onWaveStarted: {fileID: 11400000, guid: fe67aaebafa1f4843b5f60d42135ce87, type: 2}
   onClickNextWave: {fileID: 11400000, guid: e19a22d2f2e67834c836494356674168, type: 2}
+  onClickStartGame: {fileID: 11400000, guid: 53f6700a3d42d9446b2227890569d916, type: 2}
 --- !u!4 &601363649
 Transform:
   m_ObjectHideFlags: 0
@@ -434,7 +435,6 @@ GameObject:
   m_Component:
   - component: {fileID: 615863112}
   - component: {fileID: 615863113}
-  - component: {fileID: 615863114}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -477,34 +477,6 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   lobbySettings: {fileID: 11400000, guid: 300fadc30049b6a4391c0325951be476, type: 2}
---- !u!114 &615863114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 615863111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160f5899ffa28264e9082ac9673d1f16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _GameEvent: {fileID: 11400000, guid: 53f6700a3d42d9446b2227890569d916, type: 2}
-  _UnityEventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 615863113}
-        m_TargetAssemblyTypeName: TDGame.Managers.GameManager, TDGame
-        m_MethodName: LobbyStartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!850595691 &860687615
 LightingSettings:
   m_ObjectHideFlags: 0

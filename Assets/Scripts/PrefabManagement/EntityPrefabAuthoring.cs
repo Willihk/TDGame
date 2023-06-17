@@ -1,5 +1,9 @@
 ﻿using Unity.Entities;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
 using UnityEngine;
 using Hash128 = Unity.Entities.Hash128;
 
@@ -14,6 +18,7 @@ namespace TDGame.PrefabManagement
     {
         public GameObject Prefab;
 
+#if UNITY_EDITOR
         class Baker : Baker<EntityPrefabAuthoring>
         {
             public override void Bake(EntityPrefabAuthoring authoring)
@@ -24,5 +29,7 @@ namespace TDGame.PrefabManagement
                 AddComponent(GetEntity(TransformUsageFlags.None), new EntityPrefabData() {Value = guid});
             }
         }
+#endif
+
     }
 }

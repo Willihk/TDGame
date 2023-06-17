@@ -48,8 +48,10 @@ namespace TDGame.Network.Components.DOTS
             {
                 // chunk.GetDynamicComponentDataArrayReinterpret<SpawnEnemy>(SpawnEnemyHandle);
 
-                short count = MemoryMarshal.Read<short>(Data.AsSpan());
-                short id = MemoryMarshal.Read<short>(Data.AsSpan().Slice(2,2));
+                var reader = new DataStreamReader(Data);
+                
+                short count = reader.ReadShort();
+                short id = reader.ReadShort();
                 var span = Data.AsSpan().Slice(4);
 
                 int i = 0;

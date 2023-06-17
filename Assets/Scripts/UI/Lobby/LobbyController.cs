@@ -1,4 +1,5 @@
-﻿using TDGame.Events.Base;
+﻿using TDGame.Events;
+using TDGame.Events.Base;
 using TDGame.Network.Components;
 using UnityEngine;
 
@@ -7,9 +8,6 @@ namespace TDGame.UI.Lobby
     public class LobbyController : MonoBehaviour
     {
         private CustomNetworkManager manager;
-
-        [SerializeField]
-        private GameEvent startGameEvent;
 
         private void Start()
         {
@@ -21,13 +19,12 @@ namespace TDGame.UI.Lobby
             // Check host/server
             if (CustomNetworkManager.Instance.serverWrapper.isListening)
             {
-                startGameEvent.Raise();
+                EventManager.Instance.onClickStartGame.Raise();
             }
         }
         
         public void OnClickReady()
         {
-            startGameEvent.Raise();
         }
         
         public void OnClickLeave()
