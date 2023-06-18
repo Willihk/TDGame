@@ -22,9 +22,10 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
         {
             var ecb = bufferSystem.CreateCommandBuffer().AsParallelWriter();
             var allTranslations = GetComponentLookup<LocalTransform>(true);
+            var allWorldTranslations = GetComponentLookup<LocalToWorld>(true);
 
-            Entities.WithReadOnly(allTranslations).ForEach((Entity e, int entityInQueryIndex, ref BasicWindup windup,
-                in LocalTransform transform, in ProjectilePrefab prefab,
+            Entities.WithReadOnly(allTranslations).WithReadOnly(allWorldTranslations).ForEach((Entity e, int entityInQueryIndex, ref BasicWindup windup,
+                in LocalTransform transform, in ProjectilePrefab prefab, in ProjectileFiringPoint firePoint,
                 in DynamicBuffer<TargetBufferElement> targets) =>
             {
                 if (windup.Remainingtime > 0 || targets.Length == 0)
@@ -36,14 +37,17 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
                 windup.Remainingtime = windup.WindupTime;
 
                 var entity = ecb.Instantiate(entityInQueryIndex, prefab.Value);
-                ecb.RemoveComponent<Prefab>(entityInQueryIndex, entity);
                 ecb.AddComponent<ProjectileMovementDirection>(entityInQueryIndex, entity);
 
-                var direction = enemyTranslation.Position - transform.Position;
 
+                var enemyTargetPosition = enemyTranslation.Position;
+                enemyTargetPosition.y = allWorldTranslations[firePoint.firingPoint].Position.y;
+                
+                var direction = enemyTargetPosition - allWorldTranslations[firePoint.firingPoint].Position;
+                
                 var projectileTransform = new LocalTransform
                 {
-                    Position = transform.Position,
+                    Position = allWorldTranslations[firePoint.firingPoint].Position,
                     Rotation = quaternion.LookRotation(direction, new float3(0, 1, 0)),
                     Scale = 1
                 };
@@ -52,6 +56,9 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 
                 ecb.SetComponent(entityInQueryIndex, entity,
                     new ProjectileMovementDirection { Value = direction });
+                
+                ecb.RemoveComponent<Prefab>(entityInQueryIndex, entity);
+
             }).ScheduleParallel();
 
             bufferSystem.AddJobHandleForProducer(Dependency);

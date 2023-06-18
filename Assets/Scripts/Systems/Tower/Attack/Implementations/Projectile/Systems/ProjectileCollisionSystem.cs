@@ -92,7 +92,12 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 
                 for (int i = 0; i < EnemyEntities.Length; i++)
                 {
-                    float distance = math.distance(AllTranslations[EnemyEntities[i]].Position, translation.Position);
+                    var enemyPos = AllTranslations[EnemyEntities[i]].Position;
+                    enemyPos.y = 0;
+                    var projectilePos = translation.Position;
+                    projectilePos.y = 0;
+                    
+                    float distance = math.distance(enemyPos, projectilePos);
 
                     if (distance < closestDistance && distance < radiusCollider.Value)
                     {
