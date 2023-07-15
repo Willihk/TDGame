@@ -37,22 +37,24 @@ namespace TDGame.Utility.MessagePack.Mathematics
         private static readonly Dictionary<Type, object> FormatterMap = new()
         {
             // standard
+            { typeof(Hash128), new Hash128Formatter() },
             { typeof(int2), new Int2Formatter() },
             { typeof(float3), new Float3Formatter() },
             { typeof(float4), new Float4Formatter() },
             { typeof(quaternion), new QuaternionFormatter() },
             { typeof(float4x4), new Float4X4Formatter() },
-            { typeof(Hash128), new Hash128Formatter() },
    
 
             // standard + array
             { typeof(float3[]), new ArrayFormatter<float3>() },
+            { typeof(Hash128[]), new ArrayFormatter<Hash128>() },
             { typeof(float4[]), new ArrayFormatter<float4>() },
             { typeof(quaternion[]), new ArrayFormatter<quaternion>() },
             { typeof(float4x4[]), new ArrayFormatter<float4x4>() },
        
 
             // standard + list
+            { typeof(List<Hash128>), new ListFormatter<Hash128>() },
             { typeof(List<float3>), new ListFormatter<float3>() },
             { typeof(List<float4>), new ListFormatter<float4>() },
             { typeof(List<quaternion>), new ListFormatter<quaternion>() },

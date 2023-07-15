@@ -21,6 +21,21 @@ namespace TDGame.Systems.Tower.Graph
             var towerNodes = GetConnectedTowerNodes(hotbarNode.GetPort("Next"));
             
             return towerNodes.Select(x => x.TowerDetails);
+        }  
+        
+        public IEnumerable<TowerDetails> GetTowerUpgrades(TowerDetails details)
+        {
+            var allTowerNodes = nodes.OfType<TowerNode>();
+
+            var enumerable = allTowerNodes.ToList();
+            
+            var node = enumerable.FirstOrDefault((x) => x.TowerDetails.Name == details.Name);
+            if (!node)
+                return new TowerDetails[] {};
+
+            var towerNodes = GetConnectedTowerNodes(node.GetPort("Next"));
+            
+            return towerNodes.Select(x => x.TowerDetails);
         }
 
         IEnumerable<TowerNode> GetConnectedTowerNodes(NodePort port)

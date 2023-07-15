@@ -144,7 +144,7 @@ namespace TDGame.Systems.Grid.InGame
 
         #region Server
 
-        public void PlaceTowerOnGrid(GameObject tower, GridArea area)
+        public void PlaceTowerOnGrid(int id, GridArea area)
         {
             if (!CustomNetworkManager.Instance.serverWrapper.isListening)
             {
@@ -152,7 +152,7 @@ namespace TDGame.Systems.Grid.InGame
                 return;
             }
 
-            var cell = new GridCell() {State = GridCellState.Occupied};
+            var cell = new GridCell() {State = GridCellState.Occupied, OccupierId = id};
             towerGrid.SetAreaToCell(area, cell);
             
             messagingManager.SendNamedMessageToAll(new SetGridAreaMessage(){Type = GridType.Tower, Area = area, Cell = cell});
@@ -163,7 +163,7 @@ namespace TDGame.Systems.Grid.InGame
         {
             if (!CustomNetworkManager.Instance.serverWrapper.isListening)
             {
-                Debug.LogError("Called PlaceTowerOnGrid from a client");
+                Debug.LogError("Called EmptyGridArea from a client");
                 return;
             }
             

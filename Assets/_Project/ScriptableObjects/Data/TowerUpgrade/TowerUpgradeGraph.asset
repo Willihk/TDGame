@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tower
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -328, y: -136}
+  position: {x: -8, y: -120}
   ports:
     keys:
     - Previous
@@ -25,6 +25,9 @@ MonoBehaviour:
       connections:
       - fieldName: Next
         node: {fileID: 6588851183723078820}
+        reroutePoints: []
+      - fieldName: Next
+        node: {fileID: 4084835040578381424}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -91,7 +94,10 @@ MonoBehaviour:
     - _fieldName: Next
       _node: {fileID: 4084835040578381424}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: Previous
+        node: {fileID: -4012080740427942351}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0

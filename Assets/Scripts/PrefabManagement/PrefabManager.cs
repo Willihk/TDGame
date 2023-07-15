@@ -65,6 +65,11 @@ namespace TDGame.PrefabManagement
             return null;
         }
 
+        public TowerDetails[] GetTowerUpgrades(TowerDetails towerDetails)
+        {
+            return towerGraph.GetTowerUpgrades(towerDetails).ToArray();
+        }
+
         public GameObject GetPrefab(Hash128 guid)
         {
             if (prefabManagerSingleton == Entity.Null)

@@ -410,6 +410,8 @@ MonoBehaviour:
   onWaveStarted: {fileID: 11400000, guid: fe67aaebafa1f4843b5f60d42135ce87, type: 2}
   onClickNextWave: {fileID: 11400000, guid: e19a22d2f2e67834c836494356674168, type: 2}
   onClickStartGame: {fileID: 11400000, guid: 53f6700a3d42d9446b2227890569d916, type: 2}
+  onClickTower: {fileID: 11400000, guid: 9559820e9244c374bbfc484ee38d2da2, type: 2}
+  onClickTowerUpgrade: {fileID: 11400000, guid: 2e3b4189f4159b04e8877875c58ee251, type: 2}
 --- !u!4 &601363649
 Transform:
   m_ObjectHideFlags: 0

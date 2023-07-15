@@ -62,6 +62,38 @@ namespace TDGame.Systems.Grid
 
         #endregion
 
+
+        public GridArea GetAreaOfOccupier(int id)
+        {
+            int minX = sizeX;
+            int maxX = 0;
+            int minY = sizeY;
+            int maxY = 0;
+
+            for (var x = 0; x < sizeX; x++)
+            {
+                for (var y = 0; y < sizeY; y++)
+                {
+                    var index = getIndex(x, y);
+
+                    if (grid[index].OccupierId == id)
+                    {
+                        if (x < minX)
+                            minX = x;
+                        if (y < minY)
+                            minY = y;
+                        
+                        if (x > maxX)
+                            maxX = x;
+                        if (y < maxY)
+                            maxY = y;
+                    }
+                }
+            }
+
+            return new GridArea() { position = new int2(minX, minY), height = maxY - minY, width = maxX - minX };
+        }
+        
         public bool SetCell(int x, int y, GridCell newCell)
         {
             if (!IsValidGridPosition(x, y))

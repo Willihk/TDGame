@@ -35,4 +35,20 @@ namespace TDGame.Events.Base
                 EventListeners(item);
         }
     }
+    
+    [Serializable]
+    public abstract class GameEvent<T, K> : ScriptableObject
+    {
+        public event Action<T, K> EventListeners = delegate { };
+
+        public bool Enabled = true;
+
+        [Button]
+        public void Raise(T a, K b)
+        {
+            Debug.Log("Event Triggered: " + name);
+            if (Enabled)
+                EventListeners(a, b);
+        }
+    }
 }

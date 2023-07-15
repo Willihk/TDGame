@@ -45,6 +45,16 @@ namespace TDGame.Events
 
         public GameEvent onClickNextWave;
         public GameEvent onClickStartGame;
+        
+        /// <summary>
+        /// Value is tower id
+        /// </summary>
+        public IntGameEvent onClickTower;
+        
+        /// <summary>
+        /// tower id, hash of upgrade 
+        /// </summary>
+        public IntHashGameEvent onClickTowerUpgrade;
 
         private void Awake()
         {
