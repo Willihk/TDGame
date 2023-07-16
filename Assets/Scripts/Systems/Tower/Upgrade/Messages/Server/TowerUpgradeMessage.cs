@@ -1,5 +1,5 @@
 ﻿using MessagePack;
-using UnityEngine;
+using Unity.Entities;
 
 namespace TDGame.Systems.Tower.Upgrade.Messages.Server
 {
@@ -9,7 +9,7 @@ namespace TDGame.Systems.Tower.Upgrade.Messages.Server
         [Key(0)]
         public int TowerId;
 
-        [Key(0)]
+        [Key(1)]
         public Hash128 UpgradeHash;
     }
 }

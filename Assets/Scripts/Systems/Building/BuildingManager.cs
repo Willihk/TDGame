@@ -31,7 +31,7 @@ namespace TDGame.Systems.Building
         private BaseMessagingManager messagingManager;
 
         // key is id, value is prefab hash
-        private Dictionary<int, Hash128> spawned = new ();
+        private Dictionary<int, Hash128> spawned = new();
 
         private void Start()
         {
@@ -41,13 +41,16 @@ namespace TDGame.Systems.Building
             messagingManager.RegisterNamedMessageHandler<RemoveBuildingMessage>(Handle_RemoveBuildingMessage);
         }
 
-        private void BuildTower(Hash128 guid, float3 position)
+        private void BuildTower(int id, Hash128 guid, float3 position)
         {
             var prefab = PrefabManager.Instance.GetEntityPrefab(guid);
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            
+
             var entity = entityManager.Instantiate(prefab);
-            
+
+            entityManager.AddComponent<NetworkId>(entity);
+            entityManager.SetComponentData(entity, new NetworkId() { Value = id });
+
             var localTransform = entityManager.GetComponentData<LocalTransform>(entity);
             localTransform.Position = position;
             entityManager.SetComponentData(entity, localTransform);
@@ -56,28 +59,28 @@ namespace TDGame.Systems.Building
         private void Handle_NewBuildingMessage(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<NewBuildingMessage>(stream);
-            
+
             spawned.Add(message.ID, message.AssetGuid);
-            BuildTower(message.AssetGuid, message.Position);
+            BuildTower(message.ID, message.AssetGuid, message.Position);
         }
-        
+
         private void Handle_RemoveBuildingMessage(TDNetworkConnection sender, Stream stream)
         {
             var message = MessagePackSerializer.Deserialize<RemoveBuildingMessage>(stream);
-            
+
             spawned.Remove(message.Id);
 
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             var query = entityManager.CreateEntityQuery(typeof(NetworkId));
             var entities = query.ToEntityArray(Allocator.Temp);
 
-            foreach (var entity in entities)  
+            foreach (var entity in entities)
             {
                 if (entityManager.GetComponentData<NetworkId>(entity).Value == message.Id)
                 {
                     entityManager.DestroyEntity(entity);
                     break;
-                }  
+                }
             }
         }
 
@@ -90,13 +93,12 @@ namespace TDGame.Systems.Building
         {
             if (!GetHashById(id, out var hash))
             {
-                towerDetails = null;   
+                towerDetails = null;
                 return false;
             }
-            
+
             towerDetails = PrefabManager.Instance.GetTowerDetails(hash);
             return true;
-
         }
 
         #region Server
@@ -104,7 +106,7 @@ namespace TDGame.Systems.Building
         public void Server_BuildBuilding(Hash128 guid, GridArea area)
         {
             int id = Random.Range(int.MinValue, int.MaxValue);
-            
+
             var gridManager = GridManager.Instance;
             gridManager.PlaceTowerOnGrid(id, area);
 
@@ -115,13 +117,14 @@ namespace TDGame.Systems.Building
                                                                      new int2(area.width, area.height) / 2),
                 ID = id
             });
-        } 
+        }
+
         public void Server_RemoveBuilding(int id)
         {
             var gridManager = GridManager.Instance;
             var towerArea = gridManager.towerGrid.GetAreaOfOccupier(id);
             gridManager.EmptyGridArea(GridType.Tower, towerArea);
-            
+
             messagingManager.SendNamedMessageToAll(new RemoveBuildingMessage()
             {
                 Id = id

@@ -12,18 +12,14 @@ namespace TDGame
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Initialize()
         {
-            if (!serializerRegistered)
-            {
-                StaticCompositeResolver.Instance.Register(
-                    MathematicsResolver.Instance,
-                    MessagePack.Resolvers.StandardResolver.Instance
-                );
+            StaticCompositeResolver.Instance.Register(
+                MathematicsResolver.Instance,
+                MessagePack.Resolvers.StandardResolver.Instance
+            );
 
-                var option = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
+            var option = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
 
-                MessagePackSerializer.DefaultOptions = option;
-                serializerRegistered = true;
-            }
+            MessagePackSerializer.DefaultOptions = option;
         }
 
 #if UNITY_EDITOR

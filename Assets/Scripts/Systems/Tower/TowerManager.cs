@@ -8,10 +8,13 @@ using TDGame.Network.Components.Messaging;
 using TDGame.PrefabManagement;
 using TDGame.Systems.Building;
 using TDGame.Systems.Economy;
+using TDGame.Systems.Grid.InGame;
 using TDGame.Systems.Tower.Upgrade.Messages;
 using TDGame.Systems.Tower.Upgrade.Messages.Client;
 using TDGame.Systems.Tower.Upgrade.Messages.Server;
+using Unity.Mathematics;
 using UnityEngine;
+using Hash128 = Unity.Entities.Hash128;
 
 namespace TDGame.Systems.Tower
 {
@@ -21,13 +24,13 @@ namespace TDGame.Systems.Tower
 
         private TransportClientWrapper clientWrapper;
         private TransportServerWrapper serverWrapper;
-        
+
         private void Start()
         {
             clientWrapper = CustomNetworkManager.Instance.clientWrapper;
             serverWrapper = CustomNetworkManager.Instance.serverWrapper;
             messagingManager = BaseMessagingManager.Instance;
-            
+
             messagingManager.RegisterNamedMessageHandler<TowerUpgradeMessage>(HandleTowerUpgradeMessage);
             messagingManager.RegisterNamedMessageHandler<RequestTowerUpgrade>(HandleRequestTowerUpgrade);
 
@@ -36,14 +39,16 @@ namespace TDGame.Systems.Tower
 
         private void OnClickTowerUpgrade(int id, Hash128 upgrade)
         {
-            messagingManager.SendNamedMessageToServer(new RequestTowerUpgrade() {TowerId = id, UpgradeHash = upgrade});
+            messagingManager.SendNamedMessageToServer(new RequestTowerUpgrade()
+                { TowerId = id, UpgradeHash = upgrade });
+            EventManager.Instance.onClickTower.Raise(-1);
         }
 
 
         void HandleRequestTowerUpgrade(TDNetworkConnection sender, Stream stream)
         {
-            var message = MessagePackSerializer.Deserialize<RequestTowerUpgrade>(stream); 
-            
+            var message = MessagePackSerializer.Deserialize<RequestTowerUpgrade>(stream);
+
             //TODO: Validation
 
             // if (!BuildingManager.Instance.GetHashById(message.TowerId, out var builtHash))
@@ -60,15 +65,24 @@ namespace TDGame.Systems.Tower
             economy.Purchase(upgradeDetails.Price);
             PlayerEconomyManager.Instance.SyncEconomies();
 
+            var towerArea = GridManager.Instance.towerGrid.GetAreaOfOccupier(message.TowerId);
+            
+            var prefab = PrefabManager.Instance.GetPrefab(message.UpgradeHash);
+            var area = prefab.transform.Find("Model").GetComponent<GridAreaController>().area;
+
+            towerArea.height = area.height;
+            towerArea.width = area.width;
 
             BuildingManager.Instance.Server_RemoveBuilding(message.TowerId);
-            
-            messagingManager.SendNamedMessageToAll(new TowerUpgradeMessage() {TowerId = message.TowerId, UpgradeHash = message.UpgradeHash});
+
+            BuildingManager.Instance.Server_BuildBuilding(message.UpgradeHash, towerArea);
+
+            messagingManager.SendNamedMessageToAll(new TowerUpgradeMessage()
+                { TowerId = message.TowerId, UpgradeHash = message.UpgradeHash });
         }
-        
+
         void HandleTowerUpgradeMessage(TDNetworkConnection sender, Stream stream)
         {
-            
         }
     }
 }

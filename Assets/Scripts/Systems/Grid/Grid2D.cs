@@ -85,13 +85,13 @@ namespace TDGame.Systems.Grid
                         
                         if (x > maxX)
                             maxX = x;
-                        if (y < maxY)
+                        if (y > maxY)
                             maxY = y;
                     }
                 }
             }
 
-            return new GridArea() { position = new int2(minX, minY), height = maxY - minY, width = maxX - minX };
+            return new GridArea() { position = new int2(minX, minY), height = maxY - minY +1, width = maxX - minX +1 };
         }
         
         public bool SetCell(int x, int y, GridCell newCell)
