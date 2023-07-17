@@ -8,23 +8,20 @@ using TDGame.Network.Components.Interfaces;
 using TDGame.Network.Components.Messaging;
 using TDGame.Network.Messages.Scene;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace TDGame.Network.Components
 {
     // TODO: Convert to non MonoBehaviour
-    public class CustomSceneManager : MonoBehaviour, ICustomSceneManager
+    public class StandardSceneManager : MonoBehaviour, ICustomSceneManager
     {
+        public static StandardSceneManager Instance;
 
-        public static CustomSceneManager Instance;
-        
         [ReadOnly]
-        [Sirenix.OdinInspector.ShowInInspector]
-        private Dictionary<string, SceneInstance> loadedScenes = new Dictionary<string, SceneInstance>();
+        [ShowInInspector]
+        private List<string> loadedScenes = new();
 
-        public Dictionary<string, SceneInstance> LoadedScenes => loadedScenes;
+        public List<string> LoadedScenes => loadedScenes;
 
         BaseMessagingManager messagingManager;
 
@@ -45,17 +42,14 @@ namespace TDGame.Network.Components
 
         public async UniTask<bool> LoadScene(string sceneID)
         {
-            var scene = new AssetReference(sceneID);
+            await LoadAddressableScene(sceneID);
 
-            if (scene.RuntimeKeyIsValid())
-                await LoadAddressableScene(scene);
-
-            return scene.RuntimeKeyIsValid();
+            return true;
         }
 
         public async UniTask UnloadScene(string sceneID)
         {
-            if (loadedScenes.ContainsKey(sceneID))
+            if (loadedScenes.Contains(sceneID))
             {
                 await UnLoadAddressableScene(sceneID);
             }
@@ -63,31 +57,33 @@ namespace TDGame.Network.Components
 
         public async UniTask UnLoadAllLoadedScenes()
         {
-            var scenes = loadedScenes.Keys.ToArray();
-
-            foreach (var scene in scenes)
+            var scenes = loadedScenes.ToArray(); // copy to new array, scenes are removed from loadedScenes when running.
+            foreach (string scene in scenes)
             {
                 await UnLoadAddressableScene(scene);
             }
         }
 
-        private async UniTask LoadAddressableScene(AssetReference scene)
+        private async UniTask LoadAddressableScene(string scene)
         {
-            if (loadedScenes.ContainsKey(scene.AssetGUID))
+            if (loadedScenes.Contains(scene))
+            {
+                Debug.LogWarning("Scene is already loaded!");
                 return;
+            }
 
-            loadedScenes.Add(scene.AssetGUID, new SceneInstance());
+            loadedScenes.Add(scene);
 
-            var sceneInstance = await Addressables.LoadSceneAsync(scene, LoadSceneMode.Additive);
-            loadedScenes[scene.AssetGUID] = sceneInstance;
+            await SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+            Debug.Log("Loaded scene: "+scene);
+
         }
 
         private async UniTask UnLoadAddressableScene(string sceneID)
         {
-            var instance = loadedScenes[sceneID];
             loadedScenes.Remove(sceneID);
-
-            await Addressables.UnloadSceneAsync(instance);
+            await SceneManager.UnloadSceneAsync(sceneID);
+            Debug.Log("Unloaded scene: "+sceneID);
         }
 
         #region Scene syncing
@@ -101,7 +97,7 @@ namespace TDGame.Network.Components
         {
             var response = new SyncLoadedScenes()
             {
-                LoadedSceneIDs = loadedScenes.Keys.ToList()
+                LoadedSceneIDs = loadedScenes
             };
 
             messagingManager.SendNamedMessage(sender, response);
@@ -117,27 +113,20 @@ namespace TDGame.Network.Components
         private async UniTask LoadScenesFromMessage(SyncLoadedScenes message)
         {
             var handles = new List<UniTask>();
-            var toLoad = message.LoadedSceneIDs.Where(x => !loadedScenes.ContainsKey(x)).ToList();
+            var toLoad = message.LoadedSceneIDs.Where(x => !loadedScenes.Contains(x)).ToList();
 
-            var toUnLoad = loadedScenes.Where(x => !message.LoadedSceneIDs.Contains(x.Key)).Select(x => x.Key)
+            var toUnLoad = loadedScenes.Where(x => !message.LoadedSceneIDs.Contains(x))
                 .ToList();
 
-            toLoad.ForEach(x =>
-            {
-                // Load scene
-                AssetReference scene = new AssetReference(x);
-                if (!scene.RuntimeKeyIsValid())
-                    Debug.LogError("Invalid scene AssetReference");
-
-                handles.Add(LoadAddressableScene(scene));
-            });
+            toLoad.ForEach(x => handles.Add(LoadAddressableScene(x)));
             toUnLoad.ForEach(x => handles.Add(UnLoadAddressableScene(x)));
             await UniTask.WhenAll(handles);
         }
 
         public async UniTask<bool> LoadSceneSynced(string sceneID)
         {
-            if (CustomNetworkManager.Instance.serverWrapper.isListening && !CustomNetworkManager.Instance.clientWrapper.isConnected)
+            if (CustomNetworkManager.Instance.serverWrapper.isListening &&
+                !CustomNetworkManager.Instance.clientWrapper.isConnected)
             {
                 await LoadScene(sceneID);
             }
@@ -151,7 +140,8 @@ namespace TDGame.Network.Components
 
         public async UniTask<bool> UnloadSceneSynced(string sceneID)
         {
-            if (CustomNetworkManager.Instance.serverWrapper.isListening && !CustomNetworkManager.Instance.clientWrapper.isConnected)
+            if (CustomNetworkManager.Instance.serverWrapper.isListening &&
+                !CustomNetworkManager.Instance.clientWrapper.isConnected)
             {
                 await UnloadScene(sceneID);
             }
@@ -165,10 +155,8 @@ namespace TDGame.Network.Components
 
         public async UniTask UnLoadAllLoadedScenesSynced()
         {
-            // TODO: Create message to unload all scenes.
-            var scenes = loadedScenes.Keys.ToArray();
-
-            foreach (var scene in scenes)
+            var scenes = loadedScenes.ToArray(); // copy to new array, scenes are removed from loadedScenes when running.
+            foreach (string scene in scenes)
             {
                 await UnloadSceneSynced(scene);
             }

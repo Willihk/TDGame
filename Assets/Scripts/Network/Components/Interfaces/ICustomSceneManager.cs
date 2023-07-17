@@ -45,6 +45,5 @@ namespace TDGame.Network.Components.Interfaces
         /// </summary>
         /// <returns></returns>
         public UniTask UnLoadAllLoadedScenesSynced();
-
     }
 }

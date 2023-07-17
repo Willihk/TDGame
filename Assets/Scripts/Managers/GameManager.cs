@@ -1,12 +1,9 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using TDGame.Events;
 using TDGame.Network.Components;
 using TDGame.Settings;
-using TDGame.Systems.Grid.InGame;
 using Unity.Entities;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace TDGame.Managers
 {
@@ -15,12 +12,13 @@ namespace TDGame.Managers
         public static GameManager Instance;
         
         public int PlayerHealth = 100;
+
         
         [SerializeField]
-        private CustomSceneManager sceneManager;
+        private StandardSceneManager sceneManager;
 
         [SerializeField]
-        AssetReference gameplayScene;
+        string gameplayScene;
 
         [SerializeField]
         LobbySettings lobbySettings;
@@ -45,10 +43,10 @@ namespace TDGame.Managers
             await sceneManager.UnLoadAllLoadedScenesSynced();
 
             // Load gameplay scene
-            await sceneManager.LoadSceneSynced(gameplayScene.AssetGUID);
+            await sceneManager.LoadSceneSynced(gameplayScene);
 
             // Load map scene
-            await sceneManager.LoadSceneSynced(lobbySettings.selectedMap.MapReference.AssetGUID);
+            await sceneManager.LoadSceneSynced(lobbySettings.selectedMap.MapReference);
 
             // Setup for gameplay
 

@@ -31,7 +31,7 @@ namespace TDGame.PrefabManagement
             Instance = this;
         }
 
-        private void Start()
+        private void GetSingleton()
         {
             // prefabManagerSingleton = SystemAPI.GetSingletonEntity<PrefabManagerTag>();
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -73,7 +73,9 @@ namespace TDGame.PrefabManagement
         public GameObject GetPrefab(Hash128 guid)
         {
             if (prefabManagerSingleton == Entity.Null)
-                return null;
+            {
+                GetSingleton();
+            }
 
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
@@ -94,7 +96,9 @@ namespace TDGame.PrefabManagement
         public Entity GetEntityPrefab(Hash128 guid)
         {
             if (prefabManagerSingleton == Entity.Null)
-                return Entity.Null;
+            {
+                GetSingleton();
+            }
 
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
@@ -114,6 +118,11 @@ namespace TDGame.PrefabManagement
 
         public Hash128 GetPrefabHash(string prefabName)
         {
+            if (prefabManagerSingleton == Entity.Null)
+            {
+                GetSingleton();
+            }
+            
             int index = prefabList.GetIndexOfGameObjectName(prefabName);
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 

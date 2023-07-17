@@ -18,10 +18,10 @@ namespace TDGame.Map
         
         private async void Start()
         {
-            sceneManager = CustomSceneManager.Instance;
+            sceneManager = StandardSceneManager.Instance;
             var map = settings.selectedMap;
             
-            await sceneManager.LoadSceneSynced(map.MapReference.AssetGUID);
+            await sceneManager.LoadSceneSynced(map.MapReference);
             mapLoaded?.Invoke();
         }
     }

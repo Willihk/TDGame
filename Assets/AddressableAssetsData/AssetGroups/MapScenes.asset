@@ -16,11 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 6c1301a850561ea45b556d8fd4681726
-  m_SerializeEntries:
-  - m_GUID: 6cc96cb1db8ca8c42b40b9b8e1a086ec
-    m_Address: Assets/Scenes/Maps/TestMap.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: adfdebea1ca07044c8bc185c8b9018d1, type: 2}
   m_SchemaSet:

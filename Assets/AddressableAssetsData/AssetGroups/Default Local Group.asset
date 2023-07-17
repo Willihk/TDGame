@@ -37,11 +37,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4a923a40b0cff1e4d9b779200a99eb74
-    m_Address: Assets/Scenes/Menus/LobbyMenu.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2cd23f37f8fa47949925e2544af9b502
     m_Address: Assets/ScriptableObjects/EventChannels/Player/PlayerRegistered.asset
     m_ReadOnly: 0
@@ -74,11 +69,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 53f6700a3d42d9446b2227890569d916
     m_Address: Assets/ScriptableObjects/EventChannels/Menus/Lobby/Start.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b63bdd3dabc942f459c5f032ae24ed52
-    m_Address: Assets/Scenes/Menus/MainMenu.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -120,21 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!115 &8653578
-MonoScript:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 7
-  m_DefaultReferences: {}
-  m_Icon: {fileID: 0}
-  m_Type: 0
-  m_ExecutionOrder: 0
-  m_ClassName: SubScene
-  m_Namespace: Unity.Scenes
-  m_AssemblyName: Unity.Scenes
 --- !u!1 &53215439
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,17 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358731e83ea34e10b3ec96c4babc1ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customSceneManager: {fileID: 2124394707}
-  mainMenuScene:
-    m_AssetGUID: b63bdd3dabc942f459c5f032ae24ed52
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  roomScene:
-    m_AssetGUID: 4a923a40b0cff1e4d9b779200a99eb74
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  customSceneManager: {fileID: 2124394708}
+  mainMenuScene: MainMenu
+  roomScene: LobbyMenu
 --- !u!114 &107596170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,12 +449,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerHealth: 0
-  sceneManager: {fileID: 2124394707}
-  gameplayScene:
-    m_AssetGUID: 127901727ace7a44d8d31f7d9eed3f7a
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  ss: {fileID: 0}
+  sceneManager: {fileID: 2124394708}
+  gameplayScene: Gameplay
   lobbySettings: {fileID: 11400000, guid: 300fadc30049b6a4391c0325951be476, type: 2}
 --- !u!850595691 &860687615
 LightingSettings:
@@ -829,59 +803,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &1114801590
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1114801592}
-  - component: {fileID: 1114801591}
-  m_Layer: 0
-  m_Name: New Sub Scene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1114801591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114801590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 8653578}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _SceneAsset: {fileID: 102900000, guid: be631680689bf8140b1f1d12078a1662, type: 3}
-  _HierarchyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  AutoLoadScene: 1
-  _SceneGUID:
-    Value:
-      x: 140588779
-      y: 1099938182
-      z: 567407024
-      w: 643934320
---- !u!4 &1114801592
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114801590}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1286554200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,6 +1015,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1623239852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1623239854}
+  - component: {fileID: 1623239853}
+  m_Layer: 0
+  m_Name: DB Subscene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1623239853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623239852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a335734b1572644a6a5d09d87adc65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _SceneAsset: {fileID: 102900000, guid: be631680689bf8140b1f1d12078a1662, type: 3}
+  _HierarchyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  AutoLoadScene: 1
+  _SceneGUID:
+    Value:
+      x: 140588779
+      y: 1099938182
+      z: 567407024
+      w: 643934320
+--- !u!4 &1623239854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623239852}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16.920088, y: 17.150526, z: 26.982243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1928780006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,8 +1123,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2124394706}
-  - component: {fileID: 2124394707}
   - component: {fileID: 2124394705}
+  - component: {fileID: 2124394708}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -1174,8 +1148,9 @@ MonoBehaviour:
   _UnityEventResponse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2124394707}
-        m_TargetAssemblyTypeName: TDGame.Network.Components.CustomSceneManager, TDGame
+      - m_Target: {fileID: 2124394708}
+        m_TargetAssemblyTypeName: TDGame.Network.Components.StandardSceneManager,
+          TDGame
         m_MethodName: Client_OnConnected
         m_Mode: 1
         m_Arguments:
@@ -1201,7 +1176,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2124394707
+--- !u!114 &2124394708
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1210,6 +1185,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2124394704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f85e2a197654d889f587c2c6f0454c1, type: 3}
+  m_Script: {fileID: 11500000, guid: ffae99b314224cc3ae71ccef623a8060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -1,6 +1,7 @@
 ﻿using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 namespace TDGame.Map.Data
 {
@@ -14,6 +15,6 @@ namespace TDGame.Map.Data
         public int2 size;
 
         [Tooltip("Reference to the scene containing the map")]
-        public AssetReference MapReference;
+        public string MapReference;
     }
 }

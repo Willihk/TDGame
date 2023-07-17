@@ -1,0 +1,243 @@
+<linker>
+  <assembly fullname="Doozy.Engine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="Doozy.Engine.GameEventListener" preserve="all" />
+    <type fullname="Doozy.Engine.Nody.GraphController" preserve="all" />
+    <type fullname="Doozy.Engine.Nody.Models.Graph" preserve="all" />
+    <type fullname="Doozy.Engine.Nody.Nodes.StartNode" preserve="all" />
+    <type fullname="Doozy.Engine.Themes.ColorTargetImage" preserve="all" />
+    <type fullname="Doozy.Engine.Themes.ColorTargetTextMeshPro" preserve="all" />
+    <type fullname="Doozy.Engine.UI.Nodes.ApplicationQuitNode" preserve="all" />
+    <type fullname="Doozy.Engine.UI.Nodes.GameEventNode" preserve="all" />
+    <type fullname="Doozy.Engine.UI.Nodes.PortalNode" preserve="all" />
+    <type fullname="Doozy.Engine.UI.Nodes.UINode" preserve="all" />
+    <type fullname="Doozy.Engine.UI.UIButton" preserve="all" />
+    <type fullname="Doozy.Engine.UI.UICanvas" preserve="all" />
+    <type fullname="Doozy.Engine.UI.UIView" preserve="all" />
+    <type fullname="Doozy.Engine.Nody.Models.Connection" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.Nody.Models.Socket" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.Internal.UIViewCategoryName" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.Progress.ProgressEvent" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.Soundy.SoundyData" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.Animation.Fade" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.Animation.Move" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.Animation.Rotate" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.Animation.Scale" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.Animation.UIAnimation" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.Base.UIAction" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.Base.UIEffect" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.Input.InputData" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.UIButtonBehavior" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.UIButtonLoopAnimation" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.UI.UIViewBehavior" preserve="nothing" serialized="true" />
+    <type fullname="Doozy.Engine.Events.StringEvent" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="TDGame, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="TDGame.Cursor.LocalCursorState" preserve="all" />
+    <type fullname="TDGame.Data.GameObjectList" preserve="all" />
+    <type fullname="TDGame.Events.EventManager" preserve="all" />
+    <type fullname="TDGame.Events.Listeners.GameObjectGameEventListener" preserve="all" />
+    <type fullname="TDGame.Events.Listeners.IntGameEventListener" preserve="all" />
+    <type fullname="TDGame.Events.Listeners.Network.PlayerGameEventListener" preserve="all" />
+    <type fullname="TDGame.Events.Listeners.VoidGameEventListener" preserve="all" />
+    <type fullname="TDGame.Events.Types.Hash128GameEvent" preserve="all" />
+    <type fullname="TDGame.Events.Types.IntGameEvent" preserve="all" />
+    <type fullname="TDGame.Events.Types.Network.NetworkGameEvent" preserve="all" />
+    <type fullname="TDGame.Events.Types.StringGameEvent" preserve="all" />
+    <type fullname="TDGame.Events.Types.UlongGameEvent" preserve="all" />
+    <type fullname="TDGame.Events.Types.VoidGameEvent" preserve="all" />
+    <type fullname="TDGame.Managers.CustomMenuManager" preserve="all" />
+    <type fullname="TDGame.Managers.GameManager" preserve="all" />
+    <type fullname="TDGame.Map.Data.MapDetails" preserve="all" />
+    <type fullname="TDGame.Map.WaypointController" preserve="all" />
+    <type fullname="TDGame.Network.Components.CustomNetworkManager" preserve="all" />
+    <type fullname="TDGame.Network.Components.CustomSceneManager" preserve="all" />
+    <type fullname="TDGame.Network.Components.Messaging.CustomTransport.CustomTransportMessagingManager" preserve="all" />
+    <type fullname="TDGame.Network.Components.NetworkPlayerManager" preserve="all" />
+    <type fullname="TDGame.Network.Components.TransportClientWrapper" preserve="all" />
+    <type fullname="TDGame.Network.Components.TransportServerWrapper" preserve="all" />
+    <type fullname="TDGame.Network.Player.PlayerList" preserve="all" />
+    <type fullname="TDGame.Player.CameraController" preserve="all" />
+    <type fullname="TDGame.Player.LocalPlayer" preserve="all" />
+    <type fullname="TDGame.PrefabManagement.PrefabManager" preserve="all" />
+    <type fullname="TDGame.Settings.LobbySettings" preserve="all" />
+    <type fullname="TDGame.Systems.Building.BuildingManager" preserve="all" />
+    <type fullname="TDGame.Systems.Building.PlacementManager" preserve="all" />
+    <type fullname="TDGame.Systems.Collision.Collider.DistanceCollider" preserve="all" />
+    <type fullname="TDGame.Systems.Economy.PlayerEconomyManager" preserve="all" />
+    <type fullname="TDGame.Systems.Enemy.Components.Movement.EnemyMoveTowardsAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Enemy.Data.EnemyDetails" preserve="all" />
+    <type fullname="TDGame.Systems.Enemy.EnemyPathManager" preserve="all" />
+    <type fullname="TDGame.Systems.Enemy.Systems.Health.Components.EnemyHealthDataAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Enemy.Systems.Health.Components.EnemyHealthUIDataAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Enemy.Systems.Health.HealthBarUIPool" preserve="all" />
+    <type fullname="TDGame.Systems.Enemy.Systems.NetworkedSpawnManager" preserve="all" />
+    <type fullname="TDGame.Systems.Grid.InGame.GridAreaController" preserve="all" />
+    <type fullname="TDGame.Systems.Grid.InGame.GridManager" preserve="all" />
+    <type fullname="TDGame.Systems.Grid.InGame.GridObstacle" preserve="all" />
+    <type fullname="TDGame.Systems.Grid.InGame.GridPath" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Attack.Implementations.Projectile.Components.ProjectileDamageAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Attack.Implementations.Projectile.Components.ProjectileFiringPointAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Attack.Implementations.Projectile.Components.ProjectileLifetimeAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Attack.Implementations.Projectile.Components.ProjectileMovementSpeedAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Attack.Implementations.Projectile.Components.ProjectilePrefabAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Attack.Implementations.Projectile.Components.ProjectileRadiusColliderAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Attack.Windup.Components.BasicWindupAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Graph.Data.TowerDetails" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Graph.Nodes.HotbarNode" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Graph.Nodes.TowerNode" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Graph.TowerGraph" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Targeting.Components.RequestEnemyTargetTagAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Targeting.Components.TargetRangeAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Targeting.Components.TurnTowardsTargetAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.TowerTagAuthoring" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Upgrade.TowerClickDetector" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Upgrade.TowerUpgradeUIController" preserve="all" />
+    <type fullname="TDGame.Systems.Tower.Upgrade.TowerUpgradeUIEntry" preserve="all" />
+    <type fullname="TDGame.Systems.Wave.WaveManager" preserve="all" />
+    <type fullname="TDGame.UI.EntityCountUI" preserve="all" />
+    <type fullname="TDGame.UI.InGame.BuildingListEntry" preserve="all" />
+    <type fullname="TDGame.UI.InGame.EconomyController" preserve="all" />
+    <type fullname="TDGame.UI.InGame.HealthController" preserve="all" />
+    <type fullname="TDGame.UI.InGame.HotbarTowerList" preserve="all" />
+    <type fullname="TDGame.UI.InGame.Wave.WaveUIController" preserve="all" />
+    <type fullname="TDGame.UI.Lobby.LobbyController" preserve="all" />
+    <type fullname="TDGame.UI.Lobby.LobbyPlayerList" preserve="all" />
+    <type fullname="TDGame.UI.Lobby.LobbyPlayerListEntry" preserve="all" />
+    <type fullname="TDGame.UI.MainMenu.MainMenuController" preserve="all" />
+    <type fullname="TDGame.UI.PanelSwitcher" preserve="all" />
+    <type fullname="TDGame.UI.PlayerList.PlayerListEntry" preserve="all" />
+    <type fullname="TDGame.UI.TowerTooltip.TowerTooltip" preserve="all" />
+    <type fullname="TDGame.Utility.GameObjects.GameObjectToggle" preserve="all" />
+    <type fullname="TDGame.Systems.Collision.Collider.DistanceColliderData" preserve="nothing" serialized="true" />
+    <type fullname="TDGame.Systems.Grid.Data.GridArea" preserve="nothing" serialized="true" />
+    <type fullname="TDGame.Network.Messages.Player.RegisterPlayerData" preserve="nothing" serialized="true" />
+    <type fullname="TDGame.Network.Components.Messaging.TDNetworkConnection" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
+    <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
+    <type fullname="UnityEngine.AddressableAssets.AssetReference" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.AddressableAssets.AssetReferenceGameObject" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Rendering.Universal.UniversalAdditionalCameraData" preserve="all" />
+    <type fullname="UnityEngine.Rendering.Universal.UniversalAdditionalLightData" preserve="all" />
+    <type fullname="UnityEngine.Rendering.Universal.TemporalAA/Settings" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.InstanceProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.LegacyResourcesProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.SceneProvider" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.Scenes, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="Unity.Scenes.SubScene" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
+    <type fullname="TMPro.TMP_FontAsset" preserve="all" />
+    <type fullname="TMPro.TMP_InputField" preserve="all" />
+    <type fullname="TMPro.FaceInfo_Legacy" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.FontAssetCreationSettings" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.KerningTable" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_Character" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_FontFeatureTable" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_FontWeightPair" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_GlyphAdjustmentRecord" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_GlyphPairAdjustmentRecord" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_GlyphValueRecord" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.VertexGradient" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/OnChangeEvent" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/SelectionEvent" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/SubmitEvent" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/TextSelectionEvent" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/TouchScreenKeyboardEvent" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.AudioListener" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Camera" preserve="all" />
+    <type fullname="UnityEngine.Cubemap" preserve="all" />
+    <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.Light" preserve="all" />
+    <type fullname="UnityEngine.LightingSettings" preserve="all" />
+    <type fullname="UnityEngine.LightmapSettings" preserve="all" />
+    <type fullname="UnityEngine.Material" preserve="all" />
+    <type fullname="UnityEngine.Mesh" preserve="all" />
+    <type fullname="UnityEngine.MeshFilter" preserve="all" />
+    <type fullname="UnityEngine.MeshRenderer" preserve="all" />
+    <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
+    <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.RectTransform" preserve="all" />
+    <type fullname="UnityEngine.RenderSettings" preserve="all" />
+    <type fullname="UnityEngine.Shader" preserve="all" />
+    <type fullname="UnityEngine.Sprite" preserve="all" />
+    <type fullname="UnityEngine.Texture2D" preserve="all" />
+    <type fullname="UnityEngine.Transform" preserve="all" />
+    <type fullname="UnityEngine.Events.ArgumentCache" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.Events.PersistentCallGroup" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.Events.PersistentListenerMode" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.Events.UnityEvent`1" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.Events.UnityEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.RectOffset" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.BoxCollider" preserve="all" />
+    <type fullname="UnityEngine.CapsuleCollider" preserve="all" />
+    <type fullname="UnityEngine.MeshCollider" preserve="all" />
+    <type fullname="UnityEngine.SphereCollider" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Font" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.EventSystems.EventSystem" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.StandaloneInputModule" preserve="all" />
+    <type fullname="UnityEngine.UI.Button" preserve="all" />
+    <type fullname="UnityEngine.UI.CanvasScaler" preserve="all" />
+    <type fullname="UnityEngine.UI.GraphicRaycaster" preserve="all" />
+    <type fullname="UnityEngine.UI.GridLayoutGroup" preserve="all" />
+    <type fullname="UnityEngine.UI.Image" preserve="all" />
+    <type fullname="UnityEngine.UI.LayoutElement" preserve="all" />
+    <type fullname="UnityEngine.UI.Mask" preserve="all" />
+    <type fullname="UnityEngine.UI.RectMask2D" preserve="all" />
+    <type fullname="UnityEngine.UI.Scrollbar" preserve="all" />
+    <type fullname="UnityEngine.UI.ScrollRect" preserve="all" />
+    <type fullname="UnityEngine.UI.Slider" preserve="all" />
+    <type fullname="UnityEngine.UI.VerticalLayoutGroup" preserve="all" />
+    <type fullname="UnityEngine.UI.AnimationTriggers" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.ColorBlock" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.MaskableGraphic/CullStateChangedEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Navigation" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.SpriteState" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.ScrollRect/ScrollRectEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Scrollbar/ScrollEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Slider/SliderEvent" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Canvas" preserve="all" />
+    <type fullname="UnityEngine.CanvasGroup" preserve="all" />
+    <type fullname="UnityEngine.CanvasRenderer" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.Entities">
+    <type fullname="Unity.Entities.Hash128" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="Unity.Mathematics">
+    <type fullname="Unity.Mathematics.float3" preserve="nothing" serialized="true" />
+    <type fullname="Unity.Mathematics.int2" preserve="nothing" serialized="true" />
+    <type fullname="Unity.Mathematics.uint4" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.TextCoreFontEngineModule">
+    <type fullname="UnityEngine.TextCore.FaceInfo" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.Glyph" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.GlyphMetrics" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.GlyphRect" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="XNode">
+    <type fullname="XNode.Node/NodePortDictionary" preserve="nothing" serialized="true" />
+    <type fullname="XNode.NodePort" preserve="nothing" serialized="true" />
+    <type fullname="XNode.NodePort/PortConnection" preserve="nothing" serialized="true" />
+  </assembly>
+</linker>
