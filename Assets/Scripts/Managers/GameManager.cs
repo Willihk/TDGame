@@ -9,8 +9,6 @@ namespace TDGame.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance;
-        
         public int PlayerHealth = 100;
 
         
@@ -25,14 +23,10 @@ namespace TDGame.Managers
 
         private EntityManager entityManager;
 
-        private void Awake()
-        {
-            Instance = this;
-        }
-
         private void Start()
         {
             EventManager.Instance.onClickStartGame.EventListeners += LobbyStartGame;
+            EventManager.Instance.onEnemyReachedEnd.EventListeners += EnemyReachedEnd;
         }
 
         public async void LobbyStartGame()

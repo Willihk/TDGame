@@ -17,7 +17,7 @@ namespace TDGame.Network.Components
 {
     public class NetworkPlayerManager : MonoBehaviour
     {
-        public static NetworkPlayerManager Instance;
+        public static NetworkPlayerManager Instance { get; private set; }
 
         // Called on both server & client 
         public UnityEvent<int> onPlayerRegistered;

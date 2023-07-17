@@ -34,6 +34,9 @@ namespace TDGame.Events
         public IntGameEvent onPlayerHealthChanged;
 
 
+        public GameEvent onEnemyReachedEnd;
+
+
         /// <summary>
         /// Value is the wave number
         /// </summary>

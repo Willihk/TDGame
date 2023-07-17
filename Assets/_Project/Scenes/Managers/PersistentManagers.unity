@@ -383,6 +383,7 @@ MonoBehaviour:
   onGridInitialized: {fileID: 11400000, guid: b63ed3a462d258d48a15618a1430415d, type: 2}
   onPathRegistered: {fileID: 11400000, guid: 5e3cd587d64a98449837d29b340b504b, type: 2}
   onPlayerHealthChanged: {fileID: 11400000, guid: 99ec30131301fa14b92dc28361f4fff0, type: 2}
+  onEnemyReachedEnd: {fileID: 11400000, guid: 87e4861335ae1da4fb538c47890860e6, type: 2}
   onWaveCompleted: {fileID: 11400000, guid: 5a29c76e1b5fc4740892612b4a0ed454, type: 2}
   onWaveStarted: {fileID: 11400000, guid: fe67aaebafa1f4843b5f60d42135ce87, type: 2}
   onClickNextWave: {fileID: 11400000, guid: e19a22d2f2e67834c836494356674168, type: 2}
@@ -449,7 +450,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerHealth: 0
-  ss: {fileID: 0}
   sceneManager: {fileID: 2124394708}
   gameplayScene: Gameplay
   lobbySettings: {fileID: 11400000, guid: 300fadc30049b6a4391c0325951be476, type: 2}

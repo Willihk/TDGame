@@ -1,4 +1,5 @@
-﻿using TDGame.Managers;
+﻿using TDGame.Events;
+using TDGame.Managers;
 using TDGame.Systems.Enemy.Components.Movement;
 using Unity.Burst;
 using Unity.Collections;
@@ -24,7 +25,7 @@ namespace TDGame.Systems.Enemy.Systems.Movement
             {
                 commandBuffer.DestroyEntity(entityInQueryIndex, entity);
                 
-                GameManager.Instance.EnemyReachedEnd();
+                EventManager.Instance.onEnemyReachedEnd.Raise();
             }).WithoutBurst().Run();
 
             commandBufferSystem.AddJobHandleForProducer(Dependency);

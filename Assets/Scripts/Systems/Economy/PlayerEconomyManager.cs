@@ -14,7 +14,7 @@ namespace TDGame.Systems.Economy
 {
     public class PlayerEconomyManager : MonoBehaviour
     {
-        public static PlayerEconomyManager Instance;
+        public static PlayerEconomyManager Instance { get; private set; }
 
         [SerializeField]
         private PlayerList playerList;
