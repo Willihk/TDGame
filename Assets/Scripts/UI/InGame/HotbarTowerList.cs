@@ -21,7 +21,7 @@ namespace TDGame.UI.InGame
             foreach (var item in buildings)
             {
                 var entryObject = Instantiate(entryPrefab, content);
-                entryObject.GetComponent<BuildingListEntry>().Initialize(item.name, item.Name, item.Price);
+                entryObject.GetComponent<BuildingListEntry>().Initialize(item.TowerReference.name, item.Name, item.Price);
             }
         }
     }

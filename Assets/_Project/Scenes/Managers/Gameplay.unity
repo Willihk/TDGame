@@ -4583,6 +4583,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -4696,6 +4697,11 @@ PrefabInstance:
 --- !u!224 &566577404 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3115797788582929713, guid: 0d2a120c773f50c408d8de48e35821cb, type: 3}
+  m_PrefabInstance: {fileID: 566577403}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &566577405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8588581349418168974, guid: 0d2a120c773f50c408d8de48e35821cb, type: 3}
   m_PrefabInstance: {fileID: 566577403}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &571921650
@@ -4841,6 +4847,7 @@ GameObject:
   - component: {fileID: 665555354}
   - component: {fileID: 665555353}
   - component: {fileID: 665555358}
+  - component: {fileID: 665555359}
   m_Layer: 0
   m_Name: View - Overlay
   m_TagString: Untagged
@@ -4860,7 +4867,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 566577404}
   - {fileID: 422297142}
   - {fileID: 694152196}
   - {fileID: 1285157680}
@@ -4868,6 +4874,7 @@ RectTransform:
   - {fileID: 712600086}
   - {fileID: 1916395517}
   - {fileID: 469527075}
+  - {fileID: 566577404}
   m_Father: {fileID: 1551850806}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5371,6 +5378,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -5391,6 +5399,19 @@ MonoBehaviour:
   view: {fileID: 469527079}
   content: {fileID: 1492290465}
   entryPrefab: {fileID: 4276944010988111975, guid: f46041173b17e6f4298bd6fbeec270b2, type: 3}
+--- !u!114 &665555359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665555351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d87ab2ba0fb49c0aacd1b5a4c44bdad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltip: {fileID: 566577405}
 --- !u!1 &694152195
 GameObject:
   m_ObjectHideFlags: 0
@@ -8362,6 +8383,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -9097,6 +9119,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -12455,6 +12478,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -12548,6 +12572,7 @@ MonoBehaviour:
   m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
   m_UseScreenCoordOverride: 0
   m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}

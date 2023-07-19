@@ -1,6 +1,7 @@
 ﻿using TDGame.Cursor;
 using TDGame.Events.Base;
 using TDGame.PrefabManagement;
+using TDGame.UI.TowerTooltip;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -46,12 +47,12 @@ namespace TDGame.UI.InGame
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            // TowerTooltipController.Instance.DisplayUI(prefabName, this.GetComponent<RectTransform>());
+            TowerTooltipController.Instance.DisplayUI(prefabName, this.GetComponent<RectTransform>());
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            // TowerTooltipController.Instance.HideUI();
+            TowerTooltipController.Instance.HideUI();
         }
     }
 }
