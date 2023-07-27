@@ -1,38 +1,41 @@
-﻿using Unity.Burst;
+﻿using TDGame.Systems.Buff.Implementations.Movement;
+using Unity.Burst;
+using Unity.Burst.Intrinsics;
+using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 
 namespace TDGame.Systems.Buff.Systems
 {
-  public partial class BuffDurationSystem : SystemBase
+    public partial class BuffDurationSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem commandBufferSystem;
+
         protected override void OnUpdate()
         {
             commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
-          ScheduleCalcJob<MovementSpeedBuff>();
+            ScheduleBuffDurationJob<MovementSpeedBuff>();
         }
 
 
-        void ScheduleCalcJob<TBuff>()
+        void ScheduleBuffDurationJob<TBuff>()
             where TBuff : unmanaged, IComponentData, IBaseBuff
         {
-            
             var query = GetEntityQuery(ComponentType.ReadWrite<TBuff>());
-            var handle =new CalcStats<TBuff>
+            var handle = new CalcStats<TBuff>
             {
                 BuffStateHandle = GetComponentTypeHandle<TBuff>(),
                 EntityTypeHandle = GetEntityTypeHandle(),
                 CommandBuffer = commandBufferSystem.CreateCommandBuffer()
             }.Schedule(query, Dependency);
-            
+
             commandBufferSystem.AddJobHandleForProducer(handle);
             Dependency = JobHandle.CombineDependencies(Dependency, handle);
-
         }
 
 
         [BurstCompile]
-        partial struct CalcStats< TBuff > : IJobChunk
+        partial struct CalcStats<TBuff> : IJobChunk
             where TBuff : unmanaged, IComponentData, IBaseBuff
         {
             public EntityCommandBuffer CommandBuffer;
@@ -40,56 +43,28 @@ namespace TDGame.Systems.Buff.Systems
             public ComponentTypeHandle<TBuff> BuffStateHandle;
 
             public EntityTypeHandle EntityTypeHandle;
-            
+
+            [ReadOnly]
+            public int DeltaTime;
+
             [BurstCompile]
-            public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
+            public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask,
+                in v128 chunkEnabledMask)
             {
                 var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
-                NativeArray<TFinal> finalStats = new ();
-                NativeArray<TBuff> buffStats = new ();
+                NativeArray<TBuff> buffStats = buffStats = chunk.GetNativeArray(ref BuffStateHandle);
 
                 var entities = chunk.GetNativeArray(EntityTypeHandle);
-                var baseStats = chunk.GetNativeArray(ref BaseStateHandle);
 
-                bool hasFinalComponent = chunk.Has<TFinal>();
-                bool hasBuffComponent = chunk.Has<TBuff>();
-                if (hasFinalComponent)
-                {
-                    finalStats = chunk.GetNativeArray(ref FinalStateHandle);
-                }
-                if (hasBuffComponent)
-                {
-                    buffStats = chunk.GetNativeArray(ref BuffStateHandle);
-                }
-                
                 while (enumerator.NextEntityIndex(out int i))
                 {
-                    var finalValue = baseStats[i].Value;
+                    var buff = buffStats[i];
+                    buff.Duration -= DeltaTime;
+                    buffStats[i] = buff;
                     
-                    if (hasBuffComponent)
+                    if (buff.Duration <= 0)
                     {
-                        switch (buffStats[i].ModifierType)
-                        {
-                            case StatModifierType.Flat:
-                                finalValue += buffStats[i].Value * finalValue * buffStats[i].Stacks;
-                                break;
-                            case StatModifierType.PercentAdditive:
-                                finalValue *= buffStats[i].Value * buffStats[i].Stacks;
-                                break;
-                            case StatModifierType.PercentMultiplier:
-                                finalValue *= math.pow(buffStats[i].Value, buffStats[i].Stacks);
-                                break;
-                        }
-                    }
-                    
-                    if (hasFinalComponent)
-                    {
-                        finalStats[i] = new TFinal { Value = finalValue };
-                    }
-                    else
-                    {
-                        CommandBuffer.AddComponent<TFinal>(entities[i]);
-                        CommandBuffer.SetComponent(entities[i], new TFinal() {Value = finalValue});
+                        CommandBuffer.RemoveComponent<TBuff>(entities[i]);
                     }
                 }
             }
