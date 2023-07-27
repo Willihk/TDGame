@@ -80,10 +80,6 @@ namespace TDGame.UI.TowerTooltip
             // {
             //     sb.Append($"\n<color=#FFD800>{item.stat.Name}:\n {item.stat.BaseValue}</color>");
             // }
-            if (details.TowerReference.TryGetComponent(out ProjectileDamageAuthoring damageAuthoring))
-            {
-                sb.Append($"\n<color=#FFD800>Damage:\n {damageAuthoring.Value}</color>");
-            } 
             if (details.TowerReference.TryGetComponent(out TargetRangeAuthoring rangeAuthoring))
             {
                 sb.Append($"\n<color=#FFD800>Range:\n {rangeAuthoring.Range}</color>");
@@ -91,10 +87,17 @@ namespace TDGame.UI.TowerTooltip
             if (details.TowerReference.TryGetComponent(out BasicWindupAuthoring windupAuthoring))
             {
                 sb.Append($"\n<color=#FFD800>Fire Rate:\n {1/windupAuthoring.WindupTime}</color>");
-            }
-            if (details.TowerReference.TryGetComponent(out ProjectileMovementSpeedAuthoring movementSpeed))
+            }  
+            if (details.TowerReference.TryGetComponent(out ProjectilePrefabAuthoring prefabAuthoring))
             {
-                sb.Append($"\n<color=#FFD800>Projectile Speed:\n {1/movementSpeed.Value}</color>");
+                if (prefabAuthoring.Prefab.TryGetComponent(out ProjectileDamageAuthoring damageAuthoring))
+                {
+                    sb.Append($"\n<color=#FFD800>Damage:\n {damageAuthoring.Value}</color>");
+                } 
+                if (prefabAuthoring.Prefab.TryGetComponent(out ProjectileMovementSpeedAuthoring movementSpeed))
+                {
+                    sb.Append($"\n<color=#FFD800>Projectile Speed:\n {1/movementSpeed.Value}</color>");
+                }
             }
         }
     }

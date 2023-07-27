@@ -29,8 +29,8 @@ namespace TDGame.Systems.Wave.Messages
             if (!spawnEntryQuery.IsEmpty || !enemyQuery.IsEmpty)
                 return;
             
-            SystemAPI.SetSingleton(waveGlobalState);
             waveGlobalState.State = WaveState.Idle;
+            SystemAPI.SetSingleton(waveGlobalState);
             WaveManager.Instance.WaveCompleted();
         }
     }

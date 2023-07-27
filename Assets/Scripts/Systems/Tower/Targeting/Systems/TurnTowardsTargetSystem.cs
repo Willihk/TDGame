@@ -1,5 +1,6 @@
 ﻿using TDGame.Systems.Tower.Targeting.Components;
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -9,10 +10,12 @@ namespace TDGame.Systems.Tower.Targeting.Systems
     public partial struct TurnTowardsTargetSystem : ISystem
     {
         private ComponentLookup<LocalTransform> transformLookup;
+        private EndSimulationEntityCommandBufferSystem.Singleton commandBufferSystem;
 
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
             transformLookup = state.GetComponentLookup<LocalTransform>(true);
         }
 
@@ -21,20 +24,40 @@ namespace TDGame.Systems.Tower.Targeting.Systems
         {
             transformLookup.Update(ref state);
 
-            foreach (var (transform, turnTowardsTarget, targetBuffer) in SystemAPI
-                         .Query<RefRO<LocalTransform>, RefRO<TurnTowardsTarget>, DynamicBuffer<TargetBufferElement>>())
+            new TurnJob()
+            {
+                TransformLookup = transformLookup, DeltaTime = SystemAPI.Time.DeltaTime,
+                CommandBuffer = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged)
+            }.Schedule();
+        }
+
+
+        [BurstCompile]
+        partial struct TurnJob : IJobEntity
+        {
+            [ReadOnly]
+            public ComponentLookup<LocalTransform> TransformLookup;
+            [ReadOnly]
+            public float DeltaTime;
+            
+            public EntityCommandBuffer CommandBuffer;
+
+            [BurstCompile]
+            void Execute(in LocalTransform transform, in TurnTowardsTarget turnTowardsTarget,
+                in DynamicBuffer<TargetBufferElement> targetBuffer)
             {
                 if (targetBuffer.Length <= 0)
-                    continue;
-                
-                var direction = transformLookup[targetBuffer[0]].Position - transform.ValueRO.Position;
+                    return;
+
+                var direction = TransformLookup[targetBuffer[0]].Position - transform.Position;
                 direction.y = 0;
 
-                var newTransform = transformLookup[turnTowardsTarget.ValueRO.TurnPoint].WithRotation(math.nlerp(
-                    transformLookup[turnTowardsTarget.ValueRO.TurnPoint].Rotation, quaternion.LookRotation(direction, math.up()),
-                    SystemAPI.Time.DeltaTime * turnTowardsTarget.ValueRO.TurnSpeed));
-                
-                SystemAPI.SetComponent(turnTowardsTarget.ValueRO.TurnPoint, newTransform);
+                var newTransform = TransformLookup[turnTowardsTarget.TurnPoint].WithRotation(math.nlerp(
+                    TransformLookup[turnTowardsTarget.TurnPoint].Rotation,
+                    quaternion.LookRotation(direction, math.up()),
+                    DeltaTime * turnTowardsTarget.TurnSpeed));
+
+                CommandBuffer.SetComponent(turnTowardsTarget.TurnPoint, newTransform);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using TDGame.Systems.Enemy.Components.Movement;
+using TDGame.Systems.Stats.Implementations;
 using Unity.Burst;
 using Unity.Burst.Intrinsics;
 using Unity.Collections;
@@ -23,7 +24,7 @@ namespace TDGame.Systems.Enemy.Systems.Movement
             commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
             query = GetEntityQuery(new EntityQueryDesc
             {
-                All = new ComponentType[] { typeof(EnemyMoveTowards) },
+                All = new ComponentType[] { typeof(EnemyMoveTowards), typeof(FinalMovementSpeedStat) },
                 None = new ComponentType[] { typeof(ReachedEndTag) }
             });
         }
@@ -42,7 +43,8 @@ namespace TDGame.Systems.Enemy.Systems.Movement
                 Waypoints = waypoints,
                 EntityType = GetEntityTypeHandle(),
                 MoveTowardsHandle = GetComponentTypeHandle<EnemyMoveTowards>(),
-                TranslationHandle = GetComponentTypeHandle<LocalTransform>()
+                TranslationHandle = GetComponentTypeHandle<LocalTransform>(),
+                MoveSpeedHandle = GetComponentTypeHandle<FinalMovementSpeedStat>(true)
             };
 
             Dependency = job.ScheduleParallel(query, Dependency);
@@ -68,13 +70,17 @@ namespace TDGame.Systems.Enemy.Systems.Movement
         public ComponentTypeHandle<LocalTransform> TranslationHandle;
 
         public ComponentTypeHandle<EnemyMoveTowards> MoveTowardsHandle;
+        
+        [ReadOnly]
+        public ComponentTypeHandle<FinalMovementSpeedStat> MoveSpeedHandle;
 
         public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask,
             in v128 chunkEnabledMask)
         {
             var entities = chunk.GetNativeArray(EntityType);
-            var translations = chunk.GetNativeArray(TranslationHandle);
-            var enemyMoveTowards = chunk.GetNativeArray(MoveTowardsHandle);
+            var translations = chunk.GetNativeArray(ref TranslationHandle);
+            var enemyMoveTowards = chunk.GetNativeArray(ref MoveTowardsHandle);
+            var moveSpeeds = chunk.GetNativeArray(ref MoveSpeedHandle);
 
             var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
             while (enumerator.NextEntityIndex(out int i))
@@ -92,7 +98,7 @@ namespace TDGame.Systems.Enemy.Systems.Movement
                 {
                     var direction = math.normalize(destination - translation.Position);
                     direction.y = 0;
-                    translation.Position += direction * enemyMoveTowards[i].Speed * DeltaTime;
+                    translation.Position += direction * moveSpeeds[i].Value * DeltaTime;
                     translations[i] = translation;
                 }
                 else

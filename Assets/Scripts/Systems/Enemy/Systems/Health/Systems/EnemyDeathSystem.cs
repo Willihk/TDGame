@@ -1,5 +1,7 @@
 ﻿using TDGame.Systems.Economy;
 using TDGame.Systems.Enemy.Systems.Health.Components;
+using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 
 namespace TDGame.Systems.Enemy.Systems.Health.Systems
@@ -17,17 +19,32 @@ namespace TDGame.Systems.Enemy.Systems.Health.Systems
         {
             var ecb = commandBufferSystem.CreateCommandBuffer().AsParallelWriter();
 
-            Entities.ForEach((Entity entity, int entityInQueryIndex, in EnemyHealthData healthData) =>
-            {
-                if (healthData.Health <= 0)
-                {
-                    PlayerEconomyManager.Instance.AddCurrencyToAllPlayers(3);
-                    // HealthBarUIPool.Instance.ReturnSlider(uiData.Slider);
-                    ecb.DestroyEntity(entityInQueryIndex, entity);
-                }
-            }).WithoutBurst().Run();
+            var goldReward = new NativeReference<int>(Allocator.TempJob);
+
+            new DeathJob() { Gold = goldReward, CommandBuffer = ecb }.Run();
+            
+            if (goldReward.Value > 0)
+                PlayerEconomyManager.Instance.AddCurrencyToAllPlayers(goldReward.Value);
 
             commandBufferSystem.AddJobHandleForProducer(Dependency);
+        }
+
+        [BurstCompile]
+        private partial struct DeathJob : IJobEntity
+        {
+            public NativeReference<int> Gold;
+            public EntityCommandBuffer.ParallelWriter CommandBuffer;
+
+            [BurstCompile]
+            void Execute(Entity entity, [ChunkIndexInQuery] int sort, in EnemyHealthData healthData)
+            {
+                if (healthData.Health > 0)
+                    return;
+
+                Gold.Value += 3;
+                // HealthBarUIPool.Instance.ReturnSlider(uiData.Slider);
+                CommandBuffer.DestroyEntity(sort, entity);
+            }
         }
     }
 }

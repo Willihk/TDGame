@@ -18,7 +18,7 @@ namespace TDGame.Systems.Tower.Targeting.Components
     {
         public override void Bake(TargetRangeAuthoring authoring)
         {
-            AddComponent(new TargetRange { Range = authoring.Range });
+            AddComponent(new TargetRange { Range = authoring.Range});
         }
     }
 }
