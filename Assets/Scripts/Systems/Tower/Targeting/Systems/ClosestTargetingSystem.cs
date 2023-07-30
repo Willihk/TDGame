@@ -1,130 +1,82 @@
-﻿using TDGame.Systems.Enemy.Components;
+﻿using NativeTrees;
+using TDGame.Systems.Grid.SpatialTree;
 using TDGame.Systems.Tower.Targeting.Components;
 using Unity.Burst;
-using Unity.Burst.Intrinsics;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
-using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace TDGame.Systems.Tower.Targeting.Systems
 {
-    [RequireMatchingQueriesForUpdate]
-    public partial class ClosestTargetingSystem : SystemBase
+    [BurstCompile]
+    [UpdateAfter(typeof(EnemyTreeSystem))]
+    public partial struct ClosestTargetingSystem : ISystem
     {
-        private EndSimulationEntityCommandBufferSystem commandBufferSystem;
-
-        private EntityQuery enemyQuery;
-        private EntityQuery towerQuery;
-
-        protected override void OnCreate()
+        [BurstCompile]
+        public void OnCreate(ref SystemState state)
         {
-            commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
-
-            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<LocalTransform>());
-            towerQuery = GetEntityQuery(new EntityQueryDesc
-            {
-                All = new ComponentType[]
-                {
-                    typeof(TowerTag), typeof(RequestEnemyTargetTag), typeof(TargetRange), typeof(TargetBufferElement)
-                }
-            });
+            state.RequireForUpdate<MapDetailsSingleton>();
         }
-
-        protected override void OnUpdate()
-        {
-            var enemies = enemyQuery.ToEntityArray(Allocator.TempJob);
-
-            var transforms = GetComponentLookup<LocalTransform>(true);
-
-            var job = new TargetJob
-            {
-                CommandBuffer = commandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                EnemyTranslations = transforms,
-                EnemyEntities = enemies,
-                TranslationHandle = GetComponentTypeHandle<LocalTransform>(),
-                RangeHandle = GetComponentTypeHandle<TargetRange>(),
-                targetBufferHandle = GetBufferTypeHandle<TargetBufferElement>(),
-                EntityHandle = GetEntityTypeHandle()
-            };
-            var handle = job.ScheduleParallel(towerQuery, Dependency);
-            commandBufferSystem.AddJobHandleForProducer(handle);
-            Dependency = JobHandle.CombineDependencies(Dependency, handle);
-        }
-
 
         [BurstCompile]
-        private struct TargetJob : IJobChunk
+        public void OnUpdate(ref SystemState state)
         {
-            public EntityCommandBuffer.ParallelWriter CommandBuffer;
+            var treeHandle = state.WorldUnmanaged.GetExistingUnmanagedSystem<EnemyTreeSystem>();
 
-            public BufferTypeHandle<TargetBufferElement> targetBufferHandle;
+            var treeSystem = state.WorldUnmanaged.GetUnsafeSystemRef<EnemyTreeSystem>(treeHandle);
+            if (!treeSystem.GetTree(out var tree))
+                return;
 
-            [ReadOnly]
-            public ComponentLookup<LocalTransform> EnemyTranslations;
-
-            [ReadOnly]
-            [DeallocateOnJobCompletion]
-            public NativeArray<Entity> EnemyEntities;
-
-            [ReadOnly]
-            public ComponentTypeHandle<LocalTransform> TranslationHandle;
-
-            [ReadOnly]
-            public ComponentTypeHandle<TargetRange> RangeHandle;
-
-            [ReadOnly]
-            public EntityTypeHandle EntityHandle;
-
-            public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask,
-                in v128 chunkEnabledMask)
+            var handle =new DamageJob
             {
-                var translations = chunk.GetNativeArray(ref TranslationHandle);
-                var ranges = chunk.GetNativeArray(ref RangeHandle);
-                var entities = chunk.GetNativeArray(EntityHandle);
+                Quadtree = tree,
+            }.ScheduleParallel(JobHandle.CombineDependencies(state.WorldUnmanaged.GetExistingSystemState<EnemyTreeSystem>().Dependency, state.Dependency));
+            
+            state.Dependency = JobHandle.CombineDependencies(state.Dependency, handle);
+        }
 
-                var buffers = chunk.GetBufferAccessor(ref targetBufferHandle);
+        [BurstCompile]
+        partial struct DamageJob : IJobEntity
+        {
+            [ReadOnly]
+            public NativeQuadtree<Entity> Quadtree;
 
-
-                var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
-
-                while (enumerator.NextEntityIndex(out int i))
+            [BurstCompile]
+            void Execute(in TargetRange range, in LocalTransform transform, ref DynamicBuffer<TargetBufferElement> buffer, in RequestEnemyTargetTag _)
+            {
+                var nearest = new NativeQueue<Entity>(Allocator.Temp);
+                var visitor = new NearestVisitor()
                 {
-                    float closestRange = float.MaxValue;
-                    var closest = Entity.Null;
+                    Nearest = nearest
+                };
+                
+                var query = new NativeQuadtree<Entity>.NearestNeighbourQuery(Allocator.Temp);
+                query.Nearest(ref Quadtree, transform.Position.xz, range.Range,
+                    ref visitor, default(NativeQuadtreeExtensions.AABBDistanceSquaredProvider<Entity>));
 
-                    for (int j = 0; j < EnemyEntities.Length; j++)
+                while (nearest.TryDequeue(out var enemy))
+                {
+                    if (buffer.Length == 1)
                     {
-                        float distance = math.distance(translations[i].Position,
-                            EnemyTranslations[EnemyEntities[j]].Position);
-
-                        if (ranges[i].Range < distance || distance > closestRange)
-                            continue;
-
-                        closestRange = distance;
-                        closest = EnemyEntities[j];
-                    }
-
-                    if (closest == Entity.Null)
-                        continue;
-
-                    if (buffers[i].Length == 0)
-                    {
-                        buffers[i].Add(closest);
+                        buffer[0] = enemy;
                     }
                     else
                     {
-                        var buffer = buffers[i];
-                        buffer[0] = closest;
+                        buffer.Add(enemy);
                     }
-                    // else
-                    // {
-                    //     var buffer = CommandBuffer.AddBuffer<TargetBufferElement>(batchIndex, entities[i]);
-                    //
-                    //     buffer.Add(closest);
-                    // }
                 }
+            }
+        }
+        struct NearestVisitor : IQuadtreeNearestVisitor<Entity>
+        {
+            public NativeQueue<Entity> Nearest;
+
+            public bool OnVist(Entity obj)
+            {
+                Nearest.Enqueue(obj);
+
+                return false;
             }
         }
     }

@@ -47,7 +47,7 @@ namespace TDGame.Systems.Grid.InGame
 
         private void Start()
         {
-            InvokeRepeating(nameof(DrawGrid), 0, 1);
+            // InvokeRepeating(nameof(DrawGrid), 0, 1);
 
             messagingManager = BaseMessagingManager.Instance;
 

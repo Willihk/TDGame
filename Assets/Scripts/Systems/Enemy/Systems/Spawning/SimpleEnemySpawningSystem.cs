@@ -51,33 +51,4 @@ namespace TDGame.Systems.Enemy.Systems.Spawning
             entityCommandBufferSystem.AddJobHandleForProducer(Dependency);
         }
     }
-
-    // [GenerateTestsForBurstCompatibility]
-    // struct SpawnEnemiesJob : IJobChunk
-    // {
-    //     public EntityCommandBuffer.ParallelWriter CommandBuffer;
-    //
-    //     [ReadOnly]
-    //     public EntityTypeHandle EntityType;
-    //
-    //     [ReadOnly]
-    //     public ComponentTypeHandle<SpawnEnemy> SpawnEnemyType;
-    //
-    //     public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-    //     {
-    //         var entities = chunk.GetNativeArray(EntityType);
-    //         var spawnEnemies = chunk.GetNativeArray(SpawnEnemyType);
-    //
-    //         for (int i = 0; i < chunk.Count; i++)
-    //         {
-    //             var newEnemy = CommandBuffer.Instantiate(chunkIndex, spawnEnemies[i].prefab);
-    //             CommandBuffer.RemoveComponent<Prefab>(chunkIndex, newEnemy);
-    //             CommandBuffer.RemoveComponent<Disabled>(chunkIndex, newEnemy);
-    //
-    //             CommandBuffer.AddComponent<EnemyTag>(chunkIndex, newEnemy);
-    //
-    //             CommandBuffer.DestroyEntity(chunkIndex, entities[i]);
-    //         }
-    //     }
-    // }
 }
