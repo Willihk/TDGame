@@ -14,10 +14,11 @@ namespace TDGame.Systems.Stats
     public partial class CalculateStatsSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem commandBufferSystem;
+
         protected override void OnUpdate()
         {
             commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
-          ScheduleCalcJob<BaseMovementSpeedStat, MovementSpeedBuff, FinalMovementSpeedStat>();
+            ScheduleCalcJob<BaseMovementSpeedStat, MovementSpeedBuff, FinalMovementSpeedStat>();
         }
 
 
@@ -26,20 +27,18 @@ namespace TDGame.Systems.Stats
             where TBuff : unmanaged, IComponentData, IBaseBuff
             where TFinal : unmanaged, IComponentData, IBaseStat
         {
-            
             var query = GetEntityQuery(ComponentType.ReadOnly<TBase>());
-            var handle =new CalcStats<TBase, TBuff, TFinal>
+            var handle = new CalcStats<TBase, TBuff, TFinal>
             {
                 BaseStateHandle = GetComponentTypeHandle<TBase>(true),
                 BuffStateHandle = GetComponentTypeHandle<TBuff>(true),
                 FinalStateHandle = GetComponentTypeHandle<TFinal>(),
                 EntityTypeHandle = GetEntityTypeHandle(),
-                CommandBuffer = commandBufferSystem.CreateCommandBuffer()
-            }.Schedule(query, Dependency);
-            
+                CommandBuffer = commandBufferSystem.CreateCommandBuffer().AsParallelWriter()
+            }.ScheduleParallel(query, Dependency);
+
             commandBufferSystem.AddJobHandleForProducer(handle);
             Dependency = JobHandle.CombineDependencies(Dependency, handle);
-
         }
 
 
@@ -49,23 +48,25 @@ namespace TDGame.Systems.Stats
             where TBuff : unmanaged, IComponentData, IBaseBuff
             where TFinal : unmanaged, IComponentData, IBaseStat
         {
-            public EntityCommandBuffer CommandBuffer;
+            public EntityCommandBuffer.ParallelWriter CommandBuffer;
 
             [ReadOnly]
             public ComponentTypeHandle<TBase> BaseStateHandle;
+
             [ReadOnly]
             public ComponentTypeHandle<TBuff> BuffStateHandle;
-            
+
             public ComponentTypeHandle<TFinal> FinalStateHandle;
 
             public EntityTypeHandle EntityTypeHandle;
-            
+
             [BurstCompile]
-            public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
+            public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask,
+                in v128 chunkEnabledMask)
             {
                 var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
-                NativeArray<TFinal> finalStats = new ();
-                NativeArray<TBuff> buffStats = new ();
+                NativeArray<TFinal> finalStats = new();
+                NativeArray<TBuff> buffStats = new();
 
                 var entities = chunk.GetNativeArray(EntityTypeHandle);
                 var baseStats = chunk.GetNativeArray(ref BaseStateHandle);
@@ -76,15 +77,16 @@ namespace TDGame.Systems.Stats
                 {
                     finalStats = chunk.GetNativeArray(ref FinalStateHandle);
                 }
+
                 if (hasBuffComponent)
                 {
                     buffStats = chunk.GetNativeArray(ref BuffStateHandle);
                 }
-                
+
                 while (enumerator.NextEntityIndex(out int i))
                 {
-                    var finalValue = baseStats[i].Value;
-                    
+                    float finalValue = baseStats[i].Value;
+
                     if (hasBuffComponent)
                     {
                         switch (buffStats[i].ModifierType)
@@ -100,15 +102,16 @@ namespace TDGame.Systems.Stats
                                 break;
                         }
                     }
-                    
+
                     if (hasFinalComponent)
                     {
                         finalStats[i] = new TFinal { Value = finalValue };
                     }
                     else
                     {
-                        CommandBuffer.AddComponent<TFinal>(entities[i]);
-                        CommandBuffer.SetComponent(entities[i], new TFinal() {Value = finalValue});
+                        CommandBuffer.AddComponent<TFinal>(unfilteredChunkIndex, entities[i]);
+                        CommandBuffer.SetComponent(unfilteredChunkIndex, entities[i],
+                            new TFinal() { Value = finalValue });
                     }
                 }
             }

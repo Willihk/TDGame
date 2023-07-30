@@ -10,6 +10,8 @@ using TDGame.Settings;
 using TDGame.Systems.Grid.Cell;
 using TDGame.Systems.Grid.Data;
 using TDGame.Systems.Grid.Messages.Server;
+using TDGame.Systems.Grid.SpatialTree;
+using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -39,16 +41,16 @@ namespace TDGame.Systems.Grid.InGame
         public void Awake()
         {
             Instance = this;
-            mapGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
-            towerGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
+            mapGrid = new Grid2D((int)gridSize.x, (int)gridSize.y, cellSize);
+            towerGrid = new Grid2D((int)gridSize.x, (int)gridSize.y, cellSize);
         }
-        
+
         private void Start()
         {
             InvokeRepeating(nameof(DrawGrid), 0, 1);
-            
+
             messagingManager = BaseMessagingManager.Instance;
-            
+
             messagingManager.RegisterNamedMessageHandler<SetGridAreaMessage>(Handle_SetGridArea);
 
             EventManager.Instance.onMapLoaded.EventListeners += OnMapLoaded;
@@ -61,8 +63,8 @@ namespace TDGame.Systems.Grid.InGame
 
         void CreateGrid()
         {
-            mapGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
-            towerGrid = new Grid2D((int) gridSize.x, (int) gridSize.y, cellSize);
+            mapGrid = new Grid2D((int)gridSize.x, (int)gridSize.y, cellSize);
+            towerGrid = new Grid2D((int)gridSize.x, (int)gridSize.y, cellSize);
 
             gridTexture = new Texture2D(gridSize.x, gridSize.y);
             gridTexture.filterMode = FilterMode.Point;
@@ -74,7 +76,7 @@ namespace TDGame.Systems.Grid.InGame
             foreach (var gridObstacle in obstacles)
             {
                 gridObstacle.area.position = mapGrid.WorldToGridPosition(gridObstacle.originPoint.position);
-                mapGrid.SetAreaToCell(gridObstacle.area, new GridCell() {State = GridCellState.Occupied});
+                mapGrid.SetAreaToCell(gridObstacle.area, new GridCell() { State = GridCellState.Occupied });
             }
         }
 
@@ -84,7 +86,7 @@ namespace TDGame.Systems.Grid.InGame
             foreach (var gridPath in paths)
             {
                 gridPath.area.position = mapGrid.WorldToGridPosition(gridPath.originPoint.position);
-                mapGrid.SetAreaToCell(gridPath.area, new GridCell() {State = GridCellState.Path});
+                mapGrid.SetAreaToCell(gridPath.area, new GridCell() { State = GridCellState.Path });
             }
         }
 
@@ -99,6 +101,9 @@ namespace TDGame.Systems.Grid.InGame
             RegisterObstacles();
             RegisterPath();
 
+            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            entityManager.CreateSingleton(new MapDetailsSingleton
+                { IsLoaded = true, Size = lobbySettings.selectedMap.size });
 
             EventManager.Instance.onGridInitialized.Raise();
         }
@@ -127,7 +132,7 @@ namespace TDGame.Systems.Grid.InGame
             gridMaterial.SetTexture("GridTexture", gridTexture);
         }
 
-       
+
         public bool CanPlaceTower(Vector3 position, GridArea area)
         {
             var gridPos = mapGrid.WorldToGridPosition(position);
@@ -135,7 +140,7 @@ namespace TDGame.Systems.Grid.InGame
 
             return CanPlaceTower(area);
         }
-        
+
         public bool CanPlaceTower(in GridArea area)
         {
             return mapGrid.IsAreaEmpty(area) && towerGrid.IsAreaEmpty(area);
@@ -152,12 +157,13 @@ namespace TDGame.Systems.Grid.InGame
                 return;
             }
 
-            var cell = new GridCell() {State = GridCellState.Occupied, OccupierId = id};
+            var cell = new GridCell() { State = GridCellState.Occupied, OccupierId = id };
             towerGrid.SetAreaToCell(area, cell);
-            
-            messagingManager.SendNamedMessageToAll(new SetGridAreaMessage(){Type = GridType.Tower, Area = area, Cell = cell});
+
+            messagingManager.SendNamedMessageToAll(new SetGridAreaMessage()
+                { Type = GridType.Tower, Area = area, Cell = cell });
         }
-        
+
 
         public void EmptyGridArea(GridType gridType, GridArea gridArea)
         {
@@ -166,8 +172,8 @@ namespace TDGame.Systems.Grid.InGame
                 Debug.LogError("Called EmptyGridArea from a client");
                 return;
             }
-            
-            var cell = new GridCell() {State = GridCellState.Empty};
+
+            var cell = new GridCell() { State = GridCellState.Empty };
             switch (gridType)
             {
                 case GridType.Map:
@@ -179,8 +185,9 @@ namespace TDGame.Systems.Grid.InGame
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
-            messagingManager.SendNamedMessageToAll(new SetGridAreaMessage(){Type = gridType, Area = gridArea, Cell = cell});
+
+            messagingManager.SendNamedMessageToAll(new SetGridAreaMessage()
+                { Type = gridType, Area = gridArea, Cell = cell });
         }
 
         #endregion
@@ -203,10 +210,9 @@ namespace TDGame.Systems.Grid.InGame
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
 
         #endregion
-        
+
         // [Server]
         // public void EmptyGridArea(GridType gridType, GridArea gridArea)
         // {
@@ -246,11 +252,11 @@ namespace TDGame.Systems.Grid.InGame
                 }
             }
 
-            Debug.DrawLine(mapGrid.GridToWorldPosition(0, (int) gridSize.y),
-                mapGrid.GridToWorldPosition((int) gridSize.x, (int) gridSize.y),
+            Debug.DrawLine(mapGrid.GridToWorldPosition(0, (int)gridSize.y),
+                mapGrid.GridToWorldPosition((int)gridSize.x, (int)gridSize.y),
                 Color.white, 100f);
-            Debug.DrawLine(mapGrid.GridToWorldPosition((int) gridSize.x, 0),
-                mapGrid.GridToWorldPosition((int) gridSize.x, (int) gridSize.y),
+            Debug.DrawLine(mapGrid.GridToWorldPosition((int)gridSize.x, 0),
+                mapGrid.GridToWorldPosition((int)gridSize.x, (int)gridSize.y),
                 Color.white, 100f);
         }
     }
