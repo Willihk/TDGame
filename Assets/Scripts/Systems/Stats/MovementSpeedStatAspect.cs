@@ -1,6 +1,7 @@
 ﻿using TDGame.Systems.Buff;
 using TDGame.Systems.Buff.Implementations.Movement;
 using TDGame.Systems.Stats.Implementations;
+using TDGame.Systems.Stats.Implementations.Movement;
 using Unity.Entities;
 
 namespace TDGame.Systems.Stats

@@ -1,24 +1,19 @@
-﻿using System;
-using Unity.Entities;
+﻿using Unity.Entities;
 using UnityEngine;
 
-namespace TDGame.Systems.Buff.Implementations.Movement
+namespace TDGame.Systems.Buff.Implementations.Range
 {
-    [Serializable]
-    public struct MovementSpeedBuff : IBaseBuff, IComponentData
+    public struct RangeBuff : IBaseBuff, IComponentData
     {
         [SerializeField]
         private float duration;
-
         [SerializeField]
         private float value;
-
         [SerializeField]
         private StatModifierType modifierType;
-
         [SerializeField]
         private int stacks;
-
+        [SerializeField]
         private int appliedBy;
 
         public float Value

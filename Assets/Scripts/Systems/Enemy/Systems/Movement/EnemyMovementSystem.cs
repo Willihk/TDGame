@@ -1,5 +1,6 @@
 ﻿using TDGame.Systems.Enemy.Components.Movement;
 using TDGame.Systems.Stats.Implementations;
+using TDGame.Systems.Stats.Implementations.Movement;
 using Unity.Burst;
 using Unity.Burst.Intrinsics;
 using Unity.Collections;

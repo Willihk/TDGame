@@ -1,6 +1,10 @@
 ﻿using NativeTrees;
+using TDGame.Systems.Buff.Implementations.Movement;
+using TDGame.Systems.Enemy.Systems.Health.Components;
 using TDGame.Systems.Grid.SpatialTree;
 using TDGame.Systems.Stats.Implementations.Range;
+using TDGame.Systems.Tower.Attack.Implementations.AoE.Components;
+using TDGame.Systems.Tower.Attack.Windup.Components;
 using TDGame.Systems.Tower.Targeting.Components;
 using Unity.Burst;
 using Unity.Collections;
@@ -8,32 +12,42 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
 
-namespace TDGame.Systems.Tower.Targeting.Systems
+namespace TDGame.Systems.Tower.Attack.Implementations.AoE.Systems
 {
     [BurstCompile]
-    [UpdateAfter(typeof(EnemyTreeSystem))]
-    public partial struct ClosestTargetingSystem : ISystem
+    public partial struct TowerAoEBuffSystem : ISystem
     {
+        private ComponentLookup<MovementSpeedBuff> buffLookup;
+
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<MapDetailsSingleton>();
+            buffLookup = state.GetComponentLookup<MovementSpeedBuff>(true);
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+            buffLookup.Update(ref state);
+
             var treeHandle = state.WorldUnmanaged.GetExistingUnmanagedSystem<EnemyTreeSystem>();
 
             var treeSystem = state.WorldUnmanaged.GetUnsafeSystemRef<EnemyTreeSystem>(treeHandle);
             if (!treeSystem.GetTree(out var tree))
                 return;
 
-            var handle =new DamageJob
+            var commandBuffer = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
+                .CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
+
+            var handle = new DamageJob
             {
+                BuffLookup = buffLookup,
                 Quadtree = tree,
-            }.ScheduleParallel(JobHandle.CombineDependencies(state.WorldUnmanaged.GetExistingSystemState<EnemyTreeSystem>().Dependency, state.Dependency));
-            
+                CommandBuffer = commandBuffer
+            }.ScheduleParallel(state.WorldUnmanaged.GetExistingSystemState<EnemyTreeSystem>().Dependency);
+
             state.Dependency = JobHandle.CombineDependencies(state.Dependency, handle);
         }
 
@@ -41,34 +55,42 @@ namespace TDGame.Systems.Tower.Targeting.Systems
         partial struct DamageJob : IJobEntity
         {
             [ReadOnly]
+            public ComponentLookup<MovementSpeedBuff> BuffLookup;
+
+            [ReadOnly]
             public NativeQuadtree<Entity> Quadtree;
 
+            public EntityCommandBuffer.ParallelWriter CommandBuffer;
+
             [BurstCompile]
-            void Execute(in FinalRangeStat range, in LocalTransform transform, ref DynamicBuffer<TargetBufferElement> buffer, in RequestEnemyTargetTag _)
+            void Execute([ChunkIndexInQuery] int sort, ref BasicWindup windup, in LocalTransform transform,
+                in FinalRangeStat range, in MovementSpeedBuff buff)
             {
+                if (windup.Remainingtime > 0)
+                    return;
+
+                windup.Remainingtime = windup.WindupTime;
+
                 var nearest = new NativeQueue<Entity>(Allocator.Temp);
                 var visitor = new NearestVisitor()
                 {
                     Nearest = nearest
                 };
-                
+
                 var query = new NativeQuadtree<Entity>.NearestNeighbourQuery(Allocator.Temp);
                 query.Nearest(ref Quadtree, transform.Position.xz, range.Value,
                     ref visitor, default(NativeQuadtreeExtensions.AABBDistanceSquaredProvider<Entity>));
 
                 while (nearest.TryDequeue(out var enemy))
                 {
-                    if (buffer.Length == 1)
-                    {
-                        buffer[0] = enemy;
-                    }
-                    else
-                    {
-                        buffer.Add(enemy);
-                    }
+                    if (!BuffLookup.HasComponent(enemy))
+                        CommandBuffer.AddComponent<MovementSpeedBuff>(sort, enemy);
+
+                    CommandBuffer.SetComponent(sort, enemy, buff);
                 }
             }
         }
+
         struct NearestVisitor : IQuadtreeNearestVisitor<Entity>
         {
             public NativeQueue<Entity> Nearest;
@@ -77,7 +99,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             {
                 Nearest.Enqueue(obj);
 
-                return false;
+                return true;
             }
         }
     }

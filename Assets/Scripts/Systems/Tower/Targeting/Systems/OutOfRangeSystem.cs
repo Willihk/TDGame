@@ -1,4 +1,5 @@
 ﻿using TDGame.Systems.Enemy.Components;
+using TDGame.Systems.Stats.Implementations.Range;
 using TDGame.Systems.Tower.Targeting.Components;
 using Unity.Burst;
 using Unity.Burst.Intrinsics;
@@ -29,7 +30,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             {
                 All = new ComponentType[]
                 {
-                    typeof(TowerTag), typeof(RequestEnemyTargetTag), typeof(TargetRange), typeof(TargetBufferElement)
+                    typeof(TowerTag), typeof(RequestEnemyTargetTag), typeof(FinalRangeStat), typeof(TargetBufferElement)
                 }
             });
         }
@@ -43,7 +44,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
                 targetBufferHandle = GetBufferTypeHandle<TargetBufferElement>(),
                 EnemyTranslations = translations,
                 TranslationHandle = GetComponentTypeHandle<LocalTransform>(),
-                RangeHandle = GetComponentTypeHandle<TargetRange>(),
+                RangeHandle = GetComponentTypeHandle<FinalRangeStat>(),
                 EntityHandle = GetEntityTypeHandle()
             };
 
@@ -64,7 +65,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             public ComponentTypeHandle<LocalTransform> TranslationHandle;
 
             [ReadOnly]
-            public ComponentTypeHandle<TargetRange> RangeHandle;
+            public ComponentTypeHandle<FinalRangeStat> RangeHandle;
 
             [ReadOnly]
             public EntityTypeHandle EntityHandle;
@@ -90,7 +91,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
                             float distance = math.distance(translations[i].Position,
                                 EnemyTranslations[buffer[j]].Position);
 
-                            if (distance > ranges[i].Range)
+                            if (distance > ranges[i].Value)
                                 buffer.RemoveAt(j);
                         }
                         else

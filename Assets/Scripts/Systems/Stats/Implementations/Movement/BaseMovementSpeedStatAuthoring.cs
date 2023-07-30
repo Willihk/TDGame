@@ -1,7 +1,7 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 
-namespace TDGame.Systems.Stats.Implementations
+namespace TDGame.Systems.Stats.Implementations.Movement
 {
     public class BaseMovementSpeedStatAuthoring : MonoBehaviour
     {

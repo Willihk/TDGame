@@ -1,4 +1,8 @@
-﻿using TDGame.Systems.Buff.Implementations.Movement;
+﻿using TDGame.Systems.Buff.Implementations.Damage;
+using TDGame.Systems.Buff.Implementations.Movement;
+using TDGame.Systems.Buff.Implementations.Range;
+using TDGame.Systems.Tower;
+using TDGame.Systems.Tower.Attack.Implementations.AoE.Components;
 using Unity.Burst;
 using Unity.Burst.Intrinsics;
 using Unity.Collections;
@@ -15,18 +19,21 @@ namespace TDGame.Systems.Buff.Systems
         {
             commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
             ScheduleBuffDurationJob<MovementSpeedBuff>();
+            ScheduleBuffDurationJob<DamageBuff>();
+            ScheduleBuffDurationJob<RangeBuff>();
         }
 
 
         void ScheduleBuffDurationJob<TBuff>()
             where TBuff : unmanaged, IComponentData, IBaseBuff
         {
-            var query = GetEntityQuery(ComponentType.ReadWrite<TBuff>());
-            var handle = new CalcStats<TBuff>
+            var query = GetEntityQuery(ComponentType.ReadWrite<TBuff>(), ComponentType.Exclude<TowerTag>());
+            var handle = new DurationJob<TBuff>
             {
                 BuffStateHandle = GetComponentTypeHandle<TBuff>(),
                 EntityTypeHandle = GetEntityTypeHandle(),
-                CommandBuffer = commandBufferSystem.CreateCommandBuffer()
+                CommandBuffer = commandBufferSystem.CreateCommandBuffer(),
+                DeltaTime = SystemAPI.Time.DeltaTime
             }.Schedule(query, Dependency);
 
             commandBufferSystem.AddJobHandleForProducer(handle);
@@ -35,7 +42,7 @@ namespace TDGame.Systems.Buff.Systems
 
 
         [BurstCompile]
-        partial struct CalcStats<TBuff> : IJobChunk
+        partial struct DurationJob<TBuff> : IJobChunk
             where TBuff : unmanaged, IComponentData, IBaseBuff
         {
             public EntityCommandBuffer CommandBuffer;
@@ -45,14 +52,14 @@ namespace TDGame.Systems.Buff.Systems
             public EntityTypeHandle EntityTypeHandle;
 
             [ReadOnly]
-            public int DeltaTime;
+            public float DeltaTime;
 
             [BurstCompile]
             public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask,
                 in v128 chunkEnabledMask)
             {
                 var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
-                NativeArray<TBuff> buffStats = buffStats = chunk.GetNativeArray(ref BuffStateHandle);
+                var buffStats = chunk.GetNativeArray(ref BuffStateHandle);
 
                 var entities = chunk.GetNativeArray(EntityTypeHandle);
 

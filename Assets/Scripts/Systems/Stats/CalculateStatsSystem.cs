@@ -1,7 +1,12 @@
 ﻿using System;
 using TDGame.Systems.Buff;
+using TDGame.Systems.Buff.Implementations.Damage;
 using TDGame.Systems.Buff.Implementations.Movement;
+using TDGame.Systems.Buff.Implementations.Range;
 using TDGame.Systems.Stats.Implementations;
+using TDGame.Systems.Stats.Implementations.Damage;
+using TDGame.Systems.Stats.Implementations.Movement;
+using TDGame.Systems.Stats.Implementations.Range;
 using Unity.Burst;
 using Unity.Burst.Intrinsics;
 using Unity.Collections;
@@ -19,6 +24,8 @@ namespace TDGame.Systems.Stats
         {
             commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
             ScheduleCalcJob<BaseMovementSpeedStat, MovementSpeedBuff, FinalMovementSpeedStat>();
+            ScheduleCalcJob<BaseRangeStat, RangeBuff, FinalRangeStat>();
+            ScheduleCalcJob<BaseDamageStat, DamageBuff, FinalDamageStat>();
         }
 
 
