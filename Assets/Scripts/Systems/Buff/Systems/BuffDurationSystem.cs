@@ -52,7 +52,7 @@ namespace TDGame.Systems.Buff.Systems
                 in v128 chunkEnabledMask)
             {
                 var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
-                var buffStats = chunk.GetNativeArray(ref BuffStateHandle);
+                NativeArray<TBuff> buffStats = buffStats = chunk.GetNativeArray(ref BuffStateHandle);
 
                 var entities = chunk.GetNativeArray(EntityTypeHandle);
 
