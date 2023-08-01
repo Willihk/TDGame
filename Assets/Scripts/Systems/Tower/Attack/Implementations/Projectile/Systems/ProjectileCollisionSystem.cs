@@ -1,27 +1,39 @@
-﻿using TDGame.Systems.Enemy.Components;
+﻿using NativeTrees;
 using TDGame.Systems.Enemy.Systems.Health.Components;
+using TDGame.Systems.Grid.SpatialTree;
+using TDGame.Systems.Stats.Implementations.Damage;
 using TDGame.Systems.Tower.Attack.Implementations.Projectile.Components;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
-using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 {
+    [UpdateAfter(typeof(EnemyTreeSystem))]
     public partial class ProjectileCollisionSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem bufferSystem;
-        private EntityQuery enemyQuery;
+
+        private ComponentLookup<EnemyHealthData> healthLookup;
 
         private NativeQueue<Collision> collisions;
 
+        struct Collision
+        {
+            public int Damage;
+            public Entity Entity;
+        }
+
         protected override void OnCreate()
         {
+            RequireForUpdate<MapDetailsSingleton>();
+
             bufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
-            enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<LocalToWorld>(),
-                ComponentType.ReadWrite<EnemyHealthData>());
+
+            healthLookup = GetComponentLookup<EnemyHealthData>(false);
+
             collisions = new NativeQueue<Collision>(Allocator.Persistent);
         }
 
@@ -32,83 +44,99 @@ namespace TDGame.Systems.Tower.Attack.Implementations.Projectile.Systems
 
         protected override void OnUpdate()
         {
-            var enemyEntities = enemyQuery.ToEntityListAsync(Allocator.TempJob, out var enemyEntityHandle);
-            var translations = GetComponentLookup<LocalToWorld>(true);
+            var treeHandle = World.Unmanaged.GetExistingUnmanagedSystem<EnemyTreeSystem>();
+
+            var treeSystem = World.Unmanaged.GetUnsafeSystemRef<EnemyTreeSystem>(treeHandle);
+            if (!treeSystem.GetTree(out var tree))
+                return;
+
+            healthLookup.Update(this);
+
 
             var ecb = bufferSystem.CreateCommandBuffer();
-            var handle = JobHandle.CombineDependencies(Dependency, enemyEntityHandle);
-            
-            new CollisionJob
-            {
-                AllTranslations = translations,
-                EnemyEntities = enemyEntities.AsDeferredJobArray(),
-                Collisions = collisions.AsParallelWriter()
-            }.ScheduleParallel(handle).Complete();
 
-            enemyEntities.Dispose();
-            
-            // need to be local variables to compile
-            var queue = collisions;
-            var manager = EntityManager;
-            
-            Job.WithCode(() =>
+            collisions.Clear();
+            var handle = new CollisionJob
             {
-                while (queue.TryDequeue(out var collision))
-                {
-                    int damage = manager.GetComponentData<ProjectileDamage>(collision.ProjectileEntity).Value;
-                    var healthData = manager.GetComponentData<EnemyHealthData>(collision.EnemyEntity);
+                CommandBuffer = ecb.AsParallelWriter(),
+                HealthLookup = healthLookup,
+                Quadtree = tree,
+                CollisionQueue = collisions.AsParallelWriter()
+            }.ScheduleParallel(JobHandle.CombineDependencies(Dependency,
+                World.Unmanaged.GetExistingSystemState<EnemyTreeSystem>().Dependency));
+            Dependency = JobHandle.CombineDependencies(Dependency, handle);
 
-                   healthData.Health -= damage;
-                   
-                   manager.SetComponentData(collision.EnemyEntity, healthData);
-                   ecb.DestroyEntity(collision.ProjectileEntity);
-                }
-            }).Run();
+            bufferSystem.AddJobHandleForProducer(Dependency);
+
+            handle = new DealDamageJob
+            {
+                CollisionQueue = collisions,
+                HealthLookup = healthLookup
+            }.Schedule(Dependency);
+            Dependency = JobHandle.CombineDependencies(Dependency, handle);
         }
 
-        struct Collision
+        private struct DealDamageJob : IJob
         {
-            public Entity ProjectileEntity;
-            public Entity EnemyEntity;
+            public NativeQueue<Collision> CollisionQueue;
+
+            public ComponentLookup<EnemyHealthData> HealthLookup;
+
+            public void Execute()
+            {
+                while (CollisionQueue.TryDequeue(out var collision))
+                {
+                    if (!HealthLookup.HasComponent(collision.Entity))
+                        continue;
+                    
+                    var healthData = HealthLookup[collision.Entity];
+                    healthData.Health -= collision.Damage;
+                    HealthLookup[collision.Entity] = healthData;
+                }
+            }
         }
         
         [BurstCompile]
         partial struct CollisionJob : IJobEntity
         {
-            [ReadOnly]
-            public NativeArray<Entity> EnemyEntities;
-
-            [ReadOnly]
-            public ComponentLookup<LocalToWorld> AllTranslations;
-
             [WriteOnly]
-            public NativeQueue<Collision>.ParallelWriter Collisions;
+            public NativeQueue<Collision>.ParallelWriter CollisionQueue;
+            
+            [ReadOnly]
+            public ComponentLookup<EnemyHealthData> HealthLookup;
 
-            void Execute(Entity entity, in ProjectileDamage damage, in LocalToWorld translation,
+            [ReadOnly]
+            public NativeQuadtree<Entity> Quadtree;
+
+            public EntityCommandBuffer.ParallelWriter CommandBuffer;
+
+            void Execute(Entity entity, [ChunkIndexInQuery] int sort, in FinalDamageStat damage,
+                in LocalToWorld translation,
                 in ProjectileRadiusCollider radiusCollider)
             {
-                var closestEntity = Entity.Null;
-                float closestDistance = float.MaxValue;
-
-                for (int i = 0; i < EnemyEntities.Length; i++)
+                var nearest = new NativeQueue<Entity>(Allocator.Temp);
+                var visitor = new NativeQuadtreeExtensions.QuadtreeNNearestRangeVisitor<Entity>
                 {
-                    var enemyPos = AllTranslations[EnemyEntities[i]].Position;
-                    enemyPos.y = 0;
-                    var projectilePos = translation.Position;
-                    projectilePos.y = 0;
+                    Nearest = nearest,
+                    Count = 1
+                };
+
+                var query = new NativeQuadtree<Entity>.NearestNeighbourQuery(Allocator.Temp);
+                query.Nearest(ref Quadtree, translation.Position.xz, radiusCollider.Value,
+                    ref visitor, default(NativeQuadtreeExtensions.AABBDistanceSquaredProvider<Entity>));
+
+                while (nearest.TryDequeue(out var enemy))
+                {
+                    if (!HealthLookup.HasComponent(enemy))
+                        continue;
                     
-                    float distance = math.distance(enemyPos, projectilePos);
-
-                    if (distance < closestDistance && distance < radiusCollider.Value)
-                    {
-                        closestEntity = EnemyEntities[i];
-                        closestDistance = distance;
-                    }
-                }
-
-                if (closestEntity != Entity.Null)
-                {
-                    Collisions.Enqueue(new Collision(){ProjectileEntity = entity, EnemyEntity = closestEntity});
+                    // var healthData = HealthLookup[enemy];
+                    // healthData.Health -= (int)damage.Value;
+                    // HealthLookup[enemy] = healthData;
+                    
+                    CollisionQueue.Enqueue(new Collision {Damage = (int)damage.Value, Entity = enemy});
+                    
+                    CommandBuffer.DestroyEntity(sort, entity);
                 }
             }
         }

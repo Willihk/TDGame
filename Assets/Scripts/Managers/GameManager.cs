@@ -3,6 +3,7 @@ using TDGame.Events;
 using TDGame.Network.Components;
 using TDGame.Settings;
 using Unity.Entities;
+using Unity.Scenes;
 using UnityEngine;
 
 namespace TDGame.Managers

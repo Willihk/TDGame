@@ -20,9 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Maps/TestMap.unity
     guid: 6cc96cb1db8ca8c42b40b9b8e1a086ec
-  - enabled: 1
-    path: Assets/_Project/Scenes/Managers/PersistentManagers/Database.unity
-    guid: be631680689bf8140b1f1d12078a1662
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 72c22da26599b1e41bd24d071bb55e1f, type: 2}
   m_UseUCBPForAssetBundles: 0

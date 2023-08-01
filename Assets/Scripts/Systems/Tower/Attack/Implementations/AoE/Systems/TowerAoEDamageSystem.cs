@@ -15,6 +15,7 @@ using Unity.Transforms;
 namespace TDGame.Systems.Tower.Attack.Implementations.AoE.Systems
 {
     [BurstCompile]
+    [UpdateAfter(typeof(EnemyTreeSystem))]
     public partial struct TowerAoEDamageSystem : ISystem
     {
         private ComponentLookup<EnemyHealthData> healthLookup;
@@ -70,9 +71,10 @@ namespace TDGame.Systems.Tower.Attack.Implementations.AoE.Systems
                 windup.Remainingtime = windup.WindupTime;
 
                 var nearest = new NativeQueue<Entity>(Allocator.Temp);
-                var visitor = new NearestVisitor()
+                var visitor = new NativeQuadtreeExtensions.QuadtreeNNearestRangeVisitor<Entity>
                 {
-                    Nearest = nearest
+                    Nearest = nearest,
+                    Count = 1000
                 };
                 
                 var query = new NativeQuadtree<Entity>.NearestNeighbourQuery(Allocator.Temp);
@@ -81,21 +83,13 @@ namespace TDGame.Systems.Tower.Attack.Implementations.AoE.Systems
 
                 while (nearest.TryDequeue(out var enemy))
                 {
+                    if (!HealthLookup.HasComponent(enemy))
+                        continue;
+                    
                     var enemyHealth = HealthLookup[enemy];
                     enemyHealth.Health -= (int)math.round(damage.Value);
                     CommandBuffer.SetComponent(sort, enemy, enemyHealth);
                 }
-            }
-        }
-        struct NearestVisitor : IQuadtreeNearestVisitor<Entity>
-        {
-            public NativeQueue<Entity> Nearest;
-
-            public bool OnVist(Entity obj)
-            {
-                Nearest.Enqueue(obj);
-
-                return true;
             }
         }
     }

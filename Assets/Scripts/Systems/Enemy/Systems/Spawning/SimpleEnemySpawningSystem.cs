@@ -13,11 +13,13 @@ namespace TDGame.Systems.Enemy.Systems.Spawning
 {
     public partial class SimpleEnemySpawningSystem : SystemBase
     {
-        BeginSimulationEntityCommandBufferSystem entityCommandBufferSystem;
+        EndSimulationEntityCommandBufferSystem entityCommandBufferSystem;
         
         protected override void OnCreate()
         {
-            entityCommandBufferSystem = World.GetExistingSystemManaged<BeginSimulationEntityCommandBufferSystem>();
+            RequireForUpdate<EnemySpawnPoint>();
+            RequireForUpdate<PrefabManagerTag>();
+            entityCommandBufferSystem = World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>();
         }
 
         protected override void OnUpdate()

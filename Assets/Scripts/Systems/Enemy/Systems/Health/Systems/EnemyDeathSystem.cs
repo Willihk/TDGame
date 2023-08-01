@@ -8,11 +8,11 @@ namespace TDGame.Systems.Enemy.Systems.Health.Systems
 {
     public partial class EnemyDeathSystem : SystemBase
     {
-        private EndSimulationEntityCommandBufferSystem commandBufferSystem;
+        private BeginSimulationEntityCommandBufferSystem commandBufferSystem;
 
         protected override void OnCreate()
         {
-            commandBufferSystem = World.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
+            commandBufferSystem = World.GetExistingSystemManaged<BeginSimulationEntityCommandBufferSystem>();
         }
 
         protected override void OnUpdate()

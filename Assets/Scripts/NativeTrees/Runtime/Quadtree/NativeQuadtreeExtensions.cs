@@ -144,5 +144,17 @@ namespace NativeTrees
                 return false; // immediately stop iterating at first hit
             }
         }
+        public struct QuadtreeNNearestRangeVisitor<T> : IQuadtreeNearestVisitor<T> where T : unmanaged
+        {
+            public NativeQueue<T> Nearest;
+            public int Count;
+
+            public bool OnVist(T obj)
+            {
+                Nearest.Enqueue(obj);
+
+                return Nearest.Count < Count;
+            }
+        }
     }
 }

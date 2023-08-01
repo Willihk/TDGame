@@ -15,6 +15,7 @@ using Unity.Transforms;
 namespace TDGame.Systems.Tower.Attack.Implementations.AoE.Systems
 {
     [BurstCompile]
+    [UpdateAfter(typeof(EnemyTreeSystem))]
     public partial struct TowerAoEBuffSystem : ISystem
     {
         private ComponentLookup<MovementSpeedBuff> buffLookup;
@@ -41,18 +42,18 @@ namespace TDGame.Systems.Tower.Attack.Implementations.AoE.Systems
             var commandBuffer = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
 
-            var handle = new DamageJob
+            var handle = new BuffJob
             {
                 BuffLookup = buffLookup,
                 Quadtree = tree,
                 CommandBuffer = commandBuffer
-            }.ScheduleParallel(state.WorldUnmanaged.GetExistingSystemState<EnemyTreeSystem>().Dependency);
+            }.ScheduleParallel(JobHandle.CombineDependencies(state.Dependency, state.WorldUnmanaged.GetExistingSystemState<EnemyTreeSystem>().Dependency));
 
             state.Dependency = JobHandle.CombineDependencies(state.Dependency, handle);
         }
 
         [BurstCompile]
-        partial struct DamageJob : IJobEntity
+        partial struct BuffJob : IJobEntity
         {
             [ReadOnly]
             public ComponentLookup<MovementSpeedBuff> BuffLookup;
@@ -72,7 +73,7 @@ namespace TDGame.Systems.Tower.Attack.Implementations.AoE.Systems
                 windup.Remainingtime = windup.WindupTime;
 
                 var nearest = new NativeQueue<Entity>(Allocator.Temp);
-                var visitor = new NearestVisitor()
+                var visitor = new NearestVisitor
                 {
                     Nearest = nearest
                 };

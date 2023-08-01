@@ -190,6 +190,7 @@ namespace TDGame.Systems.Wave
         {
             entityManager.SetComponentData(waveStateSingleton,
                 new WaveGlobalState { State = WaveState.Running, WaveElapsedTime = 0 });
+            
             EventManager.Instance.onWaveStarted.Raise(currentWave);
         }
     }
