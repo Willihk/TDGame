@@ -11,6 +11,7 @@ namespace TDGame.Pathfinding
         {
             var path = new AStar().FindPath(start, end, gridSize, grid);
 
+            path.Reverse();
             return path;
         }
     }

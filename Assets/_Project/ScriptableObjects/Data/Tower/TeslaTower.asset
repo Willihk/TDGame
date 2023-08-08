@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e764fef0eddf479e90ad13ee8db357fb, type: 3}
+  m_Name: TeslaTower
+  m_EditorClassIdentifier: 
+  Name: Tesla
+  Description: Just a random tesla tower
+  Price: 30
+  TowerReference: {fileID: 1049642401847146796, guid: 9162d72a40c40364ba3a3aa4de90513f, type: 3}

@@ -1,13 +1,13 @@
 ﻿using System;
-using Mirror;
 using TDGame.Events.Base;
+using TDGame.Network.Components.Messaging;
 using UnityEngine;
 
 namespace TDGame.Events.Types.Network
 {
     [CreateAssetMenu(fileName = "NetworkEvent", menuName = "GameEvents/NetworkEvent")]
     [Serializable]
-    public class NetworkGameEvent : GameEvent<NetworkConnection>
+    public class NetworkGameEvent : GameEvent<TDNetworkConnection>
     {
     }
 }

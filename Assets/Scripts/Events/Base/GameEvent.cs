@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace TDGame.Events.Base
@@ -10,8 +11,10 @@ namespace TDGame.Events.Base
 
         public bool Enabled = true;
 
+        [Button]
         public void Raise()
         {
+            Debug.Log("Event Triggered: " + name);
             if (Enabled)
                 EventListeners();
         }
@@ -24,10 +27,28 @@ namespace TDGame.Events.Base
 
         public bool Enabled = true;
 
+        [Button]
         public void Raise(T item)
         {
+            Debug.Log("Event Triggered: " + name);
             if (Enabled)
                 EventListeners(item);
+        }
+    }
+    
+    [Serializable]
+    public abstract class GameEvent<T, K> : ScriptableObject
+    {
+        public event Action<T, K> EventListeners = delegate { };
+
+        public bool Enabled = true;
+
+        [Button]
+        public void Raise(T a, K b)
+        {
+            Debug.Log("Event Triggered: " + name);
+            if (Enabled)
+                EventListeners(a, b);
         }
     }
 }

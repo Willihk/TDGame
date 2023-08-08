@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace TDGame.Map
 {
+    [Obsolete]
     public class WaypointController : MonoBehaviour
     {
         public Transform startPoint;

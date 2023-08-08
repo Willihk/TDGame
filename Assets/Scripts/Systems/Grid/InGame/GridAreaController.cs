@@ -15,14 +15,14 @@ namespace TDGame.Systems.Grid.InGame
         {
             var worldPosition = originPoint.position;
 
-            area.position = GridController.Instance.towerGrid.WorldToGridPosition(worldPosition);
+            area.position = GridManager.Instance.towerGrid.WorldToGridPosition(worldPosition);
         }
 
         public GridArea CalculateArea()
         {
             var worldPosition = originPoint.position;
 
-            area.position = GridController.Instance.towerGrid.WorldToGridPosition(worldPosition);
+            area.position = GridManager.Instance.towerGrid.WorldToGridPosition(worldPosition);
 
             return area;
         }

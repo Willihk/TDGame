@@ -1,59 +1,35 @@
-﻿using System;
-using Mirror;
-using TDGame.Network;
-using TDGame.Network.Lobby;
+﻿using TDGame.Events;
+using TDGame.Events.Base;
+using TDGame.Network.Components;
 using UnityEngine;
 
 namespace TDGame.UI.Lobby
 {
     public class LobbyController : MonoBehaviour
     {
-        private TDGameNetworkManager manager;
-
-        [SerializeField]
-        private GameObject mainPanel;
-
-        [SerializeField]
-        private LobbyPlayerList lobbyPlayerList;
+        private CustomNetworkManager manager;
 
         private void Start()
         {
-            manager = TDGameNetworkManager.Instance;
+            manager = CustomNetworkManager.Instance;
         }
 
         public void OnClickStart()
         {
-            if (manager.allPlayersReady)
+            // Check host/server
+            if (CustomNetworkManager.Instance.serverWrapper.isListening)
             {
-                manager.GotoGameScene();
+                EventManager.Instance.onClickStartGame.Raise();
             }
         }
-
+        
         public void OnClickReady()
         {
-            if (NetworkedLobbyPlayer.LocalPlayer)
-            {
-                NetworkedLobbyPlayer.LocalPlayer.CmdChangeReadyState(!NetworkedLobbyPlayer.LocalPlayer.readyToBegin);
-            }
         }
-
+        
         public void OnClickLeave()
         {
-            if (NetworkServer.active && NetworkClient.isConnected)
-            {
-                // stop host if host-only
-                manager.StopHost();
-            }
-            else if (NetworkClient.isConnected)
-            {
-                // stop client if client-only
-                manager.StopClient();
-            }
-            else if (NetworkServer.active)
-            {
-                // stop server if server-only
-                manager.StopServer();
-            }
+            manager.Stop();
         }
     }
 }

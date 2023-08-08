@@ -1,4 +1,5 @@
 ﻿using Sirenix.OdinInspector;
+using TDGame.Systems.Tower.Graph.Data;
 using UnityEngine;
 using XNode;
 
@@ -8,10 +9,10 @@ namespace TDGame.Systems.Tower.Graph.Nodes
     public class TowerNode : Node
     {
         [AssetsOnly]
-        [AssetSelector(Paths = "Assets/Resources/Prefabs/Towers")]
+        [AssetSelector]
         [Title("Tower Prefab")]
         [HideLabel]
-        public GameObject TowerPrefab;
+        public TowerDetails TowerDetails;
         
         [HorizontalGroup("Bottom")]
         [Input(ShowBackingValue.Never)]
