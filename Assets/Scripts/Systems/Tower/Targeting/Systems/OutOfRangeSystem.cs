@@ -30,7 +30,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             {
                 All = new ComponentType[]
                 {
-                    typeof(TowerTag), typeof(RequestEnemyTargetTag), typeof(FinalRangeStat), typeof(TargetBufferElement)
+                    typeof(TowerTag), typeof(RequestEnemyTargets), typeof(FinalRangeStat), typeof(TargetBufferElement)
                 }
             });
         }

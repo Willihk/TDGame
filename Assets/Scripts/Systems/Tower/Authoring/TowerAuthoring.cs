@@ -71,7 +71,8 @@ namespace TDGame.Systems.Tower.Authoring
                 switch (authoring.towerType)
                 {
                     case TowerType.Projectile:
-                        AddComponent<RequestEnemyTargetTag>(towerEntity);
+                        AddComponent(towerEntity, new RequestEnemyTargets {Count = 1});
+                        
                         AddComponent(towerEntity, new ProjectileFiringPoint {firingPoint = GetEntity(authoring.FiringPoint, TransformUsageFlags.Dynamic)});
                         AddComponent(towerEntity, new ProjectilePrefab {Value = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic)});
 

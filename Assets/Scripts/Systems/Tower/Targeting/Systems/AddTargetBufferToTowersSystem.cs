@@ -17,7 +17,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
         protected override void OnUpdate()
         {
             var ecb = commandBufferSystem.CreateCommandBuffer().AsParallelWriter();
-            Entities.WithAll<TowerTag, RequestEnemyTargetTag>().WithNone<TargetBufferElement>().ForEach((Entity entity, int entityInQueryIndex) =>
+            Entities.WithAll<TowerTag, RequestEnemyTargets>().WithNone<TargetBufferElement>().ForEach((Entity entity, int entityInQueryIndex) =>
             {
                 ecb.AddBuffer<TargetBufferElement>(entityInQueryIndex, entity);
 

@@ -29,11 +29,12 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             if (!treeSystem.GetTree(out var tree))
                 return;
 
-            var handle =new DamageJob
+            var handle = new DamageJob
             {
                 Quadtree = tree,
-            }.ScheduleParallel(JobHandle.CombineDependencies(state.WorldUnmanaged.GetExistingSystemState<EnemyTreeSystem>().Dependency, state.Dependency));
-            
+            }.ScheduleParallel(JobHandle.CombineDependencies(
+                state.WorldUnmanaged.GetExistingSystemState<EnemyTreeSystem>().Dependency, state.Dependency));
+
             state.Dependency = JobHandle.CombineDependencies(state.Dependency, handle);
         }
 
@@ -44,40 +45,25 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             public NativeQuadtree<Entity> Quadtree;
 
             [BurstCompile]
-            void Execute(in FinalRangeStat range, in LocalTransform transform, ref DynamicBuffer<TargetBufferElement> buffer, in RequestEnemyTargetTag _)
+            void Execute(in FinalRangeStat range, in LocalTransform transform,
+                ref DynamicBuffer<TargetBufferElement> buffer, in RequestEnemyTargets request)
             {
                 var nearest = new NativeQueue<Entity>(Allocator.Temp);
-                var visitor = new NearestVisitor()
+                var visitor = new NativeQuadtreeExtensions.QuadtreeNNearestRangeVisitor<Entity>()
                 {
-                    Nearest = nearest
+                    Nearest = nearest,
+                    Count = request.Count
                 };
-                
+
                 var query = new NativeQuadtree<Entity>.NearestNeighbourQuery(Allocator.Temp);
                 query.Nearest(ref Quadtree, transform.Position.xz, range.Value,
                     ref visitor, default(NativeQuadtreeExtensions.AABBDistanceSquaredProvider<Entity>));
 
+                buffer.Clear();
                 while (nearest.TryDequeue(out var enemy))
                 {
-                    if (buffer.Length == 1)
-                    {
-                        buffer[0] = enemy;
-                    }
-                    else
-                    {
-                        buffer.Add(enemy);
-                    }
+                    buffer.Add(enemy);
                 }
-            }
-        }
-        struct NearestVisitor : IQuadtreeNearestVisitor<Entity>
-        {
-            public NativeQueue<Entity> Nearest;
-
-            public bool OnVist(Entity obj)
-            {
-                Nearest.Enqueue(obj);
-
-                return false;
             }
         }
     }
