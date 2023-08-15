@@ -27,8 +27,10 @@ namespace TDGame.UI.InGame
 
         private void UpdateText(int playerId)
         {
+            Debug.Log("other " + playerId + " local: " + localPlayer.playerId);
             if (localPlayer.playerId == playerId)
             {
+                Debug.Log("New currency: " + PlayerEconomyManager.Instance.GetEconomy(playerId).currency);
                 text.text= PlayerEconomyManager.Instance.GetEconomy(playerId).currency.ToString();
             }
         }

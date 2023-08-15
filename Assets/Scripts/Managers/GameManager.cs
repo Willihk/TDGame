@@ -1,6 +1,9 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.IO;
+using Cysharp.Threading.Tasks;
 using TDGame.Events;
+using TDGame.Managers.Messages;
 using TDGame.Network.Components;
+using TDGame.Network.Components.Messaging;
 using TDGame.Settings;
 using Unity.Entities;
 using Unity.Scenes;
@@ -26,6 +29,8 @@ namespace TDGame.Managers
 
         private void Start()
         {
+            BaseMessagingManager.Instance.RegisterNamedMessageHandler<StartGameMessage>(Handle_StartGameMessage);
+            
             EventManager.Instance.onClickStartGame.EventListeners += LobbyStartGame;
             EventManager.Instance.onEnemyReachedEnd.EventListeners += EnemyReachedEnd;
         }
@@ -43,15 +48,12 @@ namespace TDGame.Managers
             // Load map scene
             await sceneManager.LoadSceneSynced(lobbySettings.selectedMap.MapReference);
 
-            // Setup for gameplay
+            await UniTask.Delay(1000);
 
+            // Setup for gameplay
             PlayerHealth = 100;
             EventManager.Instance.onPlayerHealthChanged.Raise(PlayerHealth);
-            
-            EventManager.Instance.onPathRegistered.EventListeners += StartGame;
-            await UniTask.Delay(5000);
-            
-            EventManager.Instance.onMapLoaded.Raise();
+            BaseMessagingManager.Instance.SendNamedMessageToAll(new StartGameMessage());
         }
 
         void StartGame()
@@ -67,6 +69,14 @@ namespace TDGame.Managers
         {
             PlayerHealth--;
             EventManager.Instance.onPlayerHealthChanged.Raise(PlayerHealth);
+        }
+
+        async void Handle_StartGameMessage(TDNetworkConnection sender, Stream stream)
+        {
+            EventManager.Instance.onPathRegistered.EventListeners += StartGame;
+            await UniTask.Delay(5000);
+            
+            EventManager.Instance.onMapLoaded.Raise();
         }
     }
 }

@@ -63,7 +63,7 @@ namespace TDGame.Network.Components.Messaging.CustomTransport
         {
             var genericMessage = MessagePackSerializer.Deserialize<GenericMessage>(data);
             
-            // Debug.Log("Received message: " + genericMessage.Name);
+            Debug.Log("Received message: " + genericMessage.Name);
             if (registeredCallbacks.TryGetValue(genericMessage.Name.GetHashCode(), out NamedMessageDelegate callback))
             {
                 var stream = new MemoryStream(genericMessage.Message);

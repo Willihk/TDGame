@@ -168,6 +168,7 @@ namespace TDGame.Systems.Economy
 
             economy.currency = message.Currency;
             eventManager.onEconomyChanged.Raise(message.PlayerId);
+            Debug.Log("Set econbomy for " + message.PlayerId);
         }
     }
 }

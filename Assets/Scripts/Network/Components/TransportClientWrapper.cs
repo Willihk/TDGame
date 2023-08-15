@@ -110,7 +110,7 @@ namespace TDGame.Network.Components
                         clientDisconnected.Invoke();
                         break;
                     case NetworkEvent.Type.Data:
-                        Debug.Log("Client received data with length: " + reader.Length);
+                        // Debug.Log("Client received data with length: " + reader.Length);
                         var nativeArray = new NativeArray<byte>(reader.Length, Allocator.Temp);
                         reader.ReadBytes(nativeArray);
                         switch (nativeArray[0])
