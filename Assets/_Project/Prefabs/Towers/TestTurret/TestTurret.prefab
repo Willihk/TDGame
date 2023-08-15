@@ -1831,6 +1831,7 @@ MonoBehaviour:
   aps: 4
   ProjectilePrefab: {fileID: 121898704250268993, guid: c5c652c74118c07428b523609ae1cc5d, type: 3}
   FiringPoint: {fileID: 4373735556616113291}
+  MaxTargetCount: 1
   TurnPoint: {fileID: 4592322804310947057}
   TurnSpeed: 3
   enableAoeDamage: 0

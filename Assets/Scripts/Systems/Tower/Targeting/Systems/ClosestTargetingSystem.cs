@@ -29,7 +29,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
             if (!treeSystem.GetTree(out var tree))
                 return;
 
-            var handle = new DamageJob
+            var handle = new TargetJob
             {
                 Quadtree = tree,
             }.ScheduleParallel(JobHandle.CombineDependencies(
@@ -39,7 +39,7 @@ namespace TDGame.Systems.Tower.Targeting.Systems
         }
 
         [BurstCompile]
-        partial struct DamageJob : IJobEntity
+        private partial struct TargetJob : IJobEntity
         {
             [ReadOnly]
             public NativeQuadtree<Entity> Quadtree;

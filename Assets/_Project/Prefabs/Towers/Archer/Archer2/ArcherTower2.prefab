@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 8503244571883814593}
   - component: {fileID: 727874122164818764}
   m_Layer: 0
-  m_Name: ArcherTower
+  m_Name: ArcherTower2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   aps: 0.6
   ProjectilePrefab: {fileID: 121898704250268993, guid: de7570a9e53a7b44caa9760d2f73dac8, type: 3}
   FiringPoint: {fileID: 8804784952747303915}
-  MaxTargetCount: 1
+  MaxTargetCount: 2
   TurnPoint: {fileID: 4315753536150559380}
   TurnSpeed: 10
   enableAoeDamage: 0

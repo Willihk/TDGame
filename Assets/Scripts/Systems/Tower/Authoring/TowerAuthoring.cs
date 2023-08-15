@@ -36,6 +36,8 @@ namespace TDGame.Systems.Tower.Authoring
 
         [BoxGroup("Projectile")]
         public Transform FiringPoint;
+        [BoxGroup("Projectile"), Min(0)]
+        public int MaxTargetCount = 1;
 
 
         [InfoBox("Leave empty if not in use")]
@@ -76,7 +78,7 @@ namespace TDGame.Systems.Tower.Authoring
                 switch (authoring.towerType)
                 {
                     case TowerType.Projectile:
-                        AddComponent(towerEntity, new RequestEnemyTargets { Count = 1 });
+                        AddComponent(towerEntity, new RequestEnemyTargets { Count = authoring.MaxTargetCount });
 
                         AddComponent(towerEntity,
                             new ProjectileFiringPoint

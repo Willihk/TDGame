@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e764fef0eddf479e90ad13ee8db357fb, type: 3}
+  m_Name: ArcherTower2
+  m_EditorClassIdentifier: 
+  Name: Archer 2
+  Description: Multi-Shot Archer tower
+  Price: 20
+  TowerReference: {fileID: 7699583475120942697, guid: e4488d16fa621e749bb2f0c52765a74a, type: 3}
